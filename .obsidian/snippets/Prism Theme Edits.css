@@ -20,6 +20,9 @@ p .obsidian-icon {
 h6 {
   margin-top: 0 !important;
 }
+.index h6 {
+  margin-top: 0.7em !important;
+}
 h6 .isc-icon svg {
   font-size: 9px;
   margin-top: 0 !important;

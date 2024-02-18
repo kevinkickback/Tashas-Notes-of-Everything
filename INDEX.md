@@ -1,6 +1,7 @@
 ---
 cssClasses: index, cards, cards-cover, update
 ---
+![[compendium.jpg|banner]]
 ###### <span class="head">Campaign Journal</span> 
 
 ```dataviewjs
