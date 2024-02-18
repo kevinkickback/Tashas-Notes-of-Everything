@@ -1,0 +1,112 @@
+/* --- Lighten the background --- */ 
+.theme-dark.pt-color-scheme-raven-dt { 
+ --background-secondary-alt: hsl(0 0% 9%);
+}
+/* --- Typography --- */ 
+.suggestion-item {
+  font-family: Fira Code;
+}
+body {
+	--list-marker-color: var(--text-normal);
+	--nav-item-size: 18px;
+}	
+hr {
+    margin: -6px 0 10px 0;
+}
+p .obsidian-icon {
+    width: 1.4rem !important;
+	vertical-align: text-top;
+}
+h6 {
+  margin-top: 0 !important;
+}
+h6 .isc-icon svg {
+  font-size: 9px;
+  margin-top: 0 !important;
+}
+.isc-icon > *:first-child {
+  color: var(--interactive-accent-text);
+}
+span.head {
+    display: table;
+    margin: -25px auto 20px auto;
+}
+span.sub {
+    display: flex;
+	font-size: var(--font-text-size);
+	font-weight: normal;
+	font-style: italic;
+    line-height: 1em;
+    color: var(--text-muted);
+}
+span.sub2 {
+    padding-left: 10px;
+}
+.goldcoin svg {
+	color: #efe03a !important;
+}
+.silvercoin  svg {
+	color: #dbdbdb !important;
+}
+.coppercoin svg {
+	color: #bb9300 !important;
+}
+/* --- Sidebar Logo --- */ 
+.workspace-split.mod-left-split .view-content {
+	padding: 0 !important;
+}
+/* --- Hide H4 --- */ 
+h4 {
+	display: none;
+}
+/* --- H6 look like H1 --- */ 
+h6, .markdown-rendered h6, .HyperMD-header-6, .HyperMD-list-line .cm-header-6 {
+    font-variant: var(--h1-variant);
+    letter-spacing: 0.015em;
+    font-size: var(--h1-size);
+    line-height: var(--h1-line-height);
+    color: var(--h1-color);
+    font-weight: var(--h1-weight);
+    font-style: var(--h1-style);
+    font-family: var(--h1-font);
+	background-image: linear-gradient(var(--interactive-accent-base), rgba(255,0,0,0));
+	padding-left: 10px;
+	margin-bottom: -15px;
+	border-radius: 8px;
+}
+/* --- Disable header flash on link click --- */ 
+.is-flashing {
+	background-color: rgba(255,0,0,0)!important;
+}
+/* --- Toast Notifications --- */ 
+div.notice-container{
+  width: 14%;
+}
+div.notice-container div.notice {
+  font-size: 16px;
+  color: var(--text-normal);
+  background: var(--interactive-accent-base);
+  border: 2px solid var(--interactive-accent-tint);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-s);
+}
+/* --- Index Cardcover Adjustment --- */ 	
+.cards table.dataview>tbody>tr {
+	border: 2px solid #565656;
+}
+.cards table.dataview>tbody>tr:hover {
+	border: 2px solid var(--interactive-accent);
+}
+.cards table.dataview tbody>tr>td img {	
+	object-fit: cover !important;
+    object-position: top;
+	border-radius: 8px;
+    margin-bottom: -15px;
+}
+.cards table.dataview tbody>tr>td a {
+    font-size: 1.2em;
+}
+/*--- Remove bottom padding ---*/
+.markdown-preview-section:not(.popover.hover-popover .markdown-preview-section) {
+    padding-bottom: 23px !important;
+}

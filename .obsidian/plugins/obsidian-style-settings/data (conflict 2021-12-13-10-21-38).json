@@ -1,0 +1,16 @@
+{
+  "blue-topaz-theme@@background-image-settings-switch": true,
+  "blue-topaz-theme@@font-family-change-to-default": true,
+  "blue-topaz-theme@@font-family-major": "var(--default-font)",
+  "blue-topaz-theme@@font-family-h5": "var(--default-font)",
+  "blue-topaz-theme@@font-family-h6": "var(--default-font)",
+  "blue-topaz-theme@@font-family-folder-file-title": "var(--default-font)",
+  "blue-topaz-theme@@font-family-preview-edit-code": "var(--default-font)",
+  "blue-topaz-theme@@font-family-inline-code": "var(--default-font)",
+  "blue-topaz-theme@@font-family-tag": "var(--default-font)",
+  "blue-topaz-theme@@font-family-strong": "var(--default-font)",
+  "blue-topaz-theme@@font-family-vault": "var(--default-font)",
+  "blue-topaz-theme@@folder-style-change-options-colorful": true,
+  "blue-topaz-theme@@folder-style-change-options-colorful-subfolder": "folder-colorful-five",
+  "blue-topaz-theme@@unmuted-collapsed-folder": true
+}

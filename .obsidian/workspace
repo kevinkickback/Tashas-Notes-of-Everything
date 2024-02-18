@@ -1,0 +1,141 @@
+{
+  "main": {
+    "id": "679d1e21972cb5dc",
+    "type": "split",
+    "children": [
+      {
+        "id": "57b4a5d223c40230",
+        "type": "leaf",
+        "dimension": 44.88789237668161,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "INDEX.md",
+            "mode": "source",
+            "backlinks": false,
+            "source": true
+          }
+        },
+        "group": "041c2543a997f0c6"
+      },
+      {
+        "id": "61d1ea0555c42cd5",
+        "type": "leaf",
+        "dimension": 55.11210762331839,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "INDEX.md",
+            "mode": "preview",
+            "backlinks": false,
+            "source": true
+          }
+        },
+        "group": "041c2543a997f0c6"
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4963c03eed5e8710",
+    "type": "split",
+    "children": [
+      {
+        "id": "e3d111fd442460bc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5a29351e1bef6cbc",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "bb2d48f0d7d1dfda",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#tabaxi",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "de8592f3128acc54",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {}
+            }
+          },
+          {
+            "id": "1c67b01bbee34e83",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "INDEX.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "3df18e84174958a9",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "74cb17d2acfb005a",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 277
+  },
+  "right": {
+    "id": "a460e8cb71082b34",
+    "type": "split",
+    "children": [],
+    "direction": "horizontal",
+    "width": 331,
+    "collapsed": true
+  },
+  "active": "61d1ea0555c42cd5",
+  "lastOpenFiles": [
+    "Compendium/Locations/Brayflax/Brayflax.md",
+    "INDEX.md",
+    "Compendium/NPC's/Rythe.md",
+    "Compendium/NPC's/Bosin.md",
+    "Compendium/Lore & Other/Organizations/LASTSTAND.md",
+    "Compendium/Lore & Other/Organizations/Fellows of Free Fates.md",
+    "Compendium/Lore & Other/Organizations/Black Fingers.md",
+    "Compendium/Lore & Other/Gods/Tyche.md",
+    "Compendium/Lore & Other/Gods/Tymora.md",
+    "Compendium/Lore & Other/Gods/Beshaba.md"
+  ]
+}

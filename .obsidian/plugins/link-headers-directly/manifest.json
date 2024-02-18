@@ -1,0 +1,10 @@
+{
+	"id": "link-headers-directly",
+	"name": "Link Headers Directly",
+	"version": "1.0.2",
+	"minAppVersion": "0.9.12",
+	"description": "When a header is linked, preview mode will show only the header, and not the note name.",
+	"author": "Signynt",
+	"authorUrl": "https://github.com/Signynt",
+	"isDesktopOnly": false
+}

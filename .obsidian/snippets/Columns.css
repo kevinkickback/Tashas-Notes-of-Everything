@@ -1,0 +1,121 @@
+/* Columns */
+.callout[data-callout*=column] {
+  --callout-color: var(--text-normal);
+  --callout-icon: layout-dashboard;
+  --columns: 2;
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  width: auto;
+  padding: 0;
+}
+.callout[data-callout*=column] > .callout-content .callout-content {
+  border: 0;
+}
+.callout[data-callout*=column] > .callout-content {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), 1fr);
+  gap: 10px;
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  padding: 0;
+}
+.callout[data-callout*=column]:is([data-callout-metadata~=slim-margins],
+[data-callout-metadata~=s-mg]) > .callout-content {
+  gap: 2px;
+}
+.callout[data-callout*=column][data-callout-metadata~="3"] .callout-content {
+  --columns: 3;
+}
+.callout[data-callout*=column][data-callout-metadata~="4"] .callout-content {
+  --columns: 4;
+}
+.callout[data-callout*=column][data-callout-metadata~="5"] .callout-content {
+  --columns: 5;
+}
+.callout[data-callout*=column][data-callout-metadata~="6"] .callout-content {
+  --columns: 6;
+}
+.callout[data-callout*=column][data-callout-metadata~="7"] .callout-content {
+  --columns: 7;
+}
+.callout[data-callout*=column][data-callout-metadata~="8"] .callout-content {
+  --columns: 8;
+}
+.callout[data-callout*=column][data-callout-metadata~="9"] .callout-content {
+  --columns: 9;
+}
+.callout[data-callout*=column][data-callout-metadata~=flex] > .callout-content {
+  gap: 5px;
+  grid-template-columns: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.callout[data-callout*=column][data-callout-metadata~=flex] > .callout-content .callout {
+  flex: 1 1 calc(var(--file-line-width) / 2.5);
+}
+.callout[data-callout*=column][data-callout-metadata~=flex][data-callout-metadata~="3"] > .callout-content .callout {
+  flex: 1 1 calc(var(--file-line-width) / 3.5);
+}
+.callout[data-callout*=column][data-callout-metadata~=flex][data-callout-metadata~=resize] .callout {
+  flex: 1 1 auto;
+}
+.callout[data-callout*=column][data-callout-metadata~=flex][data-callout-metadata~=resize] .callout[data-callout-metadata~=wmicro] {
+  width: 5%;
+}
+.callout[data-callout*=column][data-callout-metadata~=flex][data-callout-metadata~=resize] .callout[data-callout-metadata~=wtiny] {
+  width: 10%;
+}
+.callout[data-callout*=column][data-callout-metadata~=flex][data-callout-metadata~=resize] .callout[data-callout-metadata~=wsmall] {
+  width: 20%;
+}
+.callout[data-callout*=column][data-callout-metadata~=flex][data-callout-metadata~=resize] .callout[data-callout-metadata~=ws-med] {
+  width: 30%;
+}
+.callout[data-callout*=column][data-callout-metadata~=flex][data-callout-metadata~=resize] .callout[data-callout-metadata~=wmed] {
+  width: 40%;
+}
+.callout[data-callout*=column][data-callout-metadata~=dataview] > .callout-content {
+  grid-template-columns: unset;
+  gap: unset;
+}
+.callout[data-callout*=column][data-callout-metadata~=dataview] > .callout-content .dataview.list-view-ul {
+  columns: var(--columns);
+}
+.callout[data-callout*=column][data-callout-metadata~=dataview] > .callout-content .dataview li {
+  break-inside: avoid;
+}
+.callout[data-callout*=column][data-callout-metadata~=list-global] .callout > .callout-content, .callout[data-callout*=column][data-callout-metadata~=list] > .callout-content {
+  grid-template-columns: unset;
+}
+.callout[data-callout*=column][data-callout-metadata~=list-global] .callout > .callout-content > ul, .callout[data-callout*=column][data-callout-metadata~=list] > .callout-content > ul {
+  columns: var(--columns);
+}
+.callout[data-callout*=column][data-callout-metadata~=list-global] .callout > .callout-content > ul > li, .callout[data-callout*=column][data-callout-metadata~=list] > .callout-content > ul > li {
+  break-inside: avoid;
+}
+.callout[data-callout*=column][data-callout-metadata~=list-global] .callout > .callout-content > ul .list-bullet::after, .callout[data-callout*=column][data-callout-metadata~=list] > .callout-content > ul .list-bullet::after {
+  position: relative;
+}
+.callout[data-callout*=column][data-callout-metadata~=list-x] > .callout-content {
+  grid-template-columns: unset;
+}
+.callout[data-callout*=column][data-callout-metadata~=list-x] > .callout-content > ul {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), 1fr);
+}
+
+/* --- custom edits -- */
+
+.callout[data-callout*=column] > .callout-title {
+	display:none;
+}
+
+.callout[data-callout*=column] > .callout-content {
+	border: 0 !important;
+}
+.callout[data-callout*=column] > .callout-content .callout-content {
+    height: 100%;
+}

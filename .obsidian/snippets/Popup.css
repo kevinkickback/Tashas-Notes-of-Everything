@@ -1,0 +1,39 @@
+body {	
+	--popover-width: 600px;
+    --popover-height: 300px;
+    --popover-max-height: 70vh;
+}
+.popover.hover-popover {
+	overflow-y: auto;
+}
+/* change inner window padding */
+.popover.hover-popover > .markdown-embed > .markdown-embed-content > .markdown-preview-view {
+	padding: 5px;
+	overflow: visible;
+}
+
+/* disable the normal tooltip */
+.tooltip {
+	display: none;
+}
+
+/* disable infobox in popover */
+.popover.hover-popover .callout.callout[data-callout~=infobox]{
+	display: none !important;
+}
+
+/* disable embeded images in popover */
+.popover.hover-popover .internal-embed.media-embed.image-embed.is-loaded {
+	display: none;
+}
+
+
+/* disable quote styling inside popover */
+.popover.hover-popover .callout.callout[data-callout~=quote] {
+	--callout-border-width: 0 0 0 0 !important;
+	box-shadow: 0 0 0 0 !important;
+	margin-top: 10px !important;
+}
+.popover.hover-popover .callout.callout[data-callout~=quote] .callout-title {
+	display: none !important;
+}

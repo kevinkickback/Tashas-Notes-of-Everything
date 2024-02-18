@@ -1,0 +1,199 @@
+{
+  "main": {
+    "id": "679d1e21972cb5dc",
+    "type": "split",
+    "children": [
+      {
+        "id": "92d3b6eeff4171c4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9b0206ccd3b2dcfd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Assets/Templates/NPC.md",
+                "mode": "source",
+                "backlinks": false,
+                "source": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4963c03eed5e8710",
+    "type": "split",
+    "children": [
+      {
+        "id": "960d4e5c1c49b3fe",
+        "type": "tabs",
+        "dimension": 23.642857142857142,
+        "children": [
+          {
+            "id": "7ebdef116284616c",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "Assets/Images/header.png"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "cf61d8f2efb7a84e",
+        "type": "tabs",
+        "dimension": 76.35714285714286,
+        "children": [
+          {
+            "id": "5a29351e1bef6cbc",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 348.5
+  },
+  "right": {
+    "id": "a460e8cb71082b34",
+    "type": "split",
+    "children": [
+      {
+        "id": "2ab945a38561f078",
+        "type": "tabs",
+        "dimension": 22.986111111111107,
+        "children": [
+          {
+            "id": "ed331c8f9c9afa46",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {}
+            }
+          }
+        ]
+      },
+      {
+        "id": "8874cb022e2284d9",
+        "type": "tabs",
+        "dimension": 77.01388888888889,
+        "children": [
+          {
+            "id": "3df18e84174958a9",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "43ea20f23ad1ec83",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Assets/Templates/NPC.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "bb2d48f0d7d1dfda",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#questAccepted",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 350.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "graph:Open graph view": true,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "9b0206ccd3b2dcfd",
+  "lastOpenFiles": [
+    "INDEX.md",
+    "Assets/Templates/CONTINENT.md",
+    "Compendium/NPC's/Testina Tester.md",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/The Sword Coast.md",
+    "Compendium/NPC's/Tinkera Drenn.md",
+    "Session Notes/Session 01 (2024-02-17).md",
+    "Assets/Images/NPC/tinkera.png",
+    "Compendium/NPC's/Beta Tester.md",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Baldurs Gate.md",
+    "Compendium/Party/Player Characters/Alaric Waycrest.md",
+    "Assets/Images/Party/alaric.png",
+    "Compendium/NPC's/Beta Tester1.md",
+    "Compendium/Party/Quests/The Delivery.md",
+    "Assets/Templates/NPC.md",
+    "Compendium/NPC's/987789.md",
+    "Compendium/NPC's/Test.md",
+    "Compendium/Lore & Other/Gods/Tymora.md",
+    "Compendium/Party/Quests/Take Five.md",
+    "Session Notes/Session 02 (2024-02-17).md",
+    "Assets/PDF/tilda.pdf",
+    "Assets/Templates/NOTE.md",
+    "Compendium/Party/Player Characters/Tilda Rosesong.md",
+    "Compendium/Party/Player Characters/Moira Belkas.md",
+    "Compendium/Party/Player Characters/Kingston Yashkar.md",
+    "Compendium/Lore & Other/Organizations/LASTSTAND.md",
+    "Compendium/Lore & Other/Organizations/Fellows of Free Fate.md",
+    "Compendium/Lore & Other/Organizations/Black Fingers.md",
+    "Compendium/Lore & Other/Objects/The Scarlet Scourge.md",
+    "Compendium/Lore & Other/Gods/Tyche.md",
+    "faSOLID.zip",
+    "Assets/Images/NPC/rythe.webp",
+    "Assets/Images/Location/cityDead.webp",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep/City of the Dead",
+    "Assets/Images/Location/waterdeep.jpg",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep",
+    "Assets/Images/Lore/triff.jpg",
+    "Assets/Images/triff.jpg",
+    "Assets/Images/fellowsoffreefate.jpg",
+    "Assets/Images/Lore/tymora.jpg",
+    "Assets/Images/Lore/tyche.jpg",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Elfsong Tavern",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast",
+    "far.zip",
+    "fab.zip",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn",
+    "Compendium/Party/Quests/!Journey Board.canvas"
+  ]
+}

@@ -1,0 +1,129 @@
+/* --------------------------------------------   */
+/* Make tables width same as default note width   */
+/* --------------------------------------------   */
+.wideTable table {
+	table-layout: fixed;
+	width: 90%;
+	margin: auto;
+} 
+/* --------------------------------------------   */
+
+
+/* --------------------------------------------   */
+/* Gray table                             */
+/* --------------------------------------------   */
+.grayTable th {
+	color:white;
+	border: 1px solid #fff;
+	background-color: black !important;
+	padding: 0 0 0 10px !important;
+}
+.grayTable td {	
+	color: #cccccc;
+	border: 1px solid #ccccccbb;
+	text-align: center;
+}
+.grayTable tbody tr:nth-of-type(even) {
+    background-color: #424242;
+	border: 1px solid #ccccccbb;
+}
+.grayTable tbody tr:nth-of-type(odd) {
+    background-color: #555555;
+	border: 1px solid #ccccccbb;
+}
+.grayTable tbody tr:hover td {
+	background-color: #ffffff;
+	color: #000000 !important;
+}
+
+/*Table Centered*/
+.tables-center .cm-table-widget.cm-table-widget .table-wrapper, .tables-center table,
+.t-c .cm-table-widget.cm-table-widget .table-wrapper,
+.t-c table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tables-wide .cm-table-widget.markdown-rendered .table-wrapper, .tables-wide table,
+.t-w .cm-table-widget.markdown-rendered .table-wrapper,
+.t-w table {
+  width: 100%;
+}
+
+.tables-no-alt-background.tables-no-alt-background,
+.table-nalt.table-nalt {
+  --table-column-alt-background: transparent;
+  --table-row-alt-background: transparent;
+}
+
+.tables-no-alt-column-background.tables-no-alt-column-background {
+  --table-column-alt-background: transparent;
+}
+
+.tables-no-alt-row-background.tables-no-alt-row-background {
+  --table-row-alt-background: transparent;
+}
+
+:is(.table-alto, .tables-alt-original) .markdown-rendered tbody tr > td:nth-child(2n+2), :is(.table-alto, .tables-alt-original) .markdown-rendered tbody tr:nth-child(odd) {
+  background-color: transparent;
+}
+:is(.table-alto, .tables-alt-original) .markdown-rendered tbody tr > td:nth-child(odd) {
+  background-color: var(--table-column-alt-background);
+}
+:is(.table-alto, .tables-alt-original) .markdown-rendered tbody tr:nth-child(even) {
+  background-color: var(--table-row-alt-background);
+}
+
+.tables-no-hover {
+  --table-header-background-hover: var(--table-header-background);
+}
+.tables-no-hover tbody tr:nth-child(odd):hover {
+  --table-row-background-hover: var(--table-row-alt-background);
+}
+.tables-no-hover tbody tr:nth-child(even):hover {
+  --table-row-background-hover: var(--table-row-background);
+}
+
+.tables-borders {
+  --table-border-color: var(--hr);
+}
+
+/*Bolded Right Side Table*/
+.table.table {
+  --table-style-column-header-background: var(--outer-bar);
+  --table-style-column-header-bold-weight: var(--bold-weight);
+  --table-style-column-header-bold-color: var(--bold-color);
+}
+.table.table td:nth-child(1) {
+  font-weight: var(--table-style-column-header-bold-weight);
+  color: var(--table-style-column-header-bold-color);
+}
+.table.table tr:not(:hover) td:nth-child(1) {
+  background-color: var(--table-style-column-header-background);
+}
+
+.table-column-header tr td:nth-child(1) {
+  background-color: var(--table-header-background);
+}
+.table-column-header tr td:nth-child(1):hover {
+  background-color: var(--table-header-background-hover);
+}
+
+.tables-styling-wikipedia,
+.table-wikipedia {
+  --table-header-color: var(--text);
+  --table-header-background: transparent;
+  --table-header-background-hover: var(--td);
+  --table-row-background-hover: var(--td);
+  --table-row-alt-background: transparent;
+  --table-column-alt-background: transparent;
+}
+.tables-styling-wikipedia tr:last-child,
+.table-wikipedia tr:last-child {
+  margin-bottom: 2px;
+}
+
+.lig,
+.ligatures {
+  --font-ligatures: normal;
+}

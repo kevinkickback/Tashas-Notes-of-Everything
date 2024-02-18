@@ -1,0 +1,65 @@
+{
+  "settings": {
+    "enableRemixiconsLine": true,
+    "enableRemixiconsFill": false,
+    "enableFontawesomeFill": false,
+    "enableFontawesomeLine": false,
+    "enableFontawesomeBrands": false,
+    "fontSize": 16,
+    "iconColor": null,
+    "extraPadding": {
+      "top": 2,
+      "right": 2,
+      "bottom": 2,
+      "left": 2
+    },
+    "migrated": 4,
+    "iconPacksPath": ".obsidian/plugins/obsidian-icon-folder/icons",
+    "recentlyUsedIcons": [
+      "FasBuilding",
+      "FasBook",
+      "FasFlag",
+      "FasUser",
+      "FasUsers"
+    ],
+    "recentlyUsedIconsSize": 5,
+    "rules": [
+      {
+        "icon": "FarImage",
+        "rule": "Assets/Images\\/[\\w\\d\\s]+\\.(?:\\w+\\.)*\\w+",
+        "for": "files",
+        "order": 0,
+        "useFilePath": true
+      }
+    ],
+    "extraMargin": {
+      "top": 0,
+      "right": 4,
+      "bottom": 0,
+      "left": 0
+    },
+    "emojiStyle": "none",
+    "iconInTabsEnabled": false,
+    "iconInTitleEnabled": false,
+    "iconsBackgroundCheckEnabled": false,
+    "iconInFrontmatterEnabled": false,
+    "iconsInNotesEnabled": true,
+    "iconIdentifier": ":"
+  },
+  "Assets/PDF": "FarFilePdf",
+  "Assets/Videos": "FasVideo",
+  "Compendium": "FarFolder",
+  "Assets": "FarFolder",
+  "Session Notes": "FarFolder",
+  "Assets/Templates": "FarNewspaper",
+  "Assets/Images/Location": "FarFolder",
+  "Assets/Images/Lore": "FarFolder",
+  "Assets/Images/NPC": "FarFolder",
+  "Assets/Images/Party": "FarFolder",
+  "Assets/Images/Quest": "FarFolder",
+  "Assets/Images": "FarImage",
+  "Compendium/NPC's": "FasUser",
+  "Compendium/Party": "FasFlag",
+  "Compendium/Lore & Other": "FasBook",
+  "Compendium/Atlas": "FasGlobe"
+}

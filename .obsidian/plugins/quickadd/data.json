@@ -1,0 +1,466 @@
+{
+  "choices": [
+    {
+      "id": "7e0e1179-f10d-42d9-92a4-f6d283d7dbce",
+      "name": "What is the NPC's name?",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/NPC.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{VALUE}}"
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "Compendium/NPC's"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": false
+      },
+      "openFile": false,
+      "openFileInMode": "preview",
+      "setFileExistsBehavior": true,
+      "fileExistsMode": "Increment the file name"
+    },
+    {
+      "id": "c3dd5ef3-4f65-4f23-9e25-43d2ec1a6b68",
+      "name": "What is the name of the Deity?",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/GOD.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{value}}"
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "Compendium/Lore & Other/Gods"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "preview",
+      "setFileExistsBehavior": true,
+      "fileExistsMode": "Increment the file name"
+    },
+    {
+      "id": "2eb13346-ac02-4808-ad7b-4b2f78bb048f",
+      "name": "What is the name of the object?",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/OBJECT.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{value}}"
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "Compendium/Lore & Other/Objects"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "preview",
+      "setFileExistsBehavior": true,
+      "fileExistsMode": "Increment the file name"
+    },
+    {
+      "id": "df211763-e446-4275-8398-5ccd52c248e1",
+      "name": "What is the name of the organization?",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/ORGANIZATION.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{value}}"
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "Compendium/Lore & Other/Organizations"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "preview",
+      "setFileExistsBehavior": true,
+      "fileExistsMode": "Increment the file name"
+    },
+    {
+      "id": "2a3ec5ba-6c9c-40fe-940d-126640b80d8e",
+      "name": "What is the name of the event?",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/EVENT.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{value}}"
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "Compendium/Lore & Other/Events"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "preview",
+      "setFileExistsBehavior": true,
+      "fileExistsMode": "Increment the file name"
+    },
+    {
+      "id": "18f3879e-f9bd-42b5-94f0-6622048b334f",
+      "name": "What is the name of the quest?",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/QUEST.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{value}}"
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "Compendium/Party/Quests"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "preview",
+      "setFileExistsBehavior": true,
+      "fileExistsMode": "Increment the file name"
+    },
+    {
+      "id": "31ca0e1f-5968-4ba9-a196-7d9e45725ec4",
+      "name": "What is the title for today's Session Note?",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/NOTE.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{value}}"
+      },
+      "folder": {
+        "enabled": true,
+        "folders": [
+          "Session Notes"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "preview",
+      "setFileExistsBehavior": true,
+      "fileExistsMode": "Increment the file name"
+    },
+    {
+      "id": "a600a363-6f6f-448a-b444-6074f0fe0ff2",
+      "name": "LorSelect",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/LORE.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "temp"
+      },
+      "folder": {
+        "enabled": false,
+        "folders": [],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default",
+      "setFileExistsBehavior": true,
+      "fileExistsMode": "Overwrite the file"
+    },
+    {
+      "id": "deed9b32-4e1c-45fd-a967-960c0829555c",
+      "name": "What is the name of the locale?",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/LOCALE.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{VALUE}}"
+      },
+      "folder": {
+        "enabled": false,
+        "folders": [],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false
+    },
+    {
+      "id": "515787be-a138-474b-b004-10d2a252710e",
+      "name": "What is the name of the region?",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/REGION.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{VALUE}}"
+      },
+      "folder": {
+        "enabled": false,
+        "folders": [],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false
+    },
+    {
+      "id": "7a59aa14-a2aa-4a56-8fc1-42458878ecd3",
+      "name": "What is the name of the landmark?",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/LANDMARK.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{VALUE}}"
+      },
+      "folder": {
+        "enabled": false,
+        "folders": [],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false
+    },
+    {
+      "id": "733e1e2c-9945-4247-b265-cb4b42fbb875",
+      "name": "What is the name of the plane?",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/PLANE.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{VALUE}}"
+      },
+      "folder": {
+        "enabled": false,
+        "folders": [
+          "Compendium/Atlas/{{VALUE}}"
+        ],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false
+    },
+    {
+      "id": "9b399108-ae05-46d4-be43-bcf75f75efd1",
+      "name": "What is the name of the realm?",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/REALM.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{VALUE}}"
+      },
+      "folder": {
+        "enabled": false,
+        "folders": [],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false
+    },
+    {
+      "id": "a9c998c5-d57d-4f0e-8f5e-2c321de24341",
+      "name": "What is the name of the continent or ocean?",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/CONTINENT.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "{{VALUE}}"
+      },
+      "folder": {
+        "enabled": false,
+        "folders": [],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default",
+      "fileExistsMode": "Increment the file name",
+      "setFileExistsBehavior": false
+    },
+    {
+      "id": "493dbec9-29f0-4cc4-8b66-fa06b046903b",
+      "name": "LocSelect",
+      "type": "Template",
+      "command": true,
+      "templatePath": "Assets/Templates/LOCATION.md",
+      "fileNameFormat": {
+        "enabled": true,
+        "format": "temp"
+      },
+      "folder": {
+        "enabled": false,
+        "folders": [],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "appendLink": false,
+      "openFileInNewTab": {
+        "enabled": false,
+        "direction": "vertical",
+        "focus": true
+      },
+      "openFile": false,
+      "openFileInMode": "default",
+      "fileExistsMode": "Overwrite the file",
+      "setFileExistsBehavior": true
+    }
+  ],
+  "macros": [
+    {
+      "name": "TEST",
+      "id": "4bc7666a-6974-4841-a919-0f3741761e30",
+      "commands": [],
+      "runOnStartup": false
+    },
+    {
+      "name": "asdf",
+      "id": "4ba8bbaf-36e8-432c-b5d4-f58cf492134f",
+      "commands": [],
+      "runOnStartup": false
+    }
+  ],
+  "inputPrompt": "single-line",
+  "devMode": false,
+  "templateFolderPath": "Assets/Templates",
+  "announceUpdates": true,
+  "version": "1.7.0",
+  "disableOnlineFeatures": true,
+  "ai": {
+    "OpenAIApiKey": "",
+    "defaultModel": "Ask me",
+    "defaultSystemPrompt": "As an AI assistant within Obsidian, your primary goal is to help users manage their ideas and knowledge more effectively. Format your responses using Markdown syntax. Please use the [[Obsidian]] link format. You can write aliases for the links by writing [[Obsidian|the alias after the pipe symbol]]. To use mathematical notation, use LaTeX syntax. LaTeX syntax for larger equations should be on separate lines, surrounded with double dollar signs ($$). You can also inline math expressions by wrapping it in $ symbols. For example, use $$w_{ij}^{\text{new}}:=w_{ij}^{\text{current}}+etacdotdelta_jcdot x_{ij}$$ on a separate line, but you can write \"($eta$ = learning rate, $delta_j$ = error term, $x_{ij}$ = input)\" inline.",
+    "promptTemplatesFolderPath": "",
+    "showAssistant": true
+  },
+  "migrations": {
+    "migrateToMacroIDFromEmbeddedMacro": true,
+    "useQuickAddTemplateFolder": true,
+    "incrementFileNameSettingMoveToDefaultBehavior": true,
+    "mutualExclusionInsertAfterAndWriteToBottomOfFile": true,
+    "setVersionAfterUpdateModalRelease": true
+  }
+}
