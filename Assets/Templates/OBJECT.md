@@ -10,7 +10,7 @@ function toCamelCase(str) {
   }).replace(/\s/g, '').replace(/^(.)/, function (match, group1) {
     return group1.toLowerCase();
   });
-} :0
+}
 
 // Get icon based on object type
 function getIcon(type) {
@@ -19,7 +19,7 @@ function getIcon(type) {
     "Artifact": ":fas_cross:",
     "Quest Item": ":fas_scroll:",
     "Treasure": ":rif_vip_diamond:"
-  }; :fas_trowel:
+  };
   
   return iconMappings[type] || ":fas_question:";
 }
