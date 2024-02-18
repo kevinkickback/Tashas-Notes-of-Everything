@@ -6,7 +6,6 @@ Welcome to Tasha's Notes of Everything! This project is an Obsidian vault specif
 Features
 
 - Structured Organization: The vault is organized into categories such as NPCs, locations, lore, and more, making it easy to find and manage your notes.
-- Character Sheets: Utilize templates for character sheets to keep track of your player characters (PCs) and non-player characters (NPCs). Includes sections for stats, abilities, equipment, and backstory.
 - The Automated Note Wizard: simplifies note-taking by guiding users through setup, automatically creating notes, and populating them with templates.
 - Session Logs: Keep track of each session's events, decisions made by players, and outcomes to maintain continuity in your campaign.
 
