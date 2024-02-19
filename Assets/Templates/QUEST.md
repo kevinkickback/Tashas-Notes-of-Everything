@@ -130,7 +130,7 @@ tags:
 headerLink: "[[{{name}}#{{name}}]]"
 ---
 ###### {{name}}
-:fas_scroll: *Quest*<% npc ? ` | :fas_user: *[[${npc}#${npc}|${npc}]]*` : "" %>
+<span class="sub2">:fas_scroll: *Quest*<% npc ? ` | :fas_user: *[[${npc}#${npc}|${npc}]]*` : "" %></span>
 ___
 
 > [!quote|no-t]

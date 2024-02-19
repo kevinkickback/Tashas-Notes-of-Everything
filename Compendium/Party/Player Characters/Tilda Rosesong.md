@@ -34,4 +34,6 @@ ___
 >>[!note]- HISTORY
 >>```dataview
 >>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[Tilda Rosesong]]
+>>FROM "Session Notes"
+>>WHERE [[Tilda Rosesong]] OR [[LASTSTAND]]
+>>SORT file.ctime DESC

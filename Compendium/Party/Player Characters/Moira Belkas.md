@@ -34,4 +34,6 @@ ___
 >>[!note]- HISTORY
 >>```dataview
 >>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[Moira Belkas]]
+>>FROM "Session Notes"
+>>WHERE [[Moira Belkas]] OR [[LASTSTAND]]
+>>SORT file.ctime DESC

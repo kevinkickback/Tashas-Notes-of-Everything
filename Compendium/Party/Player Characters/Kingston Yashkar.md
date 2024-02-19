@@ -33,4 +33,6 @@ ___
 >>[!note]- HISTORY
 >>```dataview
 >>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[Kingston Yashkar]]
+>>FROM "Session Notes"
+>>WHERE [[Kingston Yashkar]] OR [[LASTSTAND]]
+>>SORT file.ctime DESC

@@ -28,11 +28,12 @@ ___
 #### marker
 > [!column|flex 3]
 >> [!info]- STORYLINES:
->> - [[Take Five]] (complete)
->> - [[The Delivery]] (active)
+>> - [[Take Five#Take Five]] (complete)
+>> - [[The Delivery#The Delivery]] (active)
 >
 >>[!note]- HISTORY
 >>```dataview
 >>LIST WITHOUT ID headerLink
 >>FROM "Session Notes"
 >>WHERE [[Alaric Waycrest]] OR [[LASTSTAND]]
+>>SORT file.ctime DESC

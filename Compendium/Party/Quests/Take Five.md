@@ -11,7 +11,7 @@ tags:
 headerLink: "[[Take Five#Take Five]]"
 ---
 ###### Take Five
-:fas_scroll: *Quest*
+<span class="sub2">:fas_scroll: *Quest*</span>
 ___
 
 > [!quote|no-t]
