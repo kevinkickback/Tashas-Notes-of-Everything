@@ -13,7 +13,7 @@ tags:
 headerLink: "[[Rythe Sterling#Rythe Sterling]]"
 ---
 ###### Rythe Sterling
-<span class="sub2">:fas_map_location_dot: [[Waterdeep#Waterdeep|Waterdeep]]| &nbsp; | &nbsp; :fas_heartbeat: *Hostile* </span>
+<span class="sub2">:fas_map_location_dot: [[Waterdeep#Waterdeep|Waterdeep]] &nbsp; | &nbsp; :fas_heartbeat: *Hostile* </span>
 ___
 
 > [!infobox|no-t right]
