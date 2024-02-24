@@ -8,7 +8,7 @@ headerLink: "[[Black Fingers#The Black Fingers]]"
 ---
 
 ###### The Black Fingers
-:fas_cross: *Religious Organization*  &nbsp; | &nbsp; :fas_yin_yang: Chaotic Evil
+<span class="sub2">:fas_cross: *Religious Organization*  &nbsp; | &nbsp; :fas_yin_yang: Chaotic Evil</span>
 ___
 
 > [!quote|no-t]

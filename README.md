@@ -11,9 +11,6 @@ Tasha's Notes of Everything is inspired by the creativity and passion of the Dun
 
 Happy adventuring, and may your rolls always be natural 20s! 🎲✨
 
-<!-- ╔══════════════════════════╦═════════════════════════════════════════════════════════════════════════════[─]═[□]═[×]═╗ -->
-<!-- ║ Docs                     ║ Preview                                                                                 ║ -->
-<!-- ╚══════════════════════════╩═════════════════════════════════════════════════════════════════════════════════════════╝ -->
 
 ## Preview:
 [![Video Demonstration](https://img.youtube.com/vi/4pe6QYOFPL8/maxresdefault.jpg)](https://www.youtube.com/watch?v=4pe6QYOFPL8)
@@ -21,54 +18,20 @@ Happy adventuring, and may your rolls always be natural 20s! 🎲✨
 
 ## Downloads:
 * Pre-Setup Vault:
-    [Download Now](https://github.com/kevinkickback/Tashas-Notes-of-Everything/releases/download/v1.2/TashasNotesOfEverything.v1.2.rar)
+    [Download Now](https://github.com/kevinkickback/Tashas-Notes-of-Everything/releases/download/v1.3/TashasNotesOfEverything.v1.3.rar)
 
-<!-- ╔══════════════════════════╦═════════════════════════════════════════════════════════════════════════════[─]═[□]═[×]═╗ -->
-<!-- ║ Docs                     ║ Install                                                                                 ║ -->
-<!-- ╚══════════════════════════╩═════════════════════════════════════════════════════════════════════════════════════════╝ -->
+
 
 ## Install:
-1. Download or clone the full repository.
+1. Download or clone the repository.
 2. Move the folder to the desired location.
 3. Load the folder as your new vault in Obsidian.
 
-<!-- ╔══════════════════════════╦═════════════════════════════════════════════════════════════════════════════[─]═[□]═[×]═╗ -->
-<!-- ║ Docs                     ║ Plugins                                                                                 ║ -->
-<!-- ╚══════════════════════════╩═════════════════════════════════════════════════════════════════════════════════════════╝ -->
+
 
 ## Used Plugins & Themes:
-This project uses a mulitple core and community plugins. Below is list of everyihtng used:
+This project uses a mulitple community plugins & snippets. Below is list of everything used:
 
-<details><summary>Show Core Plugins</summary>
-
-### Core Plugins:
-- [ ] Audio recorder
-- [x] Backlinks
-- [ ] Bookmarks
-- [ ] Canvas
-- [x] Command palette
-- [ ] Daily notes
-- [x] File recovery
-- [x] Files
-- [ ] Format converter
-- [x] Graph view
-- [ ] Note composer
-- [ ] Outgoing Links
-- [ ] Outline
-- [x] Page preview
-- [ ] Publish
-- [ ] Quick switchre
-- [ ] Random note
-- [x] Search
-- [ ] Slash commands
-- [ ] Slides
-- [ ] Sync
-- [x] Tags
-- [ ] Templates
-- [ ] Unique note creator
-- [ ] Word count
-- [ ] Workspaces
-</details>
 
 <details><summary>Show Community Plugins</summary>
 

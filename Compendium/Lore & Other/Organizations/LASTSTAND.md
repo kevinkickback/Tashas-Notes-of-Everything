@@ -8,7 +8,7 @@ headerLink: "[[LASTSTAND#LASTSTAND]]"
 ---
 
 ###### LASTSTAND
-:fas_sitemap: *Organization* &nbsp; | &nbsp; :fas_yin_yang:  Chaotic Good
+<span class="sub2">:fas_sitemap: *Organization* &nbsp; | &nbsp; :fas_yin_yang:  Chaotic Good</span>
 ___
 
 > [!quote|no-t]
