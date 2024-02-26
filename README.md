@@ -43,6 +43,7 @@ This project uses a mulitple community plugins & snippets. Below is list of ever
 - [x] Link Headers Directly
 - [x] Quickadd
 - [x] Style Settings
+- [x] Sortable
 - [x] Templater
 </details>
 
