@@ -8,6 +8,7 @@ locations:
 - "[[Baldurs Gate]]"
 tags:
 - questCompleted
+- 
 headerLink: "[[Take Five#Take Five]]"
 ---
 ###### Take Five

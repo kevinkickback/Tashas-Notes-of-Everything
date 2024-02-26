@@ -24,10 +24,11 @@ dv.table(["cover", "name", "details"],
 ```
 
 > [!npc]-   NPC's<br><span class="sub">Non-player Character</span>
->```dataview
->LIST WITHOUT ID headerLink
-> FROM "Compendium/NPC's"
->SORT file.name ASC
+> ```dataviewjs
+> dv.container.className += ' listMe';
+> let pages = dv.pages('"Compendium/NPC\'s"').sort(p => p.file.name, "asc");  
+> let table = dv.table(["Name"], pages.map(page => [`- ${page.headerLink}`]));
+> table;
 >```
 > ```button
 >name + ADD NPC
@@ -36,10 +37,15 @@ dv.table(["cover", "name", "details"],
 >```
 
 > [!agenda]-  Agenda<br><span class="sub">Objectives, Pursuits, & Quests</span>
->```dataview
->LIST WITHOUT ID headerLink
-> FROM "Compendium/Party/Quests"
->SORT file.path ASC
+>```dataviewjs
+>dv.container.className += ' listMe';
+>let tags = [];
+>let pages = dv.pages('"Compendium/Party/Quests"').sort(p => p.file.name, "asc"); 
+>let table = dv.table(["Name", "Status"], pages.map(page => {
+>let status = page.tags && page.tags.includes("questCompleted") ? "(complete)" : "";
+>return [`- ${page.headerLink} ${status}`, status];
+>}));
+>table;
 >```
 > ```button
 >name + ADD QUEST
@@ -50,7 +56,7 @@ dv.table(["cover", "name", "details"],
 > [!genloc]-  Locations<br><span class="sub">Countries, Settlements, & Topography</span>
 > ```dataviewjs
 > dv.container.className += ' listMe';
-> let pages = dv.pages('"Compendium/Atlas"').sort(p => p.type, "asc");  
+> let pages = dv.pages('"Compendium/Atlas"').sort(p => p.file.name, "asc");  
 > let table = dv.table(["Name", "Type"], pages.map(page => [`- ${page.headerLink} (${page.type})`, page.type]));
 > table;
 >```
@@ -78,7 +84,7 @@ dv.table(["cover", "name", "details"],
 > [!lore]-  Lore & Mythos<br><span class="sub">Factions, Gods, Relics, & More</span> 
 > ```dataviewjs
 > dv.container.className += ' listMe';
-> let pages = dv.pages('"Compendium/Lore"').sort(p => p.type, "asc");  
+> let pages = dv.pages('"Compendium/Lore"').sort(p => p.file.name, "asc");  
 > let table = dv.table(["Name", "Type"], pages.map(page => [`- ${page.headerLink} (${page.type})`, page.type]));
 > table;
 >```
@@ -89,10 +95,11 @@ dv.table(["cover", "name", "details"],
 >```
  
 > [!session]-  Session Notes<br><span class="sub">Summaries, Transcripts, & Notes</span>
->```dataview
->LIST WITHOUT ID headerLink
->FROM "Session Notes"
->SORT file.ctime DESC
+> ```dataviewjs
+> dv.container.className += ' listMe';
+> let pages = dv.pages('"Session Notes"').sort(p => p.file.name, "desc");  
+> let table = dv.table(["Date"], pages.map(page => [`- ${page.headerLink}`]));
+> table;
 >```
  > ```button
 >name + ADD NOTE

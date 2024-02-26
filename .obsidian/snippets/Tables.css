@@ -152,11 +152,11 @@
 }
 .listMe table.dataview tbody td {
   flex: 1 1 auto;
-  margin: 0;
+  margin-top: -20px;
   padding-top: 0;
   padding-bottom: 0;
   padding-right: 15px;
-  line-height: 0.65; /* Set line-height to 1 to minimize row height */
+  line-height: 1; /* Set line-height to 1 to minimize row height */
 }
 
 .listMe table.dataview > tbody > tr {
@@ -168,17 +168,20 @@
   transition: box-shadow 0.15s linear;
   max-width: var(--cards-max-width); 
   }
+.listMe table.dataview > tbody > tr > td {
+  white-space: pre-wrap;
+}
 
 .listMe .el-pre + .el-lang-dataview .table-view-thead {
   padding-top: 8px; }
 .listMe table.dataview thead {
   user-select: none;
-  width: 100px;
+  width: 160px;
   display: block;
   float: right;
   position: relative;
   text-align: right;
-  height: 24px;
+  height: 40px;
   padding-bottom: 0px; 
   }
 .listMe table.dataview thead:hover:before {

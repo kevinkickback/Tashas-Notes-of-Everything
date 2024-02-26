@@ -81,10 +81,6 @@ h6, .markdown-rendered h6, .HyperMD-header-6, .HyperMD-list-line .cm-header-6 {
 .is-flashing {
 	background-color: rgba(255,0,0,0)!important;
 }
-/* --- Toast Notifications --- */ 
-div.notice-container{
-  width: 14%;
-}
 div.notice-container div.notice {
   font-size: 16px;
   color: var(--text-normal);
