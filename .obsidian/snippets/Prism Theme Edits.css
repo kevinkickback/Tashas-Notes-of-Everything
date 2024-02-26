@@ -93,6 +93,10 @@ div.notice-container div.notice {
   border-radius: var(--radius-m);
   box-shadow: var(--shadow-s);
 }
+/*--- Remove bottom padding ---*/
+.markdown-preview-section:not(.popover.hover-popover .markdown-preview-section) {
+    padding-bottom: 23px !important;
+}
 /* --- Index Cardcover Adjustment --- */ 	
 .cards table.dataview>tbody>tr {
 	border: 2px solid #565656;
@@ -108,8 +112,4 @@ div.notice-container div.notice {
 }
 .cards table.dataview tbody>tr>td a {
     font-size: 1.2em;
-}
-/*--- Remove bottom padding ---*/
-.markdown-preview-section:not(.popover.hover-popover .markdown-preview-section) {
-    padding-bottom: 23px !important;
 }

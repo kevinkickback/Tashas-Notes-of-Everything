@@ -42,7 +42,7 @@
       "folder": {
         "enabled": true,
         "folders": [
-          "Compendium/Lore & Other/Gods"
+          "Compendium/Lore/Deities"
         ],
         "chooseWhenCreatingNote": false,
         "createInSameFolderAsActiveFile": false
@@ -71,7 +71,7 @@
       "folder": {
         "enabled": true,
         "folders": [
-          "Compendium/Lore & Other/Objects"
+          "Compendium/Lore/Objects"
         ],
         "chooseWhenCreatingNote": false,
         "createInSameFolderAsActiveFile": false
@@ -100,7 +100,7 @@
       "folder": {
         "enabled": true,
         "folders": [
-          "Compendium/Lore & Other/Organizations"
+          "Compendium/Lore/Organizations"
         ],
         "chooseWhenCreatingNote": false,
         "createInSameFolderAsActiveFile": false
@@ -129,7 +129,7 @@
       "folder": {
         "enabled": true,
         "folders": [
-          "Compendium/Lore & Other/Events"
+          "Compendium/Lore/Events"
         ],
         "chooseWhenCreatingNote": false,
         "createInSameFolderAsActiveFile": false

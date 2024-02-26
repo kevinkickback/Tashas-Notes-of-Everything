@@ -74,7 +74,7 @@ new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;
 _%>
 
 ---
-type: lore
+type: deity
 tags:
 <% tags %>
 headerLink: "[[{{name}}#{{name}}]]"

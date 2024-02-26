@@ -1,5 +1,5 @@
 ---
-type: lore
+type: event
 tags:
 - religiousEvent
 headerLink: "[[Dawn Cataclysm#Dawn Cataclysm]]"

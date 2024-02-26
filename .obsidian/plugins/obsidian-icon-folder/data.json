@@ -60,6 +60,6 @@
   "Assets/Images": "FarImage",
   "Compendium/NPC's": "FasUser",
   "Compendium/Party": "FasFlag",
-  "Compendium/Lore & Other": "FasBook",
-  "Compendium/Atlas": "FasGlobe"
+  "Compendium/Atlas": "FasGlobe",
+  "Compendium/Lore": "FasBook"
 }

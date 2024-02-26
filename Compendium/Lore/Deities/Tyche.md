@@ -1,5 +1,5 @@
 ---
-type: lore
+type: deity
 tags:
 - pantheon/netherese
 - pantheon/olympian

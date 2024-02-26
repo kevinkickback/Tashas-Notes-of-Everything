@@ -1,5 +1,5 @@
 ---
-type: lore
+type: deity
 tags:
 - pantheon/faerûnian
 - domain/luck

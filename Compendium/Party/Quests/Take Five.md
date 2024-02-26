@@ -7,7 +7,7 @@ locations:
 - "[[The Sword Coast]]"
 - "[[Baldurs Gate]]"
 tags:
-- 
+- questCompleted
 headerLink: "[[Take Five#Take Five]]"
 ---
 ###### Take Five

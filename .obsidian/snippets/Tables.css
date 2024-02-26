@@ -6,11 +6,10 @@
 	width: 90%;
 	margin: auto;
 } 
-/* --------------------------------------------   */
 
 
 /* --------------------------------------------   */
-/* Gray table                             */
+/* Gray table                                     */
 /* --------------------------------------------   */
 .grayTable th {
 	color:white;
@@ -127,3 +126,112 @@
 .ligatures {
   --font-ligatures: normal;
 }
+
+/* --------------------------------------------   */
+/* Convert certain dataview tables to lists       */
+/* --------------------------------------------   */
+
+.listMe td:nth-child(2) {
+    display: none !important;
+}
+
+.listMe table.dataview tbody {
+	border: 0;
+  clear: both;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap; /* Allow content to wrap */
+  justify-content: flex-start; /* Align content to the start of the flex container */
+  align-items: flex-start; /* Align content to the start of the flex container */
+  grid-row-gap: 0;
+  border: none !important;  
+  margin-top: -10px;
+}
+.listMe table.dataview  {
+	margin-top: -23px;
+}
+.listMe table.dataview tbody td {
+  flex: 1 1 auto;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 15px;
+  line-height: 0.65; /* Set line-height to 1 to minimize row height */
+}
+
+.listMe table.dataview > tbody > tr {
+  background-color: var(--cards-background);
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  padding: 0 !important;
+  transition: box-shadow 0.15s linear;
+  max-width: var(--cards-max-width); 
+  }
+
+.listMe .el-pre + .el-lang-dataview .table-view-thead {
+  padding-top: 8px; }
+.listMe table.dataview thead {
+  user-select: none;
+  width: 100px;
+  display: block;
+  float: right;
+  position: relative;
+  text-align: right;
+  height: 24px;
+  padding-bottom: 0px; 
+  }
+.listMe table.dataview thead:hover:before {
+  opacity: 1;
+  background-color: var(--interactive-accent-tint); }
+.listMe table.dataview thead:before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 30px;
+  width: 10px;
+  height: 16px;
+  background-repeat: no-repeat;
+  background-color: var(--interactive-accent-tint);
+  cursor: var(--cursor);
+  text-align: right;
+  padding: var(--size-4-1) var(--size-4-2);
+  margin-bottom: 2px;
+  border-radius: var(--radius-s);
+  font-weight: 500;
+  font-size: var(--font-adaptive-small);
+  opacity: 0.5;
+  background-position: center center;
+  background-size: 20px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 100 100"><path fill="white" d="M49.792 33.125l-5.892 5.892L33.333 28.45V83.333H25V28.45L14.438 39.017L8.542 33.125L29.167 12.5l20.625 20.625zm41.667 33.75L70.833 87.5l-20.625 -20.625l5.892 -5.892l10.571 10.567L66.667 16.667h8.333v54.883l10.567 -10.567l5.892 5.892z"></path></svg>'); }
+.listMe table.dataview thead > tr {
+  top: 29px;
+  position: absolute;
+  display: none;
+  z-index: 9;
+  border: 1px solid var(--background-modifier-border-hover);
+  background-color: var(--background-secondary);
+  box-shadow: var(--shadow-s);
+  padding: 6px;
+  border-radius: var(--radius-m);
+  flex-direction: column;
+  margin: 26px 0 0 0;
+  width: 100%; }
+.listMe table.dataview thead:hover > tr {
+  display: flex; }
+.listMe table.dataview thead > tr > th {
+  display: block;
+  padding: 3px 30px 3px 6px !important;
+  border-radius: var(--radius-s);
+  width: 100%;
+  font-weight: 400;
+  color: var(--text-normal);
+  cursor: var(--cursor);
+  border: none;
+  font-size: var(--font-ui-small); }
+.listMe table.dataview thead > tr > th[sortable-style="sortable-asc"],
+.listMe table.dataview thead > tr > th[sortable-style="sortable-desc"] {
+  color: var(--text-normal); }
+.listMe table.dataview thead > tr > th:hover {
+  color: var(--text-normal);
+  background-color: var(--background-modifier-hover); }

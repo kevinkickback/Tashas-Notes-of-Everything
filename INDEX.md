@@ -1,12 +1,15 @@
 ---
-cssClasses: index, cards, cards-cover, update
+cssClasses: index
 ---
+
 ![[compendium.jpg|banner]]
 ###### <span class="head">Campaign Journal</span> 
 
 ```dataviewjs
 // Set base path
 var vault = this.app.vault.adapter.getResourcePath("").split("?")[0];
+
+dv.container.className += ' hideSort cards';
 
 // Display PC card table
 dv.table(["cover", "name", "details"],
@@ -45,49 +48,13 @@ dv.table(["cover", "name", "details"],
 >```
 
 > [!genloc]-  Locations<br><span class="sub">Countries, Settlements, & Topography</span>
-> PLANES:
- >```dataview
- >LIST WITHOUT ID headerLink
- >FROM "Compendium/Atlas" 
- >WHERE type = "plane"
- >SORT file.name ASC
- >```
- > REALMS:
- >```dataview
- >LIST WITHOUT ID headerLink
- >FROM "Compendium/Atlas" 
- >WHERE type = "realm"
- >SORT file.name ASC
- >```
- > CONTINENTS / OCEANS:
- >```dataview
- >LIST WITHOUT ID headerLink
- >FROM "Compendium/Atlas" 
- >WHERE type = "continent"
- >SORT file.name ASC
- >```
- > REGIONS:
- >```dataview
- >LIST WITHOUT ID headerLink
- >FROM "Compendium/Atlas" 
- >WHERE type = "region"
- >SORT file.name ASC
- >```
- > LOCALES:
- >```dataview
- >LIST WITHOUT ID headerLink
- >FROM "Compendium/Atlas" 
- >WHERE type = "locale"
- >SORT file.name ASC
- >```
->LANDMARKS:
- >```dataview
- >LIST WITHOUT ID headerLink
- >FROM "Compendium/Atlas" 
- >WHERE type = "landmark"
- >SORT file.name ASC
- >```
-  > ```button
+> ```dataviewjs
+> dv.container.className += ' listMe';
+> let pages = dv.pages('"Compendium/Atlas"').sort(p => p.type, "asc");  
+> let table = dv.table(["Name", "Type"], pages.map(page => [`- ${page.headerLink} (${page.type})`, page.type]));
+> table;
+>```
+> ```button
 >name + EXPAND WORLD
 >type command
 >action QuickAdd: LocSelect
@@ -108,11 +75,12 @@ dv.table(["cover", "name", "details"],
 >action QuickAdd: What is the name of the landmark?
 >```
 
-> [!lore]-  Lore & Organizations<br><span class="sub">Factions, Gods, Relics, & More</span> 
->```dataview
->LIST WITHOUT ID headerLink
->FROM "Compendium/Lore & Other"
->SORT file.name ASC
+> [!lore]-  Lore & Mythos<br><span class="sub">Factions, Gods, Relics, & More</span> 
+> ```dataviewjs
+> dv.container.className += ' listMe';
+> let pages = dv.pages('"Compendium/Lore"').sort(p => p.type, "asc");  
+> let table = dv.table(["Name", "Type"], pages.map(page => [`- ${page.headerLink} (${page.type})`, page.type]));
+> table;
 >```
 > ```button
 >name + ADD LORE
