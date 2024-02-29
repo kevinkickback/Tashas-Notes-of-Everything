@@ -156,12 +156,12 @@ tags:
 headerLink: "[[{{name}}#{{name}}]]"
 ---
 ###### {{name}}
-<span class="sub2"><% selectLoc.name ? `:fas_map_location_dot: [[${selectLoc.name}#${selectLoc.name}]] &nbsp; | &nbsp; ` : "" %><% like ? `:fas_heartbeat: *${like}*` : "" %> </span>
+<span class="sub2"><% selectLoc.name ? `:fas_map_location_dot: [[${selectLoc.name}#${selectLoc.name}]] &nbsp; | &nbsp; ` : "" %> :fas_heartbeat: <% like %> </span>
 ___
 
 > [!infobox|no-t right]
 > ![[portrait.jpg]]
-> ###### :fas_magnifying_glass_plus:  [[portrait.jpg|Enlarge Image]]
+> ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
 > | :fas_briefcase: Job | <% job ? job : "???" %> |

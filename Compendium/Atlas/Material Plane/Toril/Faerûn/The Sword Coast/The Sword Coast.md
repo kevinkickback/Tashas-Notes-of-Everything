@@ -5,13 +5,13 @@ locations:
 - "[[Toril]]"
 - "[[Faerûn]]"
 tags:
-- generalRegion
+- location/generalRegion
 headerLink: "[[The Sword Coast#The Sword Coast]]"
 ---
 
 ![[swordCoast.jpg|banner]]
 ###### The Sword Coast
-<span class="sub2">:fas_map: *General Region*</span>
+<span class="sub2">:fas_map: General Region</span>
 ___
 
 > [!quote|no-t] SUMMARY

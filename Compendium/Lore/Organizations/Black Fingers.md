@@ -8,7 +8,7 @@ headerLink: "[[Black Fingers#The Black Fingers]]"
 ---
 
 ###### The Black Fingers
-<span class="sub2">:fas_cross: *Religious Organization*  &nbsp; | &nbsp; :fas_yin_yang: Chaotic Evil</span>
+<span class="sub2">:fas_cross: Religious Organization &nbsp; | &nbsp; :fas_yin_yang: Chaotic Evil</span>
 ___
 
 > [!quote|no-t]
@@ -20,9 +20,9 @@ ___
 >>[!hint]- NPC's
 >>```dataview
 >>LIST WITHOUT ID headerLink
->>FROM "Compendium/NPC's" AND [[Black Finger]]
+>>FROM "Compendium/NPC's" AND [[Black Fingers]]
 >
 >>[!note]- HISTORY
 >>```dataview
 >>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[Black Finger]]
+>>FROM "Session Notes" AND [[Black Fingers]]

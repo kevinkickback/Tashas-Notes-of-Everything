@@ -7,18 +7,20 @@ headerLink: "[[Kingston Yashkar#Kingston Yashkar]]"
 level: 3
 race: Tabaxi
 class: Paladin
+subClass: Conquest
 cover: "/Assets/Images/Party/kingston.png"
 ---
 ###### Kingston Yashkar
-:fas_person: *Player Character* &nbsp; | &nbsp; :fas_quote_left: *Luck favors the bold, and I stand as it's champion.* :fas_quote_right:
+:fas_person: Player Character &nbsp; | &nbsp; :fas_quote_left: Luck favors the bold :fas_quote_right:
 ___
 > [!infobox|no-t right]
 > ![[kingston.png]]
-> ###### :fas_magnifying_glass_plus:  [[kingston.png|Enlarge Image]]
+> ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
 > | :fas_crown: Level | `=this.level` |
 > | :rif_sword: Class | `=this.class` |
+> | :fas_pray: Oath | `=this.subClass` |
 > | :fas_user: Race | `=this.race` |
 
 > [!quote|no-t]
@@ -26,13 +28,12 @@ ___
 #### marker
 > [!column|flex 3]
 >> [!info]- STORYLINES:
->> - [[Quest 1]] (complete)
->> - [[Quest 2]] (active)
->> - [[Quest 3]] (potential)
+>> - [[Quest 1]] (completed)
+>> - [[Quest 2]] (ongoing)
+>> - [[Quest 3]] (pending)
 >
 >>[!note]- HISTORY
 >>```dataview
 >>LIST WITHOUT ID headerLink
->>FROM "Session Notes"
->>WHERE [[Kingston Yashkar]] OR [[LASTSTAND]]
+>>FROM "Session Notes" AND [[Kingston Yashkar]]
 >>SORT file.ctime DESC

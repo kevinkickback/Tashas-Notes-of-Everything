@@ -27,7 +27,6 @@ function getIcon(type) {
     "Stable": ":fas_horse_head:",
     "Tavern": ":fas_glass_martini_alt:",
     "Temple": ":fas_church:",
-    "Other": ":fas_question_circle:",
   };
 
   return iconMappings[type] || ":fas_question_circle:";
@@ -122,7 +121,7 @@ try {
 }
 
 // Finished: move note, open note, & show toast notification
-await tp.file.move('/Compendium/Atlas/' + (plane ? plane + "/" : "") + (realm ? realm + "/" : "") + (continent ? continent + "/" : "") + (region ? region + "/" : "") + (locale.name ? locale.name + "/" : "") + tp.file.title + "/" + tp.file.title)
+await tp.file.move('/Compendium/Atlas/' + (plane ? plane + "/" : "") + (realm ? realm + "/" : "") + (continent ? continent + "/" : "") + (region ? region + "/" : "") + (locale ? locale.name + "/" : "") + tp.file.title + "/" + tp.file.title)
 await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(tp.file.title));
 new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New ${type ? type.toLowerCase() : "locale"} <span style="text-decoration: underline;">{{name}}</span> added`;
 _%>
@@ -133,13 +132,13 @@ type: landmark
 locations:
 <% locations %>
 tags:
-<% type ? "- " + toCamelCase(type) : "- " %>
+<% type ? "- location/" + toCamelCase(type) : "- " %>
 headerLink: "[[{{name}}#{{name}}]]"
 ---
 
 ![[banner.jpg|banner]]
 ###### {{name}}
-<span class="sub2"><% type ? `${icon} *${type}*` : "" %></span>
+<span class="sub2"><% type ? `${icon} ${type}` : "" %></span>
 ___
 
 > [!quote|no-t] SUMMARY

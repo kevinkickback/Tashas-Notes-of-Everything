@@ -8,12 +8,12 @@ headerLink: "[[Beshaba#Beshaba]]"
 ---
 
 ###### Beshaba
-<span class="sub2">:fas_cross: *Deity* &nbsp; | &nbsp; :fas_yin_yang: *Chaotic Evil*</span>
+<span class="sub2">:fas_cross: Deity &nbsp; | &nbsp; :fas_yin_yang: Chaotic Evil</span>
 ___
 
 > [!infobox|no-t right]
 > ![[beshaba.webp]]
-> ###### :fas_magnifying_glass_plus:  [[beshaba.webp|Enlarge Image]]
+> ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
 > | :fas_bolt_lightning: Domains | Luck, Trickery |
@@ -28,7 +28,8 @@ ___
 >> [!hint]-  NPC's
 >>```dataview
 >>LIST WITHOUT ID headerLink
->>FROM "Compendium/NPC's" AND [[Beshaba]] 
+>>FROM "Compendium/NPC's"
+>>WHERE contains(file.outlinks, this.file.link) OR contains(file.outlinks, [[Black Fingers]])
 >
 >>[!note]- HISTORY
 >>```dataview

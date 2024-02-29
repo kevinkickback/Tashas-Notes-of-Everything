@@ -5,11 +5,23 @@
 
 // Tag Formatter: convert string to camel case
 function toCamelCase(str) {
-  return str.replace(/\s(.)/g, function(match, group1) {
+  return str.replace(/\s(.)/g, function (match, group1) {
     return group1.toUpperCase();
-  }).replace(/\s/g, '').replace(/^(.)/, function(match, group1) {
+  }).replace(/\s/g, '').replace(/^(.)/, function (match, group1) {
     return group1.toLowerCase();
   });
+}
+
+// Get icon based on object type
+function getIcon(type) {
+  const iconMappings = {
+    "Country": ":fas_flag:",
+    "General Region": ":fas_map:",
+    "Kingdom": ":fab_fort_awesome:",
+    "Nation": ":fas_flag::"
+  };
+
+  return iconMappings[type] || ":fas_question_circle:";
 }
 
 // ###########################################################
@@ -17,7 +29,7 @@ function toCamelCase(str) {
 // ###########################################################
 
 const quickAdd = app.plugins.plugins.quickadd.api;
-let path, plane, locations, realm, type;
+let continent, locations, path, plane, realm, type;
 
 // Create array containing all continents with name, parent, & path keys
 const contData = this.app.vault.getAllLoadedFiles()
@@ -41,7 +53,7 @@ try {
 
     // Select prompt
     let names = contData.map(file => file.name);
-    continent = await tp.system.suggester(names, contData, true, "Which continent or ocean is {{name}} located on/in?");
+    continent = await tp.system.suggester(names, contData, true, "Where is {{name}} located?");
 
     // Manual input
     if (continent.name === manualInput.name) {
@@ -54,14 +66,6 @@ try {
     realm = continent.parents ? continent.parents[1] : null;
     locations = continent.parents ? continent.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${continent.name}]]"` : continent.name ? `- "[[${continent.name}]]"` : "- ";
 
-    // Select region type
-    type = await tp.system.suggester(["Country", "Kingdom", "Nation", "General Region", "[ MANUAL INPUT / NONE ]"], ["Country", "Kingdom", "Nation", "General Region", "other"], true, "What type of region is {{name}}?");
-
-    // Manually input region
-    if (type === "other") {
-      var manSelect = await tp.system.prompt("Please enter territory type:", null, true);
-      type = manSelect;
-    }
   } else {
     // Warning prompt
     let warning = await quickAdd.yesNoPrompt('NOTE:', "Regions (i.e. countries) are smaller parts of continents. You currently have no continents. Would you like to add one now?");
@@ -83,6 +87,21 @@ try {
       throw new Error;
     }
   }
+
+  // Select region type
+  type = await tp.system.suggester(
+    ["Country", "Kingdom", "Nation", "General Region", "[ MANUAL INPUT / NONE ]"],
+    ["Country", "Kingdom", "Nation", "General Region", "other"], true, "What type of region is {{name}}?");
+
+  // Manually input region
+  if (type === "other") {
+    var manSelect = await tp.system.prompt("Please enter territory type:", null, true);
+    type = manSelect;
+  }
+
+  // Get icon
+  icon = getIcon(type);
+
 } catch (error) {
   // Exit Early: delete note & show toast notification
   await this.app.vault.trash(tp.file.find_tfile(tp.file.title), true);
@@ -91,7 +110,7 @@ try {
 }
 
 // Finished: move note, open note, & show toast notification
-await tp.file.move('/Compendium/Atlas/' + (plane ? plane + "/" : "") + (realm ? realm + "/" : "") + (continent.name ? continent.name + "/" : "") + tp.file.title + "/" + tp.file.title);
+await tp.file.move('/Compendium/Atlas/' + (plane ? plane + "/" : "") + (realm ? realm + "/" : "") + (continent ? continent.name + "/" : "") + tp.file.title + "/" + tp.file.title);
 await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(tp.file.title));
 new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New ${type ? type.toLowerCase() : "region"} <span style="text-decoration: underline;">{{name}}</span> added`;
 _%>
@@ -101,13 +120,13 @@ type: region
 locations:
 <% locations %>
 tags:
-<% type ? "- " + toCamelCase(type) : "- " %>
+<% type ? "- location/" + toCamelCase(type) : "- " %>
 headerLink: "[[{{name}}#{{name}}]]"
 ---
 
 ![[banner.jpg|banner]]
 ###### {{name}}
-<span class="sub2"><% type ? `:fas_map: *${type}*` : "" %></span>
+<span class="sub2"><% type ? `${icon} ${type}` : "" %></span>
 ___
 
 > [!quote|no-t] SUMMARY

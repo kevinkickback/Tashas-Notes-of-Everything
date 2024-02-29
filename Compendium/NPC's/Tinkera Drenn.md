@@ -11,16 +11,16 @@ tags:
 - race/gnome
 - affinity/friendly
 - job/shopkeeper
-- questGiver
+- quest/giver
 headerLink: "[[Tinkera Drenn#Tinkera Drenn]]"
 ---
 ###### Tinkera Drenn
-<span class="sub2">:fas_map_location_dot: [[Baldurs Gate#Baldurs Gate]] &nbsp; | &nbsp; :fas_heartbeat: *Friendly* </span>
+<span class="sub2">:fas_map_location_dot: [[Baldurs Gate#Baldurs Gate]] &nbsp; | &nbsp; :fas_heartbeat: Friendly</span>
 ___
 
 > [!infobox|no-t right]
 > ![[tinkera.png]]
-> ###### :fas_magnifying_glass_plus:  [[tinkera.png|Enlarge Image]]
+> ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
 > | :fas_briefcase: Job | Shopkeeper |

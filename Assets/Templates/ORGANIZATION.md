@@ -124,7 +124,7 @@ headerLink: "[[{{name}}#{{name}}]]"
 ---
 
 ###### {{name}}
-:fas_sitemap: *Organization* &nbsp; | &nbsp; :fas_yin_yang:  <% align %>
+:fas_sitemap: Organization &nbsp; | &nbsp; :fas_yin_yang:  <% align %>
 ___
 
 > [!quote|no-t]

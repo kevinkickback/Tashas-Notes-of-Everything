@@ -8,12 +8,12 @@ headerLink: "[[Tymora#Tymora]]"
 ---
 
 ###### Tymora
-<span class="sub2">:fas_cross: *Deity* &nbsp; | &nbsp; :fas_yin_yang: *Chaotic Good*</span>
+<span class="sub2">:fas_cross: Deity &nbsp; | &nbsp; :fas_yin_yang: Chaotic Good</span>
 ___
 
 > [!infobox|no-t right]
 > ![[tymora.jpg]]
-> ###### :fas_magnifying_glass_plus:  [[tymora.jpg|Enlarge Image]]
+> ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
 > | :fas_bolt_lightning: Domains | Luck, Trickery |

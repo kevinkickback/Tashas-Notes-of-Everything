@@ -81,12 +81,12 @@ headerLink: "[[{{name}}#{{name}}]]"
 ---
 
 ###### {{name}}
-<span class="sub2">:fas_cross: *Deity* &nbsp; | &nbsp; :fas_yin_yang: *<% alignment %>*</span>
+<span class="sub2">:fas_cross: *Deity* &nbsp; | &nbsp; :fas_yin_yang: <% alignment %></span>
 ___
 
 > [!infobox|no-t right]
 > ![[portrait.jpg]]
-> ###### :fas_magnifying_glass_plus:  [[portrait.jpg|Enlarge Image]]
+> ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
 > | :fas_bolt_lightning: Domains | <% domains.join(", ") %> |

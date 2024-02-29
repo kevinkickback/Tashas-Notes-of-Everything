@@ -15,13 +15,13 @@ function toCamelCase(str) {
 // Get icon based on event type
 function getIcon(type) {
   const iconMappings = {
-    "Personal Event": ":fas_user_edit:",
-    "Political Event": ":fas_bullhorn:",
-    "Religious Event": ":fas_cross:",
-    "Seasonal Event": ":rif_sun_foggy:",
+    "Personal": ":far_calendar_alt:",
+    "Political": ":fas_bullhorn:",
+    "Religious": ":fas_cross:",
+    "Seasonal": ":rif_sun_foggy:",
   };
 
-  return iconMappings[type] || ":fas_question:";
+  return iconMappings[type] || ":fas_question_circle:";
 }
 
 // ###########################################################
@@ -34,7 +34,7 @@ try {
   // Select event type
   type = await tp.system.suggester(
     ["Personal", "Political", "Religious", "Seasonal", "[ MANUAL INPUT ]"],
-    ["Personal Event", "Political Event", "Religious Event", "Seasonal Event", "other"],
+    ["Personal", "Political", "Religious", "Seasonal", "other"],
     true,
     "What type of event was/is {{name}}?"
   );
@@ -65,16 +65,16 @@ _%>
 ---
 type: event
 tags:
-<% type ? "- " + toCamelCase(type) : "- " %>
+<% type ? "- event/" + toCamelCase(type) : "-" %>
 headerLink: "[[{{name}}#{{name}}]]"
 ---
 
 ###### {{name}}
-<span class="sub2"><% type ? `${icon} *${type}*` : "" %></span>
+<span class="sub2"><% type ? `${icon} ${type} Event` : "" %></span>
 ___
 
 > [!quote|no-t]
->![[embed.jpg|right wm-sm]]Description of the <% type ? type.toLowerCase() : "event" %>, {{name}}.
+>![[embed.jpg|right wm-sm]]Description of the <% type ? type.toLowerCase() + " event" : "event" %>, {{name}}.
 <span class="clearfix"></span>
 
 #### marker

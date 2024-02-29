@@ -9,7 +9,7 @@ headerLink: "[[Faerûn#Faerûn]]"
 
 ![[Faerûn.jpg|banner]]
 ###### Faerûn
-<span class="sub2">:fas_earth_americas: *Continent*</span>
+<span class="sub2">:fas_earth_americas: Continent</span>
 ___
 
 > [!quote|no-t]

@@ -6,13 +6,13 @@ locations:
 - "[[Faerûn]]"
 - "[[The Sword Coast]]"
 tags:
-- city
+- location/city
 headerLink: "[[Waterdeep#Waterdeep]]"
 ---
 
 ![[waterdeep.jpg|banner]]
 ###### Waterdeep
-<span class="sub2">:fas_city: *City*</span>
+<span class="sub2">:fas_city: City</span>
 ___
 
 > [!quote|no-t] SUMMARY

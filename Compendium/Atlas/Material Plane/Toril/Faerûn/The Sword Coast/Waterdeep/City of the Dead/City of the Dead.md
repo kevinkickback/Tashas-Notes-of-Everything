@@ -8,13 +8,13 @@ locations:
 - "[[The Sword Coast]]"
 - "[[Waterdeep]]"
 tags:
-- cemetery
+- location/cemetery
 headerLink: "[[City of the Dead#City of the Dead]]"
 ---
 
 ![[cityDead.webp|banner]]
 ###### City of the Dead
-<span class="sub2">:fas_ghost: *Cemetery*</span>
+<span class="sub2">:fas_ghost: Cemetery</span>
 ___
 
 > [!quote|no-t] SUMMARY

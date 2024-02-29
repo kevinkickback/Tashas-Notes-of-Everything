@@ -1,12 +1,12 @@
 ---
 type: event
 tags:
-- religiousEvent
+- event/religious
 headerLink: "[[Dawn Cataclysm#Dawn Cataclysm]]"
 ---
 
 ###### Dawn Cataclysm
-<span class="sub2">:fas_cross: *Religious Event*</span>
+<span class="sub2">:fas_cross: Religious Event</span>
 ___
 
 > [!quote|no-t]

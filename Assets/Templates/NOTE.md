@@ -130,7 +130,7 @@ headerLink: "[[<% newNoteName %>#{{name}}|<% newNoteName %>]]"
 
 ![[session.png|banner]]
 ###### {{name}}
-<span class="sub2">:fas_sun: *DAY 00* &nbsp; | &nbsp; :fas_tags: `= this.file.tags`</span>
+<span class="sub2">:fas_sun: DAY 00 &nbsp; | &nbsp; :fas_tags: `= this.file.etags`</span>
 ___
 
 > [!quote|no-t] SUMMARY

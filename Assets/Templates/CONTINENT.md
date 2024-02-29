@@ -127,7 +127,7 @@ headerLink: "[[{{name}}#{{name}}]]"
 
 ![[banner.jpg|banner]]
 ###### {{name}}
-<span class="sub2"><% type ? `${icon} *${type}*` : "" %></span>
+<span class="sub2"><% type ? `${icon} ${type}` : "" %></span>
 ___
 
 > [!quote|no-t]

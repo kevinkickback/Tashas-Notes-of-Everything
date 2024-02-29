@@ -13,7 +13,7 @@ headerLink: "[[{{name}}#{{name}}]]"
 ---
 ![[banner.jpg|banner]]
 ###### {{name}}
-<span class="sub2">:fas_circle_half_stroke:  *Plane of Existence*</span>
+<span class="sub2">:fas_circle_half_stroke:  Plane of Existence</span>
 ___
 
 > [!quote|no-t] SUMMARY
@@ -21,12 +21,6 @@ ___
 
 #### marker
 > [!column|flex 3]
->> [!hint]-  NPC's
->> ```dataview
-LIST WITHOUT ID headerLink
-FROM "Compendium/NPC's" AND [[{{name}}]]
-SORT file.name ASC
->
 >> [!example]- LOCATIONS
 >>```dataview
 LIST WITHOUT ID headerLink

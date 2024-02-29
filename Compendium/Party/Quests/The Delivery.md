@@ -8,11 +8,11 @@ locations:
 - "[[Baldurs Gate]]"
 - "[[Sorcerous Sundries]]"
 tags:
-- 
+- quest/ongoing
 headerLink: "[[The Delivery#The Delivery]]"
 ---
 ###### The Delivery
-<span class="sub2">:fas_scroll: *Quest* | :fas_user: *[[Tinkera Drenn#Tinkera Drenn]]*</span>
+<span class="sub2">:fas_exclamation_circle: Quest &nbsp; | &nbsp; :fas_list_check: Ongoing &nbsp;  | &nbsp; :fas_user: [[Tinkera Drenn#Tinkera Drenn]]</span>
 ___
 
 > [!quote|no-t]

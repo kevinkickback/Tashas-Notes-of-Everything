@@ -8,13 +8,13 @@ locations:
 - "[[The Sword Coast]]"
 - "[[Baldurs Gate]]"
 tags:
-- tavern
+- location/tavern
 headerLink: "[[Elfsong Tavern#Elfsong Tavern]]"
 ---
 
 ![[elfsong.jpg|banner]]
 ###### Elfsong Tavern
-<span class="sub2">:fas_glass_martini_alt: *Tavern*</span>
+<span class="sub2">:fas_glass_martini_alt: Tavern</span>
 ___
 
 > [!quote|no-t] SUMMARY

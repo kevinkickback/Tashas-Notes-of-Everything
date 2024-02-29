@@ -7,19 +7,21 @@ headerLink: "[[Alaric Waycrest#Alaric Waycrest]]"
 level: 3
 race: Half&#x2011;Orc
 class: Fighter
+subClass: "Battle Master"
 cover: "/Assets/Images/Party/alaric.png"
 ---
 
 ###### Alaric Waycrest
-:fas_person: *Player Character* &nbsp; | &nbsp; :fas_quote_left: *In battle, I find my true purpose* :fas_quote_right:
+:fas_person: Player Character &nbsp; | &nbsp; :fas_quote_left: In battle, I find my true purpose :fas_quote_right:
 ___
 > [!infobox|no-t right]
 > ![[alaric.png]]
-> ###### :fas_magnifying_glass_plus:  [[alaric.png|Enlarge Image]]
+> ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
 > | :fas_crown: Level | `=this.level` |
 > | :rif_sword: Class | `=this.class` |
+> | :fas_fist_raised: Archetype | `=this.subClass` |
 > | :fas_user: Race | `=this.race` |
 
 > [!quote|no-t]
@@ -28,12 +30,11 @@ ___
 #### marker
 > [!column|flex 3]
 >> [!info]- STORYLINES:
->> - [[Take Five#Take Five]] (complete)
->> - [[The Delivery#The Delivery]] (active)
+>> - [[Take Five#Take Five]] (completed)
+>> - [[The Delivery#The Delivery]] (ongoing)
 >
 >>[!note]- HISTORY
 >>```dataview
 >>LIST WITHOUT ID headerLink
->>FROM "Session Notes"
->>WHERE [[Alaric Waycrest]] OR [[LASTSTAND]]
+>>FROM "Session Notes" AND [[Alaric Waycrest]]
 >>SORT file.ctime DESC

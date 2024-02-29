@@ -8,12 +8,12 @@ headerLink: "[[Lathander#Lathander]]"
 ---
 
 ###### Lathander
-<span class="sub2">:fas_cross: *Deity* &nbsp; | &nbsp; :fas_yin_yang: *Neutral Good*</span>
+<span class="sub2">:fas_cross: Deity &nbsp; | &nbsp; :fas_yin_yang: Neutral Good</span>
 ___
 
 > [!infobox|no-t right]
 > ![[lathander.jpg]]
-> ###### :fas_magnifying_glass_plus:  [[lathander.jpg|Enlarge Image]]
+> ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
 > | :fas_bolt_lightning: Domains | Life, Light |

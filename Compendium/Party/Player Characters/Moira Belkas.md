@@ -7,18 +7,20 @@ headerLink: "[[Moira Belkas#Moira Belkas]]"
 level: 3
 race: Human
 class: Ranger
+subClass: "Gloom Stalker"
 cover: "/Assets/Images/Party/moira.jpg"
 ---
 ###### Moira Belkas
-:fas_person: *Player Character* &nbsp; | &nbsp; :fas_quote_left: *With every arrow loosed, I honor the balance of nature.* :fas_quote_right:
+:fas_person: Player Character &nbsp; | &nbsp; :fas_quote_left: I honor the balance of nature :fas_quote_right:
 ___
 > [!infobox|no-t right]
 > ![[moira.jpg]]
-> ###### :fas_magnifying_glass_plus:  [[moira.jpg|Enlarge Image]]
+> ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
 > | :fas_crown: Level | `=this.level` |
 > | :rif_sword: Class | `=this.class` |
+> | :fas_bullseye: Conclave | `=this.subClass` |
 > | :fas_user: Race | `=this.race` |
 
 > [!quote|no-t]
@@ -27,13 +29,12 @@ ___
 #### marker
 > [!column|flex 3]
 >> [!info]- STORYLINES:
->> - [[Quest 1]] (complete)
->> - [[Quest 2]] (active)
->> - [[Quest 3]] (potential)
+>> - [[Quest 1]] (completed)
+>> - [[Quest 2]] (ongoing)
+>> - [[Quest 3]] (pending)
 >
 >>[!note]- HISTORY
 >>```dataview
 >>LIST WITHOUT ID headerLink
->>FROM "Session Notes"
->>WHERE [[Moira Belkas]] OR [[LASTSTAND]]
+>>FROM "Session Notes" AND [[Moira Belkas]]
 >>SORT file.ctime DESC

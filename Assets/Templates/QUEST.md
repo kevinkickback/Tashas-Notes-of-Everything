@@ -53,7 +53,7 @@ function fileTreeStyle(data) {
 //                        Main Code Section
 // ###########################################################
 
-let npc, selectLoc, locations;
+let npc, selectLoc, locations, status;
 
 // Create array containing all locations with name, depth, & parent keys
 const locData = app.vault.getMarkdownFiles()
@@ -108,12 +108,22 @@ try {
         }
     }
 
+    // Select status
+    status = await tp.system.suggester(
+    ["Abandoned", "Completed", "Failed", "Ongoing", "Pending"],
+    ["Abandoned", "Completed", "Failed", "Ongoing", "Pending"],
+    true,
+    "Status of quest?"
+  );
+
     // Set variables
     locations = selectLoc.parents ? selectLoc.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${selectLoc.name}]]"` : selectLoc.name ? `- "[[${selectLoc.name}]]"` : "-";
     
 } catch (error) {
-    // Handle any errors here
-    console.error("An error occurred:", error);
+  // Exit Early: delete note & show toast notification
+  await this.app.vault.trash(tp.file.find_tfile(tp.file.title), true);
+  new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled!</span><br>No quest has been added`;
+  return;
 }
 
 // Finished: open note & show toast notification
@@ -126,11 +136,11 @@ type: quest
 locations:
 <% locations %>
 tags:
-- 
+- <% `quest/${status.toLowerCase()}` %>
 headerLink: "[[{{name}}#{{name}}]]"
 ---
 ###### {{name}}
-<span class="sub2">:fas_scroll: *Quest*<% npc ? ` | :fas_user: *[[${npc}#${npc}|${npc}]]*` : "" %></span>
+<span class="sub2">:fas_exclamation_circle: Quest &nbsp; | &nbsp; :fas_list_check: <% status %> <% npc ? `&nbsp; | &nbsp; :fas_user: [[${npc}#${npc}]]` : "" %></span>
 ___
 
 > [!quote|no-t]

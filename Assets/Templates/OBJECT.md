@@ -21,7 +21,7 @@ function getIcon(type) {
     "Treasure": ":rif_vip_diamond:"
   };
   
-  return iconMappings[type] || ":fas_question:";
+  return iconMappings[type] || ":fas_question_circle:";
 }
 
 // ###########################################################
@@ -64,12 +64,12 @@ _%>
 ---
 type: object
 tags:
-<% type ? "- " + toCamelCase(type) : "- " %>
+<% type ? "- object/" + toCamelCase(type) : "- " %>
 headerLink: "[[{{name}}#{{name}}]]"
 ---
 
 ###### {{name}}
-<span class="sub2"><% type ? `${icon} *${type}*` : "" %></span>
+<span class="sub2"><% type ? `${icon} ${type}` : "" %></span>
 ___
 
 > [!quote|no-t]

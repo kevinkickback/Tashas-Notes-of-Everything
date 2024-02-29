@@ -16,19 +16,19 @@ function toCamelCase(str) {
 function getIcon(type) {
   const iconMappings = {
     "City": ":fas_city:",
-    "Kingdom": ":fab_fort_awesome:",
     "Town": ":rif_building_4:",
-    "Encampment": ":fas_campground:",
-    "Village": ":fas_scroll:",
+    "Encampment": ":fas_tower_observation:",
+    "Village": ":fas_tents:",
+    "Cave": ":fas_mound:",
     "Forest": ":fas_tree:",
     "Dessert": ":fas_sun:",
     "Mountain": ":fas_mountain:",
-    "Plains": ":faSOLID_wheat_awn:",
+    "Plains": ":fas_wheat_awn:",
     "Swamp": ":fas_smog:",
     "Lake": ":fas_water:"
   };
   
-  return iconMappings[type] || ":fas_question:";
+  return iconMappings[type] || ":fas_question_circle:";
 }
 
 // ###########################################################
@@ -102,15 +102,15 @@ try {
   switch (category) {
     case "Settlement":
       type = await tp.system.suggester(
-        ["Kingdom", "City", "Town", "Village", "Encampment", "[ MANUAL INPUT ]"],
-        ["Kingdom", "City", "Town", "Village", "Encampment", "other"],
+        ["City", "Town", "Village", "Encampment", "[ MANUAL INPUT ]"],
+        ["City", "Town", "Village", "Encampment", "other"],
         true, "What type of settlement is {{name}}?");
       break;
 
     case "Topographic":
       type = await tp.system.suggester(
-        ["Forest", "Desert", "Mountain", "Plains", "Swamp", "Lake", "[ MANUAL INPUT ]"],
-        ["Forest", "Desert", "Mountain", "Plains", "Swamp", "Lake", "other"],
+        ["Cave", "Desert", "Forest", "Mountain", "Plains", "Swamp", "Lake", "[ MANUAL INPUT ]"],
+        ["Cave", "Desert", "Forest", "Mountain", "Plains", "Swamp", "Lake", "other"],
         true, "What type of topography is {{name}}?");
       break;
 
@@ -134,7 +134,7 @@ try {
 }
 
 // Finished: move note, open note, & show toast notification
-await tp.file.move('/Compendium/Atlas/' + (plane ? plane + "/" : "") + (realm ? realm + "/" : "") + (continent ? continent + "/" : "") + (region.name ? region.name + "/" : "") + tp.file.title + "/" + tp.file.title)
+await tp.file.move('/Compendium/Atlas/' + (plane ? plane + "/" : "") + (realm ? realm + "/" : "") + (continent ? continent + "/" : "") + (region ? region.name + "/" : "") + tp.file.title + "/" + tp.file.title)
 await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(tp.file.title));
 new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New ${type ? type.toLowerCase() : "locale"} <span style="text-decoration: underline;">{{name}}</span> added`;
 _%>
@@ -144,13 +144,13 @@ type: locale
 locations:
 <% locations %>
 tags:
-<% type ? "- " + toCamelCase(type) : "- " %>
+<% type ? "- location/" + toCamelCase(type) : "- " %>
 headerLink: "[[{{name}}#{{name}}]]"
 ---
 
 ![[banner.jpg|banner]]
 ###### {{name}}
-<span class="sub2"><% type ? `${icon} *${type}*` : "" %></span>
+<span class="sub2"><% type ? `${icon} ${type}` : "" %></span>
 ___
 
 > [!quote|no-t] SUMMARY

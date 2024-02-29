@@ -7,12 +7,12 @@ locations:
 - "[[The Sword Coast]]"
 - "[[Baldurs Gate]]"
 tags:
-- questCompleted
+- quest/completed
 - 
 headerLink: "[[Take Five#Take Five]]"
 ---
 ###### Take Five
-<span class="sub2">:fas_scroll: *Quest*</span>
+<span class="sub2">:fas_exclamation_circle: Quest &nbsp; | &nbsp; :fas_list_check: Completed</span>
 ___
 
 > [!quote|no-t]

@@ -10,12 +10,12 @@ headerLink: "[[Tyche#Tyche]]"
 ---
 
 ###### Tyche
-<span class="sub2">:fas_cross: *Deity* (dead) &nbsp; | &nbsp; :fas_yin_yang: *True Neutral*</span>
+<span class="sub2">:fas_cross: Deity (dead) &nbsp; | &nbsp; :fas_yin_yang: True Neutral</span>
 ___
 
 > [!infobox|no-t right]
 > ![[tyche.jpg]]
-> ###### :fas_magnifying_glass_plus:  [[tyche.jpg|Enlarge Image]]
+> ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
 > | :fas_bolt_lightning: Domains | Luck, Trade |
