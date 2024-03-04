@@ -16,11 +16,11 @@ function toCamelCase(str) {
 function getIcon(type) {
   const iconMappings = {
     "Magic Item": ":fas_magic:",
-    "Artifact": ":fas_cross:",
+    "Religious Artifact": ":fas_cross:",
     "Quest Item": ":fas_scroll:",
     "Treasure": ":rif_vip_diamond:"
   };
-  
+
   return iconMappings[type] || ":fas_question_circle:";
 }
 
@@ -31,28 +31,29 @@ function getIcon(type) {
 let icon, type;
 
 try {
-    // Select object type
-    type = await tp.system.suggester(
-        ["Magic Item", "Religious Artifact", "Quest Item", "Treasure", "[ MANUAL INPUT ]"],
-        ["Magic Item", "Religious Artifact", "Quest Item", "Treasure", "other"],
-        true,
-        "What type of object is {{name}}?"
-    );
+  // Select object type
+  type = await tp.system.suggester(
+    ["Magic Item", "Religious Artifact", "Quest Item", "Treasure", "[ MANUAL INPUT ]"],
+    ["Magic Item", "Religious Artifact", "Quest Item", "Treasure", "other"],
+    true,
+    "What type of object?"
+  );
 
-    // Manual Input
-    if (type === "other") {
-        let manualType = await tp.system.prompt("Please enter object type:", null, true);
-        type = manualType;
-    }
+  // Manual Input
+  if (type === "other") {
+    type = await tp.system.prompt("Enter object:", "Leave blank for none", true);
+    type = type === "Leave blank for none" ? null : type;
+  }
 
-    // Get icon
-    icon = getIcon(type);
-    
+  // Get icon
+  icon = getIcon(type);
+
 } catch (error) {
   // Exit Early: delete temp & note then show toast notification
   await this.app.vault.trash(app.vault.getAbstractFileByPath("temp.md"), true);
   await this.app.vault.trash(tp.file.find_tfile(tp.file.title), true);
   new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled!</span><br>No object has been added`;
+  return;
 }
 
 // Finished: delete temp, open note, fire toast message

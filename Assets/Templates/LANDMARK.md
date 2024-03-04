@@ -60,23 +60,16 @@ try {
 
     // Select prompt
     let names = locData.map(file => file.name);
-    locale = await tp.system.suggester(names, locData, true, "Which locale is {{name}} located in?");
+    locale = await tp.system.suggester(names, locData, true, "{{name}}'s location?");
 
     // Manual input
     if (locale.name === manualInput.name) {
-      locale.name = await tp.system.prompt("ENTER NAME (leave blank for none):", null, true);
+      locale.name = await tp.system.prompt("Enter name:", "Leave blank for none", true);
+      locale.name = locale.name === "Leave blank for none" ? null : locale.name;
     }
-
-    // Set variables
-    path = locale.path ? locale.path : null;
-    plane = locale.parents ? locale.parents[0] : null;
-    realm = locale.parents ? locale.parents[1] : null;
-    continent = locale.parents ? locale.parents[2] : null;
-    region = locale.parents ? locale.parents[3] : null;
-    locations = locale.parents ? locale.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${locale.name}]]"` : locale.name ? `- "[[${locale.name}]]"` : "- ";
   } else {
     // Warning prompt
-    let warning = await quickAdd.yesNoPrompt('NOTE:', 'A landmark (i.e. tavern) is a smaller part of a locale (i.e. town). You currently have no locales. Would you like to add one now?');
+    let warning = await quickAdd.yesNoPrompt('Info:', 'A landmark (i.e. tavern) is a smaller part of a locale (i.e. town). You currently have no locales. Would you like to add one now?');
 
     if (warning) {
       // Delete note and execute locale template
@@ -96,18 +89,26 @@ try {
     }
   }
 
+  // Set variables
+  path = locale && locale.path ? locale.path : null;
+  plane = locale && locale.parents ? locale.parents[0] : null;
+  realm = locale && locale.parents ? locale.parents[1] : null;
+  continent = locale && locale.parents ? locale.parents[2] : null;
+  region = locale && locale.parents ? locale.parents[3] : null;
+  locations = locale && locale.parents ? locale.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${locale.name}]]"` : locale && locale.name ? `- "[[${locale.name}]]"` : "- ";
+
   // Select venue type
   type = await tp.system.suggester(
     ["Blacksmith", "Camp", "Guildhall", "Inn", "Library", "Market", "Port", "Residence", "Shop", "Stable", "Tavern", "Temple", "[ MANUAL INPUT ]"],
     ["Blacksmith", "Camp", "Guildhall", "Inn", "Library", "Market", "Port", "Residence", "Shop", "Stable", "Tavern", "Temple", "Other"],
     true,
-    "What type of landmark is {{name}}?"
+    "Type of landmark?"
   );
 
   // Manual input
-  if (type === "Other") {
-    var manType = await tp.system.prompt("What type of venue is {{name}}?", null, true);
-    type = manType;
+  if (type === "other") {
+    type = await tp.system.prompt("Enter type:", "Leave blank for none", true);
+    type = type === "Leave blank for none" ? null : type;
   }
 
   // Get Icon

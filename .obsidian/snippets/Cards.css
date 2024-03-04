@@ -602,7 +602,11 @@ body:not(.row-hover) .table-view-table > tbody > tr:hover {
   background-color: transparent !important;
   box-shadow: none; }
   
-/* Hide sort for cards*/ 
+/* Hide sort for cards */ 
 .hideSort .table-view-thead {
 	display: none !important;
+}
+/* adjust cards on mobile */
+.is-mobile .cards table.dataview tbody > tr > td:nth-child(2) {
+width: auto;
 }

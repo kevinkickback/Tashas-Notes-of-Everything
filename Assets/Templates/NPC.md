@@ -80,20 +80,21 @@ const races = [
   "Aarakocra", "Aasimar", "Bugbear", "Centaur", "Changeling", "Dhampir", "Dragonborn", "Dwarf", "Elf",
   "Firbolg", "Genasi", "Gith", "Gnome", "Goblin", "Goliath", "Half-Elf", "Half-Orc", "Hexblood", "Hobgoblin",
   "Human", "Kalashtar", "Kenku", "Kobold", "Leonin", "Lizardfolk", "Loxodon", "Minotaur", "Orc", "Reborn Lineage",
-  "Satyr", "Shifter", "Simic Hybrid", "Tabaxi", "Tortle", "Triton", "Vedalken", "Verdan", "Warforged", "Yuan-Ti Pureblood"
+  "Satyr", "Shifter", "Simic Hybrid", "Tabaxi", "Tiefling", "Tortle", "Triton", "Vedalken", "Verdan", "Warforged", "Yuan-Ti Pureblood"
 ];
 
 try {
   // Select sex
-  sex = await tp.system.suggester(["Male", "Female", "Other"], ["Male", "Female", "Other"], true, "What is {{name}}'s gender?");
+  sex = await tp.system.suggester(["Male", "Female", "Other"], ["Male", "Female", "Other"], true, "{{name}}'s gender?");
   
-  // Manual Input
-  if (sex === "Other") {
-      sex = await tp.system.prompt("ENTER GENDER (leave blank for none):", null, true);
-  }
+  // Manual input
+    if (sex === "Other") {
+      sex = await tp.system.prompt("Enter gender:", "Leave blank for none", true);
+      sex = sex === "Leave blank for none" ? null : sex;
+    }
 
   // Select race
-  race = await tp.system.suggester(races, races, true, "What race is {{name}}?");
+  race = await tp.system.suggester(races, races, true, "{{name}}'s race?");
 
   // Select Location
   if (locData.length) {
@@ -105,34 +106,35 @@ try {
     locData.push(manualInput);
 
     // Select prompt
-    const names = fileTreeStyle(locData);
+    const names = tp.obsidian.Platform.isPhone ? locData.map(entry => entry.name) : fileTreeStyle(locData);
     selectLoc = await tp.system.suggester(
       names,
       locData,
       true,
-      "Is {{name}} associated with a specific location?"
+      "Associated with a location?"
     );
 
-    // Manually enter location
+    // Manual Input
     if (selectLoc.name === manualInput.name) {
-      selectLoc.name = await tp.system.prompt("ENTER NAME (leave blank for none):", null, true);
-    }
+        selectLoc.name = await tp.system.prompt("Enter Name:", "Leave blank for none", true);
+        selectLoc.name = selectLoc.name === "Leave blank for none" ? null : selectLoc.name;
+      }
   }
 
   // Set variables
-  locations = selectLoc.parents ? selectLoc.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${selectLoc.name}]]"` : selectLoc.name ? `- "[[${selectLoc.name}]]"` : "-";
-
+  locations = selectLoc && selectLoc.parents ? selectLoc.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${selectLoc.name}]]"` : selectLoc && selectLoc.name ? `- "[[${selectLoc.name}]]"` : "- ";
 
   // Select affinity
   like = await tp.system.suggester(
     ["Friendly", "Neutral", "Hostile", "Unknown"],
     ["Friendly", "Neutral", "Hostile", "Unknown"],
     true,
-    "What is {{name}}'s' affinity towards the party?"
+    "Affinity towards the party?"
   );
 
   // Enter occupation
-  job = await tp.system.prompt("What is {{name}}'s occupation? (leave blank for none)", null, true);
+   job = await tp.system.prompt("Enter occupation:", "Leave blank for none", true);
+   job = job === "Leave blank for none" ? null : job;
   
 } catch (error) {
   // Exit Early: delete note then show toast notification
@@ -156,7 +158,7 @@ tags:
 headerLink: "[[{{name}}#{{name}}]]"
 ---
 ###### {{name}}
-<span class="sub2"><% selectLoc.name ? `:fas_map_location_dot: [[${selectLoc.name}#${selectLoc.name}]] &nbsp; | &nbsp; ` : "" %> :fas_heartbeat: <% like %> </span>
+<span class="sub2"><% selectLoc && selectLoc.name ? `:fas_map_location_dot: [[${selectLoc.name}#${selectLoc.name}]] &nbsp; | &nbsp; ` : "" %> :fas_heartbeat: <% like %> </span>
 ___
 
 > [!infobox|no-t right]
@@ -165,12 +167,12 @@ ___
 > | Type | Stat |
 > | ---- | ---- |
 > | :fas_briefcase: Job | <% job ? job : "???" %> |
-> | :fas_venus_mars: Gender | <% sex %> |
+> | :fas_venus_mars: Gender | <% sex ? sex : "???" %> |
 > | :fas_user: Race | <% race %> |
 <span class="clearfix"></span>
 
 > [!quote|no-t]
->Profile of {{name}}, the <% sex.toLowerCase() %> <% race.toLowerCase() %> NPC.
+>Profile of {{name}}, the <% sex ? sex.toLowerCase() : "" %> <% race.toLowerCase() %> NPC.
 
 #### marker
 > [!column|flex 3]

@@ -2,7 +2,7 @@
   "choices": [
     {
       "id": "7e0e1179-f10d-42d9-92a4-f6d283d7dbce",
-      "name": "What is the NPC's name?",
+      "name": "NPC's name?",
       "type": "Template",
       "command": true,
       "templatePath": "Assets/Templates/NPC.md",
@@ -31,7 +31,7 @@
     },
     {
       "id": "c3dd5ef3-4f65-4f23-9e25-43d2ec1a6b68",
-      "name": "What is the name of the Deity?",
+      "name": "Deity name?",
       "type": "Template",
       "command": true,
       "templatePath": "Assets/Templates/GOD.md",
@@ -60,7 +60,7 @@
     },
     {
       "id": "2eb13346-ac02-4808-ad7b-4b2f78bb048f",
-      "name": "What is the name of the object?",
+      "name": "Object name?",
       "type": "Template",
       "command": true,
       "templatePath": "Assets/Templates/OBJECT.md",
@@ -89,7 +89,7 @@
     },
     {
       "id": "df211763-e446-4275-8398-5ccd52c248e1",
-      "name": "What is the name of the organization?",
+      "name": "Organization name?",
       "type": "Template",
       "command": true,
       "templatePath": "Assets/Templates/ORGANIZATION.md",
@@ -118,7 +118,7 @@
     },
     {
       "id": "2a3ec5ba-6c9c-40fe-940d-126640b80d8e",
-      "name": "What is the name of the event?",
+      "name": "Event name?",
       "type": "Template",
       "command": true,
       "templatePath": "Assets/Templates/EVENT.md",
@@ -147,7 +147,7 @@
     },
     {
       "id": "18f3879e-f9bd-42b5-94f0-6622048b334f",
-      "name": "What is the name of the quest?",
+      "name": "Quest name?",
       "type": "Template",
       "command": true,
       "templatePath": "Assets/Templates/QUEST.md",
@@ -176,7 +176,7 @@
     },
     {
       "id": "31ca0e1f-5968-4ba9-a196-7d9e45725ec4",
-      "name": "What is the title for today's Session Note?",
+      "name": "Session note title?",
       "type": "Template",
       "command": true,
       "templatePath": "Assets/Templates/NOTE.md",
@@ -232,7 +232,7 @@
     },
     {
       "id": "deed9b32-4e1c-45fd-a967-960c0829555c",
-      "name": "What is the name of the locale?",
+      "name": "Locale name?",
       "type": "Template",
       "command": true,
       "templatePath": "Assets/Templates/LOCALE.md",
@@ -260,7 +260,7 @@
     },
     {
       "id": "515787be-a138-474b-b004-10d2a252710e",
-      "name": "What is the name of the region?",
+      "name": "Region name?",
       "type": "Template",
       "command": true,
       "templatePath": "Assets/Templates/REGION.md",
@@ -288,7 +288,7 @@
     },
     {
       "id": "7a59aa14-a2aa-4a56-8fc1-42458878ecd3",
-      "name": "What is the name of the landmark?",
+      "name": "Landmark name?",
       "type": "Template",
       "command": true,
       "templatePath": "Assets/Templates/LANDMARK.md",
@@ -316,7 +316,7 @@
     },
     {
       "id": "733e1e2c-9945-4247-b265-cb4b42fbb875",
-      "name": "What is the name of the plane?",
+      "name": "Plane name?",
       "type": "Template",
       "command": true,
       "templatePath": "Assets/Templates/PLANE.md",
@@ -346,7 +346,7 @@
     },
     {
       "id": "9b399108-ae05-46d4-be43-bcf75f75efd1",
-      "name": "What is the name of the realm?",
+      "name": "Realm name?",
       "type": "Template",
       "command": true,
       "templatePath": "Assets/Templates/REALM.md",
@@ -374,7 +374,7 @@
     },
     {
       "id": "a9c998c5-d57d-4f0e-8f5e-2c321de24341",
-      "name": "What is the name of the continent or ocean?",
+      "name": "Continent/Ocean name?",
       "type": "Template",
       "command": true,
       "templatePath": "Assets/Templates/CONTINENT.md",

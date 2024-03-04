@@ -20,6 +20,11 @@ p .obsidian-icon {
 h6 {
   margin-top: 0 !important;
 }
+.is-phone h6, .is-phone span.sub2 {
+	display: block;
+	padding: 0 !important;
+	text-align: center;
+}
 .index h6 {
   margin-top: 0.7em !important;
 }
@@ -44,6 +49,9 @@ span.sub {
 }
 span.sub2 {
     padding-left: 10px;
+}
+.is-phone .index span.head {
+	text-align: center;
 }
 .goldcoin svg {
 	color: #efe03a !important;

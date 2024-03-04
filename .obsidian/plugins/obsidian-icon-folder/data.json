@@ -57,9 +57,5 @@
   "Assets/Images/NPC": "FarFolder",
   "Assets/Images/Party": "FarFolder",
   "Assets/Images/Quest": "FarFolder",
-  "Assets/Images": "FarImage",
-  "Compendium/NPC's": "FasUser",
-  "Compendium/Party": "FasFlag",
-  "Compendium/Atlas": "FasGlobe",
-  "Compendium/Lore": "FasBook"
+  "Assets/Images": "FarImage"
 }

@@ -18,7 +18,7 @@ function getIcon(type) {
     "Country": ":fas_flag:",
     "General Region": ":fas_map:",
     "Kingdom": ":fab_fort_awesome:",
-    "Nation": ":fas_flag::"
+    "Nation": ":fas_flag:"
   };
 
   return iconMappings[type] || ":fas_question_circle:";
@@ -53,22 +53,16 @@ try {
 
     // Select prompt
     let names = contData.map(file => file.name);
-    continent = await tp.system.suggester(names, contData, true, "Where is {{name}} located?");
+    continent = await tp.system.suggester(names, contData, true, "{{name}}'s location?");
 
     // Manual input
     if (continent.name === manualInput.name) {
-      continent.name = await tp.system.prompt("ENTER NAME (leave blank for none):", null, true);
+      continent.name = await tp.system.prompt("Enter name:", "Leave blank for none", true);
+      continent.name = continent.name === "Leave blank for none" ? null : continent.name;
     }
-
-    // Set variables
-    path = continent.path ? continent.path : null;
-    plane = continent.parents ? continent.parents[0] : null;
-    realm = continent.parents ? continent.parents[1] : null;
-    locations = continent.parents ? continent.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${continent.name}]]"` : continent.name ? `- "[[${continent.name}]]"` : "- ";
-
   } else {
     // Warning prompt
-    let warning = await quickAdd.yesNoPrompt('NOTE:', "Regions (i.e. countries) are smaller parts of continents. You currently have no continents. Would you like to add one now?");
+    let warning = await quickAdd.yesNoPrompt('Info:', "Regions (i.e. countries) are smaller parts of continents. You currently have no continents. Would you like to add one now?");
 
     if (warning) {
       // Delete note & execute continent template
@@ -88,15 +82,21 @@ try {
     }
   }
 
+  // Set variables
+  path = continent && continent.path ? continent.path : null;
+  plane = continent && continent.parents ? continent.parents[0] : null;
+  realm = continent && continent.parents ? continent.parents[1] : null;
+  locations = continent && continent.parents ? continent.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${continent.name}]]"` : continent && continent.name ? `- "[[${continent.name}]]"` : "- ";
+
   // Select region type
   type = await tp.system.suggester(
     ["Country", "Kingdom", "Nation", "General Region", "[ MANUAL INPUT / NONE ]"],
-    ["Country", "Kingdom", "Nation", "General Region", "other"], true, "What type of region is {{name}}?");
+    ["Country", "Kingdom", "Nation", "General Region", "other"], true, "Type of region?");
 
-  // Manually input region
+  // Manual input
   if (type === "other") {
-    var manSelect = await tp.system.prompt("Please enter territory type:", null, true);
-    type = manSelect;
+    type = await tp.system.prompt("Enter type:", "Leave blank for none", true);
+    type = type === "Leave blank for none" ? null : type;
   }
 
   // Get icon

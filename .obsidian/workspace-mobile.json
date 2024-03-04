@@ -4,30 +4,8 @@
     "type": "split",
     "children": [
       {
-        "id": "80332d928102a54e",
-        "type": "tabs",
-        "dimension": 44.88789237668161,
-        "children": [
-          {
-            "id": "57b4a5d223c40230",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "INDEX.md",
-                "mode": "source",
-                "backlinks": false,
-                "source": true
-              }
-            },
-            "group": "041c2543a997f0c6"
-          }
-        ]
-      },
-      {
         "id": "3400bd193788df97",
         "type": "tabs",
-        "dimension": 55.11210762331839,
         "children": [
           {
             "id": "61d1ea0555c42cd5",
@@ -35,13 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "INDEX.md",
+                "file": "Compendium/Party/Quests/Take Five.md",
                 "mode": "preview",
                 "backlinks": false,
                 "source": true
               }
-            },
-            "group": "041c2543a997f0c6"
+            }
           }
         ]
       }
@@ -94,31 +71,60 @@
   "right": {
     "id": "91f06c5ce0be8907",
     "type": "mobile-drawer",
-    "children": [],
+    "children": [
+      {
+        "id": "3a97ee4ac185fa2e",
+        "type": "leaf",
+        "state": {
+          "type": "backlink",
+          "state": {
+            "file": "Compendium/Party/Quests/Take Five.md",
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical",
+            "showSearch": false,
+            "searchQuery": "",
+            "backlinkCollapsed": false,
+            "unlinkedCollapsed": true
+          }
+        }
+      }
+    ],
     "currentTab": 0
   },
   "left-ribbon": {
     "hiddenItems": {
-      "obsidian-textgenerator-plugin:Generate Text!": false,
-      "obsidian-textgenerator-plugin:Text Generator: Templates Packages Manager": false,
       "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "templates:Insert template": false,
       "command-palette:Open command palette": false
     }
   },
   "active": "61d1ea0555c42cd5",
   "lastOpenFiles": [
-    "Compendium/Party/Player Characters/Alaric Waycrest.md",
     "INDEX.md",
+    "Compendium/Party/Quests/Take Five.md",
+    "Compendium/Party/Player Characters/Alaric Waycrest.md",
+    "Compendium/Lore/Organizations/Fellows of Free Fate.md",
+    "Compendium/NPC's/Tinkera Drenn.md",
+    "Compendium/NPC's/Rythe Sterling.md",
+    "Compendium/NPC's/asdfasf.md",
+    "Compendium/NPC's/Tester fouthy.md",
+    "Compendium/NPC's/Tewster ofThree.md",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Baldurs Gate.md",
+    "Compendium/Party/Player Characters/Moira Belkas.md",
+    "Compendium/Party/Quests/The Delivery.md",
+    "Compendium/NPC's/Test Threepeate.md",
+    "Assets/Templates/NPC.md",
+    "Compendium/NPC's/Test Two.md",
+    "Compendium/NPC's/Test NumberTwo.md",
+    "Compendium/NPC's/Test FileTree.md",
+    "Compendium/Party/Player Characters/Tilda Rosesong.md",
+    "Session Notes/Session 02 (2024-02-17).md",
+    "Compendium/Party/Player Characters/Kingston Yashkar.md",
+    "Compendium/Lore/Deities/Beshaba.md",
+    "Compendium/NPC's/zxczxc.md",
+    "Compendium/NPC's/sdfsdf.md",
     "Compendium/Locations/Brayflax/Brayflax.md",
     "Compendium/NPC's/Rythe.md",
-    "Compendium/NPC's/Bosin.md",
-    "Compendium/Lore & Other/Organizations/LASTSTAND.md",
-    "Compendium/Lore & Other/Organizations/Fellows of Free Fates.md",
-    "Compendium/Lore & Other/Organizations/Black Fingers.md",
-    "Compendium/Lore & Other/Gods/Tyche.md",
-    "Compendium/Lore & Other/Gods/Tymora.md",
-    "Compendium/Lore & Other/Gods/Beshaba.md"
+    "Compendium/NPC's/Bosin.md"
   ]
 }

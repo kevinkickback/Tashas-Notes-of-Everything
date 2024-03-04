@@ -191,6 +191,18 @@ body.embed-mini-headers .markdown-embed {
   --table-border-color: var(--embed-bg);
 }
 
+.is-phone img[alt][alt]:not([alt*=relative]) {
+  float: unset !important;
+  margin: auto !important;
+  width: 100% !important;
+}
+.is-phone span:is([alt], [alt~=link-left]) {
+	margin-right: 0 !important;
+}
+.is-phone span:is([alt], [alt~=link-right]) {
+	margin-left: 0 !important;
+}
+
 /*@settings
 name: Embed Adjustments
 id: embed-adjustments

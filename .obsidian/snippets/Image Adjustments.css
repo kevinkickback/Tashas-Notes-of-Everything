@@ -226,6 +226,10 @@ img:is([alt*=ctr], [alt*=center]) {
   margin-bottom: 0px;
 }
 
+.is-mobile:not(.is-tablet) :not(.markdown-rendered) .image-embed:is([alt*=right], [alt*=locr]) {
+  margin-left: 5%;
+}
+
 /*--Image Position--*/
 img[alt*="p+"], .image-embed[src*="#p+"] img {
   object-fit: cover;

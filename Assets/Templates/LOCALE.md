@@ -27,7 +27,7 @@ function getIcon(type) {
     "Swamp": ":fas_smog:",
     "Lake": ":fas_water:"
   };
-  
+
   return iconMappings[type] || ":fas_question_circle:";
 }
 
@@ -60,19 +60,13 @@ try {
 
     // Select prompt
     let names = regData.map(file => file.name);
-    region = await tp.system.suggester(names, regData, true, "Which region is {{name}} located in?");
+    region = await tp.system.suggester(names, regData, true, "{name}}'s location?");
 
     // Manual input
     if (region.name === manualInput.name) {
-      region.name = await tp.system.prompt("ENTER NAME (leave blank for none):", null, true);
+      region.name = await tp.system.prompt("ENTER NAME:", "Leave blank for none", true);
+      region.name = region.name === "Leave blank for none" ? null : region.name;
     }
-
-    // Set variables
-    path = region.path ? region.path : null;
-    plane = region.parents ? region.parents[0] : null;
-    realm = region.parents ? region.parents[1] : null;
-    continent = region.parents ? region.parents[2] : null;
-    locations = region.parents ? region.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${region.name}]]"` : region.name ? `- "[[${region.name}]]"` : "- ";
   } else {
     // Warning prompt
     let warning = await quickAdd.yesNoPrompt('NOTE:', 'A locale (i.e. town) is a smaller part of a region (i.e. country). You currently have no regions. Would you like to add one now?');
@@ -95,8 +89,15 @@ try {
     }
   }
 
+  // Set variables
+  path = region && region.path ? region.path : null;
+  plane = region && region.parents ? region.parents[0] : null;
+  realm = region && region.parents ? region.parents[1] : null;
+  continent = region && region.parents ? region.parents[2] : null;
+  locations = region && region.parents ? region.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${region.name}]]"` : region && region.name ? `- "[[${region.name}]]"` : "- ";
+
   // Select category
-  let category = await tp.system.suggester(["Settlement", "Topographic"], ["Settlement", "Topographic"], true, "What type of locale is {{name}}?");
+  let category = await tp.system.suggester(["Settlement", "Topographic"], ["Settlement", "Topographic"], true, "Type of locale?");
 
   // Select type
   switch (category) {
@@ -104,28 +105,29 @@ try {
       type = await tp.system.suggester(
         ["City", "Town", "Village", "Encampment", "[ MANUAL INPUT ]"],
         ["City", "Town", "Village", "Encampment", "other"],
-        true, "What type of settlement is {{name}}?");
+        true, "Type of settlement?");
       break;
 
     case "Topographic":
       type = await tp.system.suggester(
         ["Cave", "Desert", "Forest", "Mountain", "Plains", "Swamp", "Lake", "[ MANUAL INPUT ]"],
         ["Cave", "Desert", "Forest", "Mountain", "Plains", "Swamp", "Lake", "other"],
-        true, "What type of topography is {{name}}?");
+        true, "Type of topography?");
       break;
 
     default:
       throw new Error;
   }
 
-  // Manually input type
+  // Manual input
   if (type === "other") {
-    type = await tp.system.prompt("ENTER TYPE (leave blank for none):", null, true);
+    type = await tp.system.prompt("Enter Type:", "Leave blank for none", true);
+    type = type === "Leave blank for none" ? null : type;
   }
 
-    // Get icon
-    icon = getIcon(type);
-  
+  // Get icon
+  icon = getIcon(type);
+
 } catch (error) {
   // Exit Early: delete note & show toast notification
   await this.app.vault.trash(tp.file.find_tfile(tp.file.title), true);

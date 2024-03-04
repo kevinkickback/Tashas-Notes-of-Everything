@@ -25,29 +25,29 @@ try {
     ["Male", "Female", "Androgynous", "Agender / Non-binary"],
     ["Male", "Female", "Androgynous", "Agender"],
     true,
-    "What is {{name}}'s gender identity?"
+    "{{name}}'s gender?"
   );
 
   // Select alignment
   alignment = await tp.system.suggester(
     ["Lawful Good", "Neutral Good", "Chaotic Good",
-    "Lawful Neutral", "True Neutral", "Chaotic Neutral",
-    "Lawful Evil", "Neutral Evil", "Chaotic Evil"], 
+      "Lawful Neutral", "True Neutral", "Chaotic Neutral",
+      "Lawful Evil", "Neutral Evil", "Chaotic Evil"],
     ["Lawful Good", "Neutral Good", "Chaotic Good",
-    "Lawful Neutral", "True Neutral", "Chaotic Neutral",
-    "Lawful Evil", "Neutral Evil", "Chaotic Evil"],
-    true, "What is {{name}}'s alignment?"
+      "Lawful Neutral", "True Neutral", "Chaotic Neutral",
+      "Lawful Evil", "Neutral Evil", "Chaotic Evil"],
+    true, "{{name}}'s alignment?"
   );
 
   // Display info prompt
-  const info = await quickAdd.infoDialog(
-    "NOTE:",
-    "Select all relevant divine domains from the following list. If none apply, choose the last option."
+  await quickAdd.infoDialog(
+    "Info:",
+    "Select all relevant domains from the upcoming list. If none apply choose the last option."
   );
 
   // Select domains
   domains = await quickAdd.checkboxPrompt(
-["Agriculture", "Air", "Ambition", "Arts", "Avarice", "Balance", "Beasts", "Beauty", "Celebrations", "Change", "Civilization", "Conquest", "Corruption", "Creation", "Darkness", "Death", "Destruction", "Earth", "Envy", "Fall", "Fire", "Forge", "Freedom", "Glory", "Gluttony", "Grave", "Greed", "Growth", "Hatred", "Healing", "Hope", "Illusion", "Invention", "Justice", "Knowledge", "Law", "Lies", "Life", "Light", "Love", "Luck", "Lust", "Madness", "Magic", "Mist", "Moon", "Nature", "Nobility", "Order", "Pain", "Patience", "Pestilence", "Plants", "Pleasure", "Poison", "Pride", "Protection", "Renewal", "Repose", "Retribution", "Sea", "Secrets", "Shadow", "Sleep", "Sloth", "Snow", "Strength", "Sun", "Temperance", "Tempest", "Time", "Trade", "Travel", "Trickery", "Tyranny", "Underneath", "Vengeance", "Vengence", "War", "Water", "Wealth", "Wilderness", "Winter", "Wrath", "Zeal", "[ NONE ]"]
+    ["Agriculture", "Air", "Ambition", "Arts", "Avarice", "Balance", "Beasts", "Beauty", "Celebrations", "Change", "Civilization", "Conquest", "Corruption", "Creation", "Darkness", "Death", "Destruction", "Earth", "Envy", "Fall", "Fire", "Forge", "Freedom", "Glory", "Gluttony", "Grave", "Greed", "Growth", "Hatred", "Healing", "Hope", "Illusion", "Invention", "Justice", "Knowledge", "Law", "Lies", "Life", "Light", "Love", "Luck", "Lust", "Madness", "Magic", "Mist", "Moon", "Nature", "Nobility", "Order", "Pain", "Patience", "Pestilence", "Plants", "Pleasure", "Poison", "Pride", "Protection", "Renewal", "Repose", "Retribution", "Sea", "Secrets", "Shadow", "Sleep", "Sloth", "Snow", "Strength", "Sun", "Temperance", "Tempest", "Time", "Trade", "Travel", "Trickery", "Tyranny", "Underneath", "Vengeance", "Vengence", "War", "Water", "Wealth", "Wilderness", "Winter", "Wrath", "Zeal", "[ NONE ]"]
   );
 
   // None selected or exit early
@@ -57,7 +57,7 @@ try {
     throw new Error;
   }
 
-  tags = domains !== "None" ? domains.map(value => `- domain/${value.toLowerCase()}Domain`).join("\n") : "- ";
+  tags = domains !== "None" ? domains.map(value => `- domain/${value.toLowerCase()}`).join("\n") : "- ";
 
 } catch (error) {
   // Exit Early: delete temp & note then show toast notification

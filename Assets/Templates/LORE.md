@@ -1,10 +1,14 @@
 <%*
+// ###########################################################
+//                        Main Code Section
+// ###########################################################
+
 // Select lore type
 let choice = await tp.system.suggester(
   ["Deity", "Event", "Object", "Organization"],
   ["deity", "event", "obj", "org"],
   false,
-  "What type of lore is it?"
+  "Add new..."
 );
 
 switch (choice) {

@@ -140,12 +140,13 @@
   clear: both;
   padding: 0;
   display: flex;
-  flex-wrap: wrap; /* Allow content to wrap */
-  justify-content: flex-start; /* Align content to the start of the flex container */
-  align-items: flex-start; /* Align content to the start of the flex container */
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
   grid-row-gap: 0;
   border: none !important;  
   margin-top: -10px;
+  
 }
 .listMe table.dataview  {
 	margin-top: -23px;
@@ -156,7 +157,7 @@
   padding-top: 0;
   padding-bottom: 0;
   padding-right: 15px;
-  line-height: 1; /* Set line-height to 1 to minimize row height */
+  line-height: 1;
 }
 
 .listMe table.dataview > tbody > tr {
@@ -169,7 +170,7 @@
   max-width: var(--cards-max-width); 
   }
 .listMe table.dataview > tbody > tr > td {
-  white-space: pre-wrap;
+white-space: pre-wrap;
 }
 
 .listMe .el-pre + .el-lang-dataview .table-view-thead {

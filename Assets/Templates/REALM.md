@@ -15,15 +15,16 @@ try {
   // Select plane if available
   if (planeData.length) {
     planeData.push("[ MANUAL INPUT / NONE]");
-    plane = await tp.system.suggester(planeData, planeData, true, "Which plane is {{name}} located in?");
+    plane = await tp.system.suggester(planeData, planeData, true, "{{name}}'s location?");
 
     // Manual input
-    if (plane === "[ MANUAL INPUT / NONE]") {
-      plane = await tp.system.prompt("ENTER NAME (leave blank for none):", null, true);
+    if (plane === "[ MANUAL INPUT / NONE ]") {
+      plane = await tp.system.prompt("Enter name:", "Leave blank for none", true);
+      plane = plane === "Leave blank for none" ? null : plane;
     }
   } else {
     // Warning prompt
-    let warning = await quickAdd.yesNoPrompt('NOTE:', 'Realms (i.e. worlds) are smaller parts of planes (i.e. universes). You currently have no planes. Would you like to add one now?');
+    let warning = await quickAdd.yesNoPrompt('Info:', 'Realms (i.e. worlds) are smaller parts of planes (i.e. universes). You currently have no planes. Would you like to add one now?');
 
     if (warning) {
       // Delete realm & temp note then execute plane template

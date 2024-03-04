@@ -36,18 +36,18 @@ try {
     ["Personal", "Political", "Religious", "Seasonal", "[ MANUAL INPUT ]"],
     ["Personal", "Political", "Religious", "Seasonal", "other"],
     true,
-    "What type of event was/is {{name}}?"
+    "Type of event?"
   );
 
   // Manually input type
   if (type === "other") {
-    let manSelect = await tp.system.prompt("Please enter the event type:", null, true);
-    type = manSelect;
+    type = await tp.system.prompt("Enter type:", "Leave blank for none", true);
+    type = type === "Leave blank for none" ? null : type;
   }
 
   // Get icon
   icon = getIcon(type);
-  
+
 } catch (error) {
   // Exit Early: delete temp & note then show toast notification
   await this.app.vault.trash(app.vault.getAbstractFileByPath("temp.md"), true);
@@ -59,7 +59,7 @@ try {
 // Finished: delete temp, open note, fire toast message
 await this.app.vault.trash(app.vault.getAbstractFileByPath("temp.md"), true);
 app.workspace.getLeaf(true).openFile(tp.file.find_tfile(tp.file.title));
-new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New ${type ? type.toLowerCase() : "event"} <span style="text-decoration: underline;">{{name}}</span> added`;
+new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New ${type ? type.toLowerCase() : ""} eve <span style="text-decoration: underline;">{{name}}</span> added`;
 _%>
 
 ---

@@ -1,12 +1,16 @@
 <%*
+// ###########################################################
+//                        Main Code Section
+// ###########################################################
+
 // Select location size
 let choice = await tp.system.suggester(
-  ["Add Plane of Existence",
-   "Add Realm or World", 
-   "Add Continent / Ocean"],
+  ["Plane of Existence",
+    "Realm (world)",
+    "Continent / Ocean"],
   ["large", "medium", "small"],
   false,
-  "How would you like to expand the realms?"
+  "Add new..."
 );
 
 switch (choice) {

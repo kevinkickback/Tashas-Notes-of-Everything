@@ -18,7 +18,7 @@ function getIcon(type) {
     "Continent": ":fas_earth_americas:",
     "Ocean": ":fas_water:",
   };
-  
+
   return iconMappings[type] || ":fas_question:";
 }
 
@@ -51,21 +51,16 @@ try {
 
     // Select prompt
     let names = realmData.map(file => file.name);
-    realm = await tp.system.suggester(names, realmData, true, "What realm (world) is {{name}} located on?");
+    realm = await tp.system.suggester(names, realmData, true, "{{name}}'s location?");
 
     // Manual input
     if (realm.name === manualInput.name) {
-      realm.name = await tp.system.prompt("ENTER NAME (leave blank for none):", null, true);
+      realm.name = await tp.system.prompt("Enter name:", "Leave blank for none", true);
+      realm.name = realm.name === "Leave blank for none" ? null : realm.name;
     }
-
-    // Set variables
-    path = realm.path ? realm.path : null;
-    plane = realm.parents ? realm.parents : null;
-    locations = realm.parents ? realm.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${realm.name}]]"` : realm.name ? `- "[[${realm.name}]]"` : "- ";
-
   } else {
     // Warning prompt
-    let warning = await quickAdd.yesNoPrompt('NOTE:', "You currently have no realms. Would you like to add one now?");
+    let warning = await quickAdd.yesNoPrompt('Info:', "Continents/Oceans are smaller parts of realms (i.e. worlds). You currently have no realms. Would you like to add one now?");
 
     if (warning) {
       // Delete continent & temp note then execute realm template
@@ -75,7 +70,7 @@ try {
       return;
     } else if (warning === false) {
       // Confirmation prompt
-      let confirm = await quickAdd.yesNoPrompt('Confirm:', 'Create new continent without any realm?');
+      let confirm = await quickAdd.yesNoPrompt('Confirm:', 'Create new continent/ocean without any realm?');
 
       // Exit early
       if (!confirm) {
@@ -86,21 +81,27 @@ try {
     }
   }
 
+  // Set variables
+  path = realm && realm.path ? realm.path : null;
+  plane = realm && realm.parents ? realm.parents : null;
+  locations = realm && realm.parents ? realm.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${realm.name}]]"` : realm && realm.name ? `- "[[${realm.name}]]"` : "- ";
+
   // Select type of geography
   type = await tp.system.suggester(
     ["Continent", "Ocean", "[MANUAL INPUT / NONE]"],
     ["Continent", "Ocean", "other"],
     true,
-    "What type of location is {{name}}?"
+    "Type of location?"
   );
 
   // Manual input
   if (type === "other") {
-    type = await tp.system.prompt("ENTER TYPE (leave blank for none):", null, true);
+    type = await tp.system.prompt("Enter type:", "Leave blank for none", true);
+    type = type === "Leave blank for none" ? null : type;
   }
 
   icon = getIcon(type);
-  
+
 } catch (error) {
   // Exit Early: delete temp & note then show toast notification
   await this.app.vault.trash(app.vault.getAbstractFileByPath("temp.md"), true);

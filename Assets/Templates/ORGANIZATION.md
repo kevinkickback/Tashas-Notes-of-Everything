@@ -5,48 +5,48 @@
 
 // Sort: by path with parent file name priority
 function pppSort(a, b) {
-    const pathA = a.path.split('/');
-    const pathB = b.path.split('/');
-    const parentA = pathA[pathA.length - 2];
-    const parentB = pathB[pathB.length - 2];
+  const pathA = a.path.split('/');
+  const pathB = b.path.split('/');
+  const parentA = pathA[pathA.length - 2];
+  const parentB = pathB[pathB.length - 2];
 
-    if (parentA === parentB && (a.basename === parentA || b.basename === parentB)) return a.basename === parentA ? -1 : 1;
-    for (let i = 0; i < Math.min(pathA.length, pathB.length); i++)
-        if (pathA[i] !== pathB[i])
-            return i === pathA.length - 1 ? -1 : i === pathB.length - 1 ? 1 : pathA[i].localeCompare(pathB[i], undefined, {
-                numeric: true
-            });
-    return pathA.length - pathB.length;
+  if (parentA === parentB && (a.basename === parentA || b.basename === parentB)) return a.basename === parentA ? -1 : 1;
+  for (let i = 0; i < Math.min(pathA.length, pathB.length); i++)
+    if (pathA[i] !== pathB[i])
+      return i === pathA.length - 1 ? -1 : i === pathB.length - 1 ? 1 : pathA[i].localeCompare(pathB[i], undefined, {
+        numeric: true
+      });
+  return pathA.length - pathB.length;
 };
 
 // File Tree Style: format entries with a file tree look
 function fileTreeStyle(data) {
-    let treeLines = [];
-    let previousDepths = [];
-    for (let i = 0; i < data.length; i++) {
-        const { name, depth } = data[i];
-        let prefix = '';
-        for (let j = 0; j < depth - 1; j++) {
-            if (previousDepths[j]) {
-                prefix += '│  ';
-            } else {
-                prefix += '   ';
-            }
-        }
-        if (depth > 0) {
-            if (previousDepths[depth - 1]) {
-                prefix += '├─ ';
-            } else {
-                prefix += '└─ ';
-            }
-        }
-        treeLines.push(prefix + name);
-        previousDepths = previousDepths.slice(0, depth - 1);
-        for (let j = previousDepths.length; j < depth; j++) {
-            previousDepths.push(j === depth - 1 || j === depth - 2); // Adjusted logic
-        }
+  let treeLines = [];
+  let previousDepths = [];
+  for (let i = 0; i < data.length; i++) {
+    const { name, depth } = data[i];
+    let prefix = '';
+    for (let j = 0; j < depth - 1; j++) {
+      if (previousDepths[j]) {
+        prefix += '│  ';
+      } else {
+        prefix += '   ';
+      }
     }
-    return treeLines;
+    if (depth > 0) {
+      if (previousDepths[depth - 1]) {
+        prefix += '├─ ';
+      } else {
+        prefix += '└─ ';
+      }
+    }
+    treeLines.push(prefix + name);
+    previousDepths = previousDepths.slice(0, depth - 1);
+    for (let j = previousDepths.length; j < depth; j++) {
+      previousDepths.push(j === depth - 1 || j === depth - 2); // Adjusted logic
+    }
+  }
+  return treeLines;
 }
 
 // ###########################################################
@@ -77,28 +77,29 @@ try {
     locData.push(manualInput);
 
     // Select prompt
-    const names = fileTreeStyle(locData);
+    const names = tp.obsidian.Platform.isPhone ? locData.map(entry => entry.name) : fileTreeStyle(locData);
     selectLoc = await tp.system.suggester(
       names,
       locData,
       true,
-      'Is "{{name}}" associated with a specific location?'
+      "Associated with a location?"
     );
 
     // Manual input
     if (selectLoc.name === manualInput.name) {
-      selectLoc.name = await tp.system.prompt("ENTER NAME (leave blank for none):", null, true);
+      selectLoc.name = await tp.system.prompt("Enter name:", "Leave blank for none", true);
+      selectLoc.name = selectLoc.name === "Leave blank for none" ? null : selectLoc.name;
     }
   }
 
   // Set variables
-  locations = selectLoc.parents ? selectLoc.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${selectLoc.name}]]"` : selectLoc.name ? `- "[[${selectLoc.name}]]"` : "-";
-
+  locations = selectLoc && selectLoc.parents ? selectLoc.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${selectLoc.name}]]"` : selectLoc && selectLoc.name ? `- "[[${selectLoc.name}]]"` : "- ";
+  
   // Select alignment
   align = await tp.system.suggester(
     ["Lawful Good", "Neutral Good", "Chaotic Good", "Lawful Neutral", "True Neutral", "Chaotic Neutral", "Lawful Evil", "Neutral Evil", "Chaotic Evil", "[ UNKNOWN ]"],
     ["Lawful Good", "Neutral Good", "Chaotic Good", "Lawful Neutral", "True Neutral", "Chaotic Neutral", "Lawful Evil", "Neutral Evil", "Chaotic Evil", "Unknown"]
-    , true, "What is {{name}}'s alignment?");
+    , true, "{{name}}'s alignment?");
 
 } catch (error) {
   // Exit Early: delete temp & note then show toast notification
@@ -124,7 +125,7 @@ headerLink: "[[{{name}}#{{name}}]]"
 ---
 
 ###### {{name}}
-:fas_sitemap: Organization &nbsp; | &nbsp; :fas_yin_yang:  <% align %>
+<span class="sub2">:fas_sitemap: Organization &nbsp; | &nbsp; :fas_yin_yang:  <% align %></span>
 ___
 
 > [!quote|no-t]
