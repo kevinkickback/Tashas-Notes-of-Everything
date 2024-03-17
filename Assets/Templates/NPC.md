@@ -64,20 +64,18 @@ function toCamelCase(str) {
 
 let job, like, locations, race, selectLoc, sex;
 
-// Create array containing all locations with name, depth, & parent keys
+// Create array containing all locations with name & depth keys
 const locData = app.vault.getMarkdownFiles()
   .filter(file => file.path.startsWith("Compendium/Atlas"))
   .sort(pppSort)
   .map(file => ({
     name: file.basename,
-    depth: file.path.split('/').length - (file.basename === file.path.split('/')[file.path.split('/').length - 2] ? 3 : 2),
-    parents: (this.app.metadataCache.getFileCache(file)?.frontmatter?.locations
-      ?.map(location => typeof location === 'string' ? location.replace(/^\[\[|\]\]$/g, "") : location)),
+    depth: file.path.split('/').length - (file.basename === file.path.split('/')[file.path.split('/').length - 2] ? 3 : 2)
   }));
 
 // Create array containing races
 const races = [
-  "Aarakocra", "Aasimar", "Bugbear", "Centaur", "Changeling", "Dhampir", "Dragonborn", "Dwarf", "Elf",
+  "Aarakocra", "Aasimar", "Bugbear", "Centaur", "Changeling", "Dhampir", "Dragonborn", "Dwarf", "Elf", "Fairy",
   "Firbolg", "Genasi", "Gith", "Gnome", "Goblin", "Goliath", "Half-Elf", "Half-Orc", "Hexblood", "Hobgoblin",
   "Human", "Kalashtar", "Kenku", "Kobold", "Leonin", "Lizardfolk", "Loxodon", "Minotaur", "Orc", "Reborn Lineage",
   "Satyr", "Shifter", "Simic Hybrid", "Tabaxi", "Tiefling", "Tortle", "Triton", "Vedalken", "Verdan", "Warforged", "Yuan-Ti Pureblood"
@@ -122,7 +120,7 @@ try {
   }
 
   // Set variables
-  locations = selectLoc && selectLoc.parents ? selectLoc.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${selectLoc.name}]]"` : selectLoc && selectLoc.name ? `- "[[${selectLoc.name}]]"` : "- ";
+  locations = selectLoc && selectLoc.name ? `- "[[${selectLoc.name}]]"` : "- ";
 
   // Select affinity
   like = await tp.system.suggester(

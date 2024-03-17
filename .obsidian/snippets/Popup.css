@@ -1,3 +1,9 @@
+/*
+Popover snippet 
+author: @KevinKickback
+https://github.com/kevinkickback/Tashas-Notes-of-Everything
+*/
+
 body {	
 	--popover-width: 600px;
     --popover-height: 300px;
@@ -26,7 +32,6 @@ body {
 .popover.hover-popover .internal-embed.media-embed.image-embed.is-loaded {
 	display: none;
 }
-
 
 /* disable quote styling inside popover */
 .popover.hover-popover .callout.callout[data-callout~=quote] {

@@ -1,11 +1,7 @@
 ---
 type: quest
+target: groupQuest
 locations:
-- "[[Material Plane]]"
-- "[[Toril]]"
-- "[[Faerûn]]"
-- "[[The Sword Coast]]"
-- "[[Baldurs Gate]]"
 - "[[Sorcerous Sundries]]"
 tags:
 - quest/ongoing
@@ -16,7 +12,7 @@ headerLink: "[[The Delivery#The Delivery]]"
 ___
 
 > [!quote|no-t]
->![[quest.png|right wm-sm]]Tinkera asks [[LASTSTAND]] to deliver a package to a secluded cottage on the outskirts of Baldur's Gate. She explains that the recipient, an old friend of hers, is expecting the delivery urgently. 
+>![[quest.png|right wm-sm]]Tinkera asks [[LASTSTAND#LASTSTAND]] to deliver a package to a secluded cottage on the outskirts of Baldur's Gate. She explains that the recipient, an old friend of hers, is expecting the delivery urgently. 
 >#### marker
 >**UPDATES:**
 >-  *<span style="color: var(--link-color)">Day 05:</span>* arrive at the cottage to find [[Rythe Sterling#Rythe Sterling|Rythe]] creeping around

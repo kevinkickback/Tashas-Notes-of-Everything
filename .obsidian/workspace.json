@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "92764f1ad63f62e9",
+            "id": "fcee16785bd0e095",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -72,12 +72,12 @@
     "type": "split",
     "children": [
       {
-        "id": "2ab945a38561f078",
+        "id": "93b9c9c4275d20fd",
         "type": "tabs",
-        "dimension": 22.986111111111107,
+        "dimension": 23.214285714285715,
         "children": [
           {
-            "id": "ed331c8f9c9afa46",
+            "id": "92764f1ad63f62e9",
             "type": "leaf",
             "state": {
               "type": "graph",
@@ -89,7 +89,7 @@
       {
         "id": "8874cb022e2284d9",
         "type": "tabs",
-        "dimension": 77.01388888888889,
+        "dimension": 76.78571428571429,
         "children": [
           {
             "id": "3df18e84174958a9",
@@ -115,7 +115,7 @@
                 "showSearch": false,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
-                "unlinkedCollapsed": true
+                "unlinkedCollapsed": false
               }
             }
           },
@@ -125,7 +125,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#domain",
+                "query": "tag:#quest",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -138,7 +138,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 343.5
+    "width": 356.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -146,54 +146,54 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "92764f1ad63f62e9",
+  "active": "fcee16785bd0e095",
   "lastOpenFiles": [
-    "Compendium/Party/Quests/Take Five.md",
-    "INDEX.md",
-    "Compendium/Lore/Deities/Beshaba.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep/City of the Dead/City of the Dead.md",
-    "Compendium/Party/Quests/The Delivery.md",
-    "Compendium/NPC's/Rythe Sterling.md",
     "Compendium/Party/Player Characters/Alaric Waycrest.md",
+    "Assets/Templates/LANDMARK.md",
+    "INDEX.md",
+    "Compendium/Atlas/Material Plane/Toril/Toril.md",
+    "Assets/Images/Lore/ps83A.tmp",
+    "Assets/Images/header.jpg",
+    "Compendium/Atlas/Material Plane/Material Plane.md",
+    "Compendium/Atlas/Feywild/Feywild.md",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/Faerûn.md",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Elfsong Tavern/Elfsong Tavern.md",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep/City of the Dead/City of the Dead.md",
     "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Baldurs Gate.md",
-    "Compendium/NPC's/Tinkera Drenn.md",
-    "Assets/Templates/REGION.md",
-    "Session Notes/Session 02 (2024-02-17).md",
-    "Compendium/NPC's/Test FileTree.md",
-    "Compendium/NPC's/Test Two.md",
-    "Assets/Templates/NPC.md",
-    "Assets/Templates/STARTUP.md",
-    "Assets/Images/header.png",
-    "README.md",
-    "Assets/Templates/CONTINENT.md",
-    "Assets/Templates/PLANE.md",
-    "Assets/Templates/ORGANIZATION.md",
-    "Assets/Templates/OBJECT.md",
-    "Assets/Templates/REALM.md",
+    "Compendium/Party/Quests/The Delivery.md",
+    "Compendium/Party/Quests/Double Trouble.md",
+    "Compendium/NPC's/Eleidin Verlice.md",
+    "Compendium/Lore/Deities/Beshaba.md",
+    "Compendium/Party/Quests/efwefw.md",
     "Assets/Templates/QUEST.md",
-    "Assets/Templates/NOTE.md",
-    "Assets/Templates/LORE.md",
-    "Assets/Templates/LOCATION.md",
-    "Assets/Templates/LOCALE.md",
-    "Compendium/Lore/Organizations",
-    "Compendium/Lore/Objects",
-    "Compendium/Lore/Events",
-    "Compendium/Lore/Deities",
-    "Compendium/Lore",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep/City of the Dead",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Elfsong Tavern",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast",
+    "README.md",
+    "Untitled.md",
+    "Compendium/Party/Player Characters/Tilda Rosesong.md",
+    "Compendium/Party/Player Characters/Moira Belkas.md",
+    "Compendium/Party/Player Characters/Kingston Yashkar.md",
+    "Compendium/Party/Quests/Take Five.md",
+    "Compendium/NPC's/sdftfgsdrf.md",
+    "Compendium/NPC's/asdfsdf.md",
+    "Compendium/Lore/Organizations/LASTSTAND.md",
+    "Compendium/Party/Quests/Take Two.md",
+    "Assets/Images/NPC/eleidin.jpg",
+    "Assets/Images/Location/feywild.webp",
+    "Assets/Images/Location/Feywild.webp",
+    "Compendium/Atlas/Feywild",
+    "Assets/Images/NPC/paloma.jpg",
+    "Assets/Templates/startup.js",
+    "Assets/Templates/toggle.js",
+    "Assets/Templates/New Text Document.txt",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Drunken Griffin",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep/test67",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep/test66",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep/test6",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/test55",
+    "Assets/Images/header.png",
     "Assets/Images/Party/alaric.png",
     "Assets/Images/Lore/tymora.jpg",
     "Assets/Images/Quest/clearcave.jpg",
     "Assets/Images/Quest/runevil.jpg",
-    "Assets/Images/Quest/headtown.jpg",
-    "Assets/Images/NPC/tinkera.png",
-    "Assets/Images/NPC/rythe.webp",
-    "Assets/Images/Party/tilda.webp",
-    "Assets/Images/Party/moira.jpg",
     "Compendium/Party/Quests/!Journey Board.canvas"
   ]
 }

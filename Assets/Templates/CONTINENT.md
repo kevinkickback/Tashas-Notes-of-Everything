@@ -12,7 +12,7 @@ function toCamelCase(str) {
   });
 }
 
-// Get icon based on object type
+// Icons: get icon based on type
 function getIcon(type) {
   const iconMappings = {
     "Continent": ":fas_earth_americas:",
@@ -27,17 +27,19 @@ function getIcon(type) {
 // ###########################################################
 
 const quickAdd = app.plugins.plugins.quickadd.api;
-let icon, locations, path, plane, realm, type;
+let icon, locations, path, type;
 
-// Create array containing all realms with name, parent, & path keys
+// Create array containing all realms with name & path keys
 const realmData = this.app.vault.getAllLoadedFiles()
   .filter(file => this.app.metadataCache.getFileCache(file)?.frontmatter?.type === 'realm')
   .map(file => ({
     name: file.basename,
-    parents: (app.metadataCache.getFileCache(file)?.frontmatter?.locations
-      ?.map(location => typeof location === 'string' ? location.replace(/^\[\[|\]\]$/g, "") : location)),
-    path: file.path.split('/').slice(2, -1).join('/') + '/'
+    path: file.path.split('/').slice(0, -1).join('/') + '/'
   }));
+realmData.forEach(realm => {
+    console.log(realm.path);
+});
+
 
 try {
   // Select realm if available
@@ -84,7 +86,7 @@ try {
   // Set variables
   path = realm && realm.path ? realm.path : null;
   plane = realm && realm.parents ? realm.parents : null;
-  locations = realm && realm.parents ? realm.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${realm.name}]]"` : realm && realm.name ? `- "[[${realm.name}]]"` : "- ";
+  locations = realm && realm.name ? `- "[[${realm.name}]]"` : "- ";
 
   // Select type of geography
   type = await tp.system.suggester(
@@ -111,7 +113,7 @@ try {
 }
 
 // Finished: delete temp, move note, open note, & show toast notification
-await tp.file.move('/Compendium/Atlas/' + (path ? path + "/" : "") + tp.file.title + "/" + tp.file.title);
+await tp.file.move((path ? path : "Compendium/Atlas/") + tp.file.title + "/" + tp.file.title);
 await this.app.vault.trash(app.vault.getAbstractFileByPath("temp.md"), true);
 await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(tp.file.title));
 new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New ${type ? type.toLowerCase() : "location"} <span style="text-decoration: underline;">{{name}}</span> added`;
@@ -136,16 +138,45 @@ ___
 
 #### marker
 > [!column|flex 3]
->> [!hint]-  NPC's
->> ```dataview
-LIST WITHOUT ID headerLink
-FROM "Compendium/NPC's" AND [[{{name}}]]
-SORT file.name ASC
->
+> > [!hint]-  NPC's
+> > <input type="checkbox" id="npc"/><ul class="sortMenu"><li class="sortIcon">:rif_list_settings:<ul class="dropdown ncpedit"><li><label for="npc" class="directLabel active">Direct Links Only</label></li><li><label for="npc" class="childLabel">Include Sub-Locations</label></li></ul></li></ul>
+> >```dataviewjs
+dv.container.className += ' npcDirect';
+dv.list(dv.pages('"Compendium/NPC\'s"')
+ .where(p => p.file.outlinks.includes(dv.current().file.link))
+.sort(p => p.file.link)
+.map(p => p.headerLink), 1);
+>>```
+>>```dataviewjs
+dv.container.className += ' npcChild';
+let page = dv.current().file.path;
+let pages = new Set();
+let stack = [page];
+while (stack.length > 0) {
+let elem = stack.pop();
+let meta = dv.page(elem);
+if (!meta) continue;
+for (let inlink of meta.file.inlinks.concat(meta.file.outlinks).array()) {
+let locations = dv.page(inlink.path);
+if (!locations || pages.has(inlink.path) || inlink.path === meta.locations?.[0]) continue;
+ if (dv.array(locations.locations).join(", ").includes(meta.file.path)) {
+ pages.add(inlink.path);
+ stack.push(inlink.path);
+}}}
+let data = Array.from(pages)
+.filter(p => dv.page(p)?.type === "npc")
+.map(p => dv.page(p).headerLink)
+.sort((a, b) => {
+if (a < b) return -1;
+if (a > b) return 1;
+return 0;
+});
+dv.list(data);
+> 
 >> [!example]- LOCATIONS
 >>```dataview
 LIST WITHOUT ID headerLink
-FROM "Compendium/Atlas/<% plane ? plane + "/" + realm.name + "/" : "" %>{{name}}"
+FROM "<% path ? path : "Compendium/Atlas/" %>{{name}}"
 WHERE file.name != this.file.name AND type= "region"
 SORT file.name ASC
 >

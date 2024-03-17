@@ -5,11 +5,12 @@ version: 2.0.0
 Support my work:
 https://github.com/sponsors/kepano
 */
+
 :root {
   --cards-min-width: 180px;
   --cards-max-width: 1fr;
   --cards-mobile-width: 120px;
-  --cards-image-height: 400px;
+  --cards-image-height: 300px;
   --cards-padding: 1.2em;
   --cards-image-fit: contain;
   --cards-background: transparent;
@@ -594,19 +595,38 @@ body .dataview.small-text {
 
 .theme-dark .themed-color-wrapper > .theme-dark {
   background-color: transparent; }
-
-/* Remove hover effect */
-body:not(.row-hover) .dataview.task-list-item:hover,
-body:not(.row-hover) .dataview.task-list-basic-item:hover,
-body:not(.row-hover) .table-view-table > tbody > tr:hover {
-  background-color: transparent !important;
-  box-shadow: none; }
+  
+  /* --- CUSTOM Cardcover Adjustment --- */ 	
   
 /* Hide sort for cards */ 
 .hideSort .table-view-thead {
 	display: none !important;
 }
-/* adjust cards on mobile */
+
+/* Mobile adjustments */
 .is-mobile .cards table.dataview tbody > tr > td:nth-child(2) {
 width: auto;
+}
+
+/* Border adjustments */
+.cards table.dataview>tbody>tr {
+	border: 2px solid #565656;
+}
+
+/* Highlight border on hover */
+.cards table.dataview>tbody>tr:hover {
+	border: 2px solid var(--interactive-accent);
+}
+
+/* Image adjustments */
+.cards table.dataview tbody>tr>td img {	
+	object-fit: cover !important; /* Ensure the image covers its container */
+    object-position: top; /* Position the image at the top */
+	border-radius: 8px; /* Apply rounded corners to the image */
+    margin-bottom: -15px; /* Adjust bottom margin to prevent excessive space */
+}
+
+/* Larger title links */
+.cards table.dataview tbody>tr>td a {
+    font-size: 1.2em;
 }

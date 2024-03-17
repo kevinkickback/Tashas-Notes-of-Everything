@@ -55,15 +55,13 @@ function fileTreeStyle(data) {
 
 let locations, selectLoc, sessionNumber, today;
 
-// Create array containing all locations with name, depth, & parent keys
+// Create array containing all locations with name & depth keys
 const locData = app.vault.getMarkdownFiles()
   .filter(file => file.path.startsWith("Compendium/Atlas"))
   .sort(pppSort)
   .map(file => ({
     name: file.basename,
-    depth: file.path.split('/').length - (file.basename === file.path.split('/')[file.path.split('/').length - 2] ? 3 : 2),
-    parents: (this.app.metadataCache.getFileCache(file)?.frontmatter?.locations
-      ?.map(location => typeof location === 'string' ? location.replace(/^\[\[|\]\]$/g, "") : location)),
+    depth: file.path.split('/').length - (file.basename === file.path.split('/')[file.path.split('/').length - 2] ? 3 : 2)
   }));
 
 try {

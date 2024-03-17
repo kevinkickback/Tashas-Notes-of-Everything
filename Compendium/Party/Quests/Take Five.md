@@ -1,18 +1,14 @@
 ---
 type: quest
+target: groupQuest
 locations:
-- "[[Material Plane]]"
-- "[[Toril]]"
-- "[[Faerûn]]"
-- "[[The Sword Coast]]"
 - "[[Baldurs Gate]]"
 tags:
 - quest/completed
-- 
 headerLink: "[[Take Five#Take Five]]"
 ---
 ###### Take Five
-<span class="sub2">:fas_exclamation_circle: Quest &nbsp; | &nbsp; :fas_list_check: Completed</span>
+<span class="sub2">:fas_exclamation_circle: Quest &nbsp; | &nbsp; :fas_list_check: Completed </span>
 ___
 
 > [!quote|no-t]

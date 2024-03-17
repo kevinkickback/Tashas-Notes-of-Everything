@@ -17,9 +17,9 @@ Happy adventuring, and may your rolls always be natural 20s! 🎲✨
 
 
 ## Downloads:
-* Pre-Setup Vault:
-    [Download Now](https://github.com/kevinkickback/Tashas-Notes-of-Everything/releases/download/v1.4/TashasNotesofEverything.v1.4.rar)
-
+* Pre-Setup Vault: [Download Now](https://github.com/kevinkickback/Tashas-Notes-of-Everything/releases/download/v1.4/TashasNotesofEverything.v1.4.rar)
+<br>
+* Fira Code Font: [Download Here](https://github.com/tonsky/FiraCode)
 
 
 ## Install:
@@ -35,22 +35,18 @@ This project uses a mulitple community plugins & snippets. Below is list of ever
 
 <details><summary>Show Community Plugins</summary>
 
-### Community Plugins:
-- [x] Buttons
 - [x] Dataview
 - [x] Icon Shortcodes
-- [x] Iconize
 - [x] Link Headers Directly
+- [x] Meta Bind
 - [x] Quickadd
-- [x] Style Settings
 - [x] Sortable
+- [x] Style Settings
 - [x] Templater
 </details>
 
 <details><summary>Show Themes & Snippets</summary>
 
-### Themes and Snippets:
-
 - [x] [Prism](https://github.com/damiankorcz/Prism-Theme) theme by Damian Korcz
-- [x] Multiple code snippets from [ITS](https://github.com/SlRvb/Obsidian--ITS-Theme) theme by SlRvb
+- [x] Code snippets from [SlRvb](https://github.com/SlRvb/Obsidian--ITS-Theme) & [Kepano](https://github.com/sponsors/kepano)
 </details>

@@ -12,7 +12,7 @@ function toCamelCase(str) {
   });
 }
 
-// Get icon based on event type
+// Icons: get icon based on type
 function getIcon(type) {
   const iconMappings = {
     "Personal": ":far_calendar_alt:",

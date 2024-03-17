@@ -1,40 +1,60 @@
-/* --- Lighten the background --- */ 
+/*
+Custom edits to Prism theme
+author: @damiankorcz, @KevinKickback
+https://github.com/damiankorcz/Prism-Theme
+https://github.com/kevinkickback/Tashas-Notes-of-Everything
+*/
+
+/* Lighten the background */ 
 .theme-dark.pt-color-scheme-raven-dt { 
  --background-secondary-alt: hsl(0 0% 9%);
 }
-/* --- Typography --- */ 
+
+/* Suggestor font (make sure its monospace) */ 
 .suggestion-item {
   font-family: Fira Code;
 }
+
+/* navigation font size */
 body {
-	--list-marker-color: var(--text-normal);
 	--nav-item-size: 18px;
 }	
+
+/* line seperator spacing */
 hr {
-    margin: -6px 0 10px 0;
+    margin: -4px 0 10px 0;
 }
-p .obsidian-icon {
-    width: 1.4rem !important;
-	vertical-align: text-top;
-}
+
+/* Header 6 adjustments */
 h6 {
   margin-top: 0 !important;
+}
+.index h6 {
+  margin-top: 0.7em !important;
 }
 .is-phone h6, .is-phone span.sub2 {
 	display: block;
 	padding: 0 !important;
 	text-align: center;
 }
-.index h6 {
-  margin-top: 0.7em !important;
+
+/* H6 look like H1  */ 
+h6, .markdown-rendered h6, .HyperMD-header-6, .HyperMD-list-line .cm-header-6 {
+    font-variant: var(--h1-variant);
+    letter-spacing: 0.015em;
+    font-size: var(--h1-size);
+    line-height: var(--h1-line-height);
+    color: var(--h1-color);
+    font-weight: var(--h1-weight);
+    font-style: var(--h1-style);
+    font-family: var(--h1-font);
+	background-image: linear-gradient(var(--interactive-accent-base), rgba(255,0,0,0));
+	padding-left: 10px;
+	margin-bottom: -15px;
+	border-radius: 8px;
 }
-h6 .isc-icon svg {
-  font-size: 9px;
-  margin-top: 0 !important;
-}
-.isc-icon > *:first-child {
-  color: var(--interactive-accent-text);
-}
+
+/* Custom Header and Sub styling */ 
 span.head {
     display: table;
     margin: -25px auto 20px auto;
@@ -53,6 +73,16 @@ span.sub2 {
 .is-phone .index span.head {
 	text-align: center;
 }
+
+/* Hide H4 */ 
+h4 {
+	display: none;
+}
+
+/* Icons */ 
+.isc-icon {
+	color: var(--interactive-accent) !important;
+}
 .goldcoin svg {
 	color: #efe03a !important;
 }
@@ -62,33 +92,18 @@ span.sub2 {
 .coppercoin svg {
 	color: #bb9300 !important;
 }
-/* --- Sidebar Logo --- */ 
+
+/* Left Sidebar Image */ 
 .workspace-split.mod-left-split .view-content {
 	padding: 0 !important;
 }
-/* --- Hide H4 --- */ 
-h4 {
-	display: none;
-}
-/* --- H6 look like H1 --- */ 
-h6, .markdown-rendered h6, .HyperMD-header-6, .HyperMD-list-line .cm-header-6 {
-    font-variant: var(--h1-variant);
-    letter-spacing: 0.015em;
-    font-size: var(--h1-size);
-    line-height: var(--h1-line-height);
-    color: var(--h1-color);
-    font-weight: var(--h1-weight);
-    font-style: var(--h1-style);
-    font-family: var(--h1-font);
-	background-image: linear-gradient(var(--interactive-accent-base), rgba(255,0,0,0));
-	padding-left: 10px;
-	margin-bottom: -15px;
-	border-radius: 8px;
-}
-/* --- Disable header flash on link click --- */ 
+
+/* Disable header flash on link click */ 
 .is-flashing {
 	background-color: rgba(255,0,0,0)!important;
 }
+
+/* style toast notifications */ 
 div.notice-container div.notice {
   font-size: 16px;
   color: var(--text-normal);
@@ -97,23 +112,11 @@ div.notice-container div.notice {
   border-radius: var(--radius-m);
   box-shadow: var(--shadow-s);
 }
-/*--- Remove bottom padding ---*/
+
+/* Remove bottom padding from workspace */
 .markdown-preview-section:not(.popover.hover-popover .markdown-preview-section) {
-    padding-bottom: 23px !important;
+    padding-bottom: 30px !important;
 }
-/* --- Index Cardcover Adjustment --- */ 	
-.cards table.dataview>tbody>tr {
-	border: 2px solid #565656;
-}
-.cards table.dataview>tbody>tr:hover {
-	border: 2px solid var(--interactive-accent);
-}
-.cards table.dataview tbody>tr>td img {	
-	object-fit: cover !important;
-    object-position: top;
-	border-radius: 8px;
-    margin-bottom: -15px;
-}
-.cards table.dataview tbody>tr>td a {
-    font-size: 1.2em;
+.is-phone .markdown-preview-section:not(.popover.hover-popover .markdown-preview-section) {
+    padding-bottom: 50px !important;
 }

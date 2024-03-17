@@ -29,9 +29,10 @@ ___
 #### marker
 > [!column|flex 3]
 >> [!info]- STORYLINES:
->> - [[Quest 1]] (completed)
->> - [[Quest 2]] (ongoing)
->> - [[Quest 3]] (pending)
+>>```dataview
+>>LIST WITHOUT ID headerLink
+>>FROM "Compendium/Party/Quests" AND [[Tilda Rosesong]]
+>>SORT file.ctime DESC
 >
 >>[!note]- HISTORY
 >>```dataview

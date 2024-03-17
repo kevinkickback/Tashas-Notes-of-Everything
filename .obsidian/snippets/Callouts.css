@@ -1,4 +1,9 @@
-@charset "UTF-8";
+/*
+Callouts snippet for Obsidian
+author: @SlRvb
+https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Snippets/S%20-%20Callouts.css
+*/
+
 /*Callout Positioning*/
 :not(.is-live-preview) .callout.callout.callout:is([data-callout-metadata~="p+l"],
 [data-callout-metadata~=left]) {
@@ -1765,7 +1770,6 @@ body:not(.default-callout-quote) .callout.callout[data-callout=quote] > .callout
 }
 .callout {
 	margin-top: 10px !important;
-	padding-bottom: 1em !important;
 }
 .callout .callout-icon {
 	transform: scale(1.7);

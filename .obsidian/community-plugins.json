@@ -1,11 +1,10 @@
 [
-  "obsidian-style-settings",
   "dataview",
-  "obsidian-icon-folder",
-  "templater-obsidian",
-  "quickadd",
-  "buttons",
-  "obsidian-icon-shortcodes",
+  "obsidian-style-settings",
   "link-headers-directly",
-  "obsidian-sortable"
+  "obsidian-meta-bind-plugin",
+  "quickadd",
+  "obsidian-sortable",
+  "templater-obsidian",
+  "obsidian-icon-shortcodes"
 ]

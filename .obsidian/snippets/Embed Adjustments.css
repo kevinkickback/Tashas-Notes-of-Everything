@@ -1,3 +1,9 @@
+/*
+Embeded images snippet for Obsidian
+author: @SlRvb
+https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Snippets/S%20-%20Embed%20Adjustments.css
+*/
+
 .internal-embed:not(.image-embed)[alt*=htiny] .markdown-embed-content {
   height: var(--tiny);
 }

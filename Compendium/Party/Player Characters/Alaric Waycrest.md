@@ -19,19 +19,21 @@ ___
 > ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
-> | :fas_crown: Level | `=this.level` |
-> | :rif_sword: Class | `=this.class` |
-> | :fas_fist_raised: Archetype | `=this.subClass` |
-> | :fas_user: Race | `=this.race` |
+> | :fas_crown: Level  | `=this.level` |
+> | :rif_sword: Class |  `=this.class`|
+> | :fas_fist_raised: Archetype |  `=this.subClass`|
+> |  :rif_group: Race |  `=this.race`|
 
 > [!quote|no-t]
-> Alaric Wayrest is a rugged half-orc fighter hailing from [[Baldurs Gate#Baldurs Gate|Baldur's Gate]], known for his unwavering loyalty and formidable combat skills. As a member of the adventuring party [[LASTSTAND#LASTSTAND]], he stands as a stalwart defender against the forces of darkness. Alaric shares a deep bond with his childhood friend [[Moira Belkas#Moira Belkas]], their connection forged through shared trials and triumphs.
-
+> Alaric Wayrest is a rugged half-orc fighter hailing from [[Baldurs Gate#Baldurs Gate|Baldur's Gate]], known for his unwavering loyalty and formidable combat skills. As a member of the adventuring party [[LASTSTAND#LASTSTAND]], he stands as a stalwart defender against the forces of darkness. Alaric shares a deep bond with his childhood friend [[Moira Belkas#Moira Belkas]], their connection forged through shared trials and triumphs. 
+ 
 #### marker
 > [!column|flex 3]
 >> [!info]- STORYLINES:
->> - [[Take Five#Take Five]] (completed)
->> - [[The Delivery#The Delivery]] (ongoing)
+>>```dataview
+>>LIST WITHOUT ID headerLink
+>>FROM "Compendium/Party/Quests" AND [[Alaric Waycrest]]
+>>SORT file.ctime DESC
 >
 >>[!note]- HISTORY
 >>```dataview

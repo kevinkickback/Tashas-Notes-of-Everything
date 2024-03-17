@@ -1,26 +1,131 @@
-/*--- List display horizontally ---*/
-.index .dataview.list-view-ul  {
-    display: flex;
-    gap: 25px;
-    flex-direction: row;
-    flex-wrap: wrap;
+/*
+Convert certain dataview tables into lists
+author: @KevinKickback
+https://github.com/kevinkickback/Tashas-Notes-of-Everything
+*/
+
+/* Hide second data cell */  
+.listMe td:nth-child(2) {
+    display: none !important;
 }
 
-/*--- adjust dot spacing ---*/
-.index .dataview.list-view-ul li span{
-	position: relative;
-	left: -8px;
-	margin-right: 15px;
+.listMe table.dataview tbody {
+  border: 0;
+  clear: both;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  grid-row-gap: 0;
+  border: none !important;  
 }
+.listMe table.dataview  {
+	margin-top: -23px;
+}
+.listMe table.dataview tbody td {
+  flex: 1 1 auto;
+  margin-top: -20px;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 15px;
+  line-height: 1;
+}
+
+.listMe table.dataview > tbody > tr {
+  background-color: var(--cards-background);
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  padding: 0 !important;
+  transition: box-shadow 0.15s linear;
+  max-width: var(--cards-max-width); 
+  }
+  
+.listMe table.dataview > tbody > tr > td {
+white-space: pre-wrap;
+}
+
+.listMe .el-pre + .el-lang-dataview .table-view-thead {
+  padding-top: 8px; }
+  
+/* Sort Icon */  
+.listMe table.dataview thead {
+  user-select: none;
+  width: 160px;
+  display: block;
+  float: right;
+  position: relative;
+  text-align: right;
+  height: 40px;
+  padding-bottom: 0px; 
+  }
+.listMe table.dataview thead:hover:before {
+  opacity: 1;
+  background-color: var(--interactive-accent-tint); }
+.listMe table.dataview thead:before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 30px;
+  width: 10px;
+  height: 16px;
+  background-repeat: no-repeat;
+  background-color: var(--interactive-accent-tint);
+  cursor: var(--cursor);
+  text-align: right;
+  padding: var(--size-4-1) var(--size-4-2);
+  margin-bottom: 2px;
+  border-radius: var(--radius-s);
+  font-weight: 500;
+  font-size: var(--font-adaptive-small);
+  opacity: 0.5;
+  background-position: center center;
+  background-size: 20px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 100 100"><path fill="white" d="M49.792 33.125l-5.892 5.892L33.333 28.45V83.333H25V28.45L14.438 39.017L8.542 33.125L29.167 12.5l20.625 20.625zm41.667 33.75L70.833 87.5l-20.625 -20.625l5.892 -5.892l10.571 10.567L66.667 16.667h8.333v54.883l10.567 -10.567l5.892 5.892z"></path></svg>'); }
+.listMe table.dataview thead > tr {
+  top: 29px;
+  position: absolute;
+  display: none;
+  z-index: 9;
+  border: 1px solid var(--background-modifier-border-hover);
+  background-color: var(--background-secondary);
+  box-shadow: var(--shadow-s);
+  padding: 6px;
+  border-radius: var(--radius-m);
+  flex-direction: column;
+  margin: 26px 0 0 0;
+  width: 100%; }
+.listMe table.dataview thead:hover > tr {
+  display: flex; }
+.listMe table.dataview thead > tr > th {
+  display: block;
+  padding: 3px 30px 3px 6px !important;
+  border-radius: var(--radius-s);
+  width: 100%;
+  font-weight: 400;
+  color: var(--text-normal);
+  cursor: pointer;
+  border: none;
+  font-size: var(--font-ui-small); }
+.listMe table.dataview thead > tr > th[sortable-style="sortable-asc"],
+.listMe table.dataview thead > tr > th[sortable-style="sortable-desc"] {
+  color: var(--text-normal); }
+.listMe table.dataview thead > tr > th:hover {
+  color: var(--text-normal);
+  background-color: var(--background-modifier-hover); }
+
+/* Remove default bullet point */
 .listMe li {
-  list-style-type: none; /* Remove default marker */
+  list-style-type: none;
 }
 
+/* add custom bullet point */
 .listMe li::before {
   margin-left: -20px;
   position: relative;
-  content: "\2022"; /* Unicode for bullet character */
-  left: -5px;
-  color: inherit; /* Inherit color from parent (default) */
-  font-size: 1.3em; /* Adjust font size to make the marker larger */
+  content: "\2022";
+  left: -8px;
+  color: inherit;
+  font-size: 1.3em;
 }

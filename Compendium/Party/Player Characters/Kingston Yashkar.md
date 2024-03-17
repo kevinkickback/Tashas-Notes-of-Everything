@@ -21,16 +21,17 @@ ___
 > | :fas_crown: Level | `=this.level` |
 > | :rif_sword: Class | `=this.class` |
 > | :fas_pray: Oath | `=this.subClass` |
-> | :fas_user: Race | `=this.race` |
+> | :rif_group: Race | `=this.race` |
 
 > [!quote|no-t]
 > Kingston Yashkar, the Tabaxi Paladin hailing from [[Neverwinter#Neverwinter]], embodies unwavering faith and righteous conviction within the adventuring party [[LASTSTAND#LASTSTAND]]. At least that's how he would describe himself. In reality, as a follower of [[Tymora#Tymora]], the goddess of luck, he leaves everything to chance and goes which ever way the wind blows. You've never met a more lazy, er... carefree soul.
 #### marker
 > [!column|flex 3]
 >> [!info]- STORYLINES:
->> - [[Quest 1]] (completed)
->> - [[Quest 2]] (ongoing)
->> - [[Quest 3]] (pending)
+>>```dataview
+>>LIST WITHOUT ID headerLink
+>>FROM "Compendium/Party/Quests" AND [[Kingston Yashkar]]
+>>SORT file.ctime DESC
 >
 >>[!note]- HISTORY
 >>```dataview

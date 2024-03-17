@@ -4,11 +4,11 @@
   "showTags": true,
   "showAttachments": false,
   "hideUnresolved": true,
-  "showOrphans": true,
+  "showOrphans": false,
   "collapse-color-groups": false,
   "colorGroups": [
     {
-      "query": "path:\"Compendium/Lore & Other\"",
+      "query": "path:\"Compendium/Lore\"",
       "color": {
         "a": 1,
         "rgb": 14701138
@@ -29,21 +29,21 @@
       }
     },
     {
-      "query": "path:\"Compendium/Locations\"",
+      "query": "path:\"Compendium/Atlas\"",
       "color": {
         "a": 1,
         "rgb": 5431378
       }
     },
     {
-      "query": "path:Compendium/NPC's",
+      "query": "path:\"Compendium/NPC's\" ",
       "color": {
         "a": 1,
         "rgb": 5431473
       }
     },
     {
-      "query": "path:\"Compendium/Party/Agenda & Quests\"",
+      "query": "path:Compendium/Party/Quests",
       "color": {
         "a": 1,
         "rgb": 10965728
@@ -60,6 +60,6 @@
   "repelStrength": 10,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 0.27268604797210505,
+  "scale": 0.2726860479721058,
   "close": true
 }

@@ -16,10 +16,12 @@ ___
 
 #### marker
 > [!column|flex 3]
->>[!hint]- NPC's
+>> [!info]- STORYLINES:
 >>```dataview
 >>LIST WITHOUT ID headerLink
->>FROM "Compendium/NPC's" AND [[LASTSTAND]]
+>>FROM "Compendium/Party/Quests"
+>>WHERE target = "groupQuest"
+>>SORT file.ctime DESC
 >
 >>[!note]- HISTORY
 >>```dataview

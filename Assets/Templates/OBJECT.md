@@ -12,7 +12,7 @@ function toCamelCase(str) {
   });
 }
 
-// Get icon based on object type
+// Icons: get icon based on type
 function getIcon(type) {
   const iconMappings = {
     "Magic Item": ":fas_magic:",

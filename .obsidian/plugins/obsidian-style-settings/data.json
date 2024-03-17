@@ -102,5 +102,7 @@
   "ITS@@select": "wotc-beyond",
   "ITS@@mini": false,
   "buttons-styles@@button-background@@dark": "#DF0000",
-  "buttons-styles@@button-background@@light": "#0051F2"
+  "buttons-styles@@button-background@@light": "#0051F2",
+  "obsidian-prism-theme@@pt-file-explorer-folder-icon": true,
+  "obsidian-prism-theme@@pt-file-explorer-folder-icon-color": "pt-file-explorer-folder-icon-accent"
 }

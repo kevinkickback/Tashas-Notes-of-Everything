@@ -53,18 +53,21 @@ function fileTreeStyle(data) {
 //                        Main Code Section
 // ###########################################################
 
-let npc, selectLoc, locations, status;
+let npc, selectLoc, locations, pc, status;
 
-// Create array containing all locations with name, depth, & parent keys
+// Create array containing all locations with name & depth keys
 const locData = app.vault.getMarkdownFiles()
   .filter(file => file.path.startsWith("Compendium/Atlas"))
   .sort(pppSort)
   .map(file => ({
     name: file.basename,
-    depth: file.path.split('/').length - (file.basename === file.path.split('/')[file.path.split('/').length - 2] ? 3 : 2),
-    parents: (this.app.metadataCache.getFileCache(file)?.frontmatter?.locations
-      ?.map(location => typeof location === 'string' ? location.replace(/^\[\[|\]\]$/g, "") : location)),
+    depth: file.path.split('/').length - (file.basename === file.path.split('/')[file.path.split('/').length - 2] ? 3 : 2)
   }));
+
+// Create array containing PC names
+const pcNames = this.app.vault.getMarkdownFiles()
+  .filter(file => file.path.startsWith('Compendium/Party/Player Characters/'))
+  .map(file => file.basename);
 
 // Create array containing NPC names
 const npcNames = this.app.vault.getMarkdownFiles()
@@ -72,6 +75,16 @@ const npcNames = this.app.vault.getMarkdownFiles()
   .map(file => file.basename);
 
 try {
+  // Select PC if available
+  if (pcNames.length) {
+    pcNames.push("[ Group Quest ]");
+
+    // Select Prompt
+    pc = await tp.system.suggester(pcNames, pcNames, true, "Personal or group?");
+  } else {
+    pc = "[ Group Quest ]";
+    }
+  
   // Select NPC if available
   if (npcNames.length) {
     npcNames.push("[ MANUAL INPUT / NONE ]");
@@ -136,6 +149,7 @@ _%>
 
 ---
 type: quest
+target: <% pc === "[ Group Quest ]" ? "groupQuest" : `"[[${pc}]]"` %>
 locations:
 <% locations %>
 tags:

@@ -1,0 +1,121 @@
+/*
+NPC toggle view snippet
+author: @KevinKickback
+https://github.com/kevinkickback/Tashas-Notes-of-Everything
+*/
+
+/* Hide checkbox */ 
+input[type="checkbox"][id="npc"] {
+	display: none;
+}
+
+/* remove default dropdown icon */ 
+.dropdown.ncpedit.has-list-bullet {
+	background-image: none;
+}
+
+/* edit default dropdown style */ 
+ul li ul.dropdown {
+  min-width: 180px;
+  display: none;
+  border: 1px solid var(--interactive-accent);
+  padding: 5px;
+  background-image: none;	
+}
+
+/* dropdown mobile size */ 
+.is-mobile ul li ul.dropdown {
+  min-width: 240px;	
+}
+
+/* display dropdown menu on hover */ 
+  ul li:hover ul.dropdown {
+  display: block;
+}
+
+/* remove dropdown default bullets */ 
+.sortMenu .list-bullet::after  { 
+background-color: transparent;
+content: "  ";
+}
+
+/* dropdown menu icon */ 
+.sortMenu {
+  position: relative;
+  display: inline-block;
+}
+.sortIcon {
+  float: right;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-radius: 5px;
+  height: 27px;
+  background-color: hsl(271deg 48.93% 33.31%);;
+}
+.sortIcon svg {
+  margin-top: -5px;
+  color: #a5a3a3;;
+}
+
+/* dropdown menu styles */ 
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  display: none;
+  z-index: 999;
+  border: 1px solid var(--interactive-accent);
+  background-color: var(--background-secondary);
+  border-radius: var(--radius-m);
+  height: auto;
+}
+
+.dropdown:hover {
+  background-color: var(--background-secondary);
+}
+
+.dropdown li label {
+  display: block;
+  width: 100%;
+  padding: 3px 5px;
+  font-size: 1em;
+  color: var(--text-normal);
+  cursor: pointer;
+}
+
+.dropdown li:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.is-mobile ul.dropdown {
+	padding-inline-start: 5px;
+}
+
+/* selected option bullet indicator */ 
+.active::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-top: 4px;
+  background-color: grey;
+  border-radius: 50%;
+  float: right;
+}
+
+/* adjust dataview list margin */ 
+.npcDirect {
+	margin-top: -50px;
+	min-height: 100px;
+	float: left;
+}
+.npcChild  {
+	margin-top: -50px;
+	min-height: 120px;
+	float: left;
+	display: none;
+}
+.is-mobile .npcDirect,
+.is-mobile .npcChild {
+	min-height: 120px;
+}

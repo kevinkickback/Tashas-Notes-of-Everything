@@ -1,10 +1,6 @@
 ---
 type: npc
 locations:
-- "[[Material Plane]]"
-- "[[Toril]]"
-- "[[Faerûn]]"
-- "[[The Sword Coast]]"
 - "[[Waterdeep]]"
 tags:
 - race/human

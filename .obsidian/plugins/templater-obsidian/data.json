@@ -15,17 +15,17 @@
   "enable_folder_templates": true,
   "folder_templates": [
     {
-      "folder": "",
+      "folder": "Assets/Templates",
       "template": ""
     }
   ],
   "syntax_highlighting": true,
   "syntax_highlighting_mobile": true,
   "enabled_templates_hotkeys": [
-    ""
+    "Assets/Templates/STARTUP.md"
   ],
   "startup_templates": [
-    ""
+    "Assets/Templates/STARTUP.md"
   ],
   "enable_ribbon_icon": false
 }

@@ -1,11 +1,6 @@
 ---
 type: npc
 locations:
-- "[[Material Plane]]"
-- "[[Toril]]"
-- "[[Faerûn]]"
-- "[[The Sword Coast]]"
-- "[[Baldurs Gate]]"
 - "[[Sorcerous Sundries]]"
 tags:
 - race/gnome
@@ -15,7 +10,7 @@ tags:
 headerLink: "[[Tinkera Drenn#Tinkera Drenn]]"
 ---
 ###### Tinkera Drenn
-<span class="sub2">:fas_map_location_dot: [[Baldurs Gate#Baldurs Gate]] &nbsp; | &nbsp; :fas_heartbeat: Friendly</span>
+<span class="sub2">:fas_map_location_dot: [[Sorcerous Sundries#Sorcerous Sundries]] &nbsp; | &nbsp; :fas_heartbeat: Friendly</span>
 ___
 
 > [!infobox|no-t right]
@@ -29,7 +24,7 @@ ___
 <span class="clearfix"></span>
 
 > [!quote|no-t]
->a spirited female gnome residing in the bustling city of [[Baldurs Gate#Baldurs Gate]]. By day, she's a part-time employee at [[Sorcerous Sundries]], a renowned arcane emporium where she assists customers with their magical needs. With her vibrant personality and keen intellect, she's become a familiar face among the enchanting wares of the shop. However, beneath her jovial exterior lies a secret that few are privy to: Tinkera is the caretaker of a mischievous baby red dragon, whom she affectionately calls Ignis. Despite her best efforts to keep him hidden, Ignis's playful antics occasionally threaten to reveal their clandestine companionship.
+>A spirited female gnome residing in the bustling city of [[Baldurs Gate]]. By day, she's a part-time employee at Sorcerous Sundries, a renowned arcane emporium where she assists customers with their magical needs. With her vibrant personality and keen intellect, she's become a familiar face among the enchanting wares of the shop. However, beneath her jovial exterior lies a secret that few are privy to: Tinkera is the caretaker of a mischievous baby red dragon, whom she affectionately calls Ignis. Despite her best efforts to keep him hidden, Ignis's playful antics occasionally threaten to reveal their clandestine companionship.
 
 #### marker
 > [!column|flex 3]

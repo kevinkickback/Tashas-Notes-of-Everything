@@ -12,12 +12,12 @@ function toCamelCase(str) {
   });
 }
 
-// Icons: select icon based on type
+// Icons: get icon based on type
 function getIcon(type) {
   const iconMappings = {
     "Blacksmith": ":fas_hammer:",
     "Camp": ":fas_campground:",
-    "Guildhall": ":fas_shield",
+    "Guildhall": ":fas_shield:",
     "Inn": ":fas_bed:",
     "Library": ":fas_book_open:",
     "Market": ":fas_balance_scale_left:",
@@ -36,16 +36,14 @@ function getIcon(type) {
 // ###########################################################
 
 const quickAdd = app.plugins.plugins.quickadd.api;
-let continent, icon, locale, locations, path, plane, realm, region, type;
+let  icon, locale, locations, path, type;
 
-// Create array containing locales
+// Create array containing all locales with name & path keys
 const locData = this.app.vault.getAllLoadedFiles()
   .filter(file => this.app.metadataCache.getFileCache(file)?.frontmatter?.type === 'locale')
   .map(file => ({
     name: file.basename,
-    parents: (this.app.metadataCache.getFileCache(file)?.frontmatter?.locations
-      ?.map(location => typeof location === 'string' ? location.replace(/^\[\[|\]\]$/g, "") : location)),
-    path: file.path.split('/').slice(2, -1).join('/') + '/'
+    path: file.path.split('/').slice(0, -1).join('/') + '/'
   }));
 
 try {
@@ -91,11 +89,7 @@ try {
 
   // Set variables
   path = locale && locale.path ? locale.path : null;
-  plane = locale && locale.parents ? locale.parents[0] : null;
-  realm = locale && locale.parents ? locale.parents[1] : null;
-  continent = locale && locale.parents ? locale.parents[2] : null;
-  region = locale && locale.parents ? locale.parents[3] : null;
-  locations = locale && locale.parents ? locale.parents.map(value => `- "[[${value}]]"`).join("\n") + `\n- "[[${locale.name}]]"` : locale && locale.name ? `- "[[${locale.name}]]"` : "- ";
+  locations = locale && locale.name ? `- "[[${locale.name}]]"` : "- ";
 
   // Select venue type
   type = await tp.system.suggester(
@@ -122,7 +116,7 @@ try {
 }
 
 // Finished: move note, open note, & show toast notification
-await tp.file.move('/Compendium/Atlas/' + (plane ? plane + "/" : "") + (realm ? realm + "/" : "") + (continent ? continent + "/" : "") + (region ? region + "/" : "") + (locale ? locale.name + "/" : "") + tp.file.title + "/" + tp.file.title)
+await tp.file.move((path ? path : "Compendium/Atlas/") + tp.file.title + "/" + tp.file.title);
 await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(tp.file.title));
 new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New ${type ? type.toLowerCase() : "locale"} <span style="text-decoration: underline;">{{name}}</span> added`;
 _%>
@@ -156,12 +150,12 @@ ___
 
 #### marker
 > [!column|flex 3]
->> [!hint]-  NPC's
->> ```dataview
+> > [!hint]-  NPC's
+> >```dataview
 LIST WITHOUT ID headerLink
 FROM "Compendium/NPC's" AND [[{{name}}]]
 SORT file.name ASC
->
+> 
 >> [!note]- HISTORY
 >>```dataview
 LIST WITHOUT ID headerLink

@@ -21,7 +21,7 @@ ___
 > | :fas_crown: Level | `=this.level` |
 > | :rif_sword: Class | `=this.class` |
 > | :fas_bullseye: Conclave | `=this.subClass` |
-> | :fas_user: Race | `=this.race` |
+> | :rif_group: Race | `=this.race` |
 
 > [!quote|no-t]
 > Moira Belkas, a resourceful ranger hailing from [[Baldurs Gate#Baldurs Gate|Baldur's Gate]], embodies the harmony of nature and skillful marksmanship within the adventuring party [[LASTSTAND#LASTSTAND]]. As a childhood friend of [[Alaric Waycrest#Alaric Waycrest]], their bond endures through every trial they face together.
@@ -29,9 +29,10 @@ ___
 #### marker
 > [!column|flex 3]
 >> [!info]- STORYLINES:
->> - [[Quest 1]] (completed)
->> - [[Quest 2]] (ongoing)
->> - [[Quest 3]] (pending)
+>>```dataview
+>>LIST WITHOUT ID headerLink
+>>FROM "Compendium/Party/Quests" AND [[Moira Belkas]]
+>>SORT file.ctime DESC
 >
 >>[!note]- HISTORY
 >>```dataview

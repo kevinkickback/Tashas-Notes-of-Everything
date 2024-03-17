@@ -2,10 +2,6 @@
 cssClasses: grayTable, wideTable
 type: landmark
 locations:
-- "[[Material Plane]]"
-- "[[Toril]]"
-- "[[Faerûn]]"
-- "[[The Sword Coast]]"
 - "[[Waterdeep]]"
 tags:
 - location/cemetery
@@ -23,12 +19,12 @@ ___
 
 #### marker
 > [!column|flex 3]
->> [!hint]-  NPC's
->> ```dataview
+> > [!hint]-  NPC's
+> >```dataview
 LIST WITHOUT ID headerLink
 FROM "Compendium/NPC's" AND [[City of the Dead]]
 SORT file.name ASC
->
+> 
 >> [!note]- HISTORY
 >>```dataview
 LIST WITHOUT ID headerLink

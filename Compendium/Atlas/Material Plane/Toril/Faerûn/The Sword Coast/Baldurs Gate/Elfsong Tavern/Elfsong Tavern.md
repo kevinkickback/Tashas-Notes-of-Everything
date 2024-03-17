@@ -2,10 +2,6 @@
 cssClasses: grayTable, wideTable
 type: landmark
 locations:
-- "[[Material Plane]]"
-- "[[Toril]]"
-- "[[Faerûn]]"
-- "[[The Sword Coast]]"
 - "[[Baldurs Gate]]"
 tags:
 - location/tavern
@@ -31,12 +27,12 @@ ___
 
 #### marker
 > [!column|flex 3]
->> [!hint]-  NPC's
->> ```dataview
+> > [!hint]-  NPC's
+> >```dataview
 LIST WITHOUT ID headerLink
 FROM "Compendium/NPC's" AND [[Elfsong Tavern]]
 SORT file.name ASC
->
+> 
 >> [!note]- HISTORY
 >>```dataview
 LIST WITHOUT ID headerLink
