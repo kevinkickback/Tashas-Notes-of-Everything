@@ -18,7 +18,6 @@ Happy adventuring, and may your rolls always be natural 20s! 🎲✨
 
 ## Downloads:
 * Pre-Setup Vault: [Download Now](https://github.com/kevinkickback/Tashas-Notes-of-Everything/releases/download/v2.0.0/TashasNotesofEverything.v2.0.0.rar)
-<br>
 * Fira Code Font: [Download Here](https://github.com/tonsky/FiraCode)
 
 
