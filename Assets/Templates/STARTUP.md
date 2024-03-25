@@ -21,5 +21,5 @@ parent.window.addEventListener('change', (event) => {
     }
 });
 
-console.log("NPC toggle event listener attached.");
+console.log("NPC Toggle: event listener attached to parent window.");
 _%>

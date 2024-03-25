@@ -24,7 +24,7 @@ ___
 <span class="clearfix"></span>
 
 > [!quote|no-t]
->A spirited female gnome residing in the bustling city of [[Baldurs Gate]]. By day, she's a part-time employee at Sorcerous Sundries, a renowned arcane emporium where she assists customers with their magical needs. With her vibrant personality and keen intellect, she's become a familiar face among the enchanting wares of the shop. However, beneath her jovial exterior lies a secret that few are privy to: Tinkera is the caretaker of a mischievous baby red dragon, whom she affectionately calls Ignis. Despite her best efforts to keep him hidden, Ignis's playful antics occasionally threaten to reveal their clandestine companionship.
+>By day, she's a part-time employee at Sorcerous Sundries, a renowned arcane emporium where she assists customers with their magical needs. With her vibrant personality and keen intellect, she's become a familiar face among the enchanting wares of the shop. However, beneath her jovial exterior lies a secret that few are privy to: Tinkera is the caretaker of a mischievous baby red dragon, whom she affectionately calls Ignis. Despite her best efforts to keep him hidden, Ignis's playful antics occasionally threaten to reveal their clandestine companionship.
 
 #### marker
 > [!column|flex 3]
