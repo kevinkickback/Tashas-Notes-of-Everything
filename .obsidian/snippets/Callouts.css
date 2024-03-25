@@ -1794,10 +1794,10 @@ body:not(.default-callout-quote) .callout.callout[data-callout=quote] > .callout
 	border-width: 2px !important;
 }
 .index .callout.is-collapsible.is-collapsed .callout-icon {
-	color: var(--callout-open-bg);
+	color: var(--interactive-accent);
 }
 .index .callout.is-collapsible.is-collapsed .callout-title-inner {
-	color: var(--callout-open-bg);
+	color: var(--interactive-accent);
 }
 .index .callout-title {
 	border-color: #565656 !important;
@@ -1809,14 +1809,8 @@ body:not(.default-callout-quote) .callout.callout[data-callout=quote] > .callout
 	color: white;
 	background-color: var(--interactive-accent-base) !important;
 }
-.index .callout.is-collapsible .callout-title {
-	background-color: var(--interactive-accent-base);
-}
-.index .callout.is-collapsible.is-collapsed .callout-title {
-	background-color: var(--background-secondary-alt);
-}
 .index .callout.is-collapsible.is-collapsed .callout-fold {
-	color: var(--callout-open-bg);
+	color: var(--interactive-accent);
 }
 .index .callout.is-collapsible.is-collapsed .callout-fold:hover {
 	color: white;
@@ -1885,7 +1879,6 @@ body:not(.default-callout-quote) .callout.callout[data-callout=quote] > .callout
 	border: 0;
 	padding-bottom: 10px !important;
 }
-
 
 padding-bottom: 1em !important;
 /*@settings

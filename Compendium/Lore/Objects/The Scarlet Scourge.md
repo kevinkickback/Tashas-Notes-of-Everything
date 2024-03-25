@@ -2,7 +2,6 @@
 type: object
 tags:
 - artifact
-- 
 headerLink: "[[The Scarlet Scourge#The Scarlet Scourge]]"
 ---
 

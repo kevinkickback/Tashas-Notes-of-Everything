@@ -10,12 +10,12 @@ input[type="checkbox"][id="npc"] {
 }
 
 /* remove default dropdown icon */ 
-.dropdown.ncpedit.has-list-bullet {
+.dropdown.npcedit.has-list-bullet {
 	background-image: none;
 }
 
 /* edit default dropdown style */ 
-ul li ul.dropdown {
+ul li ul.dropdown.npcedit {
   min-width: 180px;
   display: none;
   border: 1px solid var(--interactive-accent);
@@ -24,12 +24,12 @@ ul li ul.dropdown {
 }
 
 /* dropdown mobile size */ 
-.is-mobile ul li ul.dropdown {
+.is-mobile ul li ul.dropdown.npcedit {
   min-width: 240px;	
 }
 
 /* display dropdown menu on hover */ 
-  ul li:hover ul.dropdown {
+  ul li:hover ul.dropdown.npcedit {
   display: block;
 }
 
@@ -50,7 +50,7 @@ content: "  ";
   padding-right: 3px;
   border-radius: 5px;
   height: 27px;
-  background-color: hsl(271deg 48.93% 33.31%);;
+  background-color: var(--interactive-accent);
 }
 .sortIcon svg {
   margin-top: -5px;
@@ -58,7 +58,7 @@ content: "  ";
 }
 
 /* dropdown menu styles */ 
-.dropdown {
+.dropdown.npcedit {
   position: absolute;
   top: 100%;
   right: 0;
@@ -70,11 +70,11 @@ content: "  ";
   height: auto;
 }
 
-.dropdown:hover {
+.dropdown.npcedit:hover {
   background-color: var(--background-secondary);
 }
 
-.dropdown li label {
+.dropdown.npcedit li label {
   display: block;
   width: 100%;
   padding: 3px 5px;
@@ -83,11 +83,11 @@ content: "  ";
   cursor: pointer;
 }
 
-.dropdown li:hover {
+.dropdown.npcedit li:hover {
   background-color: var(--background-modifier-hover);
 }
 
-.is-mobile ul.dropdown {
+.is-mobile ul.dropdown.npcedit {
 	padding-inline-start: 5px;
 }
 

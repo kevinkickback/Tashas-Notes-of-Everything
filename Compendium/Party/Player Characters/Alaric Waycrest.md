@@ -19,7 +19,7 @@ ___
 > ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
-> | :fas_crown: Level  | `=this.level` |
+> | :fas_crown: Level   | `=this.level` |
 > | :rif_sword: Class |  `=this.class`|
 > | :fas_fist_raised: Archetype |  `=this.subClass`|
 > |  :rif_group: Race |  `=this.race`|
