@@ -3,148 +3,91 @@
 //                        Helper Functions
 // ###########################################################
 
-// Tag Formatter: convert string to camel case
+// Convert string to camelCase
 function toCamelCase(str) {
-  return str.replace(/\s(.)/g, function (match, group1) {
-    return group1.toUpperCase();
-  }).replace(/\s/g, '').replace(/^(.)/, function (match, group1) {
-    return group1.toLowerCase();
-  });
+	return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
 }
 
-// Icons: get icon based on type
+// Return icon based on type
 function getIcon(type) {
   const iconMappings = {
-    "Blacksmith": ":fas_hammer:",
-    "Camp": ":fas_campground:",
-    "Guildhall": ":fas_shield:",
-    "Inn": ":fas_bed:",
-    "Library": ":fas_book_open:",
-    "Market": ":fas_balance_scale_left:",
-    "Port": ":fas_sailboat:",
-    "Residence": ":fas_house:",
-    "Shop": ":fas_shopping_cart:",
-    "Stable": ":fas_horse_head:",
-    "Tavern": ":fas_glass_martini_alt:",
-    "Temple": ":fas_church:",
+    Blacksmith: ':FasHammer:',
+    Camp: ':FasCampground:',
+    Guildhall: ':FasShield:',
+    Inn: ':FasBed:',
+    Library: ':FasBookOpen:',
+    Market: ':FasScaleUnbalanced:',
+    Port: ':FasSailboat:',
+    Residence: ':FasHouse:',
+    Shop: ':FasCartShopping:',
+    Stable: ':FasHorseHead::',
+    Tavern: ':RiBeerLine:',
+    Temple: ':FasChurch:',
   };
 
-  return iconMappings[type] || ":fas_question_circle:";
+  return iconMappings[type] || ':FasCircleQuestion:';
 }
+
+// Return modified path based on location
+const dv = app.plugins.plugins.dataview.api;
+function getPath(location) {
+	const match = dv.pages('"Compendium/Atlas"')
+		.where(p => p.type === 'locale' && p.file.name === location)
+		.map(obj => obj.file.path.split('/').slice(2, -1).join('/'))
+		.find(Boolean);
+
+	return match || '';
+}
+
 // ###########################################################
 //                        Main Code Section
 // ###########################################################
 
-const quickAdd = app.plugins.plugins.quickadd.api;
-let  icon, locale, locations, path, type;
+// Call modal form
+const result = await MF.openForm('LANDMARK');
 
-// Create array containing all locales with name & path keys
-const locData = this.app.vault.getAllLoadedFiles()
-  .filter(file => this.app.metadataCache.getFileCache(file)?.frontmatter?.type === 'locale')
-  .map(file => ({
-    name: file.basename,
-    path: file.path.split('/').slice(0, -1).join('/') + '/'
-  }));
+// Set variables after result returns values
+const location = result.Location.value;
+const name = result.Name.value;
+let type = result.Type.value;
+const icon = getIcon(type);
+const path = getPath(location);
 
-try {
-  // Select locale if available
-  if (locData.length) {
-    const manualInput = {
-      name: "[ MANUAL INPUT / NONE ]",
-      parents: null,
-      path: null
-    };
-    locData.push(manualInput);
-
-    // Select prompt
-    let names = locData.map(file => file.name);
-    locale = await tp.system.suggester(names, locData, true, "{{name}}'s location?");
-
-    // Manual input
-    if (locale.name === manualInput.name) {
-      locale.name = await tp.system.prompt("Enter name:", "Leave blank for none", true);
-      locale.name = locale.name === "Leave blank for none" ? null : locale.name;
-    }
-  } else {
-    // Warning prompt
-    let warning = await quickAdd.yesNoPrompt('Info:', 'A landmark (i.e. tavern) is a smaller part of a locale (i.e. town). You currently have no locales. Would you like to add one now?');
-
-    if (warning) {
-      // Delete note and execute locale template
-      await this.app.vault.trash(tp.file.find_tfile(tp.file.title), true);
-      await this.app.commands.executeCommandById('quickadd:choice:deed9b32-4e1c-45fd-a967-960c0829555c');
-      return;
-    } else if (warning === false) {
-      // Confirmation prompt
-      let confirm = await quickAdd.yesNoPrompt('Confirm:', 'Create new landmark without any locale?');
-
-      // Exit Early
-      if (!confirm) {
-        throw new Error;
-      }
-    } else if (warning === undefined) {
-      throw new Error;
-    }
-  }
-
-  // Set variables
-  path = locale && locale.path ? locale.path : null;
-  locations = locale && locale.name ? `- "[[${locale.name}]]"` : "- ";
-
-  // Select venue type
-  type = await tp.system.suggester(
-    ["Blacksmith", "Camp", "Guildhall", "Inn", "Library", "Market", "Port", "Residence", "Shop", "Stable", "Tavern", "Temple", "[ MANUAL INPUT ]"],
-    ["Blacksmith", "Camp", "Guildhall", "Inn", "Library", "Market", "Port", "Residence", "Shop", "Stable", "Tavern", "Temple", "Other"],
-    true,
-    "Type of landmark?"
-  );
-
-  // Manual input
-  if (type === "other") {
-    type = await tp.system.prompt("Enter type:", "Leave blank for none", true);
-    type = type === "Leave blank for none" ? null : type;
-  }
-
-  // Get Icon
-  icon = getIcon(type);
-
-} catch (error) {
-  // Exit Early: delete note & show toast notification
-  await this.app.vault.trash(tp.file.find_tfile(tp.file.title), true);
-  new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled!</span><br>No landmark has been added`;
-  return;
+if (type === 'Manual') {
+	type = await tp.system.prompt('Enter type:', 'Leave blank for none', true);
+	type = type === 'Leave blank for none' || '' ? '' : type;
 }
 
-// Finished: move note, open note, & show toast notification
-await tp.file.move((path ? path : "Compendium/Atlas/") + tp.file.title + "/" + tp.file.title);
-await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(tp.file.title));
-new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New ${type ? type.toLowerCase() : "locale"} <span style="text-decoration: underline;">{{name}}</span> added`;
+// Rename, move, & open markdown file
+await tp.file.move(`Compendium/Atlas/${location ? `${path}/` : ''}${name}`);
+await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New landmark <span style="text-decoration: underline;">${name}</span> added`;
 _%>
 
 ---
 cssClasses: grayTable, wideTable
 type: landmark
 locations:
-<% locations %>
+ - <% location ? `"[[${location}]]"` : '' %>
 tags:
-<% type ? "- location/" + toCamelCase(type) : "- " %>
-headerLink: "[[{{name}}#{{name}}]]"
+ - <% type ? `location/${toCamelCase(type)}` : '' %>
+headerLink: "[[<% name %>#<% name %>]]"
 ---
 
 ![[banner.jpg|banner]]
-###### {{name}}
-<span class="sub2"><% type ? `${icon} ${type}` : "" %></span>
+###### <% name %>
+<span class="sub2"><% type ? `${icon} ${type}` : '' %></span>
 ___
 
 > [!quote|no-t] SUMMARY
->Description of the <% type ? type.toLowerCase() : "landmark" %> {{name}}.
+>Description of the <% type ? type.toLowerCase() : 'landmark' %> <% name %>.
 
 #### marker
 | INVENTORY                  | PRICE |
 | -------------------------- | ----- |
-| Item 1 | 80 <span class="goldcoin">:rif_coins:</span>  |
-| Item 2 | 20 <span class="silvercoin">:rif_coins:</span>   |
-| Item 3 | 100 <span class="coppercoin">:rif_coins:</span>  |
+| Item 1 | 80 <span class="goldcoin">:RiCoinsFill:</span>  |
+| Item 2 | 20 <span class="silvercoin">:RiCoinsFill:</span>   |
+| Item 3 | 100 <span class="coppercoin">:RiCoinsFill:</span>  |
 
 <span class="clearfix"></span>
 
@@ -153,11 +96,11 @@ ___
 > > [!hint]-  NPC's
 > >```dataview
 LIST WITHOUT ID headerLink
-FROM "Compendium/NPC's" AND [[{{name}}]]
+FROM "Compendium/NPC's" AND [[<% name %>]]
 SORT file.name ASC
 > 
 >> [!note]- HISTORY
 >>```dataview
 LIST WITHOUT ID headerLink
-FROM "Session Notes" AND [[{{name}}]]
+FROM "Session Notes" AND [[<% name %>]]
 SORT file.ctime DESC

@@ -12,17 +12,17 @@ cover: "/Assets/Images/Party/alaric.png"
 ---
 
 ###### Alaric Waycrest
-:fas_person: Player Character &nbsp; | &nbsp; :fas_quote_left: In battle, I find my true purpose :fas_quote_right:
+:FasPerson: Player Character &nbsp; | &nbsp; :FasQuoteLeft: In battle, I find my true purpose :FasQuoteRight:
 ___
 > [!infobox|no-t right]
 > ![[alaric.png]]
 > ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
-> | :fas_crown: Level   | `=this.level` |
-> | :rif_sword: Class |  `=this.class`|
-> | :fas_fist_raised: Archetype |  `=this.subClass`|
-> |  :rif_group: Race |  `=this.race`|
+> | :FasCrown: Level   | `=this.level` |
+> | :RiSwordFill: Class |  `=this.class`|
+> | :FasHandFist: Archetype |  `=this.subClass`|
+> |  :FasUserGroup: Race |  `=this.race`|
 
 > [!quote|no-t]
 > Alaric Wayrest is a rugged half-orc fighter hailing from [[Baldurs Gate#Baldurs Gate|Baldur's Gate]], known for his unwavering loyalty and formidable combat skills. As a member of the adventuring party [[LASTSTAND#LASTSTAND]], he stands as a stalwart defender against the forces of darkness. Alaric shares a deep bond with his childhood friend [[Moira Belkas#Moira Belkas]], their connection forged through shared trials and triumphs. 

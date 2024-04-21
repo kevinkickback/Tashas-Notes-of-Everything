@@ -9,7 +9,7 @@ headerLink: "[[The Sword Coast#The Sword Coast]]"
 
 ![[swordCoast.jpg|banner]]
 ###### The Sword Coast
-<span class="sub2">:fas_map: General Region</span>
+<span class="sub2">:FasMap: General Region</span>
 ___
 
 > [!quote|no-t] SUMMARY
@@ -18,7 +18,7 @@ ___
 #### marker
 > [!column|flex 3]
 > > [!hint]-  NPC's
-> > <input type="checkbox" id="npc"/><ul class="sortMenu"><li class="sortIcon">:rif_list_settings:<ul class="dropdown npcedit"><li><label for="npc" class="directLabel active">Direct Links Only</label></li><li><label for="npc" class="childLabel">Include Sub-Locations</label></li></ul></li></ul>
+> > <input type="checkbox" id="npc"/><ul class="sortMenu"><li class="sortIcon">:RiListSettingsLine:<ul class="dropdown npcedit"><li><label for="npc" class="directLabel active">Direct Links Only</label></li><li><label for="npc" class="childLabel">Include Sub-Locations</label></li></ul></li></ul>
 > >```dataviewjs
 dv.container.className += ' npcDirect';
 dv.list(dv.pages('"Compendium/NPC\'s"')
@@ -56,7 +56,7 @@ dv.list(data);
 >>```dataview
 LIST WITHOUT ID headerLink
 FROM "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast"
-WHERE file.name != this.file.name AND type= "locale"
+WHERE type= "locale"
 SORT file.name ASC
 >
 >> [!note]- HISTORY

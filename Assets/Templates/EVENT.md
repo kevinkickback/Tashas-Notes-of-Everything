@@ -3,78 +3,59 @@
 //                        Helper Functions
 // ###########################################################
 
-// Tag Formatter: convert string to camel case
+// Convert string to camelCase
 function toCamelCase(str) {
-  return str.replace(/\s(.)/g, function (match, group1) {
-    return group1.toUpperCase();
-  }).replace(/\s/g, '').replace(/^(.)/, function (match, group1) {
-    return group1.toLowerCase();
-  });
+	return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
 }
 
-// Icons: get icon based on type
+// Return icon based on type
 function getIcon(type) {
-  const iconMappings = {
-    "Personal": ":far_calendar_alt:",
-    "Political": ":fas_bullhorn:",
-    "Religious": ":fas_cross:",
-    "Seasonal": ":rif_sun_foggy:",
-  };
+	const iconMappings = {
+		Personal: ':FasCalendarDays:',
+		Political: ':FasBullhorn:',
+		Religious: ':FasCross:',
+		Seasonal: ':RiSunFoggyFill',
+	};
 
-  return iconMappings[type] || ":fas_question_circle:";
+	return iconMappings[type] || ':fas_question_circle:';
 }
 
 // ###########################################################
 //                        Main Code Section
 // ###########################################################
 
-let icon, type;
+// Call modal form
+const result = await MF.openForm('EVENT');
 
-try {
-  // Select event type
-  type = await tp.system.suggester(
-    ["Personal", "Political", "Religious", "Seasonal", "[ MANUAL INPUT ]"],
-    ["Personal", "Political", "Religious", "Seasonal", "other"],
-    true,
-    "Type of event?"
-  );
+// Declare variables after form returns values
+const name = result.Name.value;
+let type = result.Type.value;
+const icon = getIcon(type);
 
-  // Manually input type
-  if (type === "other") {
-    type = await tp.system.prompt("Enter type:", "Leave blank for none", true);
-    type = type === "Leave blank for none" ? null : type;
-  }
-
-  // Get icon
-  icon = getIcon(type);
-
-} catch (error) {
-  // Exit Early: delete temp & note then show toast notification
-  await this.app.vault.trash(app.vault.getAbstractFileByPath("temp.md"), true);
-  await this.app.vault.trash(tp.file.find_tfile(tp.file.title), true);
-  new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled!</span><br>No event has been added`;
-  return;
+if (type === 'Manual') {
+	type = await tp.system.prompt('Enter type:', 'Leave blank for none', true);
+	type = type === 'Leave blank for none' || '' ? '' : type;
 }
 
-// Finished: delete temp, open note, fire toast message
-await this.app.vault.trash(app.vault.getAbstractFileByPath("temp.md"), true);
-app.workspace.getLeaf(true).openFile(tp.file.find_tfile(tp.file.title));
-new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New ${type ? type.toLowerCase() : ""} eve <span style="text-decoration: underline;">{{name}}</span> added`;
+// Rename & open note
+await tp.file.rename(name);
+await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New event <span style="text-decoration: underline;">${name}</span> added`;
 _%>
 
 ---
 type: event
 tags:
-<% type ? "- event/" + toCamelCase(type) : "-" %>
-headerLink: "[[{{name}}#{{name}}]]"
+ - <% type ? `event/${toCamelCase(type)}` : '' %>
+headerLink: "[[<% name %>#<% name %>]]"
 ---
 
-###### {{name}}
-<span class="sub2"><% type ? `${icon} ${type} Event` : "" %></span>
+###### <% name %>
+<span class="sub2"><% type ? `${icon} ${type} Event` : '' %></span>
 ___
 
 > [!quote|no-t]
->![[embed.jpg|right wm-sm]]Description of the <% type ? type.toLowerCase() + " event" : "event" %>, {{name}}.
+>![[embed.jpg|right wm-sm]]Description of the <% type ? type.toLowerCase() + ' event' : 'event' %>, <% name %>.
 <span class="clearfix"></span>
 
 #### marker
@@ -82,9 +63,9 @@ ___
 >>[!hint]- NPC's
 >>```dataview
 >>LIST WITHOUT ID headerLink
->FROM "Compendium/NPC's" AND [[{{name}}]]
+>FROM "Compendium/NPC's" AND [[<% name %>]]
 >
 >>[!note]- HISTORY
 >>```dataview
 >LIST WITHOUT ID headerLink
->FROM "Session Notes" AND [[{{name}}]]
+>FROM "Session Notes" AND [[<% name %>]]

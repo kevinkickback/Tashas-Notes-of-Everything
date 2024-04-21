@@ -6,7 +6,7 @@ headerLink: "[[Feywild#Feywild]]"
 ---
 ![[feywild.webp|banner]]
 ###### Feywild
-<span class="sub2">:fas_circle_half_stroke:  Plane of Existence</span>
+<span class="sub2">:FasCircleHalfStroke: Plane of Existence</span>
 ___
 
 > [!quote|no-t] SUMMARY
@@ -15,7 +15,7 @@ ___
 #### marker
 > [!column|flex 3]
 > > [!hint]-  NPC's
-> > <input type="checkbox" id="npc"/><ul class="sortMenu"><li class="sortIcon">:rif_list_settings:<ul class="dropdown npcedit"><li><label for="npc" class="directLabel active">Direct Links Only</label></li><li><label for="npc" class="childLabel">Include Sub-Locations</label></li></ul></li></ul>
+> > <input type="checkbox" id="npc"/><ul class="sortMenu"><li class="sortIcon">:RiListSettingsLine:<ul class="dropdown npcedit"><li><label for="npc" class="directLabel active">Direct Links Only</label></li><li><label for="npc" class="childLabel">Include Sub-Locations</label></li></ul></li></ul>
 > >```dataviewjs
 dv.container.className += ' npcDirect';
 dv.list(dv.pages('"Compendium/NPC\'s"')

@@ -3,85 +3,41 @@
 //                        Helper Functions
 // ###########################################################
 
-// Tag Formatter: convert string to camel case
+// Convert string to camelCase
 function toCamelCase(str) {
-  return str.replace(/\s(.)/g, function (match, group1) {
-    return group1.toUpperCase();
-  }).replace(/\s/g, '').replace(/^(.)/, function (match, group1) {
-    return group1.toLowerCase();
-  });
+	return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
 }
 
 // ###########################################################
 //                        Main Code Section
 // ###########################################################
 
-const quickAdd = app.plugins.plugins.quickadd.api;
-let alignment, domains, sex, tags;
+// Call modal form
+const result = await MF.openForm('GOD');
 
-try {
-  // Select sex
-  sex = await tp.system.suggester(
-    ["Male", "Female", "Androgynous", "Agender / Non-binary"],
-    ["Male", "Female", "Androgynous", "Agender"],
-    true,
-    "{{name}}'s gender?"
-  );
+// Declare variables after form returns values
+const alignment = result.Alignment.value;
+const name = result.Name.value;
+const gender = result.Gender.value;
+const domains = result.Domains.value;
+const pantheon = result.Pantheon.value;
+const tags = domains ? domains.map(value => `- domain/${toCamelCase(value)}`).join("\n") : '-';
 
-  // Select alignment
-  alignment = await tp.system.suggester(
-    ["Lawful Good", "Neutral Good", "Chaotic Good",
-      "Lawful Neutral", "True Neutral", "Chaotic Neutral",
-      "Lawful Evil", "Neutral Evil", "Chaotic Evil"],
-    ["Lawful Good", "Neutral Good", "Chaotic Good",
-      "Lawful Neutral", "True Neutral", "Chaotic Neutral",
-      "Lawful Evil", "Neutral Evil", "Chaotic Evil"],
-    true, "{{name}}'s alignment?"
-  );
-
-  // Display info prompt
-  await quickAdd.infoDialog(
-    "Info:",
-    "Select all relevant domains from the upcoming list. If none apply choose the last option."
-  );
-
-  // Select domains
-  domains = await quickAdd.checkboxPrompt(
-    ["Agriculture", "Air", "Ambition", "Arts", "Avarice", "Balance", "Beasts", "Beauty", "Celebrations", "Change", "Civilization", "Conquest", "Corruption", "Creation", "Darkness", "Death", "Destruction", "Earth", "Envy", "Fall", "Fire", "Forge", "Freedom", "Glory", "Gluttony", "Grave", "Greed", "Growth", "Hatred", "Healing", "Hope", "Illusion", "Invention", "Justice", "Knowledge", "Law", "Lies", "Life", "Light", "Love", "Luck", "Lust", "Madness", "Magic", "Mist", "Moon", "Nature", "Nobility", "Order", "Pain", "Patience", "Pestilence", "Plants", "Pleasure", "Poison", "Pride", "Protection", "Renewal", "Repose", "Retribution", "Sea", "Secrets", "Shadow", "Sleep", "Sloth", "Snow", "Strength", "Sun", "Temperance", "Tempest", "Time", "Trade", "Travel", "Trickery", "Tyranny", "Underneath", "Vengeance", "Vengence", "War", "Water", "Wealth", "Wilderness", "Winter", "Wrath", "Zeal", "[ NONE ]"]
-  );
-
-  // None selected or exit early
-  if (domains[0] === "[ NONE ]") {
-    domains = "None"
-  } else if (!domains.length) {
-    throw new Error;
-  }
-
-  tags = domains !== "None" ? domains.map(value => `- domain/${value.toLowerCase()}`).join("\n") : "- ";
-
-} catch (error) {
-  // Exit Early: delete temp & note then show toast notification
-  await this.app.vault.trash(app.vault.getAbstractFileByPath("temp.md"), true);
-  await this.app.vault.trash(tp.file.find_tfile(tp.file.title), true);
-  new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled!</span><br>No diety has been added`;
-  return;
-}
-
-// Finished: delete temp, open note, fire toast message
-await this.app.vault.trash(app.vault.getAbstractFileByPath("temp.md"), true);
-app.workspace.getLeaf(true).openFile(tp.file.find_tfile(tp.file.title));
-new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New diety <span style="text-decoration: underline;">{{name}}</span> added`;
+// Rename & open note
+await tp.file.rename(name);
+await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New deity <span style="text-decoration: underline;">${name}</span> added`;
 _%>
 
 ---
 type: deity
 tags:
 <% tags %>
-headerLink: "[[{{name}}#{{name}}]]"
+headerLink: "[[<% name %>#<% name %>]]"
 ---
 
-###### {{name}}
-<span class="sub2">:fas_cross: *Deity* &nbsp; | &nbsp; :fas_yin_yang: <% alignment %></span>
+###### <% name %>
+<span class="sub2">:FasCross: *Deity* &nbsp; | &nbsp; :FasYinYang: <% alignment %></span>
 ___
 
 > [!infobox|no-t right]
@@ -89,21 +45,21 @@ ___
 > ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
-> | :fas_bolt_lightning: Domains | <% domains.join(", ") %> |
-> | :fas_venus_mars: Gender | <% sex %> |
-> | :fas_building_columns: Pantheon | Faerûnian |
+> | :FasBoltLightning: Domains | <% domains.join(', ') %> |
+> | :FasVenusMars: Gender | <% gender %> |
+> | :FasBuildingColumns: Pantheon | <% pantheon %> |
 
 > [!quote|no-t]
->Profile of {{name}}, the <% alignment.toLowerCase() %> <% sex.toLowerCase() %> deity.
+>Profile of <% name %>, the <% alignment.toLowerCase() %> <% gender.toLowerCase() %> deity.
 
 #### marker
 > [!column|flex 3]
 >> [!hint]-  NPC's
 >>```dataview
 >>LIST WITHOUT ID headerLink
->>FROM "Compendium/NPC's" AND [[{{name}}]] 
+>>FROM "Compendium/NPC's" AND [[<% name %>]] 
 >
 >>[!note]- HISTORY
 >>```dataview
 >>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[{{name}}]]
+>>FROM "Session Notes" AND [[<% name %>]]

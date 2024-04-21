@@ -1,28 +1,28 @@
 {
   "command_timeout": 5,
-  "templates_folder": "Assets/Templates",
+  "templates_folder": "",
   "templates_pairs": [
     [
       "",
       ""
     ]
   ],
-  "trigger_on_file_creation": true,
-  "auto_jump_to_cursor": true,
+  "trigger_on_file_creation": false,
+  "auto_jump_to_cursor": false,
   "enable_system_commands": false,
   "shell_path": "",
   "user_scripts_folder": "",
   "enable_folder_templates": true,
   "folder_templates": [
     {
-      "folder": "Assets/Templates",
+      "folder": "",
       "template": ""
     }
   ],
   "syntax_highlighting": true,
-  "syntax_highlighting_mobile": true,
+  "syntax_highlighting_mobile": false,
   "enabled_templates_hotkeys": [
-    "Assets/Templates/STARTUP.md"
+    ""
   ],
   "startup_templates": [
     "Assets/Templates/STARTUP.md"

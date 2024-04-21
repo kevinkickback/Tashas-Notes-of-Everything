@@ -53,7 +53,7 @@ content: "  ";
   background-color: var(--interactive-accent);
 }
 .sortIcon svg {
-  margin-top: -5px;
+  margin-top: -2em;
   color: #a5a3a3;;
 }
 

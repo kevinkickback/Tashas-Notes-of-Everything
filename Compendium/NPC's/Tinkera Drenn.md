@@ -10,7 +10,7 @@ tags:
 headerLink: "[[Tinkera Drenn#Tinkera Drenn]]"
 ---
 ###### Tinkera Drenn
-<span class="sub2">:fas_map_location_dot: [[Sorcerous Sundries#Sorcerous Sundries]] &nbsp; | &nbsp; :fas_heartbeat: Friendly</span>
+<span class="sub2">:FasMapLocationDot: [[Sorcerous Sundries#Sorcerous Sundries]] &nbsp; | &nbsp; :FasHeartPulse: Friendly</span>
 ___
 
 > [!infobox|no-t right]

@@ -8,7 +8,7 @@ tags:
 headerLink: "[[Double Trouble#Double Trouble]]"
 ---
 ###### Double Trouble
-<span class="sub2">:fas_exclamation_circle: Quest &nbsp; | &nbsp; :fas_list_check: Pending </span>
+<span class="sub2">:FasCircleExclamation: Quest &nbsp; | &nbsp; :FasListCheck: Pending </span>
 ___
 
 > [!quote|no-t]

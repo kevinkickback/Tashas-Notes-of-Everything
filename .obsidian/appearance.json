@@ -31,14 +31,14 @@
     "Images",
     "test",
     "Tabs",
-    "NPC Toggle",
     "Buttons",
     "Callouts",
     "Cards",
-    "Embed Adjustments",
     "Columns",
+    "Embed Adjustments",
     "Image Adjustments",
     "Lists",
+    "NPC Toggle",
     "Popup",
     "Prism Theme Edits",
     "Tables"
@@ -47,5 +47,6 @@
   "accentColor": "#8a5cf5",
   "showViewHeader": true,
   "nativeMenus": false,
-  "monospaceFontFamily": "Fira Code"
+  "monospaceFontFamily": "Fira Code",
+  "textFontFamily": ""
 }

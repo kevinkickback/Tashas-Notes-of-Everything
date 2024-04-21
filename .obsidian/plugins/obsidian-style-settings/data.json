@@ -64,12 +64,12 @@
   "obsidian-prism-theme@@file-line-width": 1335,
   "obsidian-prism-theme@@pt-font-slashed-zero": false,
   "obsidian-prism-theme@@pt-fade-inactive-tabs": true,
-  "obsidian-prism-theme@@pt-icon-folder-accent": true,
+  "obsidian-prism-theme@@pt-icon-folder-accent": false,
   "obsidian-prism-theme@@h1-size": 2.4,
   "obsidian-prism-theme@@h1-text-color-dt": "var(--text-normal)",
   "obsidian-prism-theme@@pt-status-bar-style": "pt-status-bar-position-hidden",
   "obsidian-prism-theme@@pt-fixed-status-bar-align": "pt-fixed-status-bar-align-center",
-  "obsidian-prism-theme@@pt-icons-accent": true,
+  "obsidian-prism-theme@@pt-icons-accent": false,
   "obsidian-prism-theme@@color-schemes-dt": "pt-color-scheme-raven-dt",
   "obsidian-prism-theme@@pt-titlebar-hide-text": true,
   "obsidian-prism-theme@@h6-size": 2.2,
@@ -102,6 +102,11 @@
   "ITS@@mini": false,
   "buttons-styles@@button-background@@dark": "#DF0000",
   "buttons-styles@@button-background@@light": "#0051F2",
-  "obsidian-prism-theme@@pt-file-explorer-folder-icon": true,
-  "obsidian-prism-theme@@pt-file-explorer-folder-icon-color": "pt-file-explorer-folder-icon-accent"
+  "obsidian-prism-theme@@pt-colored-folders-style": "pt-colored-folders-style-rainbow",
+  "obsidian-prism-theme@@pt-colored-folders-files-match": false,
+  "callout-adjustments@@callout-style": "none",
+  "image-adjustments@@img-adj-list": true,
+  "obsidian-prism-theme@@pt-font-disable-ligatures": false,
+  "obsidian-prism-theme@@pt-file-explorer-folder-icon-color": "pt-file-explorer-folder-icon-default",
+  "obsidian-prism-theme@@pt-colored-folders": false
 }

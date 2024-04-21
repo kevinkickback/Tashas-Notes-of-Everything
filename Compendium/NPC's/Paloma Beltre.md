@@ -9,7 +9,7 @@ tags:
 headerLink: "[[Paloma Beltre#Paloma Beltre]]"
 ---
 ###### Paloma Beltre
-<span class="sub2">:fas_map_location_dot: [[Elfsong Tavern#Elfsong Tavern]] &nbsp; | &nbsp;  :fas_heartbeat: Neutral </span>
+<span class="sub2">:FasMapLocationDot: [[Elfsong Tavern#Elfsong Tavern]] &nbsp; | &nbsp; :FasHeartPulse: Neutral </span>
 ___
 
 > [!infobox|no-t right]

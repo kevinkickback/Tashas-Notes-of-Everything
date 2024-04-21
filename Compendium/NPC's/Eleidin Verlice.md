@@ -9,7 +9,7 @@ tags:
 headerLink: "[[Eleidin Verlice#Eleidin Verlice]]"
 ---
 ###### Eleidin Verlice
-<span class="sub2">:fas_map_location_dot: [[Feywild#Feywild]] &nbsp; | &nbsp;  :fas_heartbeat: Unknown </span>
+<span class="sub2">:FasMapLocationDot: [[Feywild#Feywild]] &nbsp; | &nbsp; :FasHeartPulse: Unknown </span>
 ___
 
 > [!infobox|no-t right]

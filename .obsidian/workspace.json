@@ -4,11 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "92d3b6eeff4171c4",
+        "id": "ec17b76efa8e1b2e",
         "type": "tabs",
         "children": [
           {
-            "id": "fac183caf82b08f2",
+            "id": "e20de4e82f9bef05",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "INDEX.md",
+                "mode": "preview",
+                "backlinks": false,
+                "source": true
+              }
+            }
+          },
+          {
+            "id": "32c847cc79551ec8",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -74,7 +87,7 @@
       {
         "id": "93b9c9c4275d20fd",
         "type": "tabs",
-        "dimension": 23.214285714285715,
+        "dimension": 24.857142857142858,
         "children": [
           {
             "id": "92764f1ad63f62e9",
@@ -89,7 +102,7 @@
       {
         "id": "8874cb022e2284d9",
         "type": "tabs",
-        "dimension": 76.78571428571429,
+        "dimension": 75.14285714285714,
         "children": [
           {
             "id": "3df18e84174958a9",
@@ -125,7 +138,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#rest",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -138,62 +151,63 @@
       }
     ],
     "direction": "horizontal",
-    "width": 356.5
+    "width": 341.5
   },
   "left-ribbon": {
     "hiddenItems": {
       "graph:Open graph view": true,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "modalforms:Edit forms": false
     }
   },
-  "active": "fac183caf82b08f2",
+  "active": "e20de4e82f9bef05",
   "lastOpenFiles": [
-    "Assets/Templates/REALM.md",
-    "Assets/Templates/STARTUP.md",
-    "Assets/Templates/REGION.md",
-    "Assets/Templates/PLANE.md",
-    "Assets/Templates/LOCALE.md",
-    "Assets/Templates/CONTINENT.md",
-    "INDEX.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep/Waterdeep.md",
-    "Compendium/Atlas/Material Plane/Toril/Toril.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/The Sword Coast.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Sorcerous Sundries/Sorcerous Sundries.md",
-    "Compendium/Atlas/Material Plane/Material Plane.md",
-    "Compendium/Atlas/Feywild/Feywild.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/Faerûn.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep/City of the Dead/City of the Dead.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Baldurs Gate.md",
-    "Compendium/NPC's/Tinkera Drenn.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Elfsong Tavern/Elfsong Tavern.md",
-    "Compendium/NPC's/Paloma Beltre.md",
-    "Session Notes/Session 01 (2024-02-17).md",
-    "Compendium/Party/Player Characters/Alaric Waycrest.md",
     "README.md",
-    "Compendium/Party/Player Characters/Moira Belkas.md",
-    "Compendium/Party/Quests/The Delivery.md",
-    "Compendium/Party/Quests/Double Trouble.md",
-    "Compendium/NPC's/Eleidin Verlice.md",
-    "Assets/Images/Lore/ps83A.tmp",
+    "Assets/Templates/QUEST.md",
+    "INDEX.md",
+    "Assets/Templates/STARTUP.md",
+    "Compendium/Party/Player Characters/Alaric Waycrest.md",
+    "Assets/Templates/CONTINENT.md",
+    "Assets/Templates/PLANE.md",
+    "temp.md",
+    "Compendium/Atlas/z/z.md",
+    "Compendium/Atlas/z",
+    "Compendium/Atlas/a/a.md",
+    "Compendium/Atlas/a",
+    "Assets/Templates/NOTE.md",
+    "Assets/Templates/LOCALE.md",
+    "Assets/Templates/LANDMARK.md",
+    "Assets/Templates/GOD.md",
+    "Assets/Templates/EVENT.md",
+    "Assets/Templates/NPC.md",
+    "Assets/Templates/REGION.md",
+    "Assets/Templates/REALM.md",
+    "Assets/Templates/ORGANIZATION.md",
+    "Assets/Templates/OBJECT.md",
+    "Compendium/NPC's/temp 1.md",
+    "Untitled 1.md",
+    "Untitled.md",
+    "test.md",
+    "test 3.md",
+    "test 2.md",
+    "Assets/Images/Location/elfsong.jpg",
+    "Assets/Images/Location/baldursGate.webp",
+    "Compendium/Atlas/It Works Now",
+    "__rar_30528.45510.rartemp",
+    "Compendium/Atlas/aaa",
+    "Compendium/Atlas/zzz",
+    "Compendium/Atlas/Feywild/Realm 1 2/Continent Here/My Region/Swampland",
+    "Compendium/Atlas/Feywild/Realm 1 2/Continent Here/My Region",
+    "Compendium/Atlas/Feywild/Realm 1 2/Continent Here",
+    "Compendium/Atlas/Feywild/Realm 1 2",
+    "Assets/Images/Party/alaric.png",
+    "Assets/Images/Party/alaric 1.png",
     "Assets/Images/header.jpg",
     "Assets/Images/NPC/eleidin.jpg",
     "Assets/Images/Location/feywild.webp",
     "Assets/Images/Location/Feywild.webp",
-    "Compendium/Atlas/Feywild",
     "Assets/Images/NPC/paloma.jpg",
-    "Assets/Templates/startup.js",
-    "Assets/Templates/toggle.js",
-    "Assets/Templates/New Text Document.txt",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Drunken Griffin",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep/test67",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep/test66",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep/test6",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/test55",
     "Assets/Images/header.png",
-    "Assets/Images/Party/alaric.png",
-    "Assets/Images/Lore/tymora.jpg",
-    "Assets/Images/Quest/clearcave.jpg",
-    "Assets/Images/Quest/runevil.jpg",
     "Compendium/Party/Quests/!Journey Board.canvas"
   ]
 }

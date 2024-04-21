@@ -1,28 +1,39 @@
 <%*
-// Finished: move note, open note, the show toast notification
-await tp.file.move('/Compendium/Atlas/' + tp.file.title + "/" + tp.file.title);
-await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(tp.file.title));
-new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New plane <span style="text-decoration: underline;">{{name}}</span> added`;
+// ###########################################################
+//                        Main Code Section
+// ###########################################################
+
+// Call modal form
+const result = await MF.openForm('PLANE');
+
+// Declare variables after form returns values
+const name = result.Name.value;
+
+// Rename, move, & open note
+await tp.file.move(`Compendium/Atlas/${name}/${name}`);
+await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+await this.app.vault.delete(temp);
+new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New plane <span style="text-decoration: underline;">${name}</span> added`;
 _%>
 
 ---
 type: plane
 tags:
 - 
-headerLink: "[[{{name}}#{{name}}]]"
+headerLink: "[[<% name %>#<% name %>]]"
 ---
 ![[banner.jpg|banner]]
-###### {{name}}
-<span class="sub2">:fas_circle_half_stroke:  Plane of Existence</span>
+###### <% name %>
+<span class="sub2">:FasCircleHalfStroke:  Plane of Existence</span>
 ___
 
 > [!quote|no-t] SUMMARY
->Description of the plane {{name}}.
+>Description of the plane <% name %>.
 
 #### marker
 > [!column|flex 3]
 > > [!hint]-  NPC's
-> > <input type="checkbox" id="npc"/><ul class="sortMenu"><li class="sortIcon">:rif_list_settings:<ul class="dropdown npcedit"><li><label for="npc" class="directLabel active">Direct Links Only</label></li><li><label for="npc" class="childLabel">Include Sub-Locations</label></li></ul></li></ul>
+> > <input type="checkbox" id="npc"/><ul class="sortMenu"><li class="sortIcon">:RiListSettingsLine:<ul class="dropdown npcedit"><li><label for="npc" class="directLabel active">Direct Links Only</label></li><li><label for="npc" class="childLabel">Include Sub-Locations</label></li></ul></li></ul>
 > >```dataviewjs
 dv.container.className += ' npcDirect';
 dv.list(dv.pages('"Compendium/NPC\'s"')
@@ -59,12 +70,12 @@ dv.list(data);
 >> [!example]- LOCATIONS
 >>```dataview
 LIST WITHOUT ID headerLink
-FROM "Compendium/Atlas/{{name}}"
-WHERE file.name != this.file.name AND type= "realm"
+FROM "Compendium/Atlas/<% name %>"
+WHERE type= "realm"
 SORT file.name ASC
 >
 >> [!note]- HISTORY
 >>```dataview
 LIST WITHOUT ID headerLink
-FROM "Session Notes" AND [[{{name}}]]
+FROM "Session Notes" AND [[<% name %>]]
 SORT file.ctime DESC

@@ -13,28 +13,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "INDEX.md",
-                "mode": "preview",
-                "backlinks": false,
-                "source": true
-              }
-            }
-          },
-          {
-            "id": "5243e52c0b196ae6",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Baldurs Gate.md",
+                "file": "Compendium/Atlas/Feywild/Realm 1 2/Realm 1 2.md",
                 "mode": "preview",
                 "backlinks": false,
                 "source": true
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -92,7 +78,7 @@
         "state": {
           "type": "backlink",
           "state": {
-            "file": "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Baldurs Gate.md",
+            "file": "Compendium/Atlas/Feywild/Realm 1 2/Realm 1 2.md",
             "collapseAll": false,
             "extraContext": false,
             "sortOrder": "alphabetical",
@@ -108,15 +94,17 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "modalforms:Edit forms": false,
       "graph:Open graph view": false,
       "command-palette:Open command palette": false
     }
   },
-  "active": "5243e52c0b196ae6",
+  "active": "8629e8d9f9c9732e",
   "lastOpenFiles": [
     "INDEX.md",
-    "Compendium/NPC's/sdfsdf.md",
+    "Compendium/NPC's/Mobile Works.md",
     "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Baldurs Gate.md",
+    "Compendium/NPC's/sdfsdf.md",
     "Compendium/NPC's/Paloma Beltre.md",
     "Compendium/Atlas/Material Plane/Toril/Faerûn/Faerûn.md",
     "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Elfsong Tavern/Elfsong Tavern.md",
@@ -138,7 +126,6 @@
     "Compendium/Party/Player Characters/Tilda Rosesong.md",
     "Session Notes/Session 02 (2024-02-17).md",
     "Compendium/Party/Player Characters/Kingston Yashkar.md",
-    "Compendium/Lore/Deities/Beshaba.md",
-    "Compendium/NPC's/zxczxc.md"
+    "Compendium/Lore/Deities/Beshaba.md"
   ]
 }

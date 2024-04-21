@@ -15,5 +15,6 @@
   "showInlineTitle": false,
   "defaultViewMode": "preview",
   "rightToLeft": false,
-  "propertiesInDocument": "hidden"
+  "propertiesInDocument": "hidden",
+  "focusNewTab": true
 }

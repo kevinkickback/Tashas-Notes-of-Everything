@@ -8,7 +8,7 @@ headerLink: "[[Fellows of Free Fate#Fellows of Free Fate]]"
 ---
 
 ###### Fellows of Free Fate
-<span class="sub2">:fas_sitemap: Organization &nbsp; | &nbsp; :fas_yin_yang: Chaotic Good</span>
+<span class="sub2">:FasCross: Religious Organization</span>
 ___
 
 > [!quote|no-t]

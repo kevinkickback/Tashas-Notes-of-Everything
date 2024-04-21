@@ -6,7 +6,7 @@ headerLink: "[[Dawn Cataclysm#Dawn Cataclysm]]"
 ---
 
 ###### Dawn Cataclysm
-<span class="sub2">:fas_cross: Religious Event</span>
+<span class="sub2">:FasCross: Religious Event</span>
 ___
 
 > [!quote|no-t]

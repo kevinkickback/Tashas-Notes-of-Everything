@@ -118,5 +118,31 @@ div.notice-container div.notice {
     padding-bottom: 30px !important;
 }
 .is-phone .markdown-preview-section:not(.popover.hover-popover .markdown-preview-section) {
-    padding-bottom: 50px !important;
+    padding-bottom: 80px !important;
+}
+
+/* Icon color in notes */
+.cm-iconize-icon {
+  color: var(--interactive-accent);
+}
+
+/* Icon color in file tree */
+.tree-item .iconize-icon {
+  color: var(--interactive-accent);
+}
+
+/* Icon color in file tree: active */
+.tree-item-self.fn-is-active .iconize-icon,
+.tree-item-self.is-active .iconize-icon {
+  color: white;
+}
+
+/* Icon color in file tree: hover */
+.tree-item-self:hover svg {
+  color: unset !important;
+}
+
+/* Disable pointer cursor on folder note titles */
+.tree-item-inner {
+  cursor: default !important;
 }

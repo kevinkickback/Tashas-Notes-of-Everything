@@ -6,7 +6,7 @@ headerLink: "[[The Scarlet Scourge#The Scarlet Scourge]]"
 ---
 
 ###### The Scarlet Scourge
-<span class="sub2">:fas_cross: Religious Artifact</span>
+<span class="sub2">:FasCross: Religious Artifact</span>
 ___
 
 > [!quote|no-t]

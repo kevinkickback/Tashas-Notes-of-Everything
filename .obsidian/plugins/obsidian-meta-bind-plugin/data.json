@@ -2,7 +2,6 @@
   "devMode": false,
   "ignoreCodeBlockRestrictions": false,
   "preferredDateFormat": "YYYY-MM-DD",
-  "useUsDateInputOrder": false,
   "firstWeekday": {
     "index": 0,
     "name": "Sunday",
@@ -16,7 +15,229 @@
   "enableSyntaxHighlighting": true,
   "enableEditorRightClickMenu": true,
   "inputFieldTemplates": [],
-  "buttonTemplates": [],
+  "buttonTemplates": [
+    {
+      "label": "+ ADD REGION",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "region",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/REGION.md",
+          "folderPath": "Compendium/Atlas",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ]
+    },
+    {
+      "label": "+ ADD REALM",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "realm",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/REALM.md",
+          "folderPath": "Compendium/Atlas",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ]
+    },
+    {
+      "label": "+ ADD QUEST",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "quest",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/QUEST.md",
+          "folderPath": "Compendium/Party/Quests",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ]
+    },
+    {
+      "label": "+ ADD PLANE",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "plane",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/PLANE.md",
+          "folderPath": "/",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ]
+    },
+    {
+      "label": "+ ADD ORGANIZATION",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "org",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/ORGANIZATION.md",
+          "folderPath": "Compendium/Lore/Organizations",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ]
+    },
+    {
+      "label": "+ ADD OBJECT",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "object",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/OBJECT.md",
+          "folderPath": "Compendium/Lore/Objects",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ]
+    },
+    {
+      "label": "+ ADD NOTE",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "note",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/NOTE.md",
+          "folderPath": "Session Notes",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ]
+    },
+    {
+      "label": "+ ADD LOCALE",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "locale",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/LOCALE.md",
+          "folderPath": "/",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ]
+    },
+    {
+      "label": "+ ADD LANDMARK",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "landmark",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/LANDMARK.md",
+          "folderPath": "/",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ]
+    },
+    {
+      "label": "+ ADD DEITY",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "deity",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/GOD.md",
+          "folderPath": "Compendium/Lore/Deities",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ]
+    },
+    {
+      "label": "+ ADD EVENT",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "event",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/EVENT.md",
+          "folderPath": "Compendium/Lore/Events",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ]
+    },
+    {
+      "label": "+ ADD NPC",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "npc",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/NPC.md",
+          "folderPath": "Compendium/NPC's",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ]
+    },
+    {
+      "label": "+ ADD CONTINENT",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "continent",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/CONTINENT.md",
+          "folderPath": "/",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ]
+    }
+  ],
   "excludedFolders": [
     "templates"
   ]

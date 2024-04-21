@@ -1,85 +1,58 @@
 <%*
 // ###########################################################
+//                        Helper Functions
+// ###########################################################
+
+// Return modified path based on location
+const dv = app.plugins.plugins.dataview.api;
+function getPath(location) {
+	const match = dv.pages('"Compendium/Atlas"')
+		.where(p => p.type === 'plane' && p.file.name === location)
+		.map(obj => obj.file.path.split('/').slice(2, -1).join('/'))
+		.find(Boolean);
+
+	return match || '';
+}
+
+// ###########################################################
 //                        Main Code Section
 // ###########################################################
 
-const quickAdd = app.plugins.plugins.quickadd.api;
-let plane;
+// Call modal form
+const result = await MF.openForm('REALM');
 
-// Create array containing all planes
-const planeData = this.app.vault.getAllLoadedFiles()
-  .filter(file => this.app.metadataCache.getFileCache(file)?.frontmatter?.type === 'plane')
-  .map(file => file.basename);
+// Declare variables after form returns values
+const location = result.Location.value;
+const name = result.Name.value;
+const path = getPath(location);
 
-try {
-  // Select plane if available
-  if (planeData.length) {
-    planeData.push("[ MANUAL INPUT / NONE]");
-    plane = await tp.system.suggester(planeData, planeData, true, "{{name}}'s location?");
-
-    // Manual input
-    if (plane === "[ MANUAL INPUT / NONE ]") {
-      plane = await tp.system.prompt("Enter name:", "Leave blank for none", true);
-      plane = plane === "Leave blank for none" ? null : plane;
-    }
-  } else {
-    // Warning prompt
-    let warning = await quickAdd.yesNoPrompt('Info:', 'Realms (i.e. worlds) are smaller parts of planes (i.e. universes). You currently have no planes. Would you like to add one now?');
-
-    if (warning) {
-      // Delete realm & temp note then execute plane template
-      await this.app.vault.trash(app.vault.getAbstractFileByPath("temp.md"), true);
-      await this.app.vault.trash(tp.file.find_tfile(tp.file.title), true);
-      await this.app.commands.executeCommandById('quickadd:choice:733e1e2c-9945-4247-b265-cb4b42fbb875');
-      return;
-    } else if (warning === false) {
-      // Confirmation prompt
-      let confirm = await quickAdd.yesNoPrompt('Confirm:', 'Create new realm without any plane?');
-
-      // Exit early        
-      if (!confirm) {
-        throw new Error;
-      }
-    } else if (warning === undefined) {
-      throw new Error;
-    }
-  }
-} catch (error) {
-  // Exit Early: delete temp & note then show toast notification
-  await this.app.vault.trash(app.vault.getAbstractFileByPath("temp.md"), true);
-  await this.app.vault.trash(tp.file.find_tfile(tp.file.title), true);
-  new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled!</span><br>no realm has been added`;
-  return;
-}
-
-// Finished: delete temp, move note, open note, & show toast notification
-await this.app.vault.trash(app.vault.getAbstractFileByPath("temp.md"), true);
-await tp.file.move('/Compendium/Atlas/' + (plane ? plane + "/" : "") + tp.file.title + "/" + tp.file.title);
-await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(tp.file.title));
-new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New realm <span style="text-decoration: underline;">{{name}}</span> added`;
+// Rename, move, & open note
+await tp.file.move(`Compendium/Atlas/${location ? `${path}/` : ''}${name}/${name}`);
+await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New realm <span style="text-decoration: underline;">${name}</span> added`;
 _%>
 
 ---
 type: realm
 locations:
-<% plane ? `- "[[${plane}]]"` : "- " %>
+- <% location ? `"[[${location}]]"` : '' %>
 tags:
 - 
-headerLink: "[[{{name}}#{{name}}]]"
+headerLink: "[[<% name %>#<% name %>]]"
 ---
 
 ![[banner.jpg|banner]]
-###### {{name}}
-<span class="sub2">:fas_globe:  Realm (world)</span>
+###### <% name %>
+<span class="sub2">:RiGlobalLine: Realm (world)</span>
 ___
 
 > [!quote|no-t] SUMMARY
->Description of the realm {{name}}.
+>Description of the realm <% name %>.
 
 #### marker
 > [!column|flex 3]
 > > [!hint]-  NPC's
-> > <input type="checkbox" id="npc"/><ul class="sortMenu"><li class="sortIcon">:rif_list_settings:<ul class="dropdown npcedit"><li><label for="npc" class="directLabel active">Direct Links Only</label></li><li><label for="npc" class="childLabel">Include Sub-Locations</label></li></ul></li></ul>
+> > <input type="checkbox" id="npc"/><ul class="sortMenu"><li class="sortIcon">:RiListSettingsLine:<ul class="dropdown npcedit"><li><label for="npc" class="directLabel active">Direct Links Only</label></li><li><label for="npc" class="childLabel">Include Sub-Locations</label></li></ul></li></ul>
 > >```dataviewjs
 dv.container.className += ' npcDirect';
 dv.list(dv.pages('"Compendium/NPC\'s"')
@@ -116,12 +89,12 @@ dv.list(data);
 >> [!example]- LOCATIONS
 >>```dataview
 LIST WITHOUT ID headerLink
-FROM "Compendium/Atlas/<% plane ? plane + "/" : "" %>{{name}}"
-WHERE file.name != this.file.name AND type= "continent"
+FROM "Compendium/Atlas/<% location ? `${path}/` : '' %><% name %>"
+WHERE type= "continent" OR type="ocean"
 SORT file.name ASC
 >
 >> [!note]- HISTORY
 >>```dataview
 LIST WITHOUT ID headerLink
-FROM "Session Notes" AND [[{{name}}]]
+FROM "Session Notes" AND [[<% name %>]]
 SORT file.ctime DESC

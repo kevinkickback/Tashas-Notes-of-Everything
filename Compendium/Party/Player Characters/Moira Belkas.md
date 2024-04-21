@@ -11,17 +11,17 @@ subClass: "Gloom Stalker"
 cover: "/Assets/Images/Party/moira.jpg"
 ---
 ###### Moira Belkas
-:fas_person: Player Character &nbsp; | &nbsp; :fas_quote_left: I honor the balance of nature :fas_quote_right:
+:FasPerson: Player Character &nbsp; | &nbsp; :FasQuoteLeft: I honor the balance of nature :FasQuoteRight:
 ___
 > [!infobox|no-t right]
 > ![[moira.jpg]]
 > ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
-> | :fas_crown: Level | `=this.level` |
-> | :rif_sword: Class | `=this.class` |
-> | :fas_bullseye: Conclave | `=this.subClass` |
-> | :rif_group: Race | `=this.race` |
+> | :FasCrown: Level   | `=this.level` |
+> | :RiSwordFill: Class |  `=this.class`|
+> | :FasBullseye: Conclave |  `=this.subClass`|
+> |  :FasUserGroup: Race |  `=this.race`|
 
 > [!quote|no-t]
 > Moira Belkas, a resourceful ranger hailing from [[Baldurs Gate#Baldurs Gate|Baldur's Gate]], embodies the harmony of nature and skillful marksmanship within the adventuring party [[LASTSTAND#LASTSTAND]]. As a childhood friend of [[Alaric Waycrest#Alaric Waycrest]], their bond endures through every trial they face together.

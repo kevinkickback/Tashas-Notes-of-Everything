@@ -11,17 +11,17 @@ subClass: "Divine Soul"
 cover: "/Assets/Images/Party/tilda.webp"
 ---
 ###### Tilda Rosesong
-:fas_person: Player Character &nbsp; | &nbsp; :fas_quote_left: I shape destiny to my will :fas_quote_right:
+:FasPerson: Player Character &nbsp; | &nbsp; :FasQuoteLeft: I shape destiny to my will :FasQuoteRight:
 ___
 > [!infobox|no-t right]
 > ![[tilda.webp]]
 > ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
-> | :fas_crown: Level | `=this.level` |
-> | :rif_sword: Class | `=this.class` |
-> | :fas_hand_sparkles: Origin | `=this.subClass` |
-> | :fas_user: Race | `=this.race` 
+> | :FasCrown: Level   | `=this.level` |
+> | :RiSwordFill: Class |  `=this.class`|
+> | :FasHandSparkles: Origin |  `=this.subClass`|
+> |  :FasUserGroup: Race |  `=this.race`|
 
 > [!quote|no-t]
 > Tilda Rosesong, a fiery tiefling sorcerer hailing from [[Waterdeep#Waterdeep]], channels the arcane forces with unmatched intensity and finesse within the adventuring party [[LASTSTAND#LASTSTAND]]. Her mysterious origins and powerful magic make her both a valuable ally and a formidable adversary.
