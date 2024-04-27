@@ -11,13 +11,12 @@ Tasha's Notes of Everything is inspired by the creativity and passion of the Dun
 
 Happy adventuring, and may your rolls always be natural 20s! 🎲✨
 
-
 ## Preview:
 [![Video Demonstration](https://img.youtube.com/vi/4pe6QYOFPL8/maxresdefault.jpg)](https://www.youtube.com/watch?v=4pe6QYOFPL8)
 
 
 ## Downloads:
-* Pre-Setup Vault: [Download Now](https://github.com/kevinkickback/Tashas-Notes-of-Everything/releases/download/v2.0.2/TashasNotesofEverything.v2.0.2.rar)
+* Pre-Setup Vault: [Download Now](https://github.com/kevinkickback/Tashas-Notes-of-Everything/releases/download/v2.1.0/TashasNotesofEverything.v2.1.0.rar)
 * Fira Code Font: [Download Here](https://github.com/tonsky/FiraCode)
 
 
