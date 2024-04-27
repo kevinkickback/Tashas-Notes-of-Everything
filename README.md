@@ -34,10 +34,10 @@ This project uses a mulitple community plugins & snippets. Below is list of ever
 <details><summary>Show Community Plugins</summary>
 
 - [x] Dataview
-- [x] Icon Shortcodes
+- [x] Folder Notes
 - [x] Link Headers Directly
 - [x] Meta Bind
-- [x] Quickadd
+- [x] Modal Forms
 - [x] Sortable
 - [x] Style Settings
 - [x] Templater
