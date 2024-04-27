@@ -2163,14 +2163,11 @@ function addExcludePatternListItem(settings, containerEl, pattern) {
 
 // src/ExcludeFolders/functions/folderFunctions.ts
 function getExcludedFolder(plugin, path) {
-  console.log("get excluded folder", path);
   const folderName = getFolderNameFromPathString(path);
   const matchedPattern = getExcludedFolderByPattern(plugin, folderName);
   if (matchedPattern) {
     return matchedPattern;
   }
-  console.log("test 3", path);
-  console.log("test 4", folderName);
   const excludedFolder = getExcludedFolderByPath(plugin, path);
   if ((excludedFolder == null ? void 0 : excludedFolder.path) === "") {
     return;
@@ -3248,7 +3245,7 @@ async function renderGeneral(settingsTab) {
   new import_obsidian17.Setting(containerEl).setName("Automatically create folder notes").setDesc("Automatically create a folder note when a new folder is created").addToggle((toggle) => toggle.setValue(settingsTab.plugin.settings.autoCreate).onChange(async (value) => {
     settingsTab.plugin.settings.autoCreate = value;
     await settingsTab.plugin.saveSettings();
-    settingsTab.display();
+    //settingsTab.display();
   }));
   new import_obsidian17.Setting(containerEl).setName("Enable front matter title plugin integration").setDesc("Automatically rename a folder name when the folder note is renamed").addToggle((toggle) => toggle.setValue(settingsTab.plugin.settings.frontMatterTitle.enabled).onChange(async (value) => {
     var _a;

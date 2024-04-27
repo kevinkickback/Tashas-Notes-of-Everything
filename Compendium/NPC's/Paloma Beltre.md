@@ -17,9 +17,9 @@ ___
 > ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
-> | :fas_briefcase: Job | Waitress |
-> | :fas_venus_mars: Gender | Female |
-> | :fas_user: Race | Half-Elf |
+> | :FasBriefcase:  Job | Waitress |
+> | :FasVenusMars: Gender | Female |
+> | :FasUser: Race | Half-Elf |
 <span class="clearfix"></span>
 
 > [!quote|no-t]

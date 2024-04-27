@@ -20,6 +20,19 @@ parent.window.addEventListener('change', (event) => {
         }
     }
 });
+console.log('NPC Toggle: event listener attached to parent window.');
 
-console.log("NPC Toggle: event listener attached to parent window.");
+setTimeout(async () => {
+    const leaves = this.app.workspace.getLeavesOfType('markdown');
+    const blank = this.app.vault.getAbstractFileByPath('Assets/Templates/blank.md');
+    for (const leaf of leaves) {
+        if (leaf.view.currentMode.type === "preview" && leaf.width > 0 && /:[A-z]+:/.test(leaf.containerEl.innerHTML)) {
+            const tab = app.workspace.getLeafById(leaf.id)
+            const file = leaf.view.file
+            await tab.openFile(blank, { active: false });
+            await tab.openFile(file, { active: false });
+            console.log('Reloading leaf:', leaf.view.file.basename);
+        }
+    }
+}, 2500);
 _%>

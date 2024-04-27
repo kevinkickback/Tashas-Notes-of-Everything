@@ -1,12 +1,12 @@
 [
-  "link-headers-directly",
   "quickadd",
+  "obsidian-icon-folder",
+  "dataview",
+  "link-headers-directly",
+  "obsidian-meta-bind-plugin",
   "obsidian-sortable",
   "obsidian-style-settings",
   "templater-obsidian",
-  "dataview",
-  "folder-notes",
-  "obsidian-icon-folder",
-  "obsidian-meta-bind-plugin",
-  "modalforms"
+  "modalforms",
+  "folder-notes"
 ]

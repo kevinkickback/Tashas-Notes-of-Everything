@@ -4,14 +4,14 @@
   "altKey": false,
   "hideFolderNote": true,
   "templatePath": "",
-  "autoCreate": true,
+  "autoCreate": false,
   "enableCollapsing": false,
   "excludeFolders": [],
   "whitelistFolders": [],
   "showDeleteConfirmation": true,
   "underlineFolder": false,
   "stopWhitespaceCollapsing": false,
-  "underlineFolderInPath": true,
+  "underlineFolderInPath": false,
   "openFolderNoteOnClickInPath": true,
   "openInNewTab": false,
   "folderNoteName": "{{folder_name}}",
@@ -41,14 +41,14 @@
     "showFolderNotes": false,
     "disableCollapseIcon": true
   },
-  "useSubmenus": true,
+  "useSubmenus": false,
   "syncMove": true,
   "frontMatterTitle": {
-    "enabled": false,
+    "enabled": true,
     "explorer": true,
-    "path": true
+    "path": false
   },
-  "settingsTab": "file_explorer",
+  "settingsTab": "general",
   "supportedFileTypes": [
     "md"
   ],

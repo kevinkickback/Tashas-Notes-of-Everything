@@ -1,27 +1,14 @@
 {
   "main": {
-    "id": "679d1e21972cb5dc",
+    "id": "37851a3ed664027e",
     "type": "split",
     "children": [
       {
-        "id": "ec17b76efa8e1b2e",
+        "id": "d22329d7b9c2697f",
         "type": "tabs",
         "children": [
           {
-            "id": "e20de4e82f9bef05",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "INDEX.md",
-                "mode": "preview",
-                "backlinks": false,
-                "source": true
-              }
-            }
-          },
-          {
-            "id": "32c847cc79551ec8",
+            "id": "9c41ebf281c0d567",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -39,16 +26,16 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "4963c03eed5e8710",
+    "id": "6d4a1682a5ce5a91",
     "type": "split",
     "children": [
       {
-        "id": "960d4e5c1c49b3fe",
+        "id": "9ebca63e5ad41f49",
         "type": "tabs",
-        "dimension": 23.785714285714285,
+        "dimension": 23.99425287356322,
         "children": [
           {
-            "id": "7ebdef116284616c",
+            "id": "5d147873dd2a9c1d",
             "type": "leaf",
             "state": {
               "type": "image",
@@ -60,12 +47,12 @@
         ]
       },
       {
-        "id": "cf61d8f2efb7a84e",
+        "id": "4e4b925e77e3b6ae",
         "type": "tabs",
-        "dimension": 76.21428571428571,
+        "dimension": 76.00574712643679,
         "children": [
           {
-            "id": "5a29351e1bef6cbc",
+            "id": "97418e9d456729af",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -73,67 +60,9 @@
                 "sortOrder": "alphabetical"
               }
             }
-          }
-        ]
-      }
-    ],
-    "direction": "horizontal",
-    "width": 344.5
-  },
-  "right": {
-    "id": "a460e8cb71082b34",
-    "type": "split",
-    "children": [
-      {
-        "id": "93b9c9c4275d20fd",
-        "type": "tabs",
-        "dimension": 24.857142857142858,
-        "children": [
-          {
-            "id": "92764f1ad63f62e9",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {}
-            }
-          }
-        ]
-      },
-      {
-        "id": "8874cb022e2284d9",
-        "type": "tabs",
-        "dimension": 75.14285714285714,
-        "children": [
-          {
-            "id": "3df18e84174958a9",
-            "type": "leaf",
-            "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": true
-              }
-            }
           },
           {
-            "id": "43ea20f23ad1ec83",
-            "type": "leaf",
-            "state": {
-              "type": "backlink",
-              "state": {
-                "file": "INDEX.md",
-                "collapseAll": false,
-                "extraContext": false,
-                "sortOrder": "alphabetical",
-                "showSearch": false,
-                "searchQuery": "",
-                "backlinkCollapsed": false,
-                "unlinkedCollapsed": false
-              }
-            }
-          },
-          {
-            "id": "bb2d48f0d7d1dfda",
+            "id": "7a9cb58b5c9e6a9a",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -153,61 +82,110 @@
     "direction": "horizontal",
     "width": 341.5
   },
+  "right": {
+    "id": "8c5f2a8505d045f7",
+    "type": "split",
+    "children": [
+      {
+        "id": "dfebf11a40fbf1b5",
+        "type": "tabs",
+        "dimension": 23.132183908045977,
+        "children": [
+          {
+            "id": "a875f997562b811f",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {}
+            }
+          }
+        ]
+      },
+      {
+        "id": "bb4d43a389629645",
+        "type": "tabs",
+        "dimension": 76.86781609195403,
+        "children": [
+          {
+            "id": "090116e58b2c55d1",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "INDEX.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "d23823e162f4be73",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 343.5
+  },
   "left-ribbon": {
     "hiddenItems": {
-      "graph:Open graph view": true,
+      "graph:Open graph view": false,
       "command-palette:Open command palette": false,
       "modalforms:Edit forms": false
     }
   },
-  "active": "e20de4e82f9bef05",
+  "active": "9c41ebf281c0d567",
   "lastOpenFiles": [
-    "README.md",
-    "Assets/Templates/QUEST.md",
+    "Session Notes/Session 01 (2024-02-17).md",
     "INDEX.md",
-    "Assets/Templates/STARTUP.md",
-    "Compendium/Party/Player Characters/Alaric Waycrest.md",
-    "Assets/Templates/CONTINENT.md",
-    "Assets/Templates/PLANE.md",
-    "temp.md",
-    "Compendium/Atlas/z/z.md",
-    "Compendium/Atlas/z",
-    "Compendium/Atlas/a/a.md",
-    "Compendium/Atlas/a",
-    "Assets/Templates/NOTE.md",
-    "Assets/Templates/LOCALE.md",
+    "Compendium/Lore/Organizations/LASTSTAND.md",
+    "Compendium/Lore/Organizations/Fellows of Free Fate.md",
+    "Compendium/Lore/Organizations/Black Fingers.md",
+    "Compendium/Lore/Deities/Kabibi.md",
     "Assets/Templates/LANDMARK.md",
     "Assets/Templates/GOD.md",
     "Assets/Templates/EVENT.md",
-    "Assets/Templates/NPC.md",
-    "Assets/Templates/REGION.md",
-    "Assets/Templates/REALM.md",
-    "Assets/Templates/ORGANIZATION.md",
-    "Assets/Templates/OBJECT.md",
-    "Compendium/NPC's/temp 1.md",
-    "Untitled 1.md",
-    "Untitled.md",
-    "test.md",
-    "test 3.md",
-    "test 2.md",
-    "Assets/Images/Location/elfsong.jpg",
-    "Assets/Images/Location/baldursGate.webp",
-    "Compendium/Atlas/It Works Now",
-    "__rar_30528.45510.rartemp",
-    "Compendium/Atlas/aaa",
-    "Compendium/Atlas/zzz",
-    "Compendium/Atlas/Feywild/Realm 1 2/Continent Here/My Region/Swampland",
-    "Compendium/Atlas/Feywild/Realm 1 2/Continent Here/My Region",
-    "Compendium/Atlas/Feywild/Realm 1 2/Continent Here",
-    "Compendium/Atlas/Feywild/Realm 1 2",
-    "Assets/Images/Party/alaric.png",
-    "Assets/Images/Party/alaric 1.png",
-    "Assets/Images/header.jpg",
-    "Assets/Images/NPC/eleidin.jpg",
-    "Assets/Images/Location/feywild.webp",
-    "Assets/Images/Location/Feywild.webp",
-    "Assets/Images/NPC/paloma.jpg",
-    "Assets/Images/header.png",
-    "Compendium/Party/Quests/!Journey Board.canvas"
+    "Assets/Templates/CONTINENT.md",
+    "Assets/Templates/blank.md",
+    "README.md",
+    "Untitled/Untitled.md",
+    "Untitled",
+    "Assets/Templates/PLANE.md",
+    "popo/popo.md",
+    "popo",
+    "temp123.md",
+    "Compendium/Atlas/asdasdasda",
+    "Compendium/Atlas/asdasdasda/asdasdasda.md",
+    "Compendium/Atlas/fasdfasdfasdfasdfasdfasdf/fasdfasdfasdfasdfasdfasdf.md",
+    "Compendium/Atlas/fasdfasdfasdfasdfasdfasdf",
+    "Compendium/Atlas/fuck you",
+    "Compendium/Atlas/fuck you/fuck you3.md",
+    "Compendium/Atlas/Feywild/Feywild.md",
+    "Compendium/Atlas/testing/testing3.md",
+    "Compendium/Atlas/testing",
+    "Compendium/Atlas/sdfgsdfg/sdfgsdfg.md",
+    "Compendium/Atlas/sdfgsdfg",
+    "Compendium/Atlas/no plz/no plz.md",
+    "Compendium/Atlas/no plz",
+    "Compendium/Atlas/xcvxcv/xcvxcv.md",
+    "Compendium/Atlas/xcvxcv",
+    "Compendium/Atlas/zzzzzz/zzzzzz.md",
+    "Compendium/Atlas/zzzzzz",
+    "Compendium/Atlas/fsdfs/fsdfs.md",
+    "Assets/Images/header.png"
   ]
 }

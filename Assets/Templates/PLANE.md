@@ -8,11 +8,11 @@ const result = await MF.openForm('PLANE');
 
 // Declare variables after form returns values
 const name = result.Name.value;
+const temp = app.vault.getAbstractFileByPath('temp123.md');
 
 // Rename, move, & open note
 await tp.file.move(`Compendium/Atlas/${name}/${name}`);
 await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
-await this.app.vault.delete(temp);
 new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New plane <span style="text-decoration: underline;">${name}</span> added`;
 _%>
 

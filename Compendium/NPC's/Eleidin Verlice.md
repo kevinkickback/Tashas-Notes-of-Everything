@@ -17,9 +17,9 @@ ___
 > ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
-> | :fas_briefcase: Job | Rebellion Leader |
-> | :fas_venus_mars: Gender | Male |
-> | :fas_user: Race | Fairy|
+> | :FasBriefcase: Job | Rebellion Leader |
+> | :FasVenusMars: Gender | Male |
+> | :FasUser: Race | Fairy |
 <span class="clearfix"></span>
 
 > [!quote|no-t]

@@ -18,9 +18,9 @@ ___
 > ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
-> | :fas_briefcase: Job | Shopkeeper |
+> | :FasBriefcase:  Job | Shopkeeper |
 > | :fas_venus_mars: Gender | Female |
-> | :fas_user: Race | Gnome |
+> | :FasUser: Race | Gnome |
 <span class="clearfix"></span>
 
 > [!quote|no-t]

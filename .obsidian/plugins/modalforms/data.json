@@ -268,12 +268,21 @@
           }
         }
       ],
-      "version": "1"
+      "version": "1",
+      "template": {
+        "createCommand": true,
+        "parsedTemplate": [
+          {
+            "_tag": "text",
+            "value": "what the fuck? {[Name}}"
+          }
+        ]
+      }
     },
     {
       "title": "Add New Continent Or Ocean",
       "name": "CONTINENT",
-      "customClassname": "wizard",
+      "customClassname": "",
       "fields": [
         {
           "name": "Name",

@@ -5832,6 +5832,7 @@ var FormModal = class extends import_obsidian9.Modal {
         case "number":
           return fieldBase.addText((text3) => {
             text3.inputEl.type = "number";
+            text3.inputEl.step = "any";
             subToErrors(text3.inputEl);
             text3.onChange((val) => {
               if (val !== "") {
@@ -6105,28 +6106,36 @@ var API = class {
       return Promise.reject(error2);
     }
   }
-  limitedForm(name, opts) {
+  /**
+   * Opens a named form, limiting/filtering the fields included
+   * @param {string} name - The name of the form to open
+   * @param {limitOptions} limitOpts - The options to apply when filtering fields 
+   * @param {FormOptions} formOpts - Form options to use when opening the form once filtered
+   * @returns {Promise<FormResult>} - A promise that resolves with the form result
+   * @throws {ModalFormError} - Throws an error if the form definition is not found
+   */
+  limitedForm(name, limitOpts, formOpts) {
     const formDefinition = this.getFormByName(name);
     let newFormDefinition;
     if (formDefinition) {
-      if (isOmitOption(opts)) {
-        const omit = opts.omit;
+      if (isOmitOption(limitOpts)) {
+        const omit = limitOpts.omit;
         newFormDefinition = {
           ...formDefinition,
           fields: formDefinition.fields.filter((field) => !omit.includes(field.name))
         };
-      } else if (isPickOption(opts)) {
+      } else if (isPickOption(limitOpts)) {
         newFormDefinition = {
           ...formDefinition,
-          fields: formDefinition.fields.filter((field) => opts.pick.includes(field.name))
+          fields: formDefinition.fields.filter((field) => limitOpts.pick.includes(field.name))
         };
       } else {
         throw new ModalFormError(
-          "Invalid options provided to limitedForm",
-          `GOT: ${JSON.stringify(opts)}`
+          "Invalid limit options provided to limitedForm",
+          `GOT: ${JSON.stringify(limitOpts)}`
         );
       }
-      return this.openModalForm(newFormDefinition);
+      return this.openModalForm(newFormDefinition, formOpts);
     } else {
       const error2 = new ModalFormError(`Form definition ${name} not found`);
       log_error(error2);

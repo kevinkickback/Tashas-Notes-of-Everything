@@ -17,9 +17,9 @@ ___
 > ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
-> | :fas_briefcase: Job | Scribe |
-> | :fas_venus_mars: Gender | Male |
-> | :fas_user: Race | Human |
+> | :FasBriefcase:  Job | Scribe |
+> | :FasVenusMars: Gender | Male |
+> | :FasUser: Race | Human |
 <span class="clearfix"></span>
 
 > [!quote|no-t]
