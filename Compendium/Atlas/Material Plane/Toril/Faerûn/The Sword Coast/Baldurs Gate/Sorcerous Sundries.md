@@ -19,9 +19,9 @@ ___
 #### marker
 | INVENTORY                  | PRICE |
 | -------------------------- | ----- |
-| Item 1 | 80 <span class="goldcoin">:rif_coins:</span>  |
-| Item 2 | 20 <span class="silvercoin">:rif_coins:</span>   |
-| Item 3 | 100 <span class="coppercoin">:rif_coins:</span>  |
+| Item 1 | 80 <span class="goldcoin">:RiCoinsFill:</span>  |
+| Item 2 | 20 <span class="silvercoin">:RiCoinsFill:</span>   |
+| Item 3 | 100 <span class="coppercoin">:RiCoinsFill:</span>  |
 
 <span class="clearfix"></span>
 
