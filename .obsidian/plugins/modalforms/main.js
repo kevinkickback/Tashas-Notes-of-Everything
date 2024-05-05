@@ -1102,6 +1102,7 @@ __export(std_exports, {
   EFunSemigroup: () => EFunSemigroup,
   NEA: () => NEA,
   O: () => O,
+  absurd: () => absurd2,
   ensureError: () => ensureError,
   flow: () => flow2,
   parse: () => parse2,
@@ -1551,6 +1552,7 @@ var chain2 = flatMap3;
 // src/std/index.ts
 var flow2 = flow;
 var pipe2 = pipe;
+var absurd2 = absurd;
 var A = {
   partitionMap,
   partition,
@@ -3703,15 +3705,6 @@ function formDataFromFormDefaults(fields, values) {
     }),
     A.compact,
     fromEntries
-  );
-}
-
-// src/safety.ts
-function exhaustiveGuard(_value) {
-  throw new Error(
-    `ERROR! Reached forbidden guard function with unexpected value: ${JSON.stringify(
-      _value
-    )}`
   );
 }
 
@@ -5968,7 +5961,7 @@ var FormModal = class extends import_obsidian9.Modal {
                 element2.onChange(fieldStore.value.set);
               });
             default:
-              exhaustiveGuard(source);
+              absurd2(source);
           }
           break;
         }
@@ -6001,7 +5994,7 @@ var FormModal = class extends import_obsidian9.Modal {
           return this.subscriptions.push(sub);
         }
         default:
-          return exhaustiveGuard(type);
+          return absurd2(type);
       }
     });
     new import_obsidian9.Setting(contentEl).addButton(
@@ -9985,7 +9978,7 @@ var InputBuilderDocumentBlock_default = InputBuilderDocumentBlock;
 
 // src/views/FormBuilder.svelte
 function add_css8(target) {
-  append_styles(target, "svelte-eyf10e", ".wrapper.svelte-eyf10e,.body.svelte-eyf10e{flex:1;display:flex;flex-direction:column}.wrapper.svelte-eyf10e{max-height:100%;min-height:100%;height:100%;overflow:hidden}.body.svelte-eyf10e{padding-top:0.5rem;overflow-y:scroll}.header.svelte-eyf10e{box-shadow:var(--shadow-bottom) var(--divider-color);padding:1rem}@media(min-width: 58rem){.body.svelte-eyf10e{overflow-y:hidden}.fields.svelte-eyf10e{flex:1;height:100%}form.svelte-eyf10e{display:flex;flex-direction:column;height:100%;overflow:hidden}}.template.svelte-eyf10e{padding:1rem}.fields.svelte-eyf10e{overflow-y:auto;padding:1rem}.flex.svelte-eyf10e{display:flex}.column.svelte-eyf10e{flex-direction:column}.gap1.svelte-eyf10e{gap:0.5rem}.gap2.svelte-eyf10e{gap:1rem}fieldset.svelte-eyf10e{border:none;padding:0}.hint.svelte-eyf10e{color:var(--color-base-70)}.error.svelte-eyf10e{color:var(--text-error);font-weight:bold}button.svelte-eyf10e:disabled{opacity:0.5;cursor:forbidden}@media(min-width: 58rem){.md-row.svelte-eyf10e{flex-direction:row}}");
+  append_styles(target, "svelte-8lqyxl", ".wrapper.svelte-8lqyxl,.body.svelte-8lqyxl{flex:1;display:flex;flex-direction:column}.wrapper.svelte-8lqyxl{max-height:100%;min-height:100%;height:100%;overflow:hidden}.body.svelte-8lqyxl{padding-top:0.5rem;overflow-y:scroll}.header.svelte-8lqyxl{box-shadow:var(--shadow-bottom) var(--divider-color);padding:1rem}@media(min-width: 100rem){.body.svelte-8lqyxl{overflow-y:hidden}.fields.svelte-8lqyxl{flex:1;height:100%}form.svelte-8lqyxl{display:flex;flex-direction:column;height:100%;overflow:hidden}}.template.svelte-8lqyxl{padding:1rem}.fields.svelte-8lqyxl{overflow-y:auto;padding:1rem}.flex.svelte-8lqyxl{display:flex}.column.svelte-8lqyxl{flex-direction:column}.gap1.svelte-8lqyxl{gap:0.5rem}.gap2.svelte-8lqyxl{gap:1rem}fieldset.svelte-8lqyxl{border:none;padding:0}.hint.svelte-8lqyxl{color:var(--color-base-70)}.error.svelte-8lqyxl{color:var(--text-error);font-weight:bold}button.svelte-8lqyxl:disabled{opacity:0.5;cursor:forbidden}@media(min-width: 58rem){.md-row.svelte-8lqyxl{flex-direction:row}}");
 }
 function get_each_context5(ctx, list, i) {
   const child_ctx = ctx.slice();
@@ -10125,35 +10118,35 @@ function create_else_block3(ctx) {
       t23 = space();
       if_block1.c();
       attr(label0, "for", "name");
-      attr(span0, "class", "hint svelte-eyf10e");
+      attr(span0, "class", "hint svelte-8lqyxl");
       attr(input0, "type", "text");
       attr(input0, "placeholder", "Name");
       attr(input0, "id", "name");
       attr(label1, "for", "title");
-      attr(span1, "class", "hint svelte-eyf10e");
+      attr(span1, "class", "hint svelte-8lqyxl");
       attr(input1, "type", "text");
       attr(input1, "placeholder", "Title");
       attr(input1, "id", "title");
       attr(label2, "for", "customClassname");
-      attr(span2, "class", "hint svelte-eyf10e");
+      attr(span2, "class", "hint svelte-8lqyxl");
       attr(input2, "type", "text");
       attr(input2, "id", "customClassname");
       attr(button0, "type", "button");
-      attr(button0, "class", "svelte-eyf10e");
+      attr(button0, "class", "svelte-8lqyxl");
       attr(button1, "type", "button");
       button1.disabled = button1_disabled_value = !/*isValid*/
       ctx[8];
-      attr(button1, "class", "svelte-eyf10e");
-      attr(button2, "class", "mod-cta svelte-eyf10e");
+      attr(button1, "class", "svelte-8lqyxl");
+      attr(button2, "class", "mod-cta svelte-8lqyxl");
       attr(button2, "type", "submit");
       button2.disabled = button2_disabled_value = !/*isValid*/
       ctx[8];
       attr(button3, "type", "button");
-      attr(button3, "class", "mod-warning svelte-eyf10e");
-      attr(div, "class", "flex row gap2 svelte-eyf10e");
-      attr(fieldset0, "class", "flex column gap2 header svelte-eyf10e");
-      attr(fieldset1, "class", "flex column gap2 fields svelte-eyf10e");
-      attr(form, "class", "svelte-eyf10e");
+      attr(button3, "class", "mod-warning svelte-8lqyxl");
+      attr(div, "class", "flex row gap2 svelte-8lqyxl");
+      attr(fieldset0, "class", "flex column gap2 header svelte-8lqyxl");
+      attr(fieldset1, "class", "flex column gap2 fields svelte-8lqyxl");
+      attr(form, "class", "svelte-8lqyxl");
     },
     m(target, anchor) {
       insert(target, form, anchor);
@@ -10383,7 +10376,7 @@ function create_if_block5(ctx) {
     c() {
       div = element("div");
       create_component(templateeditor.$$.fragment);
-      attr(div, "class", "template svelte-eyf10e");
+      attr(div, "class", "template svelte-8lqyxl");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -10442,7 +10435,7 @@ function create_if_block_9(ctx) {
   return {
     c() {
       h3 = element("h3");
-      h3.innerHTML = `<span class="error svelte-eyf10e">Form is invalid</span>, check the following:`;
+      h3.innerHTML = `<span class="error svelte-8lqyxl">Form is invalid</span>, check the following:`;
       t2 = space();
       ul = element("ul");
       for (let i = 0; i < each_blocks.length; i += 1) {
@@ -10563,7 +10556,7 @@ function create_each_block_2(ctx) {
       button.textContent = "Go to problem";
       t4 = space();
       attr(button, "type", "button");
-      attr(button, "class", "svelte-eyf10e");
+      attr(button, "class", "svelte-8lqyxl");
     },
     m(target, anchor) {
       insert(target, li, anchor);
@@ -11092,14 +11085,14 @@ function create_if_block_42(ctx) {
       attr(input0, "placeholder", "0");
       attr(input0, "id", input0_id_value = /*min_id*/
       ctx[50]);
-      attr(div0, "class", "flex column gap1 svelte-eyf10e");
+      attr(div0, "class", "flex column gap1 svelte-8lqyxl");
       attr(label1, "for", label1_for_value = /*max_id*/
       ctx[51]);
       attr(input1, "type", "number");
       attr(input1, "placeholder", "10");
       attr(input1, "id", input1_id_value = /*max_id*/
       ctx[51]);
-      attr(div1, "class", "flex column gap1 svelte-eyf10e");
+      attr(div1, "class", "flex column gap1 svelte-8lqyxl");
     },
     m(target, anchor) {
       insert(target, div0, anchor);
@@ -11710,28 +11703,28 @@ function create_each_block5(ctx) {
       attr(input0, "placeholder", "Name");
       attr(input0, "id", input0_id_value = `name_${/*index*/
       ctx[49]}`);
-      attr(div0, "class", "flex column gap1 svelte-eyf10e");
+      attr(div0, "class", "flex column gap1 svelte-8lqyxl");
       attr(label1, "for", label1_for_value = `label_${/*index*/
       ctx[49]}`);
       attr(input1, "type", "text");
       attr(input1, "placeholder", "Label");
       attr(input1, "id", input1_id_value = `label_${/*index*/
       ctx[49]}`);
-      attr(div1, "class", "flex column gap1 svelte-eyf10e");
+      attr(div1, "class", "flex column gap1 svelte-8lqyxl");
       attr(label2, "for", label2_for_value = /*delete_id*/
       ctx[47]);
       set_style(label2, "visibility", "hidden");
       set_style(label2, "overflow", "hidden");
       set_style(label2, "white-space", "nowrap");
-      attr(div2, "class", "flex column gap1 svelte-eyf10e");
-      attr(div3, "class", "flex column md-row gap2 svelte-eyf10e");
+      attr(div2, "class", "flex column gap1 svelte-8lqyxl");
+      attr(div3, "class", "flex column md-row gap2 svelte-8lqyxl");
       attr(label3, "for", label3_for_value = /*desc_id*/
       ctx[46]);
       attr(input2, "type", "text");
       attr(input2, "placeholder", "Description");
       attr(input2, "id", input2_id_value = /*desc_id*/
       ctx[46]);
-      attr(div4, "class", "flex column gap1 svelte-eyf10e");
+      attr(div4, "class", "flex column gap1 svelte-8lqyxl");
       attr(label4, "for", label4_for_value = `type_${/*index*/
       ctx[49]}`);
       attr(select, "id", select_id_value = `type_${/*index*/
@@ -11741,25 +11734,25 @@ function create_each_block5(ctx) {
         ctx[45].input.type === void 0
       )
         add_render_callback(select_change_handler);
-      attr(div5, "class", "flex column gap1 svelte-eyf10e");
-      attr(div6, "class", "flex column md-row gap2 svelte-eyf10e");
-      attr(div7, "class", "flex gap1 svelte-eyf10e");
+      attr(div5, "class", "flex column gap1 svelte-8lqyxl");
+      attr(div6, "class", "flex column md-row gap2 svelte-8lqyxl");
+      attr(div7, "class", "flex gap1 svelte-8lqyxl");
       attr(button0, "type", "button");
       button0.disabled = button0_disabled_value = /*index*/
       ctx[49] === 0;
-      attr(button0, "class", "svelte-eyf10e");
+      attr(button0, "class", "svelte-8lqyxl");
       attr(button1, "type", "button");
       button1.disabled = button1_disabled_value = /*index*/
       ctx[49] === /*definition*/
       ctx[0].fields.length - 1;
-      attr(button1, "class", "svelte-eyf10e");
+      attr(button1, "class", "svelte-8lqyxl");
       attr(button2, "type", "button");
-      attr(button2, "class", "svelte-eyf10e");
+      attr(button2, "class", "svelte-8lqyxl");
       attr(button3, "type", "button");
       attr(button3, "id", button3_id_value = /*delete_id*/
       ctx[47]);
-      attr(button3, "class", "svelte-eyf10e");
-      attr(div8, "class", "flex gap1 svelte-eyf10e");
+      attr(button3, "class", "svelte-8lqyxl");
+      attr(div8, "class", "flex gap1 svelte-8lqyxl");
     },
     m(target, anchor) {
       insert(target, div3, anchor);
@@ -12057,8 +12050,8 @@ function create_fragment11(ctx) {
       t = space();
       div0 = element("div");
       if_block.c();
-      attr(div0, "class", "body svelte-eyf10e");
-      attr(div1, "class", "wrapper modal-form svelte-eyf10e");
+      attr(div0, "class", "body svelte-8lqyxl");
+      attr(div1, "class", "wrapper modal-form svelte-8lqyxl");
     },
     m(target, anchor) {
       insert(target, div1, anchor);

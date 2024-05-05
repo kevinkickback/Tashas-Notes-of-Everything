@@ -1,0 +1,98 @@
+/*
+
+This CSS file will be included with your plugin, and
+available in the app when your plugin is enabled.
+
+If your plugin does not need CSS, delete this file.
+
+*/
+
+:root {
+    --mf-spacing: 0.75rem;
+    --mf-spacing2: 1.5rem;
+    --mf-tablet: 768px;
+}
+
+/* Utilities to remove styles from native obsidian elements when wrapped like this
+<div class='utility'>
+	<div>...</div>
+</div>
+*/
+.remove-border div:first-of-type {
+    border: none;
+}
+.remove-padding div:first-of-type {
+    padding: 0;
+}
+
+.fix-suggest .setting-item-info {
+    display: none;
+}
+
+.modal-form-danger {
+    color: var(--text-error);
+}
+
+.modal-form-primary {
+    color: var(--text-accent);
+}
+
+.modal-form-hint {
+    color: var(--text-muted);
+}
+.modal-form {
+    --shadow-bottom: 0 0.8rem 0.8rem -0.8rem;
+}
+/* .modal-form-hint code {
+	color: var(--text-normal);
+	background-color: var(--background-secondary);
+} */
+
+.modal-form-textarea {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--mf-spacing);
+}
+
+.modal-form-textarea .setting-item-control {
+    flex: 1;
+    width: 100%;
+}
+
+.modal-form-textarea .setting-item-control textarea {
+    width: 100%;
+}
+.modal-form.flex {
+    display: flex;
+}
+.modal-form.column {
+    flex-direction: column;
+}
+.modal-form.gap1 {
+    gap: 0.5rem;
+}
+.modal-form.gap2 {
+    gap: 1rem;
+}
+.modal-form input:invalid,
+.modal-form .invalid {
+    border-color: var(--text-error);
+    color: var(--text-error);
+}
+.notice-warning {
+    color: var(--text-warning);
+}
+.notice-error {
+    color: var(--text-error);
+}
+.modal-form-error-message {
+    color: var(--text-error);
+    font-weight: bold;
+}
+.modal-form-suggestion {
+    display: flex;
+    gap: 8px;
+    padding: 4px 0;
+    align-items: center;
+}
