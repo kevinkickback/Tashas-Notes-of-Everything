@@ -5,7 +5,11 @@
 
 // Convert string to camelCase
 function toCamelCase(str) {
-	return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
+  return str
+    .replace(/(?:^\w|[A-Z]|\b\w|\s+|[-_])/g, (match, index) =>
+      index === 0 ? match.toLowerCase() : match.toUpperCase()
+    )
+    .replace(/[\s-_]+/g, '');
 }
 
 // Return icon based on type
@@ -17,30 +21,33 @@ function getIcon(type) {
 		Seasonal: ':RiSunFoggyFill',
 	};
 
-	return iconMappings[type] || ':fas_question_circle:';
+	return iconMappings[type] || ':FasCircleQuestion::';
 }
 
 // ###########################################################
 //                        Main Code Section
 // ###########################################################
 
-// Call modal form
+// Call modal form & declare variables
 const result = await MF.openForm('EVENT');
-
-// Declare variables after form returns values
 const name = result.Name.value;
-let type = result.Type.value;
+const type = result.Type.value;
 const icon = getIcon(type);
 
-if (type === 'Manual') {
-	type = await tp.system.prompt('Enter type:', 'Leave blank for none', true);
-	type = type === 'Leave blank for none' || '' ? '' : type;
-}
+if (result.status === 'ok') {
 
-// Rename & open note
-await tp.file.rename(name);
-await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
-new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New event <span style="text-decoration: underline;">${name}</span> added`;
+    // Rename file & open in new tab; Fire toast notification
+    await tp.file.rename(name);
+    await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+    new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New event <span style="text-decoration: underline;">${name}</span> added`;
+
+} else {
+
+    // Fire toast notification & exit templater
+    console.log('Modal form cancelled');
+    new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Event has not been added`;
+    return;
+}
 _%>
 
 ---

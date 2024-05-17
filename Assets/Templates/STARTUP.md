@@ -1,5 +1,7 @@
 <%*
-// NPC Toggle View
+// ###########################################################
+//                  NPC TOGGLE FOR LOCATION VIEW
+// ###########################################################
 parent.window.addEventListener('change', (event) => {
     if (event.target.id === 'npc' && event.target.type === 'checkbox') {
         const directView = document.querySelector('.npcDirect');
@@ -20,19 +22,34 @@ parent.window.addEventListener('change', (event) => {
         }
     }
 });
-console.log('NPC Toggle: event listener attached to parent window.');
+console.log('NPC Toggle: event listener attached');
 
-setTimeout(async () => {
+// ###########################################################
+//              FIX BROKEN ICON CODES ON STARTUP
+// ###########################################################
+
+// Intercept console.log messages & trigger reload on match
+console.log = ((originalConsoleLog) => (...args) => {
+    originalConsoleLog.apply(console, args);
+    const trigger = 'loaded icon pack remix-icons';
+    if (args[0].includes(trigger)) {
+        reload();
+    }
+})(console.log);
+
+// Reload Tabs (only if reading view mode & broken icons detected)
+const reload = async () => {
     const leaves = this.app.workspace.getLeavesOfType('markdown');
-    const blank = this.app.vault.getAbstractFileByPath('Assets/Templates/blank.md');
+    const blank = this.app.vault.getAbstractFileByPath('Assets/Templates/REFRESH.md');
     for (const leaf of leaves) {
-        if (leaf.view.currentMode.type === "preview" && leaf.width > 0 && /:[A-z]+:/.test(leaf.containerEl.innerHTML)) {
+        // Can add "leaf.width > 0"  below to check if tab is visible.
+        if (leaf.view.currentMode.type === 'preview' && /:[A-z]+:/.test(leaf.containerEl.innerHTML)) {
             const tab = app.workspace.getLeafById(leaf.id)
             const file = leaf.view.file
             await tab.openFile(blank, { active: false });
             await tab.openFile(file, { active: false });
-            console.log('Reloading leaf:', leaf.view.file.basename);
+            console.log('Reloaded tab:', leaf.view.file.basename);
         }
     }
-}, 2500);
+};
 _%>

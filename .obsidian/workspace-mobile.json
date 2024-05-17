@@ -13,14 +13,106 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Compendium/Atlas/Feywild/Realm 1 2/Realm 1 2.md",
-                "mode": "preview",
+                "file": "INDEX.md",
+                "mode": "source",
                 "backlinks": false,
                 "source": true
               }
             }
+          },
+          {
+            "id": "4c8c908cb8838047",
+            "type": "leaf",
+            "state": {
+              "type": "modal-form-manage-forms-view",
+              "state": {}
+            }
+          },
+          {
+            "id": "814be1c91dc7f3c3",
+            "type": "leaf",
+            "state": {
+              "type": "modal-form-edit-form-view",
+              "state": {
+                "title": "Add New NPC",
+                "name": "NPC",
+                "customClassname": "modzzz",
+                "fields": [
+                  {
+                    "name": "Name",
+                    "label": "Name:",
+                    "description": "",
+                    "isRequired": true,
+                    "input": {
+                      "type": "text"
+                    }
+                  },
+                  {
+                    "name": "Gender",
+                    "label": "Gender:",
+                    "description": "",
+                    "isRequired": false,
+                    "input": {
+                      "type": "dataview",
+                      "query": "['Male', 'Female', 'Non-Binary']"
+                    }
+                  },
+                  {
+                    "name": "Race",
+                    "label": "Race:",
+                    "description": "",
+                    "isRequired": false,
+                    "input": {
+                      "type": "dataview",
+                      "query": "['Aarakocra','Aasimar','Bugbear','Centaur','Changeling','Dragonborn','Dwarf','Elf','Fairy','Firbolg','Genasi','Gnome','Goblin','Goliath','Grung','Halfling','Half-Elf','Half-Orc','Hobgoblin','Human','Kalashtar','Kenku','Kobold','Leonin','Lizardfolk','Loxodon','Minotaur','Orc','Owlfolk','Satyr','Shifter','Simic Hybrid','Tabaxi','Tiefling','Tortle','Triton','Vedalken','Verdan','Warforged','Yuan-Ti Pureblood']"
+                    }
+                  },
+                  {
+                    "name": "Affinity",
+                    "label": "Affinity:",
+                    "description": "",
+                    "isRequired": false,
+                    "input": {
+                      "type": "dataview",
+                      "query": "['Friendly','Hostile','Neutral','Unknown']"
+                    }
+                  },
+                  {
+                    "name": "Job",
+                    "label": "Job:",
+                    "description": "",
+                    "isRequired": false,
+                    "input": {
+                      "type": "dataview",
+                      "query": "['Bartender','Blacksmith','Chef','Cleric','Farmer','Guard','Innkeeper','Merchant','Miner','Noble','Priest','Scholar','Scribe','Performer','Thief','Town Crier','Trapper']"
+                    }
+                  },
+                  {
+                    "name": "Location",
+                    "label": "Location:",
+                    "description": "",
+                    "isRequired": false,
+                    "input": {
+                      "type": "dataview",
+                      "query": "dv.pages('\"Compendium/Atlas\"').file.name"
+                    }
+                  }
+                ],
+                "version": "1",
+                "template": {
+                  "createCommand": true,
+                  "parsedTemplate": [
+                    {
+                      "_tag": "text",
+                      "value": "what the fuck? {[Name}}"
+                    }
+                  ]
+                }
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -78,7 +170,7 @@
         "state": {
           "type": "backlink",
           "state": {
-            "file": "Compendium/Atlas/Feywild/Realm 1 2/Realm 1 2.md",
+            "file": "INDEX.md",
             "collapseAll": false,
             "extraContext": false,
             "sortOrder": "alphabetical",
@@ -99,9 +191,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "8629e8d9f9c9732e",
+  "active": "814be1c91dc7f3c3",
   "lastOpenFiles": [
     "INDEX.md",
+    "Compendium/Lore/Deities/TestGod 1.md",
     "Compendium/NPC's/Mobile Works.md",
     "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Baldurs Gate.md",
     "Compendium/NPC's/sdfsdf.md",
@@ -125,7 +218,6 @@
     "Compendium/NPC's/Test FileTree.md",
     "Compendium/Party/Player Characters/Tilda Rosesong.md",
     "Session Notes/Session 02 (2024-02-17).md",
-    "Compendium/Party/Player Characters/Kingston Yashkar.md",
-    "Compendium/Lore/Deities/Beshaba.md"
+    "Compendium/Party/Player Characters/Kingston Yashkar.md"
   ]
 }

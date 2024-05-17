@@ -1,32 +1,68 @@
 <%*
 // ###########################################################
-//                        Helper Functions
+//                       Helper Functions
 // ###########################################################
 
 // Convert string to camelCase
 function toCamelCase(str) {
-	return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
-  }
+  return str
+    .replace(/(?:^\w|[A-Z]|\b\w|\s+|[-_])/g, (match, index) =>
+      index === 0 ? match.toLowerCase() : match.toUpperCase()
+    )
+    .replace(/[\s-_]+/g, '');
+}
+
+// Format tags
+function formatTags(affinity, job, race) {
+  return [
+    affinity && ` - affinity/${toCamelCase(affinity)}`,
+    job && ` - job/${toCamelCase(job)}`,
+    race && ` - race/${toCamelCase(race)}`
+  ]
+  .filter(tag => tag)
+  .join('\n');
+}
+
+// Format sub heading
+function formatSub(location, affinity) {
+  return [
+    location && `:FasMapLocationDot: [[${location}#${location}]]`,
+    affinity && `:FasHeartPulse: ${affinity}`
+  ]
+  .filter(sub => sub)
+  .join('&nbsp;&nbsp;|&nbsp;&nbsp;');
+}
+
 
 // ###########################################################
-//                        Main Code Section
+//                         Main Code
 // ###########################################################
 
-// Call modal form
+// Call modal form & declare variables
 const result = await MF.openForm('NPC');
-
-// Declare variables after form returns values
 const affinity = result.Affinity.value;
 const gender = result.Gender.value;
 const job = result.Job.value;
 const location = result.Location.value;
 const name = result.Name.value;
 const race = result.Race.value;
+const sub = formatSub(location, affinity);
+const tags = formatTags(affinity, job, race);
 
-// Rename & open note
-await tp.file.rename(name);
-await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
-new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New NPC <span style="text-decoration: underline;">${name}</span> added`;
+if (result.status === 'ok') {
+
+    // Rename file & open in new tab; Fire toast notification
+    await tp.file.rename(name);
+    await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+    new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New NPC <span style="text-decoration: underline;">${name}</span> added`;
+
+} else {
+
+    // Fire toast notifcation & exit templater
+    console.log('Modal form cancelled');
+    new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>NPC has not been added`;
+    return;
+}
 _%>
 
 ---
@@ -34,12 +70,11 @@ type: npc
 locations:
  - <% location ? `"[[${location}]]"` : '' %>
 tags:
- - race/<% toCamelCase(race) %>
- - affinity/<% toCamelCase(affinity) %><% job ? `\n - job/${toCamelCase(job)}` : '' %>
+<% tags ? tags : ' - '%>
 headerLink: "[[<% name %>#<% name %>]]"
 ---
 ###### <% name %>
-<span class="sub2"><% location ? `:FasMapLocationDot: [[${location}#${location}]] &nbsp;|&nbsp; ` : '' %>:FasHeartPulse: <% affinity %> </span>
+<span class="sub2"><% sub ? sub : '' %> </span>
 ___
 
 > [!infobox|no-t right]
@@ -47,14 +82,13 @@ ___
 > ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
-> | :FasBriefcase: Job |  <% job %> |
-> | :FasVenusMars: Gender | <% gender %> |
-> | :FasUser: Race | <% race %> |
+> | :FasBriefcase: Job |  <% job ? job : '' %> |
+> | :FasVenusMars: Gender | <% gender ? gender : '' %> |
+> | :FasUser: Race | <% race ? race : '' %> |
 <span class="clearfix"></span>
 
 > [!quote|no-t]
->Profile of <% name.toLowerCase() %>, the <% gender.toLowerCase() %> <% race.toLowerCase() %> NPC.
-
+>Profile of <% name %>, the <% `${gender ? gender.toLowerCase() : ''}${race ? (gender ? ' ' : '') + race.toLowerCase() : ''}` %> NPC.
 #### marker
 > [!column|flex 3]
 >> [!important]- QUESTS:

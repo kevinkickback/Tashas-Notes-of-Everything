@@ -6,10 +6,11 @@
     {
       "title": "Add New NPC",
       "name": "NPC",
+      "customClassname": "",
       "fields": [
         {
           "name": "Name",
-          "label": "Name",
+          "label": "Name:",
           "description": "",
           "isRequired": true,
           "input": {
@@ -22,26 +23,8 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "select",
-            "source": "fixed",
-            "options": [
-              {
-                "value": "Male",
-                "label": "Male"
-              },
-              {
-                "value": "Female",
-                "label": "Female"
-              },
-              {
-                "value": "Non-binary",
-                "label": "Non-binary"
-              },
-              {
-                "value": "Unknown",
-                "label": "Unknown"
-              }
-            ]
+            "type": "dataview",
+            "query": "['Male', 'Female', 'Non-Binary']"
           }
         },
         {
@@ -50,174 +33,8 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "select",
-            "source": "fixed",
-            "options": [
-              {
-                "value": "Aarakocra",
-                "label": "Aarakocra"
-              },
-              {
-                "value": "Aasimar",
-                "label": "Aasimar"
-              },
-              {
-                "value": "Bugbear",
-                "label": "Bugbear"
-              },
-              {
-                "value": "Centaur",
-                "label": "Centaur"
-              },
-              {
-                "value": "Changeling",
-                "label": "Changeling"
-              },
-              {
-                "value": "Dhampir",
-                "label": "Dhampir"
-              },
-              {
-                "value": "Dragonborn",
-                "label": "Dragonborn"
-              },
-              {
-                "value": "Dwarf",
-                "label": "Dwarf"
-              },
-              {
-                "value": "Elf",
-                "label": "Elf"
-              },
-              {
-                "value": "Fairy",
-                "label": "Fairy"
-              },
-              {
-                "value": "Firbolg",
-                "label": "Firbolg"
-              },
-              {
-                "value": "Genasi",
-                "label": "Genasi"
-              },
-              {
-                "value": "Gith",
-                "label": "Gith"
-              },
-              {
-                "value": "Gnome",
-                "label": "Gnome"
-              },
-              {
-                "value": "Goblin",
-                "label": "Goblin"
-              },
-              {
-                "value": "Goliath",
-                "label": "Goliath"
-              },
-              {
-                "value": "Half-Elf",
-                "label": "Half-Elf"
-              },
-              {
-                "value": "Half-Orc",
-                "label": "Half-Orc"
-              },
-              {
-                "value": "Hexblood",
-                "label": "Hexblood"
-              },
-              {
-                "value": "Hobgoblin",
-                "label": "Hobgoblin"
-              },
-              {
-                "value": "Human",
-                "label": "Human"
-              },
-              {
-                "value": "Kalashtar",
-                "label": "Kalashtar"
-              },
-              {
-                "value": "Kenku",
-                "label": "Kenku"
-              },
-              {
-                "value": "Kobold",
-                "label": "Kobold"
-              },
-              {
-                "value": "Leonin",
-                "label": "Leonin"
-              },
-              {
-                "value": "Lizardfolk",
-                "label": "Lizardfolk"
-              },
-              {
-                "value": "Loxodon",
-                "label": "Loxodon"
-              },
-              {
-                "value": "Minotaur",
-                "label": "Minotaur"
-              },
-              {
-                "value": "Orc",
-                "label": "Orc"
-              },
-              {
-                "value": "Reborn Lineage",
-                "label": "Reborn Lineage"
-              },
-              {
-                "value": "Satyr",
-                "label": "Satyr"
-              },
-              {
-                "value": "Shifter",
-                "label": "Shifter"
-              },
-              {
-                "value": "Simic Hybrid",
-                "label": "Simic Hybrid"
-              },
-              {
-                "value": "Tabaxi",
-                "label": "Tabaxi"
-              },
-              {
-                "value": "Tiefling",
-                "label": "Tiefling"
-              },
-              {
-                "value": "Tortle",
-                "label": "Tortle"
-              },
-              {
-                "value": "Triton",
-                "label": "Triton"
-              },
-              {
-                "value": "Vedalken",
-                "label": "Vedalken"
-              },
-              {
-                "value": "Verdan",
-                "label": "Verdan"
-              },
-              {
-                "value": "Warforged",
-                "label": "Warforged"
-              },
-              {
-                "value": "Yuan-Ti Pureblood",
-                "label": "Yuan-Ti Pureblood"
-              }
-            ]
+            "type": "dataview",
+            "query": "['Aarakocra','Aasimar','Bugbear','Centaur','Changeling','Dragonborn','Dwarf','Elf','Fairy','Firbolg','Genasi','Gnome','Goblin','Goliath','Grung','Halfling','Half-Elf','Half-Orc','Hobgoblin','Human','Kalashtar','Kenku','Kobold','Leonin','Lizardfolk','Loxodon','Minotaur','Orc','Owlfolk','Satyr','Shifter','Simic Hybrid','Tabaxi','Tiefling','Tortle','Triton','Vedalken','Verdan','Warforged','Yuan-Ti Pureblood']"
           }
         },
         {
@@ -226,26 +43,8 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "select",
-            "source": "fixed",
-            "options": [
-              {
-                "value": "Neutral",
-                "label": "Neutral"
-              },
-              {
-                "value": "Friendly",
-                "label": "Friendly"
-              },
-              {
-                "value": "Hostile",
-                "label": "Hostile"
-              },
-              {
-                "value": "Unknown",
-                "label": "Unknown"
-              }
-            ]
+            "type": "dataview",
+            "query": "['Friendly','Hostile','Neutral','Unknown']"
           }
         },
         {
@@ -254,7 +53,8 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "text"
+            "type": "dataview",
+            "query": "['Bartender','Blacksmith','Chef','Cleric','Farmer','Guard','Innkeeper','Merchant','Miner','Noble','Priest','Scholar','Scribe','Performer','Thief','Town Crier','Trapper']"
           }
         },
         {
@@ -345,30 +145,8 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "select",
-            "source": "fixed",
-            "options": [
-              {
-                "value": "Personal",
-                "label": "Personal"
-              },
-              {
-                "value": "Political",
-                "label": "Political"
-              },
-              {
-                "value": "Religious",
-                "label": "Religious"
-              },
-              {
-                "value": "Seasonal",
-                "label": "Seasonal"
-              },
-              {
-                "value": "Manual",
-                "label": "[ Manual Input ]"
-              }
-            ]
+            "type": "dataview",
+            "query": "['Personal','Political','Seasonal','Religious']"
           }
         }
       ],
@@ -393,22 +171,18 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "select",
-            "source": "fixed",
-            "options": [
-              {
-                "value": "Male",
-                "label": "Male"
-              },
-              {
-                "value": "Female",
-                "label": "Female"
-              },
-              {
-                "value": "Agender / Non-binary",
-                "label": "Agender / Non-binary"
-              }
-            ]
+            "type": "dataview",
+            "query": "['Male','Female','Agender','Non-Binary']"
+          }
+        },
+        {
+          "name": "Alignment",
+          "label": "Alignment:",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "dataview",
+            "query": "['Lawful Good', 'Neutral Good', 'Chaotic Good', 'Lawful Neutral', 'True Neutral', 'Chaotic Neutral', 'Lawful Evil', 'Neutral Evil', 'Chaotic Evil']"
           }
         },
         {
@@ -420,31 +194,22 @@
             "type": "multiselect",
             "source": "fixed",
             "multi_select_options": [
-              "Agriculture",
-              "Air",
-              "Ambition",
-              "Arts",
-              "Avarice",
-              "Balance",
-              "Beasts",
+              "Animal",
+              "Arcana",
               "Beauty",
-              "Celebrations",
+              "Chaos",
               "Change",
-              "Civilization",
               "Conquest",
               "Corruption",
               "Creation",
               "Darkness",
               "Death",
               "Destruction",
-              "Earth",
-              "Envy",
-              "Fall",
-              "Fire",
+              "Dream",
+              "Fate",
               "Forge",
               "Freedom",
               "Glory",
-              "Gluttony",
               "Grave",
               "Greed",
               "Growth",
@@ -462,16 +227,12 @@
               "Love",
               "Luck",
               "Lust",
-              "Madness",
               "Magic",
-              "Mist",
               "Moon",
               "Nature",
-              "Nobility",
               "Order",
               "Pain",
               "Patience",
-              "Pestilence",
               "Plants",
               "Pleasure",
               "Poison",
@@ -483,9 +244,6 @@
               "Sea",
               "Secrets",
               "Shadow",
-              "Sleep",
-              "Sloth",
-              "Snow",
               "Strength",
               "Sun",
               "Temperance",
@@ -494,67 +252,14 @@
               "Trade",
               "Travel",
               "Trickery",
-              "Tyranny",
-              "Underneath",
-              "Vengeance",
               "Vengence",
               "War",
-              "Water",
               "Wealth",
               "Wilderness",
-              "Winter",
               "Wrath",
               "Zeal"
             ],
             "allowUnknownValues": true
-          }
-        },
-        {
-          "name": "Alignment",
-          "label": "Alignment:",
-          "description": "",
-          "isRequired": false,
-          "input": {
-            "type": "select",
-            "source": "fixed",
-            "options": [
-              {
-                "value": "Lawful Good",
-                "label": "Lawful Good"
-              },
-              {
-                "value": "Neutral Good",
-                "label": "Neutral Good"
-              },
-              {
-                "value": "Chaotic Good",
-                "label": "Chaotic Good"
-              },
-              {
-                "value": "Lawful Neutral",
-                "label": "Lawful Neutral"
-              },
-              {
-                "value": "True Neutral",
-                "label": "True Nuetral"
-              },
-              {
-                "value": "Chaotic Neutral",
-                "label": "Chatoic Neutral"
-              },
-              {
-                "value": "Lawful Evil",
-                "label": "Lawful Evil"
-              },
-              {
-                "value": "Neutral Evil",
-                "label": "Neutral Evil"
-              },
-              {
-                "value": "Chaotic Evil",
-                "label": "Chaotic Evil"
-              }
-            ]
           }
         },
         {
@@ -595,50 +300,8 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "select",
-            "source": "fixed",
-            "options": [
-              {
-                "value": "Blacksmith",
-                "label": "Blacksmith"
-              },
-              {
-                "value": "Camp",
-                "label": "Camp"
-              },
-              {
-                "value": "Guildhall",
-                "label": "Guildhall"
-              },
-              {
-                "value": "Inn",
-                "label": "Inn"
-              },
-              {
-                "value": "Library",
-                "label": "Library"
-              },
-              {
-                "value": "Market",
-                "label": "Market"
-              },
-              {
-                "value": "Port",
-                "label": "Port"
-              },
-              {
-                "value": "Residence",
-                "label": "Residence"
-              },
-              {
-                "value": "Tavern",
-                "label": "Tavern"
-              },
-              {
-                "value": "Manual",
-                "label": "[ Manual Input ]"
-              }
-            ]
+            "type": "dataview",
+            "query": "['Blacksmith','Camp','Guildhall','Inn','Library','Market','Port','Residence','Tavern']"
           }
         },
         {
@@ -673,58 +336,8 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "select",
-            "source": "fixed",
-            "options": [
-              {
-                "value": "Cave",
-                "label": "Cave"
-              },
-              {
-                "value": "City",
-                "label": "City"
-              },
-              {
-                "value": "Desert",
-                "label": "Desert"
-              },
-              {
-                "value": "Encampment",
-                "label": "Encampment"
-              },
-              {
-                "value": "Forest",
-                "label": "Forest"
-              },
-              {
-                "value": "Lake",
-                "label": "Lake"
-              },
-              {
-                "value": "Mountain",
-                "label": "Mountain"
-              },
-              {
-                "value": "Plains",
-                "label": "Plains"
-              },
-              {
-                "value": "Swamp",
-                "label": "Swamp"
-              },
-              {
-                "value": "Town",
-                "label": "Town"
-              },
-              {
-                "value": "Vilage",
-                "label": "Village"
-              },
-              {
-                "value": "Manual",
-                "label": "[ Manual Input ]"
-              }
-            ]
+            "type": "dataview",
+            "query": "['Cave','City','Desert','Encampment','Forest','Lake','Mountain','Plains','Swamp','Town','Village']"
           }
         },
         {
@@ -773,6 +386,18 @@
             "query": "dv.pages('\"Compendium/Atlas\"').file.name",
             "allowUnknownValues": true
           }
+        },
+        {
+          "name": "Tags",
+          "label": "Tags:    ",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "multiselect",
+            "source": "dataview",
+            "query": "dv.pages('\"Compendium\"').file.etags;",
+            "allowUnknownValues": true
+          }
         }
       ],
       "version": "1"
@@ -796,26 +421,8 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "select",
-            "source": "fixed",
-            "options": [
-              {
-                "value": "Magic Item",
-                "label": "Magic Item"
-              },
-              {
-                "value": "Treasure",
-                "label": "Treasure"
-              },
-              {
-                "value": "Religious Artifact",
-                "label": "Religious Artifact"
-              },
-              {
-                "value": "Manual",
-                "label": "[ Manual Input ]"
-              }
-            ]
+            "type": "dataview",
+            "query": "['Armor','Jewelry','Magic Item','Weapon','Religious Artifact','Treasure','Jewelry']"
           }
         }
       ],
@@ -840,46 +447,8 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "select",
-            "source": "fixed",
-            "options": [
-              {
-                "value": "Lawful Good",
-                "label": "Lawful Good"
-              },
-              {
-                "value": "Neutral Good",
-                "label": "Neutral Good"
-              },
-              {
-                "value": "Chaotic Good",
-                "label": "Chaotic Good"
-              },
-              {
-                "value": "Lawful Neutral",
-                "label": "Lawful Neutral"
-              },
-              {
-                "value": "True Neutral",
-                "label": "True Nuetral"
-              },
-              {
-                "value": "Chaotic Neutral",
-                "label": "Chatoic Neutral"
-              },
-              {
-                "value": "Lawful Evil",
-                "label": "Lawful Evil"
-              },
-              {
-                "value": "Neutral Evil",
-                "label": "Neutral Evil"
-              },
-              {
-                "value": "Chaotic Evil",
-                "label": "Chaotic Evil"
-              }
-            ]
+            "type": "dataview",
+            "query": "['Lawful Good','Neutral Good','Chaotic Good','Lawful Neutral','True Neutral','Chaotic Neutral','Lawful Evil','Neutral Evil','Chatoic Evil']"
           }
         },
         {
@@ -930,30 +499,8 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "select",
-            "source": "fixed",
-            "options": [
-              {
-                "value": "Abandoned",
-                "label": "Abandoned"
-              },
-              {
-                "value": "Completed",
-                "label": "Completed"
-              },
-              {
-                "value": "Failed",
-                "label": "Failed"
-              },
-              {
-                "value": "Ongoing",
-                "label": "Ongoing"
-              },
-              {
-                "value": "Pending",
-                "label": "Pending"
-              }
-            ]
+            "type": "dataview",
+            "query": "['Abandoned','Completed','Failed','Ongoing','Pending']"
           }
         },
         {
@@ -969,11 +516,11 @@
         {
           "name": "Assignee",
           "label": "Assigned to:",
-          "description": "(leave blank for the entire party)",
+          "description": "",
           "isRequired": false,
           "input": {
             "type": "dataview",
-            "query": "dv.pages('\"Compendium/Party/Player Characters\"').file.name"
+            "query": "[\"[ Group Quest ]\", ...dv.pages('\"Compendium/Party/Player Characters\"').file.name]"
           }
         },
         {

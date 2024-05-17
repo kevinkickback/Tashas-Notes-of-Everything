@@ -28,20 +28,28 @@ function getPath(location) {
 //                        Main Code Section
 // ###########################################################
 
-// Call modal form
+// Call modal form & declare variables
 const result = await MF.openForm('CONTINENT');
-
-// Declare variables after form returns values
 const location = result.Location.value;
 const name = result.Name.value;
 const type = result.Type.value;
 const icon = getIcon(type);
 const path = getPath(location);
 
-// Rename, move, & open note
-await tp.file.move(`Compendium/Atlas/${location ? `${path}/` : ''}${name}/${name}`);
-await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
-new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New ${type.toLowerCase()} <span style="text-decoration: underline;">${name}</span> added`;
+if (result.status === 'ok') {
+
+    // Rename file & open in new tab; Fire toast notification
+    await tp.file.move(`Compendium/Atlas/${location ? `${path}/` : ''}${name}/${name}`);
+    await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+    new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New ${type ? type.toLowerCase() : 'location'} <span style="text-decoration: underline;">${name}</span> added`;
+
+} else {
+
+    // Fire toast notifcation & exit templater
+    console.log('Modal form cancelled');
+    new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Location has not been added`;
+    return;
+}
 _%>
 
 ---
@@ -49,17 +57,17 @@ type: <% type.toLowerCase() %>
 locations:
  - <% location ? `"[[${location}]]"` : '' %>
 tags:
-- 
+ - 
 headerLink: "[[<% name %>#<% name %>]]"
 ---
 
 ![[banner.jpg|banner]]
 ###### <% name %>
-<span class="sub2"><% icon %> <% type %></span>
+<span class="sub2"><% type ? `${icon} ${type}` : '' %></span>
 ___
 
 > [!quote|no-t]
->Quick description of the <% type.toLowerCase() %> <% name %>.
+>Quick description of <% type ? `the ${type.toLowerCase()}` : '' %> <% name %>.
 
 #### marker
 > [!column|flex 3]

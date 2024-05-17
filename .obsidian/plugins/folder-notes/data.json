@@ -44,7 +44,7 @@
   "useSubmenus": false,
   "syncMove": true,
   "frontMatterTitle": {
-    "enabled": true,
+    "enabled": false,
     "explorer": true,
     "path": false
   },

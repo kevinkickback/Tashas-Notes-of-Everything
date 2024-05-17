@@ -1,9 +1,9 @@
 {
   "settings": {
-    "migrated": 4,
+    "migrated": 5,
     "iconPacksPath": ".obsidian/icons",
     "fontSize": 16,
-    "emojiStyle": "none",
+    "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
       "FasFolder"
@@ -25,7 +25,8 @@
     "iconsInNotesEnabled": true,
     "iconsInLinksEnabled": false,
     "iconIdentifier": ":",
-    "debugMode": false
+    "debugMode": false,
+    "iconInTitlePosition": "above"
   },
   "Compendium": "FasFolder",
   "Assets": "FasFolder",

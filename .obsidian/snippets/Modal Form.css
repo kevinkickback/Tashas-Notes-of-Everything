@@ -1,0 +1,25 @@
+/* Modal Form changes */
+.modal-form input[type="date"] {
+    min-width: 170px;
+    font-size: 1.1em;
+  }
+  .modal-form select.dropdown {
+    min-width: 170px;
+    font-size: 1em;
+  }
+  .suggestion-container {
+    min-width: 170px;
+  }
+  .modal-close-button {
+    display: none;
+  }
+  .modal-form h1 {
+    text-align: center;
+  }
+  .modal-form .setting-item {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .modal-form .setting-item:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.15) !important;
+  }

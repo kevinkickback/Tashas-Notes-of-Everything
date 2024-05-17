@@ -3,7 +3,7 @@ type: npc
 locations:
 - "[[Elfsong Tavern]]"
 tags:
-- race/half-Elf
+- race/halfElf
 - affinity/friendly
 - job/waitress
 headerLink: "[[Paloma Beltre#Paloma Beltre]]"

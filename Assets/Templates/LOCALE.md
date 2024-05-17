@@ -5,7 +5,11 @@
 
 // Convert string to camelCase
 function toCamelCase(str) {
-	return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
+  return str
+    .replace(/(?:^\w|[A-Z]|\b\w|\s+|[-_])/g, (match, index) =>
+      index === 0 ? match.toLowerCase() : match.toUpperCase()
+    )
+    .replace(/[\s-_]+/g, '');
 }
 
 // Return icon based on type
@@ -42,31 +46,34 @@ function getPath(location) {
 //                        Main Code Section
 // ###########################################################
 
-// Call modal form
+// Call modal form & declare variables
 const result = await MF.openForm('LOCALE');
-
-// Set variables after result returns values
 const location = result.Location.value;
 const name = result.Name.value;
-let type = result.Type.value;
+const type = result.Type.value;
 const icon = getIcon(type);
 const path = getPath(location);
 
-if (type === "Manual") {
-	type = await tp.system.prompt('Enter type:', 'Leave blank for none', true);
-	type = type === 'Leave blank for none' || '' ? '' : type;
-}
+if (result.status === 'ok') {
 
-// Rename, move, & open markdown file
-await tp.file.move(`Compendium/Atlas/${location ? `${path}/` : ''}${name}/${name}`);
-await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
-new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New locale <span style="text-decoration: underline;">${name}</span> added`;
+    // Rename, move, & open new file; Fire toast notification
+    await tp.file.move(`Compendium/Atlas/${location ? `${path}/` : ''}${name}/${name}`);
+    await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+    new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New locale <span style="text-decoration: underline;">${name}</span> added`;
+
+} else {
+
+    // Fire toast notifcation & exit templater
+    console.log('Modal form cancelled');
+    new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Local has not been added`;
+    return;
+}
 _%>
 
 ---
 type: locale
 locations:
-- <% location ? `"[[${location}]]"` : '' %>
+ - <% location ? `"[[${location}]]"` : '' %>
 tags:
  - <% type ? `location/${toCamelCase(type)}` : '' %>
 headerLink: "[[{<% name %>#<% name %>]]"

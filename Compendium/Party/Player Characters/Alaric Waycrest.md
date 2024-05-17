@@ -1,7 +1,7 @@
 ---
 type: pc
 tags:
-- race/halforc
+- race/halfOrc
 - class/fighter
 headerLink: "[[Alaric Waycrest#Alaric Waycrest]]"
 level: 3

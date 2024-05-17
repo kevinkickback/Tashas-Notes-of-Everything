@@ -1805,6 +1805,9 @@ body:not(.default-callout-quote) .callout.callout[data-callout=quote] > .callout
 	padding-top: 0px;
 	padding-bottom: 0px;
 }
+.index .callout.is-collapsible:not(.is-collapsed) .callout-title {
+	background-color: var(--interactive-accent-base);
+}
 .index .callout-title:hover {
 	color: white;
 	background-color: var(--interactive-accent-base) !important;

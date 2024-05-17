@@ -18,26 +18,34 @@ function getPath(location) {
 //                        Main Code Section
 // ###########################################################
 
-// Call modal form
+// Call modal form & declare variables
 const result = await MF.openForm('REALM');
-
-// Declare variables after form returns values
 const location = result.Location.value;
 const name = result.Name.value;
 const path = getPath(location);
 
-// Rename, move, & open note
-await tp.file.move(`Compendium/Atlas/${location ? `${path}/` : ''}${name}/${name}`);
-await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
-new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New realm <span style="text-decoration: underline;">${name}</span> added`;
+if (result.status === 'ok') {
+
+    // Rename file & open in new tab; Fire toast notification
+    await tp.file.move(`Compendium/Atlas/${location ? `${path}/` : ''}${name}/${name}`);
+    await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+    new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New realm <span style="text-decoration: underline;">${name}</span> added`;
+
+} else {
+
+    // Fire toast notifcation & exit templater
+    console.log('Modal form cancelled');
+    new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Realm has not been added`;
+    return;
+}
 _%>
 
 ---
 type: realm
 locations:
-- <% location ? `"[[${location}]]"` : '' %>
+ - <% location ? `"[[${location}]]"` : '' %>
 tags:
-- 
+ - 
 headerLink: "[[<% name %>#<% name %>]]"
 ---
 

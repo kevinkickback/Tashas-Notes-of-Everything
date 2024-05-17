@@ -3,23 +3,30 @@
 //                        Main Code Section
 // ###########################################################
 
-// Call modal form
+// Call modal form & declare variables
 const result = await MF.openForm('PLANE');
-
-// Declare variables after form returns values
 const name = result.Name.value;
-const temp = app.vault.getAbstractFileByPath('temp123.md');
 
-// Rename, move, & open note
-await tp.file.move(`Compendium/Atlas/${name}/${name}`);
-await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
-new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New plane <span style="text-decoration: underline;">${name}</span> added`;
+if (result.status === 'ok') {
+
+    // Rename file & open in new tab; Fire toast notification
+    await tp.file.move(`Compendium/Atlas/${name}/${name}`);
+    await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+    new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New plane <span style="text-decoration: underline;">${name}</span> added`;
+
+} else {
+
+    // Fire toast notifcation & exit templater
+    console.log('Modal form cancelled');
+    new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Plane has not been added`;
+    return;
+}
 _%>
 
 ---
 type: plane
 tags:
-- 
+ - 
 headerLink: "[[<% name %>#<% name %>]]"
 ---
 ![[banner.jpg|banner]]

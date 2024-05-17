@@ -38,10 +38,11 @@
     "Embed Adjustments",
     "Image Adjustments",
     "Lists",
-    "NPC Toggle",
     "Prism Theme Edits",
     "Tables",
-    "Popup"
+    "Popup",
+    "NPC Toggle",
+    "Modal Form"
   ],
   "baseFontSizeAction": false,
   "accentColor": "#8a5cf5",
