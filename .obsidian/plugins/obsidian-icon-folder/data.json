@@ -25,7 +25,7 @@
     "iconsInNotesEnabled": true,
     "iconsInLinksEnabled": false,
     "iconIdentifier": ":",
-    "debugMode": false,
+    "debugMode": true,
     "iconInTitlePosition": "above"
   },
   "Compendium": "FasFolder",

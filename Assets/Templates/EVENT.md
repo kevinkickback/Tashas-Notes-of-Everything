@@ -44,7 +44,6 @@ if (result.status === 'ok') {
 } else {
 
     // Fire toast notification & exit templater
-    console.log('Modal form cancelled');
     new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Event has not been added`;
     return;
 }

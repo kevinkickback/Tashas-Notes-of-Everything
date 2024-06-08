@@ -4,9 +4,9 @@ tags:
 - race/halfOrc
 - class/fighter
 headerLink: "[[Alaric Waycrest#Alaric Waycrest]]"
-level: 3
-race: Half&#x2011;Orc
-class: Fighter
+level: "3"
+race: "Half-Orc"
+class: "Fighter"
 subClass: "Battle Master"
 cover: "/Assets/Images/Party/alaric.png"
 ---
@@ -21,7 +21,7 @@ ___
 > | ---- | ---- |
 > | :FasCrown: Level   | `=this.level` |
 > | :RiSwordFill: Class |  `=this.class`|
-> | :FasHandFist: Archetype |  `=this.subClass`|
+> | :FasUserShield: Archetype |  `=this.subClass`|
 > |  :FasUserGroup: Race |  `=this.race`|
 
 > [!quote|no-t]

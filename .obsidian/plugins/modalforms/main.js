@@ -33,170 +33,2527 @@ __export(main_exports, {
   default: () => ModalFormPlugin
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian22 = require("obsidian");
 
-// src/exampleModalDefinition.ts
-var exampleModalDefinition = {
-  title: "Example form",
-  name: "example-form",
-  version: "1",
-  fields: [
-    {
-      name: "name",
-      label: "Name",
-      description: "It is named how?",
-      isRequired: true,
-      input: { type: "text" }
-    },
-    {
-      name: "age",
-      label: "Age",
-      description: "How old",
-      isRequired: true,
-      input: { type: "number" }
-    },
-    {
-      name: "dateOfBirth",
-      label: "Date of Birth",
-      description: "When were you born?",
-      input: { type: "date" }
-    },
-    {
-      name: "timeOfDay",
-      label: "Time of day",
-      description: "The time you can do this",
-      input: { type: "time" }
-    },
-    {
-      name: "is_family",
-      label: "Is family",
-      description: "If it is part of the family",
-      input: { type: "toggle" }
-    },
-    {
-      name: "favorite_book",
-      label: "Favorite book",
-      description: "Pick one",
-      input: { type: "note", folder: "Books" }
-    },
-    {
-      name: "folder",
-      label: "The destination folder",
-      description: "It offers auto-completion to existing folders",
-      input: { type: "folder" }
-    },
-    {
-      name: "multi_example",
-      label: "Multi select folder",
-      description: "Allows to pick many notes from a folder",
-      input: { type: "multiselect", source: "notes", folder: "Books" }
-    },
-    {
-      name: "multi_example_2",
-      label: "Multi select fixed",
-      description: "Allows to pick many notes from a fixed list",
-      input: {
-        type: "multiselect",
-        source: "fixed",
-        allowUnknownValues: false,
-        multi_select_options: [
-          "Android",
-          "iOS",
-          "Windows",
-          "MacOS",
-          "Linux",
-          "Solaris",
-          "MS2"
-        ]
-      }
-    },
-    {
-      name: "multi_select_dataview",
-      label: "Multi select dataview",
-      description: "Allows to pick several values from a dv query",
-      input: {
-        type: "multiselect",
-        source: "dataview",
-        query: 'dv.pages("#person").map(p => p.file.name)',
-        allowUnknownValues: true
-      }
-    },
-    {
-      name: "best_fried",
-      label: "Best friend",
-      description: "Select of type note from a folder",
-      input: {
-        type: "select",
-        source: "notes",
-        folder: "People"
-      }
-    },
-    {
-      name: "dataview_example",
-      label: "Dataview example",
-      description: "Only people matching the dataview query will be shown",
-      input: {
-        type: "dataview",
-        query: 'dv.pages("#person").filter(p => p.age < 30).map(p => p.file.name)'
-      }
-    },
-    {
-      name: "friendship_level",
-      label: "Friendship level",
-      description: "How good friends are you?",
-      input: {
-        type: "slider",
-        min: 0,
-        max: 10
-      }
-    },
-    {
-      name: "favorite_meal",
-      label: "Favorite meal",
-      description: "Pick one option",
-      input: {
-        type: "select",
-        source: "fixed",
-        options: [
-          { value: "pizza", label: "\u{1F355} Pizza" },
-          { value: "pasta", label: "\u{1F35D} Pasta" },
-          { value: "burger", label: "\u{1F354} Burger" },
-          { value: "salad", label: "\u{1F957} Salad" },
-          { value: "steak", label: "\u{1F969} Steak" },
-          { value: "sushi", label: "\u{1F363} Sushi" },
-          { value: "ramen", label: "\u{1F35C} Ramen" },
-          { value: "tacos", label: "\u{1F32E} Tacos" },
-          { value: "fish", label: "\u{1F41F} Fish" },
-          { value: "chicken", label: "\u{1F357} Chicken" }
-        ]
-      }
-    },
-    {
-      name: "some notes",
-      label: "Multi line notes",
-      description: "Put your thouhts here",
-      input: {
-        type: "textarea"
-      }
-    },
-    {
-      name: "Tags",
-      description: "Tags input example",
-      input: { type: "tag" }
-    },
-    {
-      name: "document",
-      description: "Document block example",
-      input: {
-        type: "document_block",
-        body: "return `Hello ${form.name}!<br> Your best friend is <b>${form.best_fried}</b>`"
+// src/std/index.ts
+var std_exports = {};
+__export(std_exports, {
+  A: () => Array_exports,
+  E: () => E,
+  EFunSemigroup: () => EFunSemigroup,
+  NEA: () => NEA,
+  O: () => O,
+  absurd: () => absurd2,
+  ensureError: () => ensureError,
+  flow: () => flow2,
+  parse: () => parse2,
+  parseC: () => parseC,
+  parseFunctionBody: () => parseFunctionBody,
+  pipe: () => pipe2,
+  tap: () => tap6,
+  throttle: () => throttle,
+  trySchemas: () => trySchemas
+});
+
+// node_modules/fp-ts/es6/function.js
+var __spreadArray = function(to, from, pack) {
+  if (pack || arguments.length === 2)
+    for (var i = 0, l = from.length, ar; i < l; i++) {
+      if (ar || !(i in from)) {
+        if (!ar)
+          ar = Array.prototype.slice.call(from, 0, i);
+        ar[i] = from[i];
       }
     }
-  ]
+  return to.concat(ar || Array.prototype.slice.call(from));
+};
+function identity(a) {
+  return a;
+}
+function flow(ab, bc, cd, de, ef, fg, gh, hi, ij) {
+  switch (arguments.length) {
+    case 1:
+      return ab;
+    case 2:
+      return function() {
+        return bc(ab.apply(this, arguments));
+      };
+    case 3:
+      return function() {
+        return cd(bc(ab.apply(this, arguments)));
+      };
+    case 4:
+      return function() {
+        return de(cd(bc(ab.apply(this, arguments))));
+      };
+    case 5:
+      return function() {
+        return ef(de(cd(bc(ab.apply(this, arguments)))));
+      };
+    case 6:
+      return function() {
+        return fg(ef(de(cd(bc(ab.apply(this, arguments))))));
+      };
+    case 7:
+      return function() {
+        return gh(fg(ef(de(cd(bc(ab.apply(this, arguments)))))));
+      };
+    case 8:
+      return function() {
+        return hi(gh(fg(ef(de(cd(bc(ab.apply(this, arguments))))))));
+      };
+    case 9:
+      return function() {
+        return ij(hi(gh(fg(ef(de(cd(bc(ab.apply(this, arguments)))))))));
+      };
+  }
+  return;
+}
+function absurd(_) {
+  throw new Error("Called `absurd` function which should be uncallable");
+}
+function pipe(a, ab, bc, cd, de, ef, fg, gh, hi) {
+  switch (arguments.length) {
+    case 1:
+      return a;
+    case 2:
+      return ab(a);
+    case 3:
+      return bc(ab(a));
+    case 4:
+      return cd(bc(ab(a)));
+    case 5:
+      return de(cd(bc(ab(a))));
+    case 6:
+      return ef(de(cd(bc(ab(a)))));
+    case 7:
+      return fg(ef(de(cd(bc(ab(a))))));
+    case 8:
+      return gh(fg(ef(de(cd(bc(ab(a)))))));
+    case 9:
+      return hi(gh(fg(ef(de(cd(bc(ab(a))))))));
+    default: {
+      var ret = arguments[0];
+      for (var i = 1; i < arguments.length; i++) {
+        ret = arguments[i](ret);
+      }
+      return ret;
+    }
+  }
+}
+var dual = function(arity, body) {
+  var isDataFirst = typeof arity === "number" ? function(args) {
+    return args.length >= arity;
+  } : arity;
+  return function() {
+    var args = Array.from(arguments);
+    if (isDataFirst(arguments)) {
+      return body.apply(this, args);
+    }
+    return function(self) {
+      return body.apply(void 0, __spreadArray([self], args, false));
+    };
+  };
 };
 
-// src/ModalFormSettingTab.ts
-var import_obsidian = require("obsidian");
+// node_modules/fp-ts/es6/internal.js
+var __spreadArray2 = function(to, from, pack) {
+  if (pack || arguments.length === 2)
+    for (var i = 0, l = from.length, ar; i < l; i++) {
+      if (ar || !(i in from)) {
+        if (!ar)
+          ar = Array.prototype.slice.call(from, 0, i);
+        ar[i] = from[i];
+      }
+    }
+  return to.concat(ar || Array.prototype.slice.call(from));
+};
+var isNone = function(fa) {
+  return fa._tag === "None";
+};
+var isSome = function(fa) {
+  return fa._tag === "Some";
+};
+var none = { _tag: "None" };
+var some = function(a) {
+  return { _tag: "Some", value: a };
+};
+var isLeft = function(ma) {
+  return ma._tag === "Left";
+};
+var isRight = function(ma) {
+  return ma._tag === "Right";
+};
+var left = function(e) {
+  return { _tag: "Left", left: e };
+};
+var right = function(a) {
+  return { _tag: "Right", right: a };
+};
+var singleton = function(a) {
+  return [a];
+};
+var isNonEmpty = function(as6) {
+  return as6.length > 0;
+};
+var head = function(as6) {
+  return as6[0];
+};
+var tail = function(as6) {
+  return as6.slice(1);
+};
+var emptyRecord = {};
+var has = Object.prototype.hasOwnProperty;
+var fromReadonlyNonEmptyArray = function(as6) {
+  return __spreadArray2([as6[0]], as6.slice(1), true);
+};
+var flatMapIO = function(F, M) {
+  return dual(2, function(self, f) {
+    return M.flatMap(self, function(a) {
+      return F.fromIO(f(a));
+    });
+  });
+};
+
+// node_modules/fp-ts/es6/Apply.js
+function ap(F, G) {
+  return function(fa) {
+    return function(fab) {
+      return F.ap(F.map(fab, function(gab) {
+        return function(ga) {
+          return G.ap(gab, ga);
+        };
+      }), fa);
+    };
+  };
+}
+function apFirst(A) {
+  return function(second) {
+    return function(first2) {
+      return A.ap(A.map(first2, function(a) {
+        return function() {
+          return a;
+        };
+      }), second);
+    };
+  };
+}
+function apSecond(A) {
+  return function(second) {
+    return function(first2) {
+      return A.ap(A.map(first2, function() {
+        return function(b) {
+          return b;
+        };
+      }), second);
+    };
+  };
+}
+function apS(F) {
+  return function(name, fb) {
+    return function(fa) {
+      return F.ap(F.map(fa, function(a) {
+        return function(b) {
+          var _a;
+          return Object.assign({}, a, (_a = {}, _a[name] = b, _a));
+        };
+      }), fb);
+    };
+  };
+}
+
+// node_modules/fp-ts/es6/Chain.js
+function chainFirst(M) {
+  var tapM = tap(M);
+  return function(f) {
+    return function(first2) {
+      return tapM(first2, f);
+    };
+  };
+}
+function tap(M) {
+  return function(first2, f) {
+    return M.chain(first2, function(a) {
+      return M.map(f(a), function() {
+        return a;
+      });
+    });
+  };
+}
+function bind(M) {
+  return function(name, f) {
+    return function(ma) {
+      return M.chain(ma, function(a) {
+        return M.map(f(a), function(b) {
+          var _a;
+          return Object.assign({}, a, (_a = {}, _a[name] = b, _a));
+        });
+      });
+    };
+  };
+}
+
+// node_modules/fp-ts/es6/FromEither.js
+function fromEitherK(F) {
+  return function(f) {
+    return flow(f, F.fromEither);
+  };
+}
+function tapEither(F, M) {
+  var fromEither4 = fromEitherK(F);
+  var tapM = tap(M);
+  return function(self, f) {
+    return tapM(self, fromEither4(f));
+  };
+}
+
+// node_modules/fp-ts/es6/Functor.js
+function map(F, G) {
+  return function(f) {
+    return function(fa) {
+      return F.map(fa, function(ga) {
+        return G.map(ga, f);
+      });
+    };
+  };
+}
+function flap(F) {
+  return function(a) {
+    return function(fab) {
+      return F.map(fab, function(f) {
+        return f(a);
+      });
+    };
+  };
+}
+function bindTo(F) {
+  return function(name) {
+    return function(fa) {
+      return F.map(fa, function(a) {
+        var _a;
+        return _a = {}, _a[name] = a, _a;
+      });
+    };
+  };
+}
+function let_(F) {
+  return function(name, f) {
+    return function(fa) {
+      return F.map(fa, function(a) {
+        var _a;
+        return Object.assign({}, a, (_a = {}, _a[name] = f(a), _a));
+      });
+    };
+  };
+}
+function as(F) {
+  return function(self, b) {
+    return F.map(self, function() {
+      return b;
+    });
+  };
+}
+function asUnit(F) {
+  var asM = as(F);
+  return function(self) {
+    return asM(self, void 0);
+  };
+}
+
+// node_modules/fp-ts/es6/Eq.js
+var fromEquals = function(equals) {
+  return {
+    equals: function(x, y) {
+      return x === y || equals(x, y);
+    }
+  };
+};
+var eqStrict = {
+  equals: function(a, b) {
+    return a === b;
+  }
+};
+var strictEqual = eqStrict.equals;
+
+// node_modules/fp-ts/es6/Ord.js
+var equalsDefault = function(compare2) {
+  return function(first2, second) {
+    return first2 === second || compare2(first2, second) === 0;
+  };
+};
+var fromCompare = function(compare2) {
+  return {
+    equals: equalsDefault(compare2),
+    compare: function(first2, second) {
+      return first2 === second ? 0 : compare2(first2, second);
+    }
+  };
+};
+var getSemigroup = function() {
+  return {
+    concat: function(first2, second) {
+      return fromCompare(function(a, b) {
+        var ox = first2.compare(a, b);
+        return ox !== 0 ? ox : second.compare(a, b);
+      });
+    }
+  };
+};
+var getMonoid = function() {
+  return {
+    concat: getSemigroup().concat,
+    empty: fromCompare(function() {
+      return 0;
+    })
+  };
+};
+function compare(first2, second) {
+  return first2 < second ? -1 : first2 > second ? 1 : 0;
+}
+var strictOrd = {
+  equals: eqStrict.equals,
+  compare
+};
+
+// node_modules/fp-ts/es6/Magma.js
+var concatAll = function(M) {
+  return function(startWith) {
+    return function(as6) {
+      return as6.reduce(function(a, acc) {
+        return M.concat(a, acc);
+      }, startWith);
+    };
+  };
+};
+
+// node_modules/fp-ts/es6/Semigroup.js
+var constant = function(a) {
+  return {
+    concat: function() {
+      return a;
+    }
+  };
+};
+var struct = function(semigroups) {
+  return {
+    concat: function(first2, second) {
+      var r = {};
+      for (var k in semigroups) {
+        if (has.call(semigroups, k)) {
+          r[k] = semigroups[k].concat(first2[k], second[k]);
+        }
+      }
+      return r;
+    }
+  };
+};
+var first = function() {
+  return { concat: identity };
+};
+var last = function() {
+  return { concat: function(_, y) {
+    return y;
+  } };
+};
+var concatAll2 = concatAll;
+var semigroupVoid = constant(void 0);
+var semigroupAll = {
+  concat: function(x, y) {
+    return x && y;
+  }
+};
+var semigroupAny = {
+  concat: function(x, y) {
+    return x || y;
+  }
+};
+var semigroupString = {
+  concat: function(x, y) {
+    return x + y;
+  }
+};
+var semigroupSum = {
+  concat: function(x, y) {
+    return x + y;
+  }
+};
+var semigroupProduct = {
+  concat: function(x, y) {
+    return x * y;
+  }
+};
+
+// node_modules/fp-ts/es6/ReadonlyNonEmptyArray.js
+var __spreadArray3 = function(to, from, pack) {
+  if (pack || arguments.length === 2)
+    for (var i = 0, l = from.length, ar; i < l; i++) {
+      if (ar || !(i in from)) {
+        if (!ar)
+          ar = Array.prototype.slice.call(from, 0, i);
+        ar[i] = from[i];
+      }
+    }
+  return to.concat(ar || Array.prototype.slice.call(from));
+};
+var isNonEmpty2 = isNonEmpty;
+var isOutOfBound = function(i, as6) {
+  return i < 0 || i >= as6.length;
+};
+var prependW = function(head6) {
+  return function(tail5) {
+    return __spreadArray3([head6], tail5, true);
+  };
+};
+var prepend = prependW;
+var appendW = function(end) {
+  return function(init5) {
+    return __spreadArray3(__spreadArray3([], init5, true), [end], false);
+  };
+};
+var append = appendW;
+var prependAll = function(middle) {
+  return function(as6) {
+    var out = [middle, as6[0]];
+    for (var i = 1; i < as6.length; i++) {
+      out.push(middle, as6[i]);
+    }
+    return out;
+  };
+};
+var intersperse = function(middle) {
+  return function(as6) {
+    var rest = tail2(as6);
+    return isNonEmpty2(rest) ? pipe(rest, prependAll(middle), prepend(head2(as6))) : as6;
+  };
+};
+var of = singleton;
+var extract = head;
+var head2 = extract;
+var tail2 = tail;
+var last2 = function(as6) {
+  return as6[as6.length - 1];
+};
+var concatAll3 = function(S) {
+  return function(as6) {
+    return as6.reduce(S.concat);
+  };
+};
+var intercalate = function(S) {
+  var concatAllS = concatAll3(S);
+  return function(middle) {
+    return flow(intersperse(middle), concatAllS);
+  };
+};
+
+// node_modules/fp-ts/es6/NonEmptyArray.js
+var __spreadArray4 = function(to, from, pack) {
+  if (pack || arguments.length === 2)
+    for (var i = 0, l = from.length, ar; i < l; i++) {
+      if (ar || !(i in from)) {
+        if (!ar)
+          ar = Array.prototype.slice.call(from, 0, i);
+        ar[i] = from[i];
+      }
+    }
+  return to.concat(ar || Array.prototype.slice.call(from));
+};
+var isNonEmpty3 = function(as6) {
+  return as6.length > 0;
+};
+var isOutOfBound2 = function(i, as6) {
+  return i < 0 || i >= as6.length;
+};
+var prependW2 = function(head6) {
+  return function(tail5) {
+    return __spreadArray4([head6], tail5, true);
+  };
+};
+var prepend2 = prependW2;
+var appendW2 = function(end) {
+  return function(init5) {
+    return __spreadArray4(__spreadArray4([], init5, true), [end], false);
+  };
+};
+var append2 = appendW2;
+var unsafeInsertAt = function(i, a, as6) {
+  if (isNonEmpty3(as6)) {
+    var xs = fromReadonlyNonEmptyArray2(as6);
+    xs.splice(i, 0, a);
+    return xs;
+  }
+  return [a];
+};
+var unsafeUpdateAt = function(i, a, as6) {
+  var xs = fromReadonlyNonEmptyArray2(as6);
+  xs[i] = a;
+  return xs;
+};
+var uniq = function(E2) {
+  return function(as6) {
+    if (as6.length === 1) {
+      return copy(as6);
+    }
+    var out = [head3(as6)];
+    var rest = tail3(as6);
+    var _loop_1 = function(a2) {
+      if (out.every(function(o) {
+        return !E2.equals(o, a2);
+      })) {
+        out.push(a2);
+      }
+    };
+    for (var _i = 0, rest_1 = rest; _i < rest_1.length; _i++) {
+      var a = rest_1[_i];
+      _loop_1(a);
+    }
+    return out;
+  };
+};
+var sortBy = function(ords) {
+  if (isNonEmpty3(ords)) {
+    var M = getMonoid();
+    return sort(ords.reduce(M.concat, M.empty));
+  }
+  return copy;
+};
+var union = function(E2) {
+  var uniqE = uniq(E2);
+  return function(second) {
+    return function(first2) {
+      return uniqE(pipe(first2, concat(second)));
+    };
+  };
+};
+var rotate = function(n) {
+  return function(as6) {
+    var len = as6.length;
+    var m = Math.round(n) % len;
+    if (isOutOfBound2(Math.abs(m), as6) || m === 0) {
+      return copy(as6);
+    }
+    if (m < 0) {
+      var _a = splitAt(-m)(as6), f = _a[0], s = _a[1];
+      return pipe(s, concat(f));
+    } else {
+      return rotate(m - len)(as6);
+    }
+  };
+};
+var fromReadonlyNonEmptyArray2 = fromReadonlyNonEmptyArray;
+var fromArray = function(as6) {
+  return isNonEmpty3(as6) ? some(as6) : none;
+};
+var makeBy = function(f) {
+  return function(n) {
+    var j = Math.max(0, Math.floor(n));
+    var out = [f(0)];
+    for (var i = 1; i < j; i++) {
+      out.push(f(i));
+    }
+    return out;
+  };
+};
+var range = function(start, end) {
+  return start <= end ? makeBy(function(i) {
+    return start + i;
+  })(end - start + 1) : [start];
+};
+function concat(x, y) {
+  return y ? x.concat(y) : function(y2) {
+    return y2.concat(x);
+  };
+}
+var sort = function(O2) {
+  return function(as6) {
+    return as6.slice().sort(O2.compare);
+  };
+};
+var copy = fromReadonlyNonEmptyArray2;
+var of2 = function(a) {
+  return [a];
+};
+var prependAll2 = function(middle) {
+  return function(as6) {
+    var out = [middle, as6[0]];
+    for (var i = 1; i < as6.length; i++) {
+      out.push(middle, as6[i]);
+    }
+    return out;
+  };
+};
+var intersperse2 = function(middle) {
+  return function(as6) {
+    var rest = tail3(as6);
+    return isNonEmpty3(rest) ? pipe(rest, prependAll2(middle), prepend2(head3(as6))) : copy(as6);
+  };
+};
+var chop = function(f) {
+  return function(as6) {
+    var _a = f(as6), b = _a[0], rest = _a[1];
+    var out = [b];
+    var next = rest;
+    while (isNonEmpty3(next)) {
+      var _b = f(next), b_1 = _b[0], rest_2 = _b[1];
+      out.push(b_1);
+      next = rest_2;
+    }
+    return out;
+  };
+};
+var splitAt = function(n) {
+  return function(as6) {
+    var m = Math.max(1, n);
+    return m >= as6.length ? [copy(as6), []] : [pipe(as6.slice(1, m), prepend2(head3(as6))), as6.slice(m)];
+  };
+};
+var chunksOf = function(n) {
+  return chop(splitAt(n));
+};
+var head3 = head2;
+var tail3 = function(as6) {
+  return as6.slice(1);
+};
+var last3 = last2;
+var init = function(as6) {
+  return as6.slice(0, -1);
+};
+var concatAll4 = function(S) {
+  return function(as6) {
+    return as6.reduce(S.concat);
+  };
+};
+function cons(head6, tail5) {
+  return tail5 === void 0 ? prepend2(head6) : pipe(tail5, prepend2(head6));
+}
+var snoc = function(init5, end) {
+  return pipe(init5, append2(end));
+};
+
+// node_modules/fp-ts/es6/number.js
+var Eq = {
+  equals: function(first2, second) {
+    return first2 === second;
+  }
+};
+var Ord = {
+  equals: Eq.equals,
+  compare: function(first2, second) {
+    return first2 < second ? -1 : first2 > second ? 1 : 0;
+  }
+};
+var Bounded = {
+  equals: Eq.equals,
+  compare: Ord.compare,
+  top: Infinity,
+  bottom: -Infinity
+};
+var MagmaSub = {
+  concat: function(first2, second) {
+    return first2 - second;
+  }
+};
+var SemigroupSum = {
+  concat: function(first2, second) {
+    return first2 + second;
+  }
+};
+var SemigroupProduct = {
+  concat: function(first2, second) {
+    return first2 * second;
+  }
+};
+var MonoidSum = {
+  concat: SemigroupSum.concat,
+  empty: 0
+};
+var MonoidProduct = {
+  concat: SemigroupProduct.concat,
+  empty: 1
+};
+var Field = {
+  add: SemigroupSum.concat,
+  zero: 0,
+  mul: SemigroupProduct.concat,
+  one: 1,
+  sub: MagmaSub.concat,
+  degree: function(_) {
+    return 1;
+  },
+  div: function(first2, second) {
+    return first2 / second;
+  },
+  mod: function(first2, second) {
+    return first2 % second;
+  }
+};
+
+// node_modules/fp-ts/es6/Separated.js
+var separated = function(left6, right6) {
+  return { left: left6, right: right6 };
+};
+var left2 = function(s) {
+  return s.left;
+};
+var right2 = function(s) {
+  return s.right;
+};
+
+// node_modules/fp-ts/es6/Witherable.js
+function wiltDefault(T, C) {
+  return function(F) {
+    var traverseF = T.traverse(F);
+    return function(wa, f) {
+      return F.map(traverseF(wa, f), C.separate);
+    };
+  };
+}
+function witherDefault(T, C) {
+  return function(F) {
+    var traverseF = T.traverse(F);
+    return function(wa, f) {
+      return F.map(traverseF(wa, f), C.compact);
+    };
+  };
+}
+function filterE(W) {
+  return function(F) {
+    var witherF = W.wither(F);
+    return function(predicate) {
+      return function(ga) {
+        return witherF(ga, function(a) {
+          return F.map(predicate(a), function(b) {
+            return b ? some(a) : none;
+          });
+        });
+      };
+    };
+  };
+}
+
+// node_modules/fp-ts/es6/Zero.js
+function guard(F, P) {
+  return function(b) {
+    return b ? P.of(void 0) : F.zero();
+  };
+}
+
+// node_modules/fp-ts/es6/ReadonlyArray.js
+var __spreadArray5 = function(to, from, pack) {
+  if (pack || arguments.length === 2)
+    for (var i = 0, l = from.length, ar; i < l; i++) {
+      if (ar || !(i in from)) {
+        if (!ar)
+          ar = Array.prototype.slice.call(from, 0, i);
+        ar[i] = from[i];
+      }
+    }
+  return to.concat(ar || Array.prototype.slice.call(from));
+};
+var isNonEmpty4 = isNonEmpty2;
+var append3 = append;
+var matchW = function(onEmpty, onNonEmpty) {
+  return function(as6) {
+    return isNonEmpty4(as6) ? onNonEmpty(as6) : onEmpty();
+  };
+};
+var match = matchW;
+var isOutOfBound3 = isOutOfBound;
+function lookup(i, as6) {
+  return as6 === void 0 ? function(as7) {
+    return lookup(i, as7);
+  } : isOutOfBound3(i, as6) ? none : some(as6[i]);
+}
+var head4 = function(as6) {
+  return isNonEmpty4(as6) ? some(head2(as6)) : none;
+};
+var last4 = function(as6) {
+  return isNonEmpty4(as6) ? some(last2(as6)) : none;
+};
+var findIndex = function(predicate) {
+  return function(as6) {
+    for (var i = 0; i < as6.length; i++) {
+      if (predicate(as6[i])) {
+        return some(i);
+      }
+    }
+    return none;
+  };
+};
+function findFirst(predicate) {
+  return function(as6) {
+    for (var i = 0; i < as6.length; i++) {
+      if (predicate(as6[i])) {
+        return some(as6[i]);
+      }
+    }
+    return none;
+  };
+}
+var findFirstMap = function(f) {
+  return function(as6) {
+    for (var i = 0; i < as6.length; i++) {
+      var out = f(as6[i]);
+      if (isSome(out)) {
+        return out;
+      }
+    }
+    return none;
+  };
+};
+function findLast(predicate) {
+  return function(as6) {
+    for (var i = as6.length - 1; i >= 0; i--) {
+      if (predicate(as6[i])) {
+        return some(as6[i]);
+      }
+    }
+    return none;
+  };
+}
+var findLastMap = function(f) {
+  return function(as6) {
+    for (var i = as6.length - 1; i >= 0; i--) {
+      var out = f(as6[i]);
+      if (isSome(out)) {
+        return out;
+      }
+    }
+    return none;
+  };
+};
+var findLastIndex = function(predicate) {
+  return function(as6) {
+    for (var i = as6.length - 1; i >= 0; i--) {
+      if (predicate(as6[i])) {
+        return some(i);
+      }
+    }
+    return none;
+  };
+};
+function elem(E2) {
+  return function(a, as6) {
+    if (as6 === void 0) {
+      var elemE_1 = elem(E2);
+      return function(as7) {
+        return elemE_1(a, as7);
+      };
+    }
+    var predicate = function(element2) {
+      return E2.equals(element2, a);
+    };
+    var i = 0;
+    for (; i < as6.length; i++) {
+      if (predicate(as6[i])) {
+        return true;
+      }
+    }
+    return false;
+  };
+}
+var _chainRecDepthFirst = function(a, f) {
+  return pipe(a, chainRecDepthFirst(f));
+};
+var _chainRecBreadthFirst = function(a, f) {
+  return pipe(a, chainRecBreadthFirst(f));
+};
+var foldMapWithIndex2 = function(M) {
+  return function(f) {
+    return function(fa) {
+      return fa.reduce(function(b, a, i) {
+        return M.concat(b, f(i, a));
+      }, M.empty);
+    };
+  };
+};
+var reduce2 = function(b, f) {
+  return reduceWithIndex2(b, function(_, b2, a) {
+    return f(b2, a);
+  });
+};
+var foldMap2 = function(M) {
+  var foldMapWithIndexM = foldMapWithIndex2(M);
+  return function(f) {
+    return foldMapWithIndexM(function(_, a) {
+      return f(a);
+    });
+  };
+};
+var reduceWithIndex2 = function(b, f) {
+  return function(fa) {
+    var len = fa.length;
+    var out = b;
+    for (var i = 0; i < len; i++) {
+      out = f(i, out, fa[i]);
+    }
+    return out;
+  };
+};
+var reduceRight2 = function(b, f) {
+  return reduceRightWithIndex2(b, function(_, a, b2) {
+    return f(a, b2);
+  });
+};
+var reduceRightWithIndex2 = function(b, f) {
+  return function(fa) {
+    return fa.reduceRight(function(b2, a, i) {
+      return f(i, a, b2);
+    }, b);
+  };
+};
+var getShow2 = function(S) {
+  return {
+    show: function(as6) {
+      return "[".concat(as6.map(S.show).join(", "), "]");
+    }
+  };
+};
+var getEq2 = function(E2) {
+  return fromEquals(function(xs, ys) {
+    return xs.length === ys.length && xs.every(function(x, i) {
+      return E2.equals(x, ys[i]);
+    });
+  });
+};
+var getOrd = function(O2) {
+  return fromCompare(function(a, b) {
+    var aLen = a.length;
+    var bLen = b.length;
+    var len = Math.min(aLen, bLen);
+    for (var i = 0; i < len; i++) {
+      var ordering = O2.compare(a[i], b[i]);
+      if (ordering !== 0) {
+        return ordering;
+      }
+    }
+    return Ord.compare(aLen, bLen);
+  });
+};
+var chainRecDepthFirst = function(f) {
+  return function(a) {
+    var todo = __spreadArray5([], f(a), true);
+    var out = [];
+    while (todo.length > 0) {
+      var e = todo.shift();
+      if (isLeft(e)) {
+        todo.unshift.apply(todo, f(e.left));
+      } else {
+        out.push(e.right);
+      }
+    }
+    return out;
+  };
+};
+var chainRecBreadthFirst = function(f) {
+  return function(a) {
+    var initial = f(a);
+    var todo = [];
+    var out = [];
+    function go(e2) {
+      if (isLeft(e2)) {
+        f(e2.left).forEach(function(v) {
+          return todo.push(v);
+        });
+      } else {
+        out.push(e2.right);
+      }
+    }
+    for (var _i = 0, initial_1 = initial; _i < initial_1.length; _i++) {
+      var e = initial_1[_i];
+      go(e);
+    }
+    while (todo.length > 0) {
+      go(todo.shift());
+    }
+    return out;
+  };
+};
+function every(predicate) {
+  return function(as6) {
+    return as6.every(predicate);
+  };
+}
+var intercalate2 = function(M) {
+  var intercalateM = intercalate(M);
+  return function(middle) {
+    return match(function() {
+      return M.empty;
+    }, intercalateM(middle));
+  };
+};
+
+// node_modules/fp-ts/es6/Array.js
+var isEmpty = function(as6) {
+  return as6.length === 0;
+};
+var isNonEmpty5 = isNonEmpty3;
+var prepend3 = prepend2;
+var prependW3 = prependW2;
+var append4 = append2;
+var appendW3 = appendW2;
+var makeBy3 = function(n, f) {
+  return n <= 0 ? [] : makeBy(f)(n);
+};
+var replicate = function(n, a) {
+  return makeBy3(n, function() {
+    return a;
+  });
+};
+function fromPredicate(predicate) {
+  return function(a) {
+    return predicate(a) ? [a] : [];
+  };
+}
+var fromOption = function(ma) {
+  return isNone(ma) ? [] : [ma.value];
+};
+var fromEither = function(e) {
+  return isLeft(e) ? [] : [e.right];
+};
+var matchW2 = function(onEmpty, onNonEmpty) {
+  return function(as6) {
+    return isNonEmpty5(as6) ? onNonEmpty(as6) : onEmpty();
+  };
+};
+var match2 = matchW2;
+var matchLeftW = function(onEmpty, onNonEmpty) {
+  return function(as6) {
+    return isNonEmpty5(as6) ? onNonEmpty(head3(as6), tail3(as6)) : onEmpty();
+  };
+};
+var matchLeft = matchLeftW;
+var foldLeft = matchLeft;
+var matchRightW = function(onEmpty, onNonEmpty) {
+  return function(as6) {
+    return isNonEmpty5(as6) ? onNonEmpty(init(as6), last3(as6)) : onEmpty();
+  };
+};
+var matchRight = matchRightW;
+var foldRight = matchRight;
+var chainWithIndex = function(f) {
+  return function(as6) {
+    var out = [];
+    for (var i = 0; i < as6.length; i++) {
+      out.push.apply(out, f(i, as6[i]));
+    }
+    return out;
+  };
+};
+var scanLeft = function(b, f) {
+  return function(as6) {
+    var len = as6.length;
+    var out = new Array(len + 1);
+    out[0] = b;
+    for (var i = 0; i < len; i++) {
+      out[i + 1] = f(out[i], as6[i]);
+    }
+    return out;
+  };
+};
+var scanRight = function(b, f) {
+  return function(as6) {
+    var len = as6.length;
+    var out = new Array(len + 1);
+    out[len] = b;
+    for (var i = len - 1; i >= 0; i--) {
+      out[i] = f(as6[i], out[i + 1]);
+    }
+    return out;
+  };
+};
+var size = function(as6) {
+  return as6.length;
+};
+var isOutOfBound4 = isOutOfBound2;
+var lookup2 = lookup;
+var head5 = head4;
+var last5 = last4;
+var tail4 = function(as6) {
+  return isNonEmpty5(as6) ? some(tail3(as6)) : none;
+};
+var init3 = function(as6) {
+  return isNonEmpty5(as6) ? some(init(as6)) : none;
+};
+var takeLeft = function(n) {
+  return function(as6) {
+    return isOutOfBound4(n, as6) ? copy2(as6) : as6.slice(0, n);
+  };
+};
+var takeRight = function(n) {
+  return function(as6) {
+    return isOutOfBound4(n, as6) ? copy2(as6) : n === 0 ? [] : as6.slice(-n);
+  };
+};
+function takeLeftWhile(predicate) {
+  return function(as6) {
+    var out = [];
+    for (var _i = 0, as_1 = as6; _i < as_1.length; _i++) {
+      var a = as_1[_i];
+      if (!predicate(a)) {
+        break;
+      }
+      out.push(a);
+    }
+    return out;
+  };
+}
+var spanLeftIndex = function(as6, predicate) {
+  var l = as6.length;
+  var i = 0;
+  for (; i < l; i++) {
+    if (!predicate(as6[i])) {
+      break;
+    }
+  }
+  return i;
+};
+function spanLeft(predicate) {
+  return function(as6) {
+    var _a = splitAt3(spanLeftIndex(as6, predicate))(as6), init5 = _a[0], rest = _a[1];
+    return { init: init5, rest };
+  };
+}
+var dropLeft = function(n) {
+  return function(as6) {
+    return n <= 0 || isEmpty(as6) ? copy2(as6) : n >= as6.length ? [] : as6.slice(n, as6.length);
+  };
+};
+var dropRight = function(n) {
+  return function(as6) {
+    return n <= 0 || isEmpty(as6) ? copy2(as6) : n >= as6.length ? [] : as6.slice(0, as6.length - n);
+  };
+};
+function dropLeftWhile(predicate) {
+  return function(as6) {
+    return as6.slice(spanLeftIndex(as6, predicate));
+  };
+}
+var findIndex2 = findIndex;
+function findFirst2(predicate) {
+  return findFirst(predicate);
+}
+var findFirstMap2 = findFirstMap;
+function findLast2(predicate) {
+  return findLast(predicate);
+}
+var findLastMap2 = findLastMap;
+var findLastIndex2 = findLastIndex;
+var copy2 = function(as6) {
+  return as6.slice();
+};
+var insertAt = function(i, a) {
+  return function(as6) {
+    return i < 0 || i > as6.length ? none : some(unsafeInsertAt3(i, a, as6));
+  };
+};
+var updateAt = function(i, a) {
+  return modifyAt(i, function() {
+    return a;
+  });
+};
+var deleteAt = function(i) {
+  return function(as6) {
+    return isOutOfBound4(i, as6) ? none : some(unsafeDeleteAt(i, as6));
+  };
+};
+var modifyAt = function(i, f) {
+  return function(as6) {
+    return isOutOfBound4(i, as6) ? none : some(unsafeUpdateAt3(i, f(as6[i]), as6));
+  };
+};
+var reverse2 = function(as6) {
+  return isEmpty(as6) ? [] : as6.slice().reverse();
+};
+var rights = function(as6) {
+  var r = [];
+  for (var i = 0; i < as6.length; i++) {
+    var a = as6[i];
+    if (a._tag === "Right") {
+      r.push(a.right);
+    }
+  }
+  return r;
+};
+var lefts = function(as6) {
+  var r = [];
+  for (var i = 0; i < as6.length; i++) {
+    var a = as6[i];
+    if (a._tag === "Left") {
+      r.push(a.left);
+    }
+  }
+  return r;
+};
+var sort2 = function(O2) {
+  return function(as6) {
+    return as6.length <= 1 ? copy2(as6) : as6.slice().sort(O2.compare);
+  };
+};
+var zipWith = function(fa, fb, f) {
+  var fc = [];
+  var len = Math.min(fa.length, fb.length);
+  for (var i = 0; i < len; i++) {
+    fc[i] = f(fa[i], fb[i]);
+  }
+  return fc;
+};
+function zip(as6, bs) {
+  if (bs === void 0) {
+    return function(bs2) {
+      return zip(bs2, as6);
+    };
+  }
+  return zipWith(as6, bs, function(a, b) {
+    return [a, b];
+  });
+}
+var unzip = function(as6) {
+  var fa = [];
+  var fb = [];
+  for (var i = 0; i < as6.length; i++) {
+    fa[i] = as6[i][0];
+    fb[i] = as6[i][1];
+  }
+  return [fa, fb];
+};
+var prependAll3 = function(middle) {
+  var f = prependAll2(middle);
+  return function(as6) {
+    return isNonEmpty5(as6) ? f(as6) : [];
+  };
+};
+var intersperse3 = function(middle) {
+  var f = intersperse2(middle);
+  return function(as6) {
+    return isNonEmpty5(as6) ? f(as6) : copy2(as6);
+  };
+};
+var rotate3 = function(n) {
+  var f = rotate(n);
+  return function(as6) {
+    return isNonEmpty5(as6) ? f(as6) : copy2(as6);
+  };
+};
+var elem2 = elem;
+var uniq3 = function(E2) {
+  var f = uniq(E2);
+  return function(as6) {
+    return isNonEmpty5(as6) ? f(as6) : copy2(as6);
+  };
+};
+var sortBy3 = function(ords) {
+  var f = sortBy(ords);
+  return function(as6) {
+    return isNonEmpty5(as6) ? f(as6) : copy2(as6);
+  };
+};
+var chop3 = function(f) {
+  var g = chop(f);
+  return function(as6) {
+    return isNonEmpty5(as6) ? g(as6) : [];
+  };
+};
+var splitAt3 = function(n) {
+  return function(as6) {
+    return n >= 1 && isNonEmpty5(as6) ? splitAt(n)(as6) : isEmpty(as6) ? [copy2(as6), []] : [[], copy2(as6)];
+  };
+};
+var chunksOf3 = function(n) {
+  var f = chunksOf(n);
+  return function(as6) {
+    return isNonEmpty5(as6) ? f(as6) : [];
+  };
+};
+var fromOptionK = function(f) {
+  return function() {
+    var a = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+      a[_i] = arguments[_i];
+    }
+    return fromOption(f.apply(void 0, a));
+  };
+};
+function comprehension(input, f, g) {
+  if (g === void 0) {
+    g = function() {
+      return true;
+    };
+  }
+  var go = function(scope, input2) {
+    return isNonEmpty5(input2) ? flatMap(head3(input2), function(a) {
+      return go(pipe(scope, append4(a)), tail3(input2));
+    }) : g.apply(void 0, scope) ? [f.apply(void 0, scope)] : [];
+  };
+  return go([], input);
+}
+var concatW = function(second) {
+  return function(first2) {
+    return isEmpty(first2) ? copy2(second) : isEmpty(second) ? copy2(first2) : first2.concat(second);
+  };
+};
+var concat2 = concatW;
+function union3(E2) {
+  var unionE = union(E2);
+  return function(first2, second) {
+    if (second === void 0) {
+      var unionE_1 = union3(E2);
+      return function(second2) {
+        return unionE_1(second2, first2);
+      };
+    }
+    return isNonEmpty5(first2) && isNonEmpty5(second) ? unionE(second)(first2) : isNonEmpty5(first2) ? copy2(first2) : copy2(second);
+  };
+}
+function intersection(E2) {
+  var elemE = elem2(E2);
+  return function(xs, ys) {
+    if (ys === void 0) {
+      var intersectionE_1 = intersection(E2);
+      return function(ys2) {
+        return intersectionE_1(ys2, xs);
+      };
+    }
+    return xs.filter(function(a) {
+      return elemE(a, ys);
+    });
+  };
+}
+function difference(E2) {
+  var elemE = elem2(E2);
+  return function(xs, ys) {
+    if (ys === void 0) {
+      var differenceE_1 = difference(E2);
+      return function(ys2) {
+        return differenceE_1(ys2, xs);
+      };
+    }
+    return xs.filter(function(a) {
+      return !elemE(a, ys);
+    });
+  };
+}
+var _map = function(fa, f) {
+  return pipe(fa, map2(f));
+};
+var _mapWithIndex = function(fa, f) {
+  return pipe(fa, mapWithIndex(f));
+};
+var _ap = function(fab, fa) {
+  return pipe(fab, ap2(fa));
+};
+var _filter = function(fa, predicate) {
+  return pipe(fa, filter(predicate));
+};
+var _filterMap = function(fa, f) {
+  return pipe(fa, filterMap(f));
+};
+var _partition = function(fa, predicate) {
+  return pipe(fa, partition(predicate));
+};
+var _partitionMap = function(fa, f) {
+  return pipe(fa, partitionMap(f));
+};
+var _partitionWithIndex = function(fa, predicateWithIndex) {
+  return pipe(fa, partitionWithIndex(predicateWithIndex));
+};
+var _partitionMapWithIndex = function(fa, f) {
+  return pipe(fa, partitionMapWithIndex(f));
+};
+var _alt = function(fa, that) {
+  return pipe(fa, alt(that));
+};
+var _reduce = function(fa, b, f) {
+  return pipe(fa, reduce3(b, f));
+};
+var _foldMap = function(M) {
+  var foldMapM = foldMap3(M);
+  return function(fa, f) {
+    return pipe(fa, foldMapM(f));
+  };
+};
+var _reduceRight = function(fa, b, f) {
+  return pipe(fa, reduceRight3(b, f));
+};
+var _reduceWithIndex = function(fa, b, f) {
+  return pipe(fa, reduceWithIndex3(b, f));
+};
+var _foldMapWithIndex = function(M) {
+  var foldMapWithIndexM = foldMapWithIndex3(M);
+  return function(fa, f) {
+    return pipe(fa, foldMapWithIndexM(f));
+  };
+};
+var _reduceRightWithIndex = function(fa, b, f) {
+  return pipe(fa, reduceRightWithIndex3(b, f));
+};
+var _filterMapWithIndex = function(fa, f) {
+  return pipe(fa, filterMapWithIndex(f));
+};
+var _filterWithIndex = function(fa, predicateWithIndex) {
+  return pipe(fa, filterWithIndex(predicateWithIndex));
+};
+var _extend = function(fa, f) {
+  return pipe(fa, extend(f));
+};
+var _traverse = function(F) {
+  var traverseF = traverse(F);
+  return function(ta, f) {
+    return pipe(ta, traverseF(f));
+  };
+};
+var _traverseWithIndex = function(F) {
+  var traverseWithIndexF = traverseWithIndex(F);
+  return function(ta, f) {
+    return pipe(ta, traverseWithIndexF(f));
+  };
+};
+var _chainRecDepthFirst2 = _chainRecDepthFirst;
+var _chainRecBreadthFirst2 = _chainRecBreadthFirst;
+var of3 = of2;
+var zero = function() {
+  return [];
+};
+var map2 = function(f) {
+  return function(fa) {
+    return fa.map(function(a) {
+      return f(a);
+    });
+  };
+};
+var ap2 = function(fa) {
+  return flatMap(function(f) {
+    return pipe(fa, map2(f));
+  });
+};
+var flatMap = /* @__PURE__ */ dual(2, function(ma, f) {
+  return pipe(ma, chainWithIndex(function(i, a) {
+    return f(a, i);
+  }));
+});
+var flatten = /* @__PURE__ */ flatMap(identity);
+var mapWithIndex = function(f) {
+  return function(fa) {
+    return fa.map(function(a, i) {
+      return f(i, a);
+    });
+  };
+};
+var filterMapWithIndex = function(f) {
+  return function(fa) {
+    var out = [];
+    for (var i = 0; i < fa.length; i++) {
+      var optionB = f(i, fa[i]);
+      if (isSome(optionB)) {
+        out.push(optionB.value);
+      }
+    }
+    return out;
+  };
+};
+var filterMap = function(f) {
+  return filterMapWithIndex(function(_, a) {
+    return f(a);
+  });
+};
+var compact = /* @__PURE__ */ filterMap(identity);
+var separate = function(fa) {
+  var left6 = [];
+  var right6 = [];
+  for (var _i = 0, fa_1 = fa; _i < fa_1.length; _i++) {
+    var e = fa_1[_i];
+    if (e._tag === "Left") {
+      left6.push(e.left);
+    } else {
+      right6.push(e.right);
+    }
+  }
+  return separated(left6, right6);
+};
+var filter = function(predicate) {
+  return function(as6) {
+    return as6.filter(predicate);
+  };
+};
+var partition = function(predicate) {
+  return partitionWithIndex(function(_, a) {
+    return predicate(a);
+  });
+};
+var partitionWithIndex = function(predicateWithIndex) {
+  return function(as6) {
+    var left6 = [];
+    var right6 = [];
+    for (var i = 0; i < as6.length; i++) {
+      var b = as6[i];
+      if (predicateWithIndex(i, b)) {
+        right6.push(b);
+      } else {
+        left6.push(b);
+      }
+    }
+    return separated(left6, right6);
+  };
+};
+var partitionMap = function(f) {
+  return partitionMapWithIndex(function(_, a) {
+    return f(a);
+  });
+};
+var partitionMapWithIndex = function(f) {
+  return function(fa) {
+    var left6 = [];
+    var right6 = [];
+    for (var i = 0; i < fa.length; i++) {
+      var e = f(i, fa[i]);
+      if (e._tag === "Left") {
+        left6.push(e.left);
+      } else {
+        right6.push(e.right);
+      }
+    }
+    return separated(left6, right6);
+  };
+};
+var altW = function(that) {
+  return function(fa) {
+    return fa.concat(that());
+  };
+};
+var alt = altW;
+var filterWithIndex = function(predicateWithIndex) {
+  return function(as6) {
+    return as6.filter(function(b, i) {
+      return predicateWithIndex(i, b);
+    });
+  };
+};
+var extend = function(f) {
+  return function(wa) {
+    return wa.map(function(_, i) {
+      return f(wa.slice(i));
+    });
+  };
+};
+var duplicate = /* @__PURE__ */ extend(identity);
+var foldMap3 = foldMap2;
+var foldMapWithIndex3 = foldMapWithIndex2;
+var reduce3 = reduce2;
+var reduceWithIndex3 = reduceWithIndex2;
+var reduceRight3 = reduceRight2;
+var reduceRightWithIndex3 = reduceRightWithIndex2;
+var traverse = function(F) {
+  var traverseWithIndexF = traverseWithIndex(F);
+  return function(f) {
+    return traverseWithIndexF(function(_, a) {
+      return f(a);
+    });
+  };
+};
+var sequence = function(F) {
+  return function(ta) {
+    return _reduce(ta, F.of(zero()), function(fas, fa) {
+      return F.ap(F.map(fas, function(as6) {
+        return function(a) {
+          return pipe(as6, append4(a));
+        };
+      }), fa);
+    });
+  };
+};
+var traverseWithIndex = function(F) {
+  return function(f) {
+    return reduceWithIndex3(F.of(zero()), function(i, fbs, a) {
+      return F.ap(F.map(fbs, function(bs) {
+        return function(b) {
+          return pipe(bs, append4(b));
+        };
+      }), f(i, a));
+    });
+  };
+};
+var wither = function(F) {
+  var _witherF = _wither(F);
+  return function(f) {
+    return function(fa) {
+      return _witherF(fa, f);
+    };
+  };
+};
+var wilt = function(F) {
+  var _wiltF = _wilt(F);
+  return function(f) {
+    return function(fa) {
+      return _wiltF(fa, f);
+    };
+  };
+};
+var unfold = function(b, f) {
+  var out = [];
+  var bb = b;
+  while (true) {
+    var mt = f(bb);
+    if (isSome(mt)) {
+      var _a = mt.value, a = _a[0], b_1 = _a[1];
+      out.push(a);
+      bb = b_1;
+    } else {
+      break;
+    }
+  }
+  return out;
+};
+var URI = "Array";
+var getShow3 = getShow2;
+var getSemigroup3 = function() {
+  return {
+    concat: function(first2, second) {
+      return first2.concat(second);
+    }
+  };
+};
+var getMonoid2 = function() {
+  return {
+    concat: getSemigroup3().concat,
+    empty: []
+  };
+};
+var getEq3 = getEq2;
+var getOrd2 = getOrd;
+var getUnionSemigroup = function(E2) {
+  var unionE = union3(E2);
+  return {
+    concat: function(first2, second) {
+      return unionE(second)(first2);
+    }
+  };
+};
+var getUnionMonoid = function(E2) {
+  return {
+    concat: getUnionSemigroup(E2).concat,
+    empty: []
+  };
+};
+var getIntersectionSemigroup = function(E2) {
+  var intersectionE = intersection(E2);
+  return {
+    concat: function(first2, second) {
+      return intersectionE(second)(first2);
+    }
+  };
+};
+var getDifferenceMagma = function(E2) {
+  var differenceE = difference(E2);
+  return {
+    concat: function(first2, second) {
+      return differenceE(second)(first2);
+    }
+  };
+};
+var Functor = {
+  URI,
+  map: _map
+};
+var flap2 = /* @__PURE__ */ flap(Functor);
+var Pointed = {
+  URI,
+  of: of3
+};
+var FunctorWithIndex = {
+  URI,
+  map: _map,
+  mapWithIndex: _mapWithIndex
+};
+var Apply = {
+  URI,
+  map: _map,
+  ap: _ap
+};
+var apFirst2 = /* @__PURE__ */ apFirst(Apply);
+var apSecond2 = /* @__PURE__ */ apSecond(Apply);
+var Applicative = {
+  URI,
+  map: _map,
+  ap: _ap,
+  of: of3
+};
+var Chain = {
+  URI,
+  map: _map,
+  ap: _ap,
+  chain: flatMap
+};
+var chainFirst2 = /* @__PURE__ */ chainFirst(Chain);
+var Monad = {
+  URI,
+  map: _map,
+  ap: _ap,
+  of: of3,
+  chain: flatMap
+};
+var Unfoldable = {
+  URI,
+  unfold
+};
+var Alt = {
+  URI,
+  map: _map,
+  alt: _alt
+};
+var Zero = {
+  URI,
+  zero
+};
+var guard2 = /* @__PURE__ */ guard(Zero, Pointed);
+var Alternative = {
+  URI,
+  map: _map,
+  ap: _ap,
+  of: of3,
+  alt: _alt,
+  zero
+};
+var Extend = {
+  URI,
+  map: _map,
+  extend: _extend
+};
+var Compactable = {
+  URI,
+  compact,
+  separate
+};
+var Filterable = {
+  URI,
+  map: _map,
+  compact,
+  separate,
+  filter: _filter,
+  filterMap: _filterMap,
+  partition: _partition,
+  partitionMap: _partitionMap
+};
+var FilterableWithIndex = {
+  URI,
+  map: _map,
+  mapWithIndex: _mapWithIndex,
+  compact,
+  separate,
+  filter: _filter,
+  filterMap: _filterMap,
+  partition: _partition,
+  partitionMap: _partitionMap,
+  partitionMapWithIndex: _partitionMapWithIndex,
+  partitionWithIndex: _partitionWithIndex,
+  filterMapWithIndex: _filterMapWithIndex,
+  filterWithIndex: _filterWithIndex
+};
+var Foldable = {
+  URI,
+  reduce: _reduce,
+  foldMap: _foldMap,
+  reduceRight: _reduceRight
+};
+var FoldableWithIndex = {
+  URI,
+  reduce: _reduce,
+  foldMap: _foldMap,
+  reduceRight: _reduceRight,
+  reduceWithIndex: _reduceWithIndex,
+  foldMapWithIndex: _foldMapWithIndex,
+  reduceRightWithIndex: _reduceRightWithIndex
+};
+var Traversable = {
+  URI,
+  map: _map,
+  reduce: _reduce,
+  foldMap: _foldMap,
+  reduceRight: _reduceRight,
+  traverse: _traverse,
+  sequence
+};
+var TraversableWithIndex = {
+  URI,
+  map: _map,
+  mapWithIndex: _mapWithIndex,
+  reduce: _reduce,
+  foldMap: _foldMap,
+  reduceRight: _reduceRight,
+  reduceWithIndex: _reduceWithIndex,
+  foldMapWithIndex: _foldMapWithIndex,
+  reduceRightWithIndex: _reduceRightWithIndex,
+  traverse: _traverse,
+  sequence,
+  traverseWithIndex: _traverseWithIndex
+};
+var _wither = /* @__PURE__ */ witherDefault(Traversable, Compactable);
+var _wilt = /* @__PURE__ */ wiltDefault(Traversable, Compactable);
+var Witherable = {
+  URI,
+  map: _map,
+  compact,
+  separate,
+  filter: _filter,
+  filterMap: _filterMap,
+  partition: _partition,
+  partitionMap: _partitionMap,
+  reduce: _reduce,
+  foldMap: _foldMap,
+  reduceRight: _reduceRight,
+  traverse: _traverse,
+  sequence,
+  wither: _wither,
+  wilt: _wilt
+};
+var chainRecDepthFirst2 = chainRecDepthFirst;
+var ChainRecDepthFirst = {
+  URI,
+  map: _map,
+  ap: _ap,
+  chain: flatMap,
+  chainRec: _chainRecDepthFirst2
+};
+var chainRecBreadthFirst2 = chainRecBreadthFirst;
+var ChainRecBreadthFirst = {
+  URI,
+  map: _map,
+  ap: _ap,
+  chain: flatMap,
+  chainRec: _chainRecBreadthFirst2
+};
+var filterE2 = /* @__PURE__ */ filterE(Witherable);
+var FromEither = {
+  URI,
+  fromEither
+};
+var fromEitherK2 = /* @__PURE__ */ fromEitherK(FromEither);
+var unsafeInsertAt3 = unsafeInsertAt;
+var unsafeUpdateAt3 = function(i, a, as6) {
+  return isNonEmpty5(as6) ? unsafeUpdateAt(i, a, as6) : [];
+};
+var unsafeDeleteAt = function(i, as6) {
+  var xs = as6.slice();
+  xs.splice(i, 1);
+  return xs;
+};
+var every2 = every;
+var some2 = function(predicate) {
+  return function(as6) {
+    return as6.some(predicate);
+  };
+};
+var exists = some2;
+var intercalate3 = intercalate2;
+var Do = /* @__PURE__ */ of3(emptyRecord);
+var bindTo2 = /* @__PURE__ */ bindTo(Functor);
+var let_2 = /* @__PURE__ */ let_(Functor);
+var bind2 = /* @__PURE__ */ bind(Chain);
+var apS2 = /* @__PURE__ */ apS(Apply);
+var chain = flatMap;
+var range3 = range;
+var empty2 = [];
+var cons3 = cons;
+var snoc3 = snoc;
+var prependToAll = prependAll3;
+var array = {
+  URI,
+  compact,
+  separate,
+  map: _map,
+  ap: _ap,
+  of: of3,
+  chain: flatMap,
+  filter: _filter,
+  filterMap: _filterMap,
+  partition: _partition,
+  partitionMap: _partitionMap,
+  mapWithIndex: _mapWithIndex,
+  partitionMapWithIndex: _partitionMapWithIndex,
+  partitionWithIndex: _partitionWithIndex,
+  filterMapWithIndex: _filterMapWithIndex,
+  filterWithIndex: _filterWithIndex,
+  alt: _alt,
+  zero,
+  unfold,
+  reduce: _reduce,
+  foldMap: _foldMap,
+  reduceRight: _reduceRight,
+  traverse: _traverse,
+  sequence,
+  reduceWithIndex: _reduceWithIndex,
+  foldMapWithIndex: _foldMapWithIndex,
+  reduceRightWithIndex: _reduceRightWithIndex,
+  traverseWithIndex: _traverseWithIndex,
+  extend: _extend,
+  wither: _wither,
+  wilt: _wilt
+};
+
+// node_modules/fp-ts/es6/ChainRec.js
+var tailRec = function(startWith, f) {
+  var ab = f(startWith);
+  while (ab._tag === "Left") {
+    ab = f(ab.left);
+  }
+  return ab.right;
+};
+
+// node_modules/fp-ts/es6/Either.js
+var left3 = left;
+var right3 = right;
+var flatMap2 = /* @__PURE__ */ dual(2, function(ma, f) {
+  return isLeft2(ma) ? ma : f(ma.right);
+});
+var _map2 = function(fa, f) {
+  return pipe(fa, map3(f));
+};
+var _ap2 = function(fab, fa) {
+  return pipe(fab, ap3(fa));
+};
+var URI2 = "Either";
+var map3 = function(f) {
+  return function(fa) {
+    return isLeft2(fa) ? fa : right3(f(fa.right));
+  };
+};
+var Functor2 = {
+  URI: URI2,
+  map: _map2
+};
+var as2 = dual(2, as(Functor2));
+var asUnit2 = asUnit(Functor2);
+var of4 = right3;
+var apW = function(fa) {
+  return function(fab) {
+    return isLeft2(fab) ? fab : isLeft2(fa) ? fa : right3(fab.right(fa.right));
+  };
+};
+var ap3 = apW;
+var Apply2 = {
+  URI: URI2,
+  map: _map2,
+  ap: _ap2
+};
+var Chain2 = {
+  URI: URI2,
+  map: _map2,
+  ap: _ap2,
+  chain: flatMap2
+};
+var bimap = function(f, g) {
+  return function(fa) {
+    return isLeft2(fa) ? left3(f(fa.left)) : right3(g(fa.right));
+  };
+};
+var mapLeft = function(f) {
+  return function(fa) {
+    return isLeft2(fa) ? left3(f(fa.left)) : fa;
+  };
+};
+var FromEither2 = {
+  URI: URI2,
+  fromEither: identity
+};
+var isLeft2 = isLeft;
+var isRight2 = isRight;
+var matchW3 = function(onLeft, onRight) {
+  return function(ma) {
+    return isLeft2(ma) ? onLeft(ma.left) : onRight(ma.right);
+  };
+};
+var match3 = matchW3;
+var fold = match3;
+var getOrElseW = function(onLeft) {
+  return function(ma) {
+    return isLeft2(ma) ? onLeft(ma.left) : ma.right;
+  };
+};
+var getOrElse = getOrElseW;
+var flap3 = /* @__PURE__ */ flap(Functor2);
+var tap2 = /* @__PURE__ */ dual(2, tap(Chain2));
+var _FromEither = {
+  fromEither: FromEither2.fromEither
+};
+var orElseW = function(onLeft) {
+  return function(ma) {
+    return isLeft2(ma) ? onLeft(ma.left) : ma;
+  };
+};
+var orElse = orElseW;
+var fromNullable = function(e) {
+  return function(a) {
+    return a == null ? left3(e) : right3(a);
+  };
+};
+var tryCatch = function(f, onThrow) {
+  try {
+    return right3(f());
+  } catch (e) {
+    return left3(onThrow(e));
+  }
+};
+var tryCatchK = function(f, onThrow) {
+  return function() {
+    var a = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+      a[_i] = arguments[_i];
+    }
+    return tryCatch(function() {
+      return f.apply(void 0, a);
+    }, onThrow);
+  };
+};
+var chainW = flatMap2;
+var chain2 = flatMap2;
+
+// node_modules/fp-ts/es6/Predicate.js
+var not = function(predicate) {
+  return function(a) {
+    return !predicate(a);
+  };
+};
+
+// node_modules/fp-ts/es6/Option.js
+var none2 = none;
+var some3 = some;
+function fromPredicate2(predicate) {
+  return function(a) {
+    return predicate(a) ? some3(a) : none2;
+  };
+}
+var getRight = function(ma) {
+  return ma._tag === "Left" ? none2 : some3(ma.right);
+};
+var _map3 = function(fa, f) {
+  return pipe(fa, map4(f));
+};
+var _ap3 = function(fab, fa) {
+  return pipe(fab, ap4(fa));
+};
+var URI3 = "Option";
+var map4 = function(f) {
+  return function(fa) {
+    return isNone2(fa) ? none2 : some3(f(fa.value));
+  };
+};
+var Functor3 = {
+  URI: URI3,
+  map: _map3
+};
+var as3 = dual(2, as(Functor3));
+var asUnit3 = asUnit(Functor3);
+var ap4 = function(fa) {
+  return function(fab) {
+    return isNone2(fab) ? none2 : isNone2(fa) ? none2 : some3(fab.value(fa.value));
+  };
+};
+var flatMap3 = /* @__PURE__ */ dual(2, function(ma, f) {
+  return isNone2(ma) ? none2 : f(ma.value);
+});
+var Chain3 = {
+  URI: URI3,
+  map: _map3,
+  ap: _ap3,
+  chain: flatMap3
+};
+var orElse2 = dual(2, function(self, that) {
+  return isNone2(self) ? that() : self;
+});
+var alt2 = orElse2;
+var fromEither2 = getRight;
+var FromEither3 = {
+  URI: URI3,
+  fromEither: fromEither2
+};
+var isSome2 = isSome;
+var isNone2 = function(fa) {
+  return fa._tag === "None";
+};
+var matchW4 = function(onNone, onSome) {
+  return function(ma) {
+    return isNone2(ma) ? onNone() : onSome(ma.value);
+  };
+};
+var match4 = matchW4;
+var fold2 = match4;
+var getOrElseW2 = function(onNone) {
+  return function(ma) {
+    return isNone2(ma) ? onNone() : ma.value;
+  };
+};
+var getOrElse2 = getOrElseW2;
+var tap3 = /* @__PURE__ */ dual(2, tap(Chain3));
+var tapEither2 = /* @__PURE__ */ dual(2, tapEither(FromEither3, Chain3));
+var fromNullable2 = function(a) {
+  return a == null ? none2 : some3(a);
+};
+var chain3 = flatMap3;
+
+// node_modules/fp-ts/es6/EitherT.js
+function right4(F) {
+  return flow(right3, F.of);
+}
+function left4(F) {
+  return flow(left3, F.of);
+}
+function rightF(F) {
+  return function(fa) {
+    return F.map(fa, right3);
+  };
+}
+function map5(F) {
+  return map(F, Functor2);
+}
+function ap5(F) {
+  return ap(F, Apply2);
+}
+function flatMap4(M) {
+  return function(ma, f) {
+    return M.chain(ma, function(e) {
+      return isLeft2(e) ? M.of(e) : f(e.right);
+    });
+  };
+}
+function mapBoth(F) {
+  return function(self, f, g) {
+    return F.map(self, bimap(f, g));
+  };
+}
+function mapError(F) {
+  return function(self, f) {
+    return F.map(self, mapLeft(f));
+  };
+}
+function match5(F) {
+  return function(onLeft, onRight) {
+    return function(ma) {
+      return F.map(ma, match3(onLeft, onRight));
+    };
+  };
+}
+function getOrElse3(M) {
+  return function(onLeft) {
+    return function(ma) {
+      return M.chain(ma, match3(onLeft, M.of));
+    };
+  };
+}
+function orElse3(M) {
+  return function(onLeft) {
+    return function(ma) {
+      return M.chain(ma, function(e) {
+        return isLeft2(e) ? onLeft(e.left) : M.of(e);
+      });
+    };
+  };
+}
+function tapError(M) {
+  var orElseM = orElse3(M);
+  return function(ma, onLeft) {
+    return pipe(ma, orElseM(function(e) {
+      return M.map(onLeft(e), function(eb) {
+        return isLeft2(eb) ? eb : left3(e);
+      });
+    }));
+  };
+}
+
+// node_modules/fp-ts/es6/FromIO.js
+function tapIO(F, M) {
+  var chainFirstM = tap(M);
+  return function(self, f) {
+    return chainFirstM(self, flow(f, F.fromIO));
+  };
+}
+
+// node_modules/fp-ts/es6/FromTask.js
+function tapTask(F, M) {
+  var tapM = tap(M);
+  return function(self, f) {
+    return tapM(self, flow(f, F.fromTask));
+  };
+}
+
+// node_modules/fp-ts/es6/Task.js
+var fromIO = function(ma) {
+  return function() {
+    return Promise.resolve().then(ma);
+  };
+};
+var _map4 = function(fa, f) {
+  return pipe(fa, map6(f));
+};
+var _apPar = function(fab, fa) {
+  return pipe(fab, ap6(fa));
+};
+var map6 = function(f) {
+  return function(fa) {
+    return function() {
+      return Promise.resolve().then(fa).then(f);
+    };
+  };
+};
+var ap6 = function(fa) {
+  return function(fab) {
+    return function() {
+      return Promise.all([Promise.resolve().then(fab), Promise.resolve().then(fa)]).then(function(_a) {
+        var f = _a[0], a = _a[1];
+        return f(a);
+      });
+    };
+  };
+};
+var of5 = function(a) {
+  return function() {
+    return Promise.resolve(a);
+  };
+};
+var flatMap5 = /* @__PURE__ */ dual(2, function(ma, f) {
+  return function() {
+    return Promise.resolve().then(ma).then(function(a) {
+      return f(a)();
+    });
+  };
+});
+var URI4 = "Task";
+var Functor4 = {
+  URI: URI4,
+  map: _map4
+};
+var as4 = dual(2, as(Functor4));
+var asUnit4 = asUnit(Functor4);
+var Pointed2 = {
+  URI: URI4,
+  of: of5
+};
+var ApplyPar = {
+  URI: URI4,
+  map: _map4,
+  ap: _apPar
+};
+var Chain4 = {
+  URI: URI4,
+  map: _map4,
+  ap: _apPar,
+  chain: flatMap5
+};
+var Monad2 = {
+  URI: URI4,
+  map: _map4,
+  of: of5,
+  ap: _apPar,
+  chain: flatMap5
+};
+var FromIO = {
+  URI: URI4,
+  fromIO
+};
+var _FlatMap = {
+  flatMap: flatMap5
+};
+var _FromIO = {
+  fromIO: FromIO.fromIO
+};
+var flatMapIO2 = flatMapIO(_FromIO, _FlatMap);
+var tap4 = /* @__PURE__ */ dual(2, tap(Chain4));
+var tapIO2 = /* @__PURE__ */ dual(2, tapIO(FromIO, Chain4));
+
+// node_modules/fp-ts/es6/TaskEither.js
+var __awaiter = function(thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function(resolve) {
+      resolve(value);
+    });
+  }
+  return new (P || (P = Promise))(function(resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function step(result2) {
+      result2.done ? resolve(result2.value) : adopt(result2.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+var __generator = function(thisArg, body) {
+  var _ = { label: 0, sent: function() {
+    if (t[0] & 1)
+      throw t[1];
+    return t[1];
+  }, trys: [], ops: [] }, f, y, t, g;
+  return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+    return this;
+  }), g;
+  function verb(n) {
+    return function(v) {
+      return step([n, v]);
+    };
+  }
+  function step(op) {
+    if (f)
+      throw new TypeError("Generator is already executing.");
+    while (g && (g = 0, op[0] && (_ = 0)), _)
+      try {
+        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
+          return t;
+        if (y = 0, t)
+          op = [op[0] & 2, t.value];
+        switch (op[0]) {
+          case 0:
+          case 1:
+            t = op;
+            break;
+          case 4:
+            _.label++;
+            return { value: op[1], done: false };
+          case 5:
+            _.label++;
+            y = op[1];
+            op = [0];
+            continue;
+          case 7:
+            op = _.ops.pop();
+            _.trys.pop();
+            continue;
+          default:
+            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+              _ = 0;
+              continue;
+            }
+            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+              _.label = op[1];
+              break;
+            }
+            if (op[0] === 6 && _.label < t[1]) {
+              _.label = t[1];
+              t = op;
+              break;
+            }
+            if (t && _.label < t[2]) {
+              _.label = t[2];
+              _.ops.push(op);
+              break;
+            }
+            if (t[2])
+              _.ops.pop();
+            _.trys.pop();
+            continue;
+        }
+        op = body.call(thisArg, _);
+      } catch (e) {
+        op = [6, e];
+        y = 0;
+      } finally {
+        f = t = 0;
+      }
+    if (op[0] & 5)
+      throw op[1];
+    return { value: op[0] ? op[1] : void 0, done: true };
+  }
+};
+var left5 = /* @__PURE__ */ left4(Pointed2);
+var right5 = /* @__PURE__ */ right4(Pointed2);
+var rightTask = /* @__PURE__ */ rightF(Functor4);
+var rightIO = /* @__PURE__ */ flow(fromIO, rightTask);
+var fromIO2 = rightIO;
+var fromTask = rightTask;
+var fromEither3 = of5;
+var match6 = /* @__PURE__ */ match5(Functor4);
+var getOrElse4 = /* @__PURE__ */ getOrElse3(Monad2);
+var tryCatch2 = function(f, onRejected) {
+  return function() {
+    return __awaiter(void 0, void 0, void 0, function() {
+      var reason_1;
+      return __generator(this, function(_a) {
+        switch (_a.label) {
+          case 0:
+            _a.trys.push([0, 2, , 3]);
+            return [4, f().then(right)];
+          case 1:
+            return [2, _a.sent()];
+          case 2:
+            reason_1 = _a.sent();
+            return [2, left(onRejected(reason_1))];
+          case 3:
+            return [
+              2
+              /*return*/
+            ];
+        }
+      });
+    });
+  };
+};
+var tryCatchK2 = function(f, onRejected) {
+  return function() {
+    var a = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+      a[_i] = arguments[_i];
+    }
+    return tryCatch2(function() {
+      return f.apply(void 0, a);
+    }, onRejected);
+  };
+};
+var tapError2 = /* @__PURE__ */ dual(2, tapError(Monad2));
+var _map5 = function(fa, f) {
+  return pipe(fa, map7(f));
+};
+var _apPar2 = function(fab, fa) {
+  return pipe(fab, ap7(fa));
+};
+var map7 = /* @__PURE__ */ map5(Functor4);
+var mapBoth2 = /* @__PURE__ */ dual(3, mapBoth(Functor4));
+var mapError2 = /* @__PURE__ */ dual(2, mapError(Functor4));
+var mapLeft2 = mapError2;
+var ap7 = /* @__PURE__ */ ap5(ApplyPar);
+var flatMap6 = /* @__PURE__ */ dual(2, flatMap4(Monad2));
+var URI5 = "TaskEither";
+var Functor5 = {
+  URI: URI5,
+  map: _map5
+};
+var as5 = dual(2, as(Functor5));
+var asUnit5 = asUnit(Functor5);
+var Chain5 = {
+  URI: URI5,
+  map: _map5,
+  ap: _apPar2,
+  chain: flatMap6
+};
+var FromEither4 = {
+  URI: URI5,
+  fromEither: fromEither3
+};
+var FromIO2 = {
+  URI: URI5,
+  fromIO: fromIO2
+};
+var FromTask = {
+  URI: URI5,
+  fromIO: fromIO2,
+  fromTask
+};
+var tap5 = /* @__PURE__ */ dual(2, tap(Chain5));
+var tapEither3 = /* @__PURE__ */ dual(2, tapEither(FromEither4, Chain5));
+var tapIO3 = /* @__PURE__ */ dual(2, tapIO(FromIO2, Chain5));
+var tapTask2 = /* @__PURE__ */ dual(2, tapTask(FromTask, Chain5));
+var _FromEither2 = {
+  fromEither: FromEither4.fromEither
+};
+var _FromIO2 = {
+  fromIO: FromIO2.fromIO
+};
+var chainW2 = flatMap6;
 
 // node_modules/valibot/dist/index.js
 var ValiError = class extends Error {
@@ -265,10 +2622,10 @@ function executePipe(input, pipe3, parseInfo, reason) {
   let issues;
   let output = input;
   for (const action of pipe3) {
-    const result = action(output);
-    if (result.issues) {
+    const result2 = action(output);
+    if (result2.issues) {
       pipeInfo = pipeInfo || getPipeInfo(parseInfo, reason);
-      for (const issueInfo of result.issues) {
+      for (const issueInfo of result2.issues) {
         const issue = getIssue(pipeInfo, issueInfo);
         issues ? issues.push(issue) : issues = [issue];
       }
@@ -276,7 +2633,7 @@ function executePipe(input, pipe3, parseInfo, reason) {
         break;
       }
     } else {
-      output = result.output;
+      output = result2.output;
     }
   }
   return issues ? getIssues(issues) : getOutput(output);
@@ -316,7 +2673,7 @@ function getSchemaIssues(info, reason, validation, error2, input, issues) {
 function is(schema, input) {
   return !schema._parse(input, { abortEarly: true }).issues;
 }
-function array(item2, arg2, arg3) {
+function array2(item2, arg2, arg3) {
   const [error2, pipe3] = getDefaultArgs(arg2, arg3);
   return {
     /**
@@ -353,15 +2710,15 @@ function array(item2, arg2, arg3) {
       const output = [];
       for (let key = 0; key < input.length; key++) {
         const value2 = input[key];
-        const result = item2._parse(value2, info);
-        if (result.issues) {
+        const result2 = item2._parse(value2, info);
+        if (result2.issues) {
           const pathItem = {
             schema: "array",
             input,
             key,
             value: value2
           };
-          for (const issue of result.issues) {
+          for (const issue of result2.issues) {
             if (issue.path) {
               issue.path.unshift(pathItem);
             } else {
@@ -370,13 +2727,13 @@ function array(item2, arg2, arg3) {
             issues == null ? void 0 : issues.push(issue);
           }
           if (!issues) {
-            issues = result.issues;
+            issues = result2.issues;
           }
           if (info == null ? void 0 : info.abortEarly) {
             break;
           }
         } else {
-          output.push(result.output);
+          output.push(result2.output);
         }
       }
       return issues ? getIssues(issues) : executePipe(output, pipe3, info, "array");
@@ -560,15 +2917,15 @@ function object(object2, arg2, arg3) {
       const output = {};
       for (const [key, schema] of cachedEntries) {
         const value2 = input[key];
-        const result = schema._parse(value2, info);
-        if (result.issues) {
+        const result2 = schema._parse(value2, info);
+        if (result2.issues) {
           const pathItem = {
             schema: "object",
             input,
             key,
             value: value2
           };
-          for (const issue of result.issues) {
+          for (const issue of result2.issues) {
             if (issue.path) {
               issue.path.unshift(pathItem);
             } else {
@@ -577,13 +2934,13 @@ function object(object2, arg2, arg3) {
             issues == null ? void 0 : issues.push(issue);
           }
           if (!issues) {
-            issues = result.issues;
+            issues = result2.issues;
           }
           if (info == null ? void 0 : info.abortEarly) {
             break;
           }
-        } else if (result.output !== void 0 || key in input) {
-          output[key] = result.output;
+        } else if (result2.output !== void 0 || key in input) {
+          output[key] = result2.output;
         }
       }
       return issues ? getIssues(issues) : executePipe(
@@ -665,7 +3022,7 @@ function string(arg1, arg2) {
     }
   };
 }
-function union(union22, error2) {
+function union4(union22, error2) {
   return {
     /**
      * The schema type.
@@ -691,17 +3048,17 @@ function union(union22, error2) {
       let issues;
       let output;
       for (const schema of union22) {
-        const result = schema._parse(input, info);
-        if (result.issues) {
+        const result2 = schema._parse(input, info);
+        if (result2.issues) {
           if (issues) {
-            for (const issue of result.issues) {
+            for (const issue of result2.issues) {
               issues.push(issue);
             }
           } else {
-            issues = result.issues;
+            issues = result2.issues;
           }
         } else {
-          output = [result.output];
+          output = [result2.output];
           break;
         }
       }
@@ -751,11 +3108,11 @@ function merge(schemas, arg2, arg3) {
   );
 }
 function parse(schema, input, info) {
-  const result = schema._parse(input, info);
-  if (result.issues) {
-    throw new ValiError(result.issues);
+  const result2 = schema._parse(input, info);
+  if (result2.issues) {
+    throw new ValiError(result2.issues);
   }
-  return result.output;
+  return result2.output;
 }
 function passthrough(schema) {
   return {
@@ -769,21 +3126,21 @@ function passthrough(schema) {
      * @returns The parsed output.
      */
     _parse(input, info) {
-      const result = schema._parse(input, info);
-      return !result.issues ? getOutput({ ...input, ...result.output }) : result;
+      const result2 = schema._parse(input, info);
+      return !result2.issues ? getOutput({ ...input, ...result2.output }) : result2;
     }
   };
 }
 function safeParse(schema, input, info) {
-  const result = schema._parse(input, info);
-  return result.issues ? {
+  const result2 = schema._parse(input, info);
+  return result2.issues ? {
     success: false,
-    error: new ValiError(result.issues),
-    issues: result.issues
+    error: new ValiError(result2.issues),
+    issues: result2.issues
   } : {
     success: true,
-    data: result.output,
-    output: result.output
+    data: result2.output,
+    output: result2.output
   };
 }
 function toTrimmed() {
@@ -793,1181 +3150,192 @@ function minLength(requirement, error2) {
   return (input) => input.length < requirement ? getPipeIssues("min_length", error2 || "Invalid length", input) : getOutput(input);
 }
 
-// node_modules/fp-ts/es6/function.js
-var __spreadArray = function(to, from, pack) {
-  if (pack || arguments.length === 2)
-    for (var i = 0, l = from.length, ar; i < l; i++) {
-      if (ar || !(i in from)) {
-        if (!ar)
-          ar = Array.prototype.slice.call(from, 0, i);
-        ar[i] = from[i];
-      }
-    }
-  return to.concat(ar || Array.prototype.slice.call(from));
-};
-function identity(a) {
-  return a;
-}
-function flow(ab, bc, cd, de, ef, fg, gh, hi, ij) {
-  switch (arguments.length) {
-    case 1:
-      return ab;
-    case 2:
-      return function() {
-        return bc(ab.apply(this, arguments));
-      };
-    case 3:
-      return function() {
-        return cd(bc(ab.apply(this, arguments)));
-      };
-    case 4:
-      return function() {
-        return de(cd(bc(ab.apply(this, arguments))));
-      };
-    case 5:
-      return function() {
-        return ef(de(cd(bc(ab.apply(this, arguments)))));
-      };
-    case 6:
-      return function() {
-        return fg(ef(de(cd(bc(ab.apply(this, arguments))))));
-      };
-    case 7:
-      return function() {
-        return gh(fg(ef(de(cd(bc(ab.apply(this, arguments)))))));
-      };
-    case 8:
-      return function() {
-        return hi(gh(fg(ef(de(cd(bc(ab.apply(this, arguments))))))));
-      };
-    case 9:
-      return function() {
-        return ij(hi(gh(fg(ef(de(cd(bc(ab.apply(this, arguments)))))))));
-      };
-  }
-  return;
-}
-function absurd(_) {
-  throw new Error("Called `absurd` function which should be uncallable");
-}
-function pipe(a, ab, bc, cd, de, ef, fg, gh, hi) {
-  switch (arguments.length) {
-    case 1:
-      return a;
-    case 2:
-      return ab(a);
-    case 3:
-      return bc(ab(a));
-    case 4:
-      return cd(bc(ab(a)));
-    case 5:
-      return de(cd(bc(ab(a))));
-    case 6:
-      return ef(de(cd(bc(ab(a)))));
-    case 7:
-      return fg(ef(de(cd(bc(ab(a))))));
-    case 8:
-      return gh(fg(ef(de(cd(bc(ab(a)))))));
-    case 9:
-      return hi(gh(fg(ef(de(cd(bc(ab(a))))))));
-    default: {
-      var ret = arguments[0];
-      for (var i = 1; i < arguments.length; i++) {
-        ret = arguments[i](ret);
-      }
-      return ret;
-    }
-  }
-}
-var dual = function(arity, body) {
-  var isDataFirst = typeof arity === "number" ? function(args) {
-    return args.length >= arity;
-  } : arity;
-  return function() {
-    var args = Array.from(arguments);
-    if (isDataFirst(arguments)) {
-      return body.apply(this, args);
-    }
-    return function(self) {
-      return body.apply(void 0, __spreadArray([self], args, false));
-    };
-  };
-};
-
-// node_modules/fp-ts/es6/internal.js
-var isSome = function(fa) {
-  return fa._tag === "Some";
-};
-var none = { _tag: "None" };
-var some = function(a) {
-  return { _tag: "Some", value: a };
-};
-var isLeft = function(ma) {
-  return ma._tag === "Left";
-};
-var isRight = function(ma) {
-  return ma._tag === "Right";
-};
-var left = function(e) {
-  return { _tag: "Left", left: e };
-};
-var right = function(a) {
-  return { _tag: "Right", right: a };
-};
-var singleton = function(a) {
-  return [a];
-};
-var isNonEmpty = function(as6) {
-  return as6.length > 0;
-};
-var has = Object.prototype.hasOwnProperty;
-var flatMapIO = function(F, M) {
-  return dual(2, function(self, f) {
-    return M.flatMap(self, function(a) {
-      return F.fromIO(f(a));
-    });
-  });
-};
-
-// node_modules/fp-ts/es6/Apply.js
-function ap(F, G) {
-  return function(fa) {
-    return function(fab) {
-      return F.ap(F.map(fab, function(gab) {
-        return function(ga) {
-          return G.ap(gab, ga);
-        };
-      }), fa);
-    };
-  };
-}
-
-// node_modules/fp-ts/es6/Functor.js
-function map(F, G) {
-  return function(f) {
-    return function(fa) {
-      return F.map(fa, function(ga) {
-        return G.map(ga, f);
-      });
-    };
-  };
-}
-function flap(F) {
-  return function(a) {
-    return function(fab) {
-      return F.map(fab, function(f) {
-        return f(a);
-      });
-    };
-  };
-}
-function as(F) {
-  return function(self, b) {
-    return F.map(self, function() {
-      return b;
-    });
-  };
-}
-function asUnit(F) {
-  var asM = as(F);
-  return function(self) {
-    return asM(self, void 0);
-  };
-}
-
-// node_modules/fp-ts/es6/Chain.js
-function tap(M) {
-  return function(first2, f) {
-    return M.chain(first2, function(a) {
-      return M.map(f(a), function() {
-        return a;
-      });
-    });
-  };
-}
-
-// node_modules/fp-ts/es6/ChainRec.js
-var tailRec = function(startWith, f) {
-  var ab = f(startWith);
-  while (ab._tag === "Left") {
-    ab = f(ab.left);
-  }
-  return ab.right;
-};
-
-// node_modules/fp-ts/es6/FromEither.js
-function fromEitherK(F) {
-  return function(f) {
-    return flow(f, F.fromEither);
-  };
-}
-function tapEither(F, M) {
-  var fromEither3 = fromEitherK(F);
-  var tapM = tap(M);
-  return function(self, f) {
-    return tapM(self, fromEither3(f));
-  };
-}
-
-// node_modules/fp-ts/es6/Separated.js
-var separated = function(left6, right6) {
-  return { left: left6, right: right6 };
-};
-var left2 = function(s) {
-  return s.left;
-};
-var right2 = function(s) {
-  return s.right;
-};
-
-// node_modules/fp-ts/es6/Either.js
-var left3 = left;
-var right3 = right;
-var flatMap = /* @__PURE__ */ dual(2, function(ma, f) {
-  return isLeft2(ma) ? ma : f(ma.right);
+// src/std/Array.ts
+var Array_exports = {};
+__export(Array_exports, {
+  Alt: () => Alt,
+  Alternative: () => Alternative,
+  Applicative: () => Applicative,
+  Apply: () => Apply,
+  Chain: () => Chain,
+  ChainRecBreadthFirst: () => ChainRecBreadthFirst,
+  ChainRecDepthFirst: () => ChainRecDepthFirst,
+  Compactable: () => Compactable,
+  Do: () => Do,
+  Extend: () => Extend,
+  Filterable: () => Filterable,
+  FilterableWithIndex: () => FilterableWithIndex,
+  Foldable: () => Foldable,
+  FoldableWithIndex: () => FoldableWithIndex,
+  FromEither: () => FromEither,
+  Functor: () => Functor,
+  FunctorWithIndex: () => FunctorWithIndex,
+  Monad: () => Monad,
+  Pointed: () => Pointed,
+  Traversable: () => Traversable,
+  TraversableWithIndex: () => TraversableWithIndex,
+  URI: () => URI,
+  Unfoldable: () => Unfoldable,
+  Witherable: () => Witherable,
+  Zero: () => Zero,
+  alt: () => alt,
+  altW: () => altW,
+  ap: () => ap2,
+  apFirst: () => apFirst2,
+  apS: () => apS2,
+  apSecond: () => apSecond2,
+  append: () => append4,
+  appendW: () => appendW3,
+  array: () => array,
+  bind: () => bind2,
+  bindTo: () => bindTo2,
+  chain: () => chain,
+  chainFirst: () => chainFirst2,
+  chainRecBreadthFirst: () => chainRecBreadthFirst2,
+  chainRecDepthFirst: () => chainRecDepthFirst2,
+  chainWithIndex: () => chainWithIndex,
+  chop: () => chop3,
+  chunksOf: () => chunksOf3,
+  compact: () => compact,
+  comprehension: () => comprehension,
+  concat: () => concat2,
+  concatW: () => concatW,
+  cons: () => cons3,
+  copy: () => copy2,
+  deleteAt: () => deleteAt,
+  difference: () => difference,
+  dropLeft: () => dropLeft,
+  dropLeftWhile: () => dropLeftWhile,
+  dropRight: () => dropRight,
+  duplicate: () => duplicate,
+  elem: () => elem2,
+  empty: () => empty2,
+  every: () => every2,
+  exists: () => exists,
+  extend: () => extend,
+  filter: () => filter,
+  filterE: () => filterE2,
+  filterMap: () => filterMap,
+  filterMapWithIndex: () => filterMapWithIndex,
+  filterWithIndex: () => filterWithIndex,
+  findFirst: () => findFirst2,
+  findFirstMap: () => findFirstMap2,
+  findIndex: () => findIndex2,
+  findLast: () => findLast2,
+  findLastIndex: () => findLastIndex2,
+  findLastMap: () => findLastMap2,
+  flap: () => flap2,
+  flatMap: () => flatMap,
+  flatten: () => flatten,
+  foldLeft: () => foldLeft,
+  foldMap: () => foldMap3,
+  foldMapWithIndex: () => foldMapWithIndex3,
+  foldRight: () => foldRight,
+  fromEither: () => fromEither,
+  fromEitherK: () => fromEitherK2,
+  fromOption: () => fromOption,
+  fromOptionK: () => fromOptionK,
+  fromPredicate: () => fromPredicate,
+  getDifferenceMagma: () => getDifferenceMagma,
+  getEq: () => getEq3,
+  getIntersectionSemigroup: () => getIntersectionSemigroup,
+  getMonoid: () => getMonoid2,
+  getOrd: () => getOrd2,
+  getSemigroup: () => getSemigroup3,
+  getShow: () => getShow3,
+  getUnionMonoid: () => getUnionMonoid,
+  getUnionSemigroup: () => getUnionSemigroup,
+  guard: () => guard2,
+  head: () => head5,
+  init: () => init3,
+  insertAt: () => insertAt,
+  intercalate: () => intercalate3,
+  intersection: () => intersection,
+  intersperse: () => intersperse3,
+  isEmpty: () => isEmpty,
+  isNonEmpty: () => isNonEmpty5,
+  isOutOfBound: () => isOutOfBound4,
+  last: () => last5,
+  lefts: () => lefts,
+  let: () => let_2,
+  lookup: () => lookup2,
+  makeBy: () => makeBy3,
+  map: () => map2,
+  mapWithIndex: () => mapWithIndex,
+  match: () => match2,
+  matchLeft: () => matchLeft,
+  matchLeftW: () => matchLeftW,
+  matchRight: () => matchRight,
+  matchRightW: () => matchRightW,
+  matchW: () => matchW2,
+  modifyAt: () => modifyAt,
+  of: () => of3,
+  partition: () => partition,
+  partitionMap: () => partitionMap,
+  partitionMapWithIndex: () => partitionMapWithIndex,
+  partitionWithIndex: () => partitionWithIndex,
+  prepend: () => prepend3,
+  prependAll: () => prependAll3,
+  prependToAll: () => prependToAll,
+  prependW: () => prependW3,
+  range: () => range3,
+  reduce: () => reduce3,
+  reduceRight: () => reduceRight3,
+  reduceRightWithIndex: () => reduceRightWithIndex3,
+  reduceWithIndex: () => reduceWithIndex3,
+  replicate: () => replicate,
+  reverse: () => reverse2,
+  rights: () => rights,
+  rotate: () => rotate3,
+  scanLeft: () => scanLeft,
+  scanRight: () => scanRight,
+  separate: () => separate,
+  sequence: () => sequence,
+  size: () => size,
+  snoc: () => snoc3,
+  some: () => some2,
+  sort: () => sort2,
+  sortBy: () => sortBy3,
+  spanLeft: () => spanLeft,
+  splitAt: () => splitAt3,
+  tail: () => tail4,
+  takeLeft: () => takeLeft,
+  takeLeftWhile: () => takeLeftWhile,
+  takeRight: () => takeRight,
+  traverse: () => traverse,
+  traverseWithIndex: () => traverseWithIndex,
+  unfold: () => unfold,
+  union: () => union3,
+  uniq: () => uniq3,
+  unsafeDeleteAt: () => unsafeDeleteAt,
+  unsafeInsertAt: () => unsafeInsertAt3,
+  unsafeUpdateAt: () => unsafeUpdateAt3,
+  unzip: () => unzip,
+  updateAt: () => updateAt,
+  updateFirst: () => updateFirst,
+  wilt: () => wilt,
+  wither: () => wither,
+  zero: () => zero,
+  zip: () => zip,
+  zipWith: () => zipWith
 });
-var _map = function(fa, f) {
-  return pipe(fa, map2(f));
-};
-var _ap = function(fab, fa) {
-  return pipe(fab, ap2(fa));
-};
-var URI = "Either";
-var map2 = function(f) {
-  return function(fa) {
-    return isLeft2(fa) ? fa : right3(f(fa.right));
-  };
-};
-var Functor = {
-  URI,
-  map: _map
-};
-var as2 = dual(2, as(Functor));
-var asUnit2 = asUnit(Functor);
-var of = right3;
-var apW = function(fa) {
-  return function(fab) {
-    return isLeft2(fab) ? fab : isLeft2(fa) ? fa : right3(fab.right(fa.right));
-  };
-};
-var ap2 = apW;
-var Apply = {
-  URI,
-  map: _map,
-  ap: _ap
-};
-var Chain = {
-  URI,
-  map: _map,
-  ap: _ap,
-  chain: flatMap
-};
-var bimap = function(f, g) {
-  return function(fa) {
-    return isLeft2(fa) ? left3(f(fa.left)) : right3(g(fa.right));
-  };
-};
-var mapLeft = function(f) {
-  return function(fa) {
-    return isLeft2(fa) ? left3(f(fa.left)) : fa;
-  };
-};
-var FromEither = {
-  URI,
-  fromEither: identity
-};
-var isLeft2 = isLeft;
-var isRight2 = isRight;
-var matchW = function(onLeft, onRight) {
-  return function(ma) {
-    return isLeft2(ma) ? onLeft(ma.left) : onRight(ma.right);
-  };
-};
-var match = matchW;
-var fold = match;
-var getOrElseW = function(onLeft) {
-  return function(ma) {
-    return isLeft2(ma) ? onLeft(ma.left) : ma.right;
-  };
-};
-var getOrElse = getOrElseW;
-var flap2 = /* @__PURE__ */ flap(Functor);
-var tap2 = /* @__PURE__ */ dual(2, tap(Chain));
-var _FromEither = {
-  fromEither: FromEither.fromEither
-};
-var orElseW = function(onLeft) {
-  return function(ma) {
-    return isLeft2(ma) ? onLeft(ma.left) : ma;
-  };
-};
-var orElse = orElseW;
-var fromNullable = function(e) {
-  return function(a) {
-    return a == null ? left3(e) : right3(a);
-  };
-};
-var tryCatch = function(f, onThrow) {
-  try {
-    return right3(f());
-  } catch (e) {
-    return left3(onThrow(e));
-  }
-};
-var tryCatchK = function(f, onThrow) {
-  return function() {
-    var a = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-      a[_i] = arguments[_i];
+var updateFirst = (predicate, update3) => (as6) => {
+  return as6.reduce((acc, a) => {
+    if (predicate(a)) {
+      acc.push(update3(a));
+      return acc;
     }
-    return tryCatch(function() {
-      return f.apply(void 0, a);
-    }, onThrow);
-  };
+    acc.push(a);
+    return acc;
+  }, []);
 };
-var chainW = flatMap;
-var chain = flatMap;
-
-// src/std/index.ts
-var std_exports = {};
-__export(std_exports, {
-  A: () => A,
-  E: () => E,
-  EFunSemigroup: () => EFunSemigroup,
-  NEA: () => NEA,
-  O: () => O,
-  absurd: () => absurd2,
-  ensureError: () => ensureError,
-  flow: () => flow2,
-  parse: () => parse2,
-  parseC: () => parseC,
-  parseFunctionBody: () => parseFunctionBody,
-  pipe: () => pipe2,
-  tap: () => tap6,
-  throttle: () => throttle,
-  trySchemas: () => trySchemas
-});
-
-// node_modules/fp-ts/es6/Magma.js
-var concatAll = function(M) {
-  return function(startWith) {
-    return function(as6) {
-      return as6.reduce(function(a, acc) {
-        return M.concat(a, acc);
-      }, startWith);
-    };
-  };
-};
-
-// node_modules/fp-ts/es6/Semigroup.js
-var constant = function(a) {
-  return {
-    concat: function() {
-      return a;
-    }
-  };
-};
-var struct = function(semigroups) {
-  return {
-    concat: function(first2, second) {
-      var r = {};
-      for (var k in semigroups) {
-        if (has.call(semigroups, k)) {
-          r[k] = semigroups[k].concat(first2[k], second[k]);
-        }
-      }
-      return r;
-    }
-  };
-};
-var first = function() {
-  return { concat: identity };
-};
-var last = function() {
-  return { concat: function(_, y) {
-    return y;
-  } };
-};
-var concatAll2 = concatAll;
-var semigroupVoid = constant(void 0);
-var semigroupAll = {
-  concat: function(x, y) {
-    return x && y;
-  }
-};
-var semigroupAny = {
-  concat: function(x, y) {
-    return x || y;
-  }
-};
-var semigroupString = {
-  concat: function(x, y) {
-    return x + y;
-  }
-};
-var semigroupSum = {
-  concat: function(x, y) {
-    return x + y;
-  }
-};
-var semigroupProduct = {
-  concat: function(x, y) {
-    return x * y;
-  }
-};
-
-// node_modules/fp-ts/es6/ReadonlyNonEmptyArray.js
-var __spreadArray2 = function(to, from, pack) {
-  if (pack || arguments.length === 2)
-    for (var i = 0, l = from.length, ar; i < l; i++) {
-      if (ar || !(i in from)) {
-        if (!ar)
-          ar = Array.prototype.slice.call(from, 0, i);
-        ar[i] = from[i];
-      }
-    }
-  return to.concat(ar || Array.prototype.slice.call(from));
-};
-var isNonEmpty2 = isNonEmpty;
-var isOutOfBound = function(i, as6) {
-  return i < 0 || i >= as6.length;
-};
-var appendW = function(end) {
-  return function(init4) {
-    return __spreadArray2(__spreadArray2([], init4, true), [end], false);
-  };
-};
-var append = appendW;
-var of2 = singleton;
-
-// node_modules/fp-ts/es6/NonEmptyArray.js
-var __spreadArray3 = function(to, from, pack) {
-  if (pack || arguments.length === 2)
-    for (var i = 0, l = from.length, ar; i < l; i++) {
-      if (ar || !(i in from)) {
-        if (!ar)
-          ar = Array.prototype.slice.call(from, 0, i);
-        ar[i] = from[i];
-      }
-    }
-  return to.concat(ar || Array.prototype.slice.call(from));
-};
-var isNonEmpty3 = function(as6) {
-  return as6.length > 0;
-};
-var prependW = function(head5) {
-  return function(tail4) {
-    return __spreadArray3([head5], tail4, true);
-  };
-};
-var prepend = prependW;
-var appendW2 = function(end) {
-  return function(init4) {
-    return __spreadArray3(__spreadArray3([], init4, true), [end], false);
-  };
-};
-var append2 = appendW2;
-var fromArray = function(as6) {
-  return isNonEmpty3(as6) ? some(as6) : none;
-};
-var of3 = function(a) {
-  return [a];
-};
-var concatAll3 = function(S) {
-  return function(as6) {
-    return as6.reduce(S.concat);
-  };
-};
-
-// node_modules/fp-ts/es6/ReadonlyArray.js
-var append3 = append;
-var isOutOfBound2 = isOutOfBound;
-function lookup(i, as6) {
-  return as6 === void 0 ? function(as7) {
-    return lookup(i, as7);
-  } : isOutOfBound2(i, as6) ? none : some(as6[i]);
-}
-function findFirst(predicate) {
-  return function(as6) {
-    for (var i = 0; i < as6.length; i++) {
-      if (predicate(as6[i])) {
-        return some(as6[i]);
-      }
-    }
-    return none;
-  };
-}
-var findFirstMap = function(f) {
-  return function(as6) {
-    for (var i = 0; i < as6.length; i++) {
-      var out = f(as6[i]);
-      if (isSome(out)) {
-        return out;
-      }
-    }
-    return none;
-  };
-};
-var foldMapWithIndex = function(M) {
-  return function(f) {
-    return function(fa) {
-      return fa.reduce(function(b, a, i) {
-        return M.concat(b, f(i, a));
-      }, M.empty);
-    };
-  };
-};
-var reduce = function(b, f) {
-  return reduceWithIndex(b, function(_, b2, a) {
-    return f(b2, a);
-  });
-};
-var foldMap = function(M) {
-  var foldMapWithIndexM = foldMapWithIndex(M);
-  return function(f) {
-    return foldMapWithIndexM(function(_, a) {
-      return f(a);
-    });
-  };
-};
-var reduceWithIndex = function(b, f) {
-  return function(fa) {
-    var len = fa.length;
-    var out = b;
-    for (var i = 0; i < len; i++) {
-      out = f(i, out, fa[i]);
-    }
-    return out;
-  };
-};
-var reduceRight = function(b, f) {
-  return reduceRightWithIndex(b, function(_, a, b2) {
-    return f(a, b2);
-  });
-};
-var reduceRightWithIndex = function(b, f) {
-  return function(fa) {
-    return fa.reduceRight(function(b2, a, i) {
-      return f(i, a, b2);
-    }, b);
-  };
-};
-
-// node_modules/fp-ts/es6/Array.js
-var prepend3 = prepend;
-var append4 = append2;
-var chainWithIndex = function(f) {
-  return function(as6) {
-    var out = [];
-    for (var i = 0; i < as6.length; i++) {
-      out.push.apply(out, f(i, as6[i]));
-    }
-    return out;
-  };
-};
-var lookup2 = lookup;
-function findFirst2(predicate) {
-  return findFirst(predicate);
-}
-var findFirstMap2 = findFirstMap;
-var _reduce = function(fa, b, f) {
-  return pipe(fa, reduce2(b, f));
-};
-var _foldMap = function(M) {
-  var foldMapM = foldMap2(M);
-  return function(fa, f) {
-    return pipe(fa, foldMapM(f));
-  };
-};
-var _reduceRight = function(fa, b, f) {
-  return pipe(fa, reduceRight2(b, f));
-};
-var map3 = function(f) {
-  return function(fa) {
-    return fa.map(function(a) {
-      return f(a);
-    });
-  };
-};
-var flatMap2 = /* @__PURE__ */ dual(2, function(ma, f) {
-  return pipe(ma, chainWithIndex(function(i, a) {
-    return f(a, i);
-  }));
-});
-var flatten = /* @__PURE__ */ flatMap2(identity);
-var filterMapWithIndex = function(f) {
-  return function(fa) {
-    var out = [];
-    for (var i = 0; i < fa.length; i++) {
-      var optionB = f(i, fa[i]);
-      if (isSome(optionB)) {
-        out.push(optionB.value);
-      }
-    }
-    return out;
-  };
-};
-var filterMap = function(f) {
-  return filterMapWithIndex(function(_, a) {
-    return f(a);
-  });
-};
-var compact = /* @__PURE__ */ filterMap(identity);
-var separate = function(fa) {
-  var left6 = [];
-  var right6 = [];
-  for (var _i = 0, fa_1 = fa; _i < fa_1.length; _i++) {
-    var e = fa_1[_i];
-    if (e._tag === "Left") {
-      left6.push(e.left);
-    } else {
-      right6.push(e.right);
-    }
-  }
-  return separated(left6, right6);
-};
-var filter = function(predicate) {
-  return function(as6) {
-    return as6.filter(predicate);
-  };
-};
-var partition = function(predicate) {
-  return partitionWithIndex(function(_, a) {
-    return predicate(a);
-  });
-};
-var partitionWithIndex = function(predicateWithIndex) {
-  return function(as6) {
-    var left6 = [];
-    var right6 = [];
-    for (var i = 0; i < as6.length; i++) {
-      var b = as6[i];
-      if (predicateWithIndex(i, b)) {
-        right6.push(b);
-      } else {
-        left6.push(b);
-      }
-    }
-    return separated(left6, right6);
-  };
-};
-var partitionMap = function(f) {
-  return partitionMapWithIndex(function(_, a) {
-    return f(a);
-  });
-};
-var partitionMapWithIndex = function(f) {
-  return function(fa) {
-    var left6 = [];
-    var right6 = [];
-    for (var i = 0; i < fa.length; i++) {
-      var e = f(i, fa[i]);
-      if (e._tag === "Left") {
-        left6.push(e.left);
-      } else {
-        right6.push(e.right);
-      }
-    }
-    return separated(left6, right6);
-  };
-};
-var foldMap2 = foldMap;
-var reduce2 = reduce;
-var reduceRight2 = reduceRight;
-var URI2 = "Array";
-var getSemigroup2 = function() {
-  return {
-    concat: function(first2, second) {
-      return first2.concat(second);
-    }
-  };
-};
-var getMonoid = function() {
-  return {
-    concat: getSemigroup2().concat,
-    empty: []
-  };
-};
-var Foldable = {
-  URI: URI2,
-  reduce: _reduce,
-  foldMap: _foldMap,
-  reduceRight: _reduceRight
-};
-var some2 = function(predicate) {
-  return function(as6) {
-    return as6.some(predicate);
-  };
-};
-
-// node_modules/fp-ts/es6/Predicate.js
-var not = function(predicate) {
-  return function(a) {
-    return !predicate(a);
-  };
-};
-
-// node_modules/fp-ts/es6/Option.js
-var none2 = none;
-var some3 = some;
-function fromPredicate(predicate) {
-  return function(a) {
-    return predicate(a) ? some3(a) : none2;
-  };
-}
-var getRight = function(ma) {
-  return ma._tag === "Left" ? none2 : some3(ma.right);
-};
-var _map2 = function(fa, f) {
-  return pipe(fa, map4(f));
-};
-var _ap2 = function(fab, fa) {
-  return pipe(fab, ap3(fa));
-};
-var URI3 = "Option";
-var map4 = function(f) {
-  return function(fa) {
-    return isNone2(fa) ? none2 : some3(f(fa.value));
-  };
-};
-var Functor2 = {
-  URI: URI3,
-  map: _map2
-};
-var as3 = dual(2, as(Functor2));
-var asUnit3 = asUnit(Functor2);
-var ap3 = function(fa) {
-  return function(fab) {
-    return isNone2(fab) ? none2 : isNone2(fa) ? none2 : some3(fab.value(fa.value));
-  };
-};
-var flatMap3 = /* @__PURE__ */ dual(2, function(ma, f) {
-  return isNone2(ma) ? none2 : f(ma.value);
-});
-var Chain2 = {
-  URI: URI3,
-  map: _map2,
-  ap: _ap2,
-  chain: flatMap3
-};
-var orElse2 = dual(2, function(self, that) {
-  return isNone2(self) ? that() : self;
-});
-var alt = orElse2;
-var fromEither = getRight;
-var FromEither2 = {
-  URI: URI3,
-  fromEither
-};
-var isSome2 = isSome;
-var isNone2 = function(fa) {
-  return fa._tag === "None";
-};
-var matchW2 = function(onNone, onSome) {
-  return function(ma) {
-    return isNone2(ma) ? onNone() : onSome(ma.value);
-  };
-};
-var match2 = matchW2;
-var fold2 = match2;
-var getOrElseW2 = function(onNone) {
-  return function(ma) {
-    return isNone2(ma) ? onNone() : ma.value;
-  };
-};
-var getOrElse2 = getOrElseW2;
-var tap3 = /* @__PURE__ */ dual(2, tap(Chain2));
-var tapEither2 = /* @__PURE__ */ dual(2, tapEither(FromEither2, Chain2));
-var fromNullable2 = function(a) {
-  return a == null ? none2 : some3(a);
-};
-var chain2 = flatMap3;
-
-// node_modules/fp-ts/es6/EitherT.js
-function right4(F) {
-  return flow(right3, F.of);
-}
-function left4(F) {
-  return flow(left3, F.of);
-}
-function rightF(F) {
-  return function(fa) {
-    return F.map(fa, right3);
-  };
-}
-function map5(F) {
-  return map(F, Functor);
-}
-function ap4(F) {
-  return ap(F, Apply);
-}
-function flatMap4(M) {
-  return function(ma, f) {
-    return M.chain(ma, function(e) {
-      return isLeft2(e) ? M.of(e) : f(e.right);
-    });
-  };
-}
-function mapBoth(F) {
-  return function(self, f, g) {
-    return F.map(self, bimap(f, g));
-  };
-}
-function mapError(F) {
-  return function(self, f) {
-    return F.map(self, mapLeft(f));
-  };
-}
-function match3(F) {
-  return function(onLeft, onRight) {
-    return function(ma) {
-      return F.map(ma, match(onLeft, onRight));
-    };
-  };
-}
-function getOrElse3(M) {
-  return function(onLeft) {
-    return function(ma) {
-      return M.chain(ma, match(onLeft, M.of));
-    };
-  };
-}
-function orElse3(M) {
-  return function(onLeft) {
-    return function(ma) {
-      return M.chain(ma, function(e) {
-        return isLeft2(e) ? onLeft(e.left) : M.of(e);
-      });
-    };
-  };
-}
-function tapError(M) {
-  var orElseM = orElse3(M);
-  return function(ma, onLeft) {
-    return pipe(ma, orElseM(function(e) {
-      return M.map(onLeft(e), function(eb) {
-        return isLeft2(eb) ? eb : left3(e);
-      });
-    }));
-  };
-}
-
-// node_modules/fp-ts/es6/FromIO.js
-function tapIO(F, M) {
-  var chainFirstM = tap(M);
-  return function(self, f) {
-    return chainFirstM(self, flow(f, F.fromIO));
-  };
-}
-
-// node_modules/fp-ts/es6/FromTask.js
-function tapTask(F, M) {
-  var tapM = tap(M);
-  return function(self, f) {
-    return tapM(self, flow(f, F.fromTask));
-  };
-}
-
-// node_modules/fp-ts/es6/Task.js
-var fromIO = function(ma) {
-  return function() {
-    return Promise.resolve().then(ma);
-  };
-};
-var _map3 = function(fa, f) {
-  return pipe(fa, map6(f));
-};
-var _apPar = function(fab, fa) {
-  return pipe(fab, ap5(fa));
-};
-var map6 = function(f) {
-  return function(fa) {
-    return function() {
-      return Promise.resolve().then(fa).then(f);
-    };
-  };
-};
-var ap5 = function(fa) {
-  return function(fab) {
-    return function() {
-      return Promise.all([Promise.resolve().then(fab), Promise.resolve().then(fa)]).then(function(_a) {
-        var f = _a[0], a = _a[1];
-        return f(a);
-      });
-    };
-  };
-};
-var of4 = function(a) {
-  return function() {
-    return Promise.resolve(a);
-  };
-};
-var flatMap5 = /* @__PURE__ */ dual(2, function(ma, f) {
-  return function() {
-    return Promise.resolve().then(ma).then(function(a) {
-      return f(a)();
-    });
-  };
-});
-var URI4 = "Task";
-var Functor3 = {
-  URI: URI4,
-  map: _map3
-};
-var as4 = dual(2, as(Functor3));
-var asUnit4 = asUnit(Functor3);
-var Pointed = {
-  URI: URI4,
-  of: of4
-};
-var ApplyPar = {
-  URI: URI4,
-  map: _map3,
-  ap: _apPar
-};
-var Chain3 = {
-  URI: URI4,
-  map: _map3,
-  ap: _apPar,
-  chain: flatMap5
-};
-var Monad = {
-  URI: URI4,
-  map: _map3,
-  of: of4,
-  ap: _apPar,
-  chain: flatMap5
-};
-var FromIO = {
-  URI: URI4,
-  fromIO
-};
-var _FlatMap = {
-  flatMap: flatMap5
-};
-var _FromIO = {
-  fromIO: FromIO.fromIO
-};
-var flatMapIO2 = flatMapIO(_FromIO, _FlatMap);
-var tap4 = /* @__PURE__ */ dual(2, tap(Chain3));
-var tapIO2 = /* @__PURE__ */ dual(2, tapIO(FromIO, Chain3));
-
-// node_modules/fp-ts/es6/TaskEither.js
-var __awaiter = function(thisArg, _arguments, P, generator) {
-  function adopt(value) {
-    return value instanceof P ? value : new P(function(resolve) {
-      resolve(value);
-    });
-  }
-  return new (P || (P = Promise))(function(resolve, reject) {
-    function fulfilled(value) {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-    function rejected(value) {
-      try {
-        step(generator["throw"](value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-    function step(result) {
-      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-    }
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-};
-var __generator = function(thisArg, body) {
-  var _ = { label: 0, sent: function() {
-    if (t[0] & 1)
-      throw t[1];
-    return t[1];
-  }, trys: [], ops: [] }, f, y, t, g;
-  return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
-    return this;
-  }), g;
-  function verb(n) {
-    return function(v) {
-      return step([n, v]);
-    };
-  }
-  function step(op) {
-    if (f)
-      throw new TypeError("Generator is already executing.");
-    while (g && (g = 0, op[0] && (_ = 0)), _)
-      try {
-        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
-          return t;
-        if (y = 0, t)
-          op = [op[0] & 2, t.value];
-        switch (op[0]) {
-          case 0:
-          case 1:
-            t = op;
-            break;
-          case 4:
-            _.label++;
-            return { value: op[1], done: false };
-          case 5:
-            _.label++;
-            y = op[1];
-            op = [0];
-            continue;
-          case 7:
-            op = _.ops.pop();
-            _.trys.pop();
-            continue;
-          default:
-            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-              _ = 0;
-              continue;
-            }
-            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-              _.label = op[1];
-              break;
-            }
-            if (op[0] === 6 && _.label < t[1]) {
-              _.label = t[1];
-              t = op;
-              break;
-            }
-            if (t && _.label < t[2]) {
-              _.label = t[2];
-              _.ops.push(op);
-              break;
-            }
-            if (t[2])
-              _.ops.pop();
-            _.trys.pop();
-            continue;
-        }
-        op = body.call(thisArg, _);
-      } catch (e) {
-        op = [6, e];
-        y = 0;
-      } finally {
-        f = t = 0;
-      }
-    if (op[0] & 5)
-      throw op[1];
-    return { value: op[0] ? op[1] : void 0, done: true };
-  }
-};
-var left5 = /* @__PURE__ */ left4(Pointed);
-var right5 = /* @__PURE__ */ right4(Pointed);
-var rightTask = /* @__PURE__ */ rightF(Functor3);
-var rightIO = /* @__PURE__ */ flow(fromIO, rightTask);
-var fromIO2 = rightIO;
-var fromTask = rightTask;
-var fromEither2 = of4;
-var match4 = /* @__PURE__ */ match3(Functor3);
-var getOrElse4 = /* @__PURE__ */ getOrElse3(Monad);
-var tryCatch2 = function(f, onRejected) {
-  return function() {
-    return __awaiter(void 0, void 0, void 0, function() {
-      var reason_1;
-      return __generator(this, function(_a) {
-        switch (_a.label) {
-          case 0:
-            _a.trys.push([0, 2, , 3]);
-            return [4, f().then(right)];
-          case 1:
-            return [2, _a.sent()];
-          case 2:
-            reason_1 = _a.sent();
-            return [2, left(onRejected(reason_1))];
-          case 3:
-            return [
-              2
-              /*return*/
-            ];
-        }
-      });
-    });
-  };
-};
-var tryCatchK2 = function(f, onRejected) {
-  return function() {
-    var a = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-      a[_i] = arguments[_i];
-    }
-    return tryCatch2(function() {
-      return f.apply(void 0, a);
-    }, onRejected);
-  };
-};
-var tapError2 = /* @__PURE__ */ dual(2, tapError(Monad));
-var _map4 = function(fa, f) {
-  return pipe(fa, map7(f));
-};
-var _apPar2 = function(fab, fa) {
-  return pipe(fab, ap6(fa));
-};
-var map7 = /* @__PURE__ */ map5(Functor3);
-var mapBoth2 = /* @__PURE__ */ dual(3, mapBoth(Functor3));
-var mapError2 = /* @__PURE__ */ dual(2, mapError(Functor3));
-var mapLeft2 = mapError2;
-var ap6 = /* @__PURE__ */ ap4(ApplyPar);
-var flatMap6 = /* @__PURE__ */ dual(2, flatMap4(Monad));
-var URI5 = "TaskEither";
-var Functor4 = {
-  URI: URI5,
-  map: _map4
-};
-var as5 = dual(2, as(Functor4));
-var asUnit5 = asUnit(Functor4);
-var Chain4 = {
-  URI: URI5,
-  map: _map4,
-  ap: _apPar2,
-  chain: flatMap6
-};
-var FromEither3 = {
-  URI: URI5,
-  fromEither: fromEither2
-};
-var FromIO2 = {
-  URI: URI5,
-  fromIO: fromIO2
-};
-var FromTask = {
-  URI: URI5,
-  fromIO: fromIO2,
-  fromTask
-};
-var tap5 = /* @__PURE__ */ dual(2, tap(Chain4));
-var tapEither3 = /* @__PURE__ */ dual(2, tapEither(FromEither3, Chain4));
-var tapIO3 = /* @__PURE__ */ dual(2, tapIO(FromIO2, Chain4));
-var tapTask2 = /* @__PURE__ */ dual(2, tapTask(FromTask, Chain4));
-var _FromEither2 = {
-  fromEither: FromEither3.fromEither
-};
-var _FromIO2 = {
-  fromIO: FromIO2.fromIO
-};
-var chainW2 = flatMap6;
 
 // src/std/index.ts
 var flow2 = flow;
 var pipe2 = pipe;
 var absurd2 = absurd;
-var A = {
-  partitionMap,
-  partition,
-  compact,
-  findFirst: findFirst2,
-  findFirstMap: findFirstMap2,
-  map: map3,
-  filter,
-  filterMap,
-  flatten
-};
 var NEA = {
-  concatAll: concatAll3
+  concatAll: concatAll4
 };
 var E = {
   isLeft: isLeft2,
@@ -1977,16 +3345,16 @@ var E = {
   tryCatchK,
   tryCatch,
   getOrElse,
-  map: map2,
+  map: map3,
   mapLeft,
   bimap,
-  flatMap,
+  flatMap: flatMap2,
   fromNullable,
-  match,
-  ap: ap2,
-  flap: flap2,
+  match: match3,
+  ap: ap3,
+  flap: flap3,
   chainW,
-  fold: match
+  fold: match3
 };
 var O = {
   map: map4,
@@ -1995,12 +3363,12 @@ var O = {
   none: none2,
   fold: fold2,
   fromNullable: fromNullable2,
-  chain: chain2,
-  fromPredicate,
+  chain: chain3,
+  fromPredicate: fromPredicate2,
   isNone: isNone2,
   isSome: isSome2,
-  alt,
-  match: match2
+  alt: alt2,
+  match: match4
 };
 var parse2 = tryCatchK(parse, (e) => e);
 function parseC(schema, options) {
@@ -2021,7 +3389,7 @@ function trySchemas(schemas, options) {
   const [first2, ...rest] = schemas;
   return pipe2(
     rest,
-    A.map((schema) => parseC(schema, options)),
+    map2((schema) => parseC(schema, options)),
     concatAll2(EFunSemigroup)(parseC(first2, options))
   );
 }
@@ -2058,406 +3426,14 @@ ${body}`;
   }
 }
 
-// src/core/settings.ts
-var OpenPositionSchema = enumType(["left", "right", "mainView"]);
-function isValidOpenPosition(position) {
-  return is(OpenPositionSchema, position);
-}
-var ModalFormSettingsSchema = object({
-  editorPosition: optional(OpenPositionSchema, "right"),
-  attachShortcutToGlobalWindow: optional(boolean(), false),
-  globalNamespace: optional(enumType(["MF", "ModalForm"]), "MF"),
-  formDefinitions: array(unknown())
-});
-function getDefaultSettings() {
-  return {
-    editorPosition: "right",
-    attachShortcutToGlobalWindow: false,
-    globalNamespace: "MF",
-    formDefinitions: []
-  };
-}
-var NullSettingsError = class {
-  constructor() {
-    this._tag = "NullSettingsError";
-  }
-};
-function parseSettings(maybeSettings) {
-  return pipe2(
-    maybeSettings,
-    fromNullable(new NullSettingsError()),
-    chainW((s) => parse2(ModalFormSettingsSchema, { ...getDefaultSettings(), ...s }))
-  );
-}
-
-// src/ModalFormSettingTab.ts
-var ModalFormSettingTab = class extends import_obsidian.PluginSettingTab {
-  constructor(app2, plugin) {
-    super(app2, plugin);
-    this.plugin = plugin;
-  }
-  async display() {
-    const { containerEl, plugin } = this;
-    containerEl.empty();
-    containerEl.createEl("a", { text: "Modal Form documentation", cls: "nav-link", href: "https://github.com/danielo515/obsidian-modal-form" });
-    const settings2 = await plugin.getSettings();
-    new import_obsidian.Setting(containerEl).setName("Editor position").setDesc("Where the form editor will be opened. In mobile it will always be main view.").addDropdown((component) => {
-      component.addOptions({
-        left: "Left",
-        right: "Right",
-        mainView: "Main View"
-      }).setValue(settings2.editorPosition).onChange(async (value) => {
-        if (isValidOpenPosition(value)) {
-          await this.plugin.setEditorPosition(value);
-        }
-      });
-    });
-    new import_obsidian.Setting(containerEl).setName("Attach Modal-Form Shortcut to Global Window").setDesc("Enable or disable attaching a modal-form shortcut to the global window. If you enable this you will be able to access the API using the global variable `MF`. Enabling is immediate, disabling requires a restart.").addToggle((component) => {
-      component.setValue(settings2.attachShortcutToGlobalWindow).onChange(async (value) => {
-        await this.plugin.setAttachShortcutToGlobalWindow(value);
-      });
-    });
-  }
-};
+// src/main.ts
+var import_obsidian25 = require("obsidian");
 
 // src/API.ts
-var import_obsidian10 = require("obsidian");
-
-// src/core/InputDefinitionSchema.ts
-function nonEmptyString(name) {
-  return string(`${name} should be a string`, [
-    toTrimmed(),
-    minLength(1, `${name} should not be empty`)
-  ]);
-}
-var InputBasicTypeSchema = enumType([
-  "text",
-  "number",
-  "date",
-  "time",
-  "datetime",
-  "textarea",
-  "toggle",
-  "email",
-  "tel"
-]);
-var SelectFromNotesSchema = object({
-  type: literal("select"),
-  source: literal("notes"),
-  folder: nonEmptyString("folder name")
-});
-var InputTagSchema = object({
-  type: literal("tag"),
-  exclude: optional(string())
-  // This should be a regex string
-});
-var InputSliderSchema = object({
-  type: literal("slider"),
-  min: number(),
-  max: number()
-});
-var InputNoteFromFolderSchema = object({
-  type: literal("note"),
-  folder: nonEmptyString("folder name")
-});
-var InputFolderSchema = object({
-  type: literal("folder")
-  // TODO: allow exclude option
-});
-var InputDataviewSourceSchema = object({
-  type: literal("dataview"),
-  query: nonEmptyString("dataview query")
-});
-var InputBasicSchema = object({ type: InputBasicTypeSchema });
-var InputSelectFixedSchema = object({
-  type: literal("select"),
-  source: literal("fixed"),
-  options: array(
-    object({
-      value: string([toTrimmed()]),
-      label: string()
-    })
-  )
-});
-var MultiSelectNotesSchema = object({
-  type: literal("multiselect"),
-  source: literal("notes"),
-  folder: nonEmptyString("multi select source folder")
-});
-var MultiSelectFixedSchema = object({
-  type: literal("multiselect"),
-  source: literal("fixed"),
-  multi_select_options: array(string()),
-  allowUnknownValues: optional(boolean(), false)
-});
-var MultiSelectQuerySchema = object({
-  type: literal("multiselect"),
-  source: literal("dataview"),
-  query: nonEmptyString("dataview query"),
-  allowUnknownValues: optional(boolean(), false)
-});
-function canAllowUnknownValues(type, source) {
-  return type === "multiselect" && (source === "dataview" || source === "fixed");
-}
-var MultiselectSchema = union([
-  MultiSelectNotesSchema,
-  MultiSelectFixedSchema,
-  MultiSelectQuerySchema
-]);
-var DocumentBlock = object({
-  type: literal("document_block"),
-  body: string()
-});
-var InputTypeSchema = union([
-  InputBasicSchema,
-  InputNoteFromFolderSchema,
-  InputFolderSchema,
-  InputSliderSchema,
-  InputTagSchema,
-  SelectFromNotesSchema,
-  InputDataviewSourceSchema,
-  InputSelectFixedSchema,
-  MultiselectSchema,
-  DocumentBlock
-]);
-var InputTypeToParserMap = {
-  number: parseC(InputBasicSchema),
-  text: parseC(InputBasicSchema),
-  email: parseC(InputBasicSchema),
-  tel: parseC(InputBasicSchema),
-  date: parseC(InputBasicSchema),
-  time: parseC(InputBasicSchema),
-  datetime: parseC(InputBasicSchema),
-  textarea: parseC(InputBasicSchema),
-  toggle: parseC(InputBasicSchema),
-  note: parseC(InputNoteFromFolderSchema),
-  folder: parseC(InputFolderSchema),
-  slider: parseC(InputSliderSchema),
-  tag: parseC(InputTagSchema),
-  select: trySchemas([SelectFromNotesSchema, InputSelectFixedSchema]),
-  dataview: parseC(InputDataviewSourceSchema),
-  multiselect: parseC(MultiselectSchema),
-  document_block: parseC(DocumentBlock)
-};
-
-// src/core/findInputDefinitionSchema.ts
-function stringifyIssues(error2) {
-  return error2.issues.map(
-    (issue) => {
-      var _a;
-      return `${(_a = issue.path) == null ? void 0 : _a.map((i) => i.key).join(".")}: ${issue.message} got ${issue.input}`;
-    }
-  );
-}
-var InvalidInputTypeError = class {
-  constructor(field, inputType2) {
-    this.field = field;
-    this.inputType = inputType2;
-    this.path = "input.type";
-  }
-  toString() {
-    return `InvalidInputTypeError: ${this.getFieldErrors()[0]}`;
-  }
-  getFieldErrors() {
-    return [`"input.type" is invalid, got: ${JSON.stringify(this.inputType)}`];
-  }
-};
-InvalidInputTypeError._tag = "InvalidInputTypeError";
-var InvalidInputError = class {
-  constructor(field, error2) {
-    this.field = field;
-    this.error = error2;
-    var _a, _b;
-    this.path = (_b = (_a = error2.issues[0].path) == null ? void 0 : _a.map((i) => i.key).join(".")) != null ? _b : "";
-  }
-  toString() {
-    return `InvalidInputError: ${stringifyIssues(this.error).join(", ")}`;
-  }
-  getFieldErrors() {
-    return stringifyIssues(this.error);
-  }
-};
-InvalidInputError._tag = "InvalidInputError";
-var _InvalidFieldError = class {
-  constructor(field, error2) {
-    this.field = field;
-    this.error = error2;
-    var _a, _b;
-    this.path = (_b = (_a = error2.issues[0].path) == null ? void 0 : _a.map((i) => i.key).join(".")) != null ? _b : "";
-  }
-  toString() {
-    return `InvalidFieldError: ${stringifyIssues(this.error).join(", ")}`;
-  }
-  toArrayOfStrings() {
-    return this.getFieldErrors();
-  }
-  getFieldErrors() {
-    return stringifyIssues(this.error);
-  }
-  static of(field) {
-    return (error2) => new _InvalidFieldError(field, error2);
-  }
-};
-var InvalidFieldError = _InvalidFieldError;
-InvalidFieldError._tag = "InvalidFieldError";
-function isValidInputType(input) {
-  return "string" === typeof input && input in InputTypeToParserMap;
-}
-function findInputDefinitionSchema(fieldDefinition) {
-  return pipe2(
-    parse2(FieldMinimalSchema, fieldDefinition),
-    mapLeft(InvalidFieldError.of(fieldDefinition)),
-    chainW((field) => {
-      const type = field.input.type;
-      if (isValidInputType(type))
-        return right3([field, InputTypeToParserMap[type]]);
-      else
-        return left3(new InvalidInputTypeError(field, type));
-    })
-  );
-}
-function findFieldErrors(fields) {
-  return pipe2(
-    fields,
-    A.partitionMap((fieldUnparsed) => {
-      return pipe2(
-        findInputDefinitionSchema(fieldUnparsed),
-        chainW(
-          ([field, parser]) => pipe2(
-            parser(field.input),
-            bimap(
-              (error2) => new InvalidInputError(field, error2),
-              () => field
-            )
-          )
-        )
-      );
-    })
-    // Separated.left,
-  );
-}
-
-// src/core/template/templateSchema.ts
-var TemplateTextSchema = object({
-  _tag: literal("text"),
-  value: string()
-});
-var TemplateVariableSchema = object({
-  _tag: literal("variable"),
-  value: string()
-});
-var FrontmatterCommandSchema = object({
-  _tag: literal("frontmatter-command"),
-  pick: array(string()),
-  omit: array(string())
-});
-var ParsedTemplateSchema = array(union([TemplateTextSchema, TemplateVariableSchema, FrontmatterCommandSchema]));
-
-// src/core/formDefinitionSchema.ts
-var FieldDefinitionSchema = object({
-  name: nonEmptyString("field name"),
-  label: optional(string()),
-  description: string(),
-  isRequired: optional(boolean()),
-  input: InputTypeSchema
-});
-var FieldMinimalSchema = passthrough(
-  merge([FieldDefinitionSchema, object({ input: passthrough(object({ type: string() })) })])
-);
-var FieldListSchema = array(FieldDefinitionSchema);
-var FormDefinitionBasicSchema = object({
-  title: nonEmptyString("form title"),
-  name: nonEmptyString("form name"),
-  customClassname: optional(string()),
-  fields: array(unknown())
-});
-var FormDefinitionV1Schema = merge([
-  FormDefinitionBasicSchema,
-  object({
-    version: literal("1"),
-    fields: FieldListSchema,
-    template: optional(
-      object({
-        createCommand: boolean(),
-        parsedTemplate: ParsedTemplateSchema
-      })
-    )
-  })
-]);
-var FormDefinitionLatestSchema = FormDefinitionV1Schema;
-var MigrationError = class {
-  constructor(form, error2) {
-    this.form = form;
-    this.error = error2;
-    this.name = form.name;
-  }
-  toString() {
-    return `MigrationError: 
-            ${this.error.message}
-            ${this.error.issues.map((issue) => issue.message).join(", ")}`;
-  }
-  toArrayOfStrings() {
-    return stringifyIssues(this.error);
-  }
-  // This allows to store the error in the settings, along with the rest of the forms and
-  // have save all the data in one go transparently.
-  // This is required so we don't lose the form, even if it is invalid
-  toJSON() {
-    return this.form;
-  }
-  get fieldErrors() {
-    return findFieldErrors(this.form.fields);
-  }
-};
-MigrationError._tag = "MigrationError";
-var InvalidData = class {
-  constructor(data, error2) {
-    this.data = data;
-    this.error = error2;
-  }
-  toString() {
-    return `InvalidData: ${stringifyIssues(this.error).join(", ")}`;
-  }
-  toArrayOfStrings() {
-    return stringifyIssues(this.error);
-  }
-};
-InvalidData._tag = "InvalidData";
-function fromV0toV1(data) {
-  return pipe2(
-    parse2(FormDefinitionV1Schema, { ...data, version: "1" }),
-    getOrElseW((error2) => new MigrationError(data, error2))
-  );
-}
-function migrateToLatest(data) {
-  return pipe2(
-    // first try a quick one with the latest schema
-    parse2(FormDefinitionLatestSchema, data, { abortEarly: true }),
-    orElse(
-      () => pipe2(
-        parse2(FormDefinitionBasicSchema, data, { abortEarly: false }),
-        mapLeft((error2) => new InvalidData(data, error2)),
-        map2(fromV0toV1)
-      )
-    )
-  );
-}
-function formNeedsMigration(data) {
-  return !is(FormDefinitionLatestSchema, data);
-}
-
-// src/utils/ModalFormError.ts
-var ModalFormError = class extends Error {
-  constructor(msg, console_msg) {
-    super(msg);
-    this.console_msg = console_msg;
-    this.name = this.constructor.name;
-    Error.captureStackTrace(this, this.constructor);
-  }
-};
+var import_obsidian9 = require("obsidian");
 
 // node_modules/fp-ts/es6/string.js
-var Eq = {
+var Eq2 = {
   equals: function(first2, second) {
     return first2 === second;
   }
@@ -2467,13 +3443,13 @@ var Semigroup2 = {
     return first2 + second;
   }
 };
-var empty2 = "";
+var empty3 = "";
 var Monoid = {
   concat: Semigroup2.concat,
-  empty: empty2
+  empty: empty3
 };
-var Ord = {
-  equals: Eq.equals,
+var Ord2 = {
+  equals: Eq2.equals,
   compare: function(first2, second) {
     return first2 < second ? -1 : first2 > second ? 1 : 0;
   }
@@ -2506,7 +3482,7 @@ function filterMapWithIndex2(f) {
     return out;
   };
 }
-function filterWithIndex(predicateWithIndex) {
+function filterWithIndex2(predicateWithIndex) {
   return function(fa) {
     var out = {};
     var changed = false;
@@ -2552,7 +3528,7 @@ var keys_ = function(O2) {
 };
 function collect(O2) {
   if (typeof O2 === "function") {
-    return collect(Ord)(O2);
+    return collect(Ord2)(O2);
   }
   var keysO = keys_(O2);
   return function(f) {
@@ -2566,15 +3542,15 @@ function collect(O2) {
     };
   };
 }
-var toArray = /* @__PURE__ */ collect(Ord)(function(k, a) {
+var toArray = /* @__PURE__ */ collect(Ord2)(function(k, a) {
   return [
     k,
     a
   ];
 });
 var filterMapWithIndex3 = filterMapWithIndex2;
-function filterWithIndex2(predicateWithIndex) {
-  return filterWithIndex(predicateWithIndex);
+function filterWithIndex3(predicateWithIndex) {
+  return filterWithIndex2(predicateWithIndex);
 }
 function fromFoldable2(M, F) {
   return fromFoldable(M, F);
@@ -2586,18 +3562,30 @@ var fromEntries = function(fa) {
 var filterMap3 = filterMap2;
 
 // src/FormModal.ts
-var import_obsidian9 = require("obsidian");
+var import_obsidian8 = require("obsidian");
 
 // src/utils/Log.ts
-var import_obsidian2 = require("obsidian");
+var import_obsidian = require("obsidian");
+
+// src/utils/ModalFormError.ts
+var ModalFormError = class extends Error {
+  constructor(msg, console_msg) {
+    super(msg);
+    this.console_msg = console_msg;
+    this.name = this.constructor.name;
+    Error.captureStackTrace(this, this.constructor);
+  }
+};
+
+// src/utils/Log.ts
 function log_notice(title, msg, titleClass, bodyClass) {
-  const notice = new import_obsidian2.Notice("", 15e3);
+  const notice = new import_obsidian.Notice("", 15e3);
   const el = notice.noticeEl;
   el.empty();
-  const head5 = el.createEl("h6", { text: title, cls: titleClass });
-  head5.setCssStyles({ marginTop: "0px" });
+  const head6 = el.createEl("h6", { text: title, cls: titleClass });
+  head6.setCssStyles({ marginTop: "0px" });
   const body = el.createEl("div", { text: msg, cls: bodyClass });
-  el.append(head5, body);
+  el.append(head6, body);
 }
 function log_error(e) {
   if (e instanceof ModalFormError && e.console_msg) {
@@ -2781,7 +3769,7 @@ var ResultValue = class {
 };
 
 // src/core/objectSelect.ts
-var KeysSchema = array(coerce(string(), String));
+var KeysSchema = array2(coerce(string(), String));
 var PickOmitSchema = object({
   pick: optional(KeysSchema),
   omit: optional(KeysSchema)
@@ -2789,13 +3777,13 @@ var PickOmitSchema = object({
 function picKeys(obj) {
   return (keys) => pipe2(
     obj,
-    filterWithIndex2((k) => keys.includes(k))
+    filterWithIndex3((k) => keys.includes(k))
   );
 }
 function omitKeys(obj) {
   return (keys) => pipe2(
     obj,
-    filterWithIndex2((k) => !keys.includes(k))
+    filterWithIndex3((k) => !keys.includes(k))
   );
 }
 function objectSelect(obj, opts) {
@@ -2822,7 +3810,7 @@ function objectSelect(obj, opts) {
 }
 
 // src/core/FormResult.ts
-var import_obsidian3 = require("obsidian");
+var import_obsidian2 = require("obsidian");
 function isPrimitive(value) {
   return typeof value === "string" || typeof value === "boolean" || typeof value === "number";
 }
@@ -2867,7 +3855,7 @@ var FormResult = class {
    */
   asFrontmatterString(options) {
     const data = objectSelect(this.data, options);
-    return (0, import_obsidian3.stringifyYaml)(data);
+    return (0, import_obsidian2.stringifyYaml)(data);
   }
   /**
    * Return the current data as a block of dataview properties
@@ -2891,11 +3879,11 @@ var FormResult = class {
    * template.
    */
   asString(template) {
-    let result = template;
+    let result2 = template;
     for (const [key, value] of Object.entries(this.data)) {
-      result = result.replace(new RegExp(`{{${key}}}`, "g"), value + "");
+      result2 = result2.replace(new RegExp(`{{${key}}}`, "g"), value + "");
     }
-    return result;
+    return result2;
   }
   /**
    * Gets a single value from the data.
@@ -2925,13 +3913,13 @@ var FormResult = class {
 
 // src/core/formDataFromFormDefaults.ts
 function formDataFromFormDefaults(fields, values) {
-  const result = {};
+  const result2 = {};
   const invalidKeys = [];
   for (const [key, value] of Object.entries(values)) {
     if (Array.isArray(value) && isPrimitiveArray(value)) {
-      result[key] = value;
+      result2[key] = value;
     } else if (isPrimitive(value)) {
-      result[key] = value;
+      result2[key] = value;
     } else {
       invalidKeys.push(key);
     }
@@ -2941,15 +3929,15 @@ function formDataFromFormDefaults(fields, values) {
   }
   return pipe2(
     fields,
-    A.map((field) => {
+    Array_exports.map((field) => {
       return pipe2(
-        result[field.name],
+        result2[field.name],
         fromNullable2,
-        match2(() => field.input.type === "toggle" ? some3(false) : none2, some3),
+        match4(() => field.input.type === "toggle" ? some3(false) : none2, some3),
         map4((value) => [field.name, value])
       );
     }),
-    A.compact,
+    Array_exports.compact,
     fromEntries
   );
 }
@@ -3048,6 +4036,10 @@ function get_all_dirty_from_scope($$scope) {
     return dirty;
   }
   return -1;
+}
+function set_store_value(store, ret, value) {
+  store.set(value);
+  return ret;
 }
 function action_destroyer(action_result) {
   return action_result && is_function(action_result.destroy) ? action_result.destroy : noop;
@@ -3171,7 +4163,7 @@ function text(data) {
 function space() {
   return text(" ");
 }
-function empty3() {
+function empty4() {
   return text("");
 }
 function listen(node, event, handler, options) {
@@ -3233,14 +4225,14 @@ function toggle_class(element2, name, toggle) {
   element2.classList.toggle(name, !!toggle);
 }
 function get_custom_elements_slots(element2) {
-  const result = {};
+  const result2 = {};
   element2.childNodes.forEach(
     /** @param {Element} node */
     (node) => {
-      result[node.slot || "default"] = true;
+      result2[node.slot || "default"] = true;
     }
   );
-  return result;
+  return result2;
 }
 
 // node_modules/svelte/src/runtime/internal/lifecycle.js
@@ -3465,6 +4457,79 @@ function update_await_block_branch(info, ctx, dirty) {
 function ensure_array_like(array_like_or_iterator) {
   return (array_like_or_iterator == null ? void 0 : array_like_or_iterator.length) !== void 0 ? array_like_or_iterator : Array.from(array_like_or_iterator);
 }
+function destroy_block(block, lookup4) {
+  block.d(1);
+  lookup4.delete(block.key);
+}
+function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, lookup4, node, destroy, create_each_block9, next, get_context) {
+  let o = old_blocks.length;
+  let n = list.length;
+  let i = o;
+  const old_indexes = {};
+  while (i--)
+    old_indexes[old_blocks[i].key] = i;
+  const new_blocks = [];
+  const new_lookup = /* @__PURE__ */ new Map();
+  const deltas = /* @__PURE__ */ new Map();
+  const updates = [];
+  i = n;
+  while (i--) {
+    const child_ctx = get_context(ctx, list, i);
+    const key = get_key(child_ctx);
+    let block = lookup4.get(key);
+    if (!block) {
+      block = create_each_block9(key, child_ctx);
+      block.c();
+    } else if (dynamic) {
+      updates.push(() => block.p(child_ctx, dirty));
+    }
+    new_lookup.set(key, new_blocks[i] = block);
+    if (key in old_indexes)
+      deltas.set(key, Math.abs(i - old_indexes[key]));
+  }
+  const will_move = /* @__PURE__ */ new Set();
+  const did_move = /* @__PURE__ */ new Set();
+  function insert2(block) {
+    transition_in(block, 1);
+    block.m(node, next);
+    lookup4.set(block.key, block);
+    next = block.first;
+    n--;
+  }
+  while (o && n) {
+    const new_block = new_blocks[n - 1];
+    const old_block = old_blocks[o - 1];
+    const new_key = new_block.key;
+    const old_key = old_block.key;
+    if (new_block === old_block) {
+      next = new_block.first;
+      o--;
+      n--;
+    } else if (!new_lookup.has(old_key)) {
+      destroy(old_block, lookup4);
+      o--;
+    } else if (!lookup4.has(new_key) || will_move.has(new_key)) {
+      insert2(new_block);
+    } else if (did_move.has(old_key)) {
+      o--;
+    } else if (deltas.get(new_key) > deltas.get(old_key)) {
+      did_move.add(new_key);
+      insert2(new_block);
+    } else {
+      will_move.add(old_key);
+      o--;
+    }
+  }
+  while (o--) {
+    const old_block = old_blocks[o];
+    if (!new_lookup.has(old_block.key))
+      destroy(old_block, lookup4);
+  }
+  while (n)
+    insert2(new_blocks[n - 1]);
+  run_all(updates);
+  return new_blocks;
+}
 
 // node_modules/svelte/src/shared/boolean_attributes.js
 var _boolean_attributes = (
@@ -3500,7 +4565,7 @@ var _boolean_attributes = (
 var boolean_attributes = /* @__PURE__ */ new Set([..._boolean_attributes]);
 
 // node_modules/svelte/src/runtime/internal/Component.js
-function bind2(component, name, callback) {
+function bind3(component, name, callback) {
   const index = component.$$.props[name];
   if (index !== void 0) {
     component.$$.bound[index] = callback;
@@ -3542,7 +4607,7 @@ function make_dirty(component, i) {
   }
   component.$$.dirty[i / 31 | 0] |= 1 << i % 31;
 }
-function init3(component, options, instance16, create_fragment16, not_equal, props, append_styles2, dirty = [-1]) {
+function init4(component, options, instance18, create_fragment18, not_equal, props, append_styles2, dirty = [-1]) {
   const parent_component = current_component;
   set_current_component(component);
   const $$ = component.$$ = {
@@ -3568,7 +4633,7 @@ function init3(component, options, instance16, create_fragment16, not_equal, pro
   };
   append_styles2 && append_styles2($$.root);
   let ready = false;
-  $$.ctx = instance16 ? instance16(component, options.props || {}, (i, ret, ...rest) => {
+  $$.ctx = instance18 ? instance18(component, options.props || {}, (i, ret, ...rest) => {
     const value = rest.length ? rest[0] : ret;
     if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
       if (!$$.skip_bound && $$.bound[i])
@@ -3581,7 +4646,7 @@ function init3(component, options, instance16, create_fragment16, not_equal, pro
   $$.update();
   ready = true;
   run_all($$.before_update);
-  $$.fragment = create_fragment16 ? create_fragment16($$.ctx) : false;
+  $$.fragment = create_fragment18 ? create_fragment18($$.ctx) : false;
   if (options.target) {
     if (options.hydrate) {
       start_hydrating();
@@ -3915,11 +4980,11 @@ function derived(stores, fn, initial_value) {
         return;
       }
       cleanup();
-      const result = fn(single ? values[0] : values, set2, update3);
+      const result2 = fn(single ? values[0] : values, set2, update3);
       if (auto) {
-        set2(result);
+        set2(result2);
       } else {
-        cleanup = is_function(result) ? result : noop;
+        cleanup = is_function(result2) ? result2 : noop;
       }
     };
     const unsubscribers = stores_array.map(
@@ -3975,8 +5040,8 @@ function parseField(field) {
     case "required":
       return pipe2(
         field.value,
-        chain2(nonEmptyValue),
-        match2(
+        chain3(nonEmptyValue),
+        match4(
           () => left3(FieldFailed(field, rule)),
           (value) => right3(field)
         )
@@ -3989,7 +5054,7 @@ function parseForm(fields) {
   const { right: ok, left: failed } = pipe2(
     fields,
     Object.values,
-    map3(parseField),
+    map2(parseField),
     separate
   );
   if (failed.length > 0)
@@ -3997,7 +5062,7 @@ function parseForm(fields) {
   return right3(
     pipe2(
       ok,
-      map3(
+      map2(
         (field) => pipe2(
           field.value,
           map4((value) => [field.name, value])
@@ -4048,7 +5113,7 @@ function makeFormEngine({
     formStore.update((form) => {
       return pipe2(
         failedFields,
-        reduce2(form, (form2, field) => {
+        reduce3(form, (form2, field) => {
           return {
             ...form2,
             fields: { ...form2.fields, [field.name]: field }
@@ -4074,7 +5139,7 @@ function makeFormEngine({
       pipe2(
         formState.fields,
         parseForm,
-        match(setErrors, onSubmit)
+        match3(setErrors, onSubmit)
       );
     },
     triggerCancel() {
@@ -4091,7 +5156,7 @@ function makeFormEngine({
             (x) => pipe2(
               x,
               fromNullable2,
-              chain2((x2) => x2.value),
+              chain3((x2) => x2.value),
               map4(cb)
             )
           );
@@ -4137,10 +5202,10 @@ function makeFormEngine({
 }
 
 // src/suggesters/suggestFile.ts
-var import_obsidian5 = require("obsidian");
+var import_obsidian4 = require("obsidian");
 
 // src/utils/files.ts
-var import_obsidian4 = require("obsidian");
+var import_obsidian3 = require("obsidian");
 var FolderDoesNotExistError = class extends Error {
 };
 FolderDoesNotExistError.tag = "FolderDoesNotExistError";
@@ -4167,11 +5232,11 @@ var NotAFileError = class extends Error {
 NotAFileError.tag = "NotAFileError";
 function resolve_tfolder(folder_str, app2) {
   return pipe2(
-    (0, import_obsidian4.normalizePath)(folder_str),
+    (0, import_obsidian3.normalizePath)(folder_str),
     (path) => app2.vault.getAbstractFileByPath(path),
     E.fromNullable(new FolderDoesNotExistError(`Folder "${folder_str}" doesn't exist`)),
     E.flatMap((file) => {
-      if (!(file instanceof import_obsidian4.TFolder)) {
+      if (!(file instanceof import_obsidian3.TFolder)) {
         return E.left(new NotAFolderError(file));
       }
       return E.right(file);
@@ -4180,11 +5245,11 @@ function resolve_tfolder(folder_str, app2) {
 }
 function resolve_tfile(file_str, app2) {
   return pipe2(
-    (0, import_obsidian4.normalizePath)(file_str),
+    (0, import_obsidian3.normalizePath)(file_str),
     (path) => app2.vault.getAbstractFileByPath(path),
     E.fromNullable(FileDoesNotExistError.of(file_str)),
     E.flatMap((file) => {
-      if (!(file instanceof import_obsidian4.TFile)) {
+      if (!(file instanceof import_obsidian3.TFile)) {
         return E.left(new NotAFileError(file));
       }
       return E.right(file);
@@ -4196,8 +5261,8 @@ function get_tfiles_from_folder(folder_str, app2) {
     resolve_tfolder(folder_str, app2),
     E.flatMap((folder) => {
       const files = [];
-      import_obsidian4.Vault.recurseChildren(folder, (file) => {
-        if (file instanceof import_obsidian4.TFile) {
+      import_obsidian3.Vault.recurseChildren(folder, (file) => {
+        if (file instanceof import_obsidian3.TFile) {
           files.push(file);
         }
       });
@@ -4239,7 +5304,7 @@ function extract_tags(cache) {
   const bodyTags = pipe2(
     cache.tags,
     O.fromNullable,
-    O.map(A.map((tag) => tag.tag))
+    O.map(Array_exports.map((tag) => tag.tag))
   );
   const frontmatterTags = pipe2(
     cache.frontmatter,
@@ -4248,8 +5313,8 @@ function extract_tags(cache) {
   );
   return pipe2(
     [bodyTags, frontmatterTags],
-    A.compact,
-    A.flatten
+    Array_exports.compact,
+    Array_exports.flatten
   );
 }
 function enrich_tfile(file, app2) {
@@ -4268,7 +5333,7 @@ function enrich_tfile(file, app2) {
 }
 function file_exists(file_str, app2) {
   return pipe2(
-    (0, import_obsidian4.normalizePath)(file_str),
+    (0, import_obsidian3.normalizePath)(file_str),
     (path) => app2.vault.getAbstractFileByPath(path),
     (value) => value !== null
   );
@@ -4283,8 +5348,8 @@ function baseToString(value) {
   if (typeof value == "string") {
     return value;
   }
-  let result = value + "";
-  return result == "0" && 1 / value == -INFINITY ? "-0" : result;
+  let result2 = value + "";
+  return result2 == "0" && 1 / value == -INFINITY ? "-0" : result2;
 }
 function toString(value) {
   return value == null ? "" : baseToString(value);
@@ -4315,7 +5380,7 @@ function getTag(value) {
 }
 var INCORRECT_INDEX_TYPE = "Incorrect 'index' type";
 var LOGICAL_SEARCH_INVALID_QUERY_FOR_KEY = (key) => `Invalid value for key ${key}`;
-var PATTERN_LENGTH_TOO_LARGE = (max2) => `Pattern length exceeds max of ${max2}.`;
+var PATTERN_LENGTH_TOO_LARGE = (max3) => `Pattern length exceeds max of ${max3}.`;
 var MISSING_KEY_PROPERTY = (name) => `Missing ${name} property in key`;
 var INVALID_KEY_WEIGHT_VALUE = (key) => `Property 'weight' in key '${key}' must be a positive integer`;
 var hasOwn = Object.prototype.hasOwnProperty;
@@ -4648,10 +5713,10 @@ function convertMaskToIndices(matchmask = [], minMatchCharLength = Config.minMat
   let end = -1;
   let i = 0;
   for (let len = matchmask.length; i < len; i += 1) {
-    let match5 = matchmask[i];
-    if (match5 && start === -1) {
+    let match7 = matchmask[i];
+    if (match7 && start === -1) {
       start = i;
-    } else if (!match5 && start !== -1) {
+    } else if (!match7 && start !== -1) {
       end = i - 1;
       if (end - start + 1 >= minMatchCharLength) {
         indices.push([start, end]);
@@ -4770,7 +5835,7 @@ function search(text3, pattern, patternAlphabet, {
     }
     lastBitArr = bitArr;
   }
-  const result = {
+  const result2 = {
     isMatch: bestLocation >= 0,
     // Count exact matches (those with a score of 0) to be "almost" exact
     score: Math.max(1e-3, finalScore)
@@ -4778,12 +5843,12 @@ function search(text3, pattern, patternAlphabet, {
   if (computeMatches) {
     const indices = convertMaskToIndices(matchMask, minMatchCharLength);
     if (!indices.length) {
-      result.isMatch = false;
+      result2.isMatch = false;
     } else if (includeMatches) {
-      result.indices = indices;
+      result2.indices = indices;
     }
   }
-  return result;
+  return result2;
 }
 function createPatternAlphabet(pattern) {
   let mask = {};
@@ -4849,14 +5914,14 @@ var BitapSearch = class {
       text3 = text3.toLowerCase();
     }
     if (this.pattern === text3) {
-      let result2 = {
+      let result3 = {
         isMatch: true,
         score: 0
       };
       if (includeMatches) {
-        result2.indices = [[0, text3.length - 1]];
+        result3.indices = [[0, text3.length - 1]];
       }
-      return result2;
+      return result3;
     }
     const {
       location,
@@ -4887,14 +5952,14 @@ var BitapSearch = class {
         allIndices = [...allIndices, ...indices];
       }
     });
-    let result = {
+    let result2 = {
       isMatch: hasMatches,
       score: hasMatches ? totalScore / this.chunks.length : 1
     };
     if (hasMatches && includeMatches) {
-      result.indices = allIndices;
+      result2.indices = allIndices;
     }
-    return result;
+    return result2;
   }
 };
 var BaseMatch = class {
@@ -5226,14 +6291,14 @@ var ExtendedSearch = class {
         }
       }
       if (numMatches) {
-        let result = {
+        let result2 = {
           isMatch: true,
           score: totalScore / numMatches
         };
         if (includeMatches) {
-          result.indices = allIndices;
+          result2.indices = allIndices;
         }
-        return result;
+        return result2;
       }
     }
     return {
@@ -5313,44 +6378,44 @@ function parse3(query, options, { auto = true } = {}) {
   return next(query);
 }
 function computeScore(results, { ignoreFieldNorm = Config.ignoreFieldNorm }) {
-  results.forEach((result) => {
+  results.forEach((result2) => {
     let totalScore = 1;
-    result.matches.forEach(({ key, norm: norm2, score }) => {
+    result2.matches.forEach(({ key, norm: norm2, score }) => {
       const weight = key ? key.weight : null;
       totalScore *= Math.pow(
         score === 0 && weight ? Number.EPSILON : score,
         (weight || 1) * (ignoreFieldNorm ? 1 : norm2)
       );
     });
-    result.score = totalScore;
+    result2.score = totalScore;
   });
 }
-function transformMatches(result, data) {
-  const matches = result.matches;
+function transformMatches(result2, data) {
+  const matches = result2.matches;
   data.matches = [];
   if (!isDefined(matches)) {
     return;
   }
-  matches.forEach((match5) => {
-    if (!isDefined(match5.indices) || !match5.indices.length) {
+  matches.forEach((match7) => {
+    if (!isDefined(match7.indices) || !match7.indices.length) {
       return;
     }
-    const { indices, value } = match5;
+    const { indices, value } = match7;
     let obj = {
       indices,
       value
     };
-    if (match5.key) {
-      obj.key = match5.key.src;
+    if (match7.key) {
+      obj.key = match7.key.src;
     }
-    if (match5.idx > -1) {
-      obj.refIndex = match5.idx;
+    if (match7.idx > -1) {
+      obj.refIndex = match7.idx;
     }
     data.matches.push(obj);
   });
 }
-function transformScore(result, data) {
-  data.score = result.score;
+function transformScore(result2, data) {
+  data.score = result2.score;
 }
 function format(results, docs, {
   includeMatches = Config.includeMatches,
@@ -5361,15 +6426,15 @@ function format(results, docs, {
     transformers.push(transformMatches);
   if (includeScore)
     transformers.push(transformScore);
-  return results.map((result) => {
-    const { idx } = result;
+  return results.map((result2) => {
+    const { idx } = result2;
     const data = {
       item: docs[idx],
       refIndex: idx
     };
     if (transformers.length) {
       transformers.forEach((transformer) => {
-        transformer(result, data);
+        transformer(result2, data);
       });
     }
     return data;
@@ -5485,9 +6550,9 @@ var Fuse = class {
       const res = [];
       for (let i = 0, len = node.children.length; i < len; i += 1) {
         const child = node.children[i];
-        const result = evaluate(child, item2, idx);
-        if (result.length) {
-          res.push(...result);
+        const result2 = evaluate(child, item2, idx);
+        if (result2.length) {
+          res.push(...result2);
         } else if (node.operator === LogicalOperator.AND) {
           return [];
         }
@@ -5585,7 +6650,7 @@ Fuse.config = Config;
 }
 
 // src/suggesters/suggestFile.ts
-var FileSuggest = class extends import_obsidian5.AbstractInputSuggest {
+var FileSuggest = class extends import_obsidian4.AbstractInputSuggest {
   constructor(app2, inputEl, strategy, folder) {
     super(app2, inputEl);
     this.app = app2;
@@ -5596,7 +6661,7 @@ var FileSuggest = class extends import_obsidian5.AbstractInputSuggest {
   getSuggestions(input_str) {
     const all_files = pipe2(
       get_tfiles_from_folder(this.folder, this.app),
-      E.map(A.map((file) => enrich_tfile(file, this.app)))
+      E.map(Array_exports.map((file) => enrich_tfile(file, this.app)))
     );
     if (E.isLeft(all_files)) {
       return [];
@@ -5614,8 +6679,8 @@ var FileSuggest = class extends import_obsidian5.AbstractInputSuggest {
         { name: "frontmatter.aliases", weight: 2 }
       ]
     });
-    return fuse.search(lower_input_str).map((result) => {
-      return result.item;
+    return fuse.search(lower_input_str).map((result2) => {
+      return result2.item;
     });
   }
   /* This is an example structure of how a obsidian suggestion looks like in the dom
@@ -5649,7 +6714,7 @@ var FileSuggest = class extends import_obsidian5.AbstractInputSuggest {
       text: (_a = file.parent) == null ? void 0 : _a.path
     });
     const icon = el.createSpan({ cls: "suggestion-icon" });
-    (0, import_obsidian5.setIcon)(icon, "folder");
+    (0, import_obsidian4.setIcon)(icon, "folder");
     subtitle.prepend(icon);
     const body = el.createDiv({ cls: "suggestion-content" });
     body.appendChild(title);
@@ -5664,8 +6729,8 @@ var FileSuggest = class extends import_obsidian5.AbstractInputSuggest {
 };
 
 // src/suggesters/suggestFolder.ts
-var import_obsidian6 = require("obsidian");
-var FolderSuggest = class extends import_obsidian6.AbstractInputSuggest {
+var import_obsidian5 = require("obsidian");
+var FolderSuggest = class extends import_obsidian5.AbstractInputSuggest {
   constructor(inputEl, app2) {
     super(app2, inputEl);
     this.inputEl = inputEl;
@@ -5675,7 +6740,7 @@ var FolderSuggest = class extends import_obsidian6.AbstractInputSuggest {
     const abstractFiles = this.app.vault.getAllLoadedFiles();
     const lowerCaseInputStr = inputStr.toLowerCase();
     const folders = abstractFiles.reduce((acc, folder) => {
-      if (folder instanceof import_obsidian6.TFolder && folder.path.toLowerCase().contains(lowerCaseInputStr)) {
+      if (folder instanceof import_obsidian5.TFolder && folder.path.toLowerCase().contains(lowerCaseInputStr)) {
         acc.push(folder);
       }
       return acc;
@@ -5693,7 +6758,7 @@ var FolderSuggest = class extends import_obsidian6.AbstractInputSuggest {
 };
 
 // src/suggesters/suggestFromDataview.ts
-var import_obsidian7 = require("obsidian");
+var import_obsidian6 = require("obsidian");
 
 // src/suggesters/SafeDataviewQuery.ts
 function sandboxedDvQuery(query) {
@@ -5703,18 +6768,18 @@ function sandboxedDvQuery(query) {
   const parsed = parseFunctionBody(query, "dv", "pages");
   return (dv, pages) => pipe2(
     parsed,
-    fromEither2,
+    fromEither3,
     mapLeft2(
       (err) => new ModalFormError("Error evaluating the dataview query", err.message)
     ),
     flatMap6((fn) => fn(dv, pages)),
-    flatMap6((result) => {
-      if (!Array.isArray(result)) {
+    flatMap6((result2) => {
+      if (!Array.isArray(result2)) {
         return left5(
           new ModalFormError("The dataview query did not return an array")
         );
       }
-      return right5(result);
+      return right5(result2);
     })
   );
 }
@@ -5723,14 +6788,14 @@ function executeSandboxedDvQuery(query, app2, logger = log_error) {
   const dv = (_a = app2.plugins.plugins.dataview) == null ? void 0 : _a.api;
   if (!dv) {
     logger(new ModalFormError("Dataview plugin is not enabled"));
-    return of4([]);
+    return of5([]);
   }
   const pages = dv.pages;
   return pipe2(
     query(dv, pages),
     getOrElse4((e) => {
       logger(e);
-      return of4([]);
+      return of5([]);
     })
   );
 }
@@ -5748,7 +6813,7 @@ function createRegexFromInput(input) {
 }
 
 // src/suggesters/suggestFromDataview.ts
-var DataviewSuggest = class extends import_obsidian7.AbstractInputSuggest {
+var DataviewSuggest = class extends import_obsidian6.AbstractInputSuggest {
   constructor(inputEl, dvQuery, app2) {
     super(app2, inputEl);
     this.inputEl = inputEl;
@@ -5756,12 +6821,12 @@ var DataviewSuggest = class extends import_obsidian7.AbstractInputSuggest {
     this.sandboxedQuery = sandboxedDvQuery(dvQuery);
   }
   getSuggestions(inputStr) {
-    const result = executeSandboxedDvQuery(this.sandboxedQuery, this.app);
+    const result2 = executeSandboxedDvQuery(this.sandboxedQuery, this.app);
     if (!inputStr) {
-      return result();
+      return result2();
     }
     const regex = createRegexFromInput(inputStr);
-    return result().then((res) => res.filter((r) => regex.test(r)));
+    return result2().then((res) => res.filter((r) => regex.test(r)));
   }
   renderSuggestion(option, el) {
     el.setText(option);
@@ -6188,7 +7253,7 @@ function instance($$self, $$props, $$invalidate) {
 var MultiSelect = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(
+    init4(
       this,
       options,
       instance,
@@ -6207,8 +7272,8 @@ var MultiSelect = class extends SvelteComponent {
 var MultiSelect_default = MultiSelect;
 
 // src/suggesters/StringSuggest.ts
-var import_obsidian8 = require("obsidian");
-var StringSuggest = class extends import_obsidian8.AbstractInputSuggest {
+var import_obsidian7 = require("obsidian");
+var StringSuggest = class extends import_obsidian7.AbstractInputSuggest {
   constructor(inputEl, content, onSelectCb, app2, allowUnknownValues = false) {
     super(app2, inputEl);
     this.inputEl = inputEl;
@@ -6240,7 +7305,7 @@ async function MultiSelectModel(fieldInput, app2, values) {
   const removeValue = (value) => values.update(
     (xs) => pipe2(
       xs,
-      A.filter((x) => x !== value)
+      Array_exports.filter((x) => x !== value)
     )
   );
   switch (source) {
@@ -6317,7 +7382,7 @@ function MultiSelectTags(fieldInput, app2, values) {
       values.update(
         (x) => pipe2(
           x,
-          A.filter((x2) => x2 !== value)
+          Array_exports.filter((x2) => x2 !== value)
         )
       );
     }
@@ -6330,7 +7395,7 @@ var notify = throttle(
   2e3
 );
 var notifyError2 = (title) => throttle((msg) => log_notice(`\u{1F6A8} ${title} \u{1F6A8}`, msg, "notice-error"), 2e3);
-var FormModal = class extends import_obsidian9.Modal {
+var FormModal = class extends import_obsidian8.Modal {
   constructor(app2, modalDefinition, onSubmit, options) {
     var _a;
     super(app2);
@@ -6343,8 +7408,8 @@ var FormModal = class extends import_obsidian9.Modal {
       (_a = options == null ? void 0 : options.values) != null ? _a : {}
     );
     this.formEngine = makeFormEngine({
-      onSubmit: (result) => {
-        this.onSubmit(FormResult.make(result, "ok"));
+      onSubmit: (result2) => {
+        this.onSubmit(FormResult.make(result2, "ok"));
         this.close();
       },
       onCancel: () => {
@@ -6364,7 +7429,7 @@ var FormModal = class extends import_obsidian9.Modal {
       var _a;
       const name = definition.label || definition.name;
       const required = (_a = definition.isRequired) != null ? _a : false;
-      const fieldBase = new import_obsidian9.Setting(contentEl).setName(`${name} ${required ? "*" : ""}`.trim()).setDesc(definition.description);
+      const fieldBase = new import_obsidian8.Setting(contentEl).setName(`${name} ${required ? "*" : ""}`.trim()).setDesc(definition.description);
       const fieldInput = definition.input;
       const type = fieldInput.type;
       const initialValue = this.initialFormValues[definition.name];
@@ -6388,9 +7453,9 @@ var FormModal = class extends import_obsidian9.Modal {
               textEl.setValue(initialValue);
             }
             textEl.inputEl.rows = 6;
-            if (import_obsidian9.Platform.isIosApp)
+            if (import_obsidian8.Platform.isIosApp)
               textEl.inputEl.style.width = "100%";
-            else if (import_obsidian9.Platform.isDesktopApp) {
+            else if (import_obsidian8.Platform.isDesktopApp) {
               textEl.inputEl.rows = 10;
             }
           });
@@ -6562,7 +7627,7 @@ var FormModal = class extends import_obsidian9.Modal {
           const sub = this.formEngine.subscribe((form) => {
             pipe2(
               functionParsed,
-              fromEither2,
+              fromEither3,
               chainW2(
                 (fn) => pipe2(
                   form.fields,
@@ -6570,12 +7635,12 @@ var FormModal = class extends import_obsidian9.Modal {
                   fn
                 )
               ),
-              match4(
+              match6(
                 (error2) => {
                   console.error(error2);
                   notifyError2("Error in document block")(String(error2));
                 },
-                (newText) => domNode.setText((0, import_obsidian9.sanitizeHTMLToDom)(newText))
+                (newText) => domNode.setText((0, import_obsidian8.sanitizeHTMLToDom)(newText))
               )
             )();
           });
@@ -6585,7 +7650,7 @@ var FormModal = class extends import_obsidian9.Modal {
           return absurd2(type);
       }
     });
-    const buttons = new import_obsidian9.Setting(contentEl).addButton(
+    const buttons = new import_obsidian8.Setting(contentEl).addButton(
       (btn) => btn.setButtonText("Cancel").onClick(this.formEngine.triggerCancel)
     );
     buttons.addButton(
@@ -6615,6 +7680,489 @@ var FormModal = class extends import_obsidian9.Modal {
   }
 };
 
+// src/core/InputDefinitionSchema.ts
+function nonEmptyString(name) {
+  return string(`${name} should be a string`, [
+    toTrimmed(),
+    minLength(1, `${name} should not be empty`)
+  ]);
+}
+var InputBasicTypeSchema = enumType([
+  "text",
+  "number",
+  "date",
+  "time",
+  "datetime",
+  "textarea",
+  "toggle",
+  "email",
+  "tel"
+]);
+var SelectFromNotesSchema = object({
+  type: literal("select"),
+  source: literal("notes"),
+  folder: nonEmptyString("folder name")
+});
+var InputTagSchema = object({
+  type: literal("tag"),
+  exclude: optional(string())
+  // This should be a regex string
+});
+var InputSliderSchema = object({
+  type: literal("slider"),
+  min: number(),
+  max: number()
+});
+var InputNoteFromFolderSchema = object({
+  type: literal("note"),
+  folder: nonEmptyString("folder name")
+});
+var InputFolderSchema = object({
+  type: literal("folder")
+  // TODO: allow exclude option
+});
+var InputDataviewSourceSchema = object({
+  type: literal("dataview"),
+  query: nonEmptyString("dataview query")
+});
+var InputBasicSchema = object({ type: InputBasicTypeSchema });
+var InputSelectFixedSchema = object({
+  type: literal("select"),
+  source: literal("fixed"),
+  options: array2(
+    object({
+      value: string([toTrimmed()]),
+      label: string()
+    })
+  )
+});
+var MultiSelectNotesSchema = object({
+  type: literal("multiselect"),
+  source: literal("notes"),
+  folder: nonEmptyString("multi select source folder")
+});
+var MultiSelectFixedSchema = object({
+  type: literal("multiselect"),
+  source: literal("fixed"),
+  multi_select_options: array2(string()),
+  allowUnknownValues: optional(boolean(), false)
+});
+var MultiSelectQuerySchema = object({
+  type: literal("multiselect"),
+  source: literal("dataview"),
+  query: nonEmptyString("dataview query"),
+  allowUnknownValues: optional(boolean(), false)
+});
+function canAllowUnknownValues(type, source) {
+  return type === "multiselect" && (source === "dataview" || source === "fixed");
+}
+var MultiselectSchema = union4([
+  MultiSelectNotesSchema,
+  MultiSelectFixedSchema,
+  MultiSelectQuerySchema
+]);
+var DocumentBlock = object({
+  type: literal("document_block"),
+  body: string()
+});
+var InputTypeSchema = union4([
+  InputBasicSchema,
+  InputNoteFromFolderSchema,
+  InputFolderSchema,
+  InputSliderSchema,
+  InputTagSchema,
+  SelectFromNotesSchema,
+  InputDataviewSourceSchema,
+  InputSelectFixedSchema,
+  MultiselectSchema,
+  DocumentBlock
+]);
+var InputTypeToParserMap = {
+  number: parseC(InputBasicSchema),
+  text: parseC(InputBasicSchema),
+  email: parseC(InputBasicSchema),
+  tel: parseC(InputBasicSchema),
+  date: parseC(InputBasicSchema),
+  time: parseC(InputBasicSchema),
+  datetime: parseC(InputBasicSchema),
+  textarea: parseC(InputBasicSchema),
+  toggle: parseC(InputBasicSchema),
+  note: parseC(InputNoteFromFolderSchema),
+  folder: parseC(InputFolderSchema),
+  slider: parseC(InputSliderSchema),
+  tag: parseC(InputTagSchema),
+  select: trySchemas([SelectFromNotesSchema, InputSelectFixedSchema]),
+  dataview: parseC(InputDataviewSourceSchema),
+  multiselect: parseC(MultiselectSchema),
+  document_block: parseC(DocumentBlock)
+};
+
+// src/core/findInputDefinitionSchema.ts
+function stringifyIssues(error2) {
+  return error2.issues.map(
+    (issue) => {
+      var _a;
+      return `${(_a = issue.path) == null ? void 0 : _a.map((i) => i.key).join(".")}: ${issue.message} got ${issue.input}`;
+    }
+  );
+}
+var InvalidInputTypeError = class {
+  constructor(field, inputType2) {
+    this.field = field;
+    this.inputType = inputType2;
+    this.path = "input.type";
+  }
+  toString() {
+    return `InvalidInputTypeError: ${this.getFieldErrors()[0]}`;
+  }
+  getFieldErrors() {
+    return [`"input.type" is invalid, got: ${JSON.stringify(this.inputType)}`];
+  }
+};
+InvalidInputTypeError._tag = "InvalidInputTypeError";
+var InvalidInputError = class {
+  constructor(field, error2) {
+    this.field = field;
+    this.error = error2;
+    var _a, _b;
+    this.path = (_b = (_a = error2.issues[0].path) == null ? void 0 : _a.map((i) => i.key).join(".")) != null ? _b : "";
+  }
+  toString() {
+    return `InvalidInputError: ${stringifyIssues(this.error).join(", ")}`;
+  }
+  getFieldErrors() {
+    return stringifyIssues(this.error);
+  }
+};
+InvalidInputError._tag = "InvalidInputError";
+var _InvalidFieldError = class {
+  constructor(field, error2) {
+    this.field = field;
+    this.error = error2;
+    var _a, _b;
+    this.path = (_b = (_a = error2.issues[0].path) == null ? void 0 : _a.map((i) => i.key).join(".")) != null ? _b : "";
+  }
+  toString() {
+    return `InvalidFieldError: ${stringifyIssues(this.error).join(", ")}`;
+  }
+  toArrayOfStrings() {
+    return this.getFieldErrors();
+  }
+  getFieldErrors() {
+    return stringifyIssues(this.error);
+  }
+  static of(field) {
+    return (error2) => new _InvalidFieldError(field, error2);
+  }
+};
+var InvalidFieldError = _InvalidFieldError;
+InvalidFieldError._tag = "InvalidFieldError";
+function isValidInputType(input) {
+  return "string" === typeof input && input in InputTypeToParserMap;
+}
+function findInputDefinitionSchema(fieldDefinition) {
+  return pipe2(
+    parse2(FieldMinimalSchema, fieldDefinition),
+    mapLeft(InvalidFieldError.of(fieldDefinition)),
+    chainW((field) => {
+      const type = field.input.type;
+      if (isValidInputType(type))
+        return right3([field, InputTypeToParserMap[type]]);
+      else
+        return left3(new InvalidInputTypeError(field, type));
+    })
+  );
+}
+function findFieldErrors(fields) {
+  return pipe2(
+    fields,
+    Array_exports.partitionMap((fieldUnparsed) => {
+      return pipe2(
+        findInputDefinitionSchema(fieldUnparsed),
+        chainW(
+          ([field, parser]) => pipe2(
+            parser(field.input),
+            bimap(
+              (error2) => new InvalidInputError(field, error2),
+              () => field
+            )
+          )
+        )
+      );
+    })
+    // Separated.left,
+  );
+}
+
+// src/core/template/templateSchema.ts
+var TemplateTextSchema = object({
+  _tag: literal("text"),
+  value: string()
+});
+var TemplateVariableSchema = object({
+  _tag: literal("variable"),
+  value: string()
+});
+var FrontmatterCommandSchema = object({
+  _tag: literal("frontmatter-command"),
+  pick: array2(string()),
+  omit: array2(string())
+});
+var ParsedTemplateSchema = array2(union4([TemplateTextSchema, TemplateVariableSchema, FrontmatterCommandSchema]));
+
+// src/core/formDefinitionSchema.ts
+var FieldDefinitionSchema = object({
+  name: nonEmptyString("field name"),
+  label: optional(string()),
+  description: string(),
+  isRequired: optional(boolean()),
+  input: InputTypeSchema
+});
+var FieldMinimalSchema = passthrough(
+  merge([FieldDefinitionSchema, object({ input: passthrough(object({ type: string() })) })])
+);
+var FieldListSchema = array2(FieldDefinitionSchema);
+var FormDefinitionBasicSchema = object({
+  title: nonEmptyString("form title"),
+  name: nonEmptyString("form name"),
+  customClassname: optional(string()),
+  fields: array2(unknown())
+});
+var FormDefinitionV1Schema = merge([
+  FormDefinitionBasicSchema,
+  object({
+    version: literal("1"),
+    fields: FieldListSchema,
+    template: optional(
+      object({
+        createCommand: boolean(),
+        parsedTemplate: ParsedTemplateSchema
+      })
+    )
+  })
+]);
+var FormDefinitionLatestSchema = FormDefinitionV1Schema;
+var MigrationError = class {
+  constructor(form, error2) {
+    this.form = form;
+    this.error = error2;
+    this.name = form.name;
+  }
+  toString() {
+    return `MigrationError: 
+            ${this.error.message}
+            ${this.error.issues.map((issue) => issue.message).join(", ")}`;
+  }
+  toArrayOfStrings() {
+    return stringifyIssues(this.error);
+  }
+  // This allows to store the error in the settings, along with the rest of the forms and
+  // have save all the data in one go transparently.
+  // This is required so we don't lose the form, even if it is invalid
+  toJSON() {
+    return this.form;
+  }
+  get fieldErrors() {
+    return findFieldErrors(this.form.fields);
+  }
+};
+MigrationError._tag = "MigrationError";
+var InvalidData = class {
+  constructor(data, error2) {
+    this.data = data;
+    this.error = error2;
+  }
+  toString() {
+    return `InvalidData: ${stringifyIssues(this.error).join(", ")}`;
+  }
+  toArrayOfStrings() {
+    return stringifyIssues(this.error);
+  }
+};
+InvalidData._tag = "InvalidData";
+function fromV0toV1(data) {
+  return pipe2(
+    parse2(FormDefinitionV1Schema, { ...data, version: "1" }),
+    getOrElseW((error2) => new MigrationError(data, error2))
+  );
+}
+function migrateToLatest(data) {
+  return pipe2(
+    // first try a quick one with the latest schema
+    parse2(FormDefinitionLatestSchema, data, { abortEarly: true }),
+    orElse(
+      () => pipe2(
+        parse2(FormDefinitionBasicSchema, data, { abortEarly: false }),
+        mapLeft((error2) => new InvalidData(data, error2)),
+        map3(fromV0toV1)
+      )
+    )
+  );
+}
+function formNeedsMigration(data) {
+  return !is(FormDefinitionLatestSchema, data);
+}
+
+// src/exampleModalDefinition.ts
+var exampleModalDefinition = {
+  title: "Example form",
+  name: "example-form",
+  version: "1",
+  fields: [
+    {
+      name: "name",
+      label: "Name",
+      description: "It is named how?",
+      isRequired: true,
+      input: { type: "text" }
+    },
+    {
+      name: "age",
+      label: "Age",
+      description: "How old",
+      isRequired: true,
+      input: { type: "number" }
+    },
+    {
+      name: "dateOfBirth",
+      label: "Date of Birth",
+      description: "When were you born?",
+      input: { type: "date" }
+    },
+    {
+      name: "timeOfDay",
+      label: "Time of day",
+      description: "The time you can do this",
+      input: { type: "time" }
+    },
+    {
+      name: "is_family",
+      label: "Is family",
+      description: "If it is part of the family",
+      input: { type: "toggle" }
+    },
+    {
+      name: "favorite_book",
+      label: "Favorite book",
+      description: "Pick one",
+      input: { type: "note", folder: "Books" }
+    },
+    {
+      name: "folder",
+      label: "The destination folder",
+      description: "It offers auto-completion to existing folders",
+      input: { type: "folder" }
+    },
+    {
+      name: "multi_example",
+      label: "Multi select folder",
+      description: "Allows to pick many notes from a folder",
+      input: { type: "multiselect", source: "notes", folder: "Books" }
+    },
+    {
+      name: "multi_example_2",
+      label: "Multi select fixed",
+      description: "Allows to pick many notes from a fixed list",
+      input: {
+        type: "multiselect",
+        source: "fixed",
+        allowUnknownValues: false,
+        multi_select_options: [
+          "Android",
+          "iOS",
+          "Windows",
+          "MacOS",
+          "Linux",
+          "Solaris",
+          "MS2"
+        ]
+      }
+    },
+    {
+      name: "multi_select_dataview",
+      label: "Multi select dataview",
+      description: "Allows to pick several values from a dv query",
+      input: {
+        type: "multiselect",
+        source: "dataview",
+        query: 'dv.pages("#person").map(p => p.file.name)',
+        allowUnknownValues: true
+      }
+    },
+    {
+      name: "best_fried",
+      label: "Best friend",
+      description: "Select of type note from a folder",
+      input: {
+        type: "select",
+        source: "notes",
+        folder: "People"
+      }
+    },
+    {
+      name: "dataview_example",
+      label: "Dataview example",
+      description: "Only people matching the dataview query will be shown",
+      input: {
+        type: "dataview",
+        query: 'dv.pages("#person").filter(p => p.age < 30).map(p => p.file.name)'
+      }
+    },
+    {
+      name: "friendship_level",
+      label: "Friendship level",
+      description: "How good friends are you?",
+      input: {
+        type: "slider",
+        min: 0,
+        max: 10
+      }
+    },
+    {
+      name: "favorite_meal",
+      label: "Favorite meal",
+      description: "Pick one option",
+      input: {
+        type: "select",
+        source: "fixed",
+        options: [
+          { value: "pizza", label: "\u{1F355} Pizza" },
+          { value: "pasta", label: "\u{1F35D} Pasta" },
+          { value: "burger", label: "\u{1F354} Burger" },
+          { value: "salad", label: "\u{1F957} Salad" },
+          { value: "steak", label: "\u{1F969} Steak" },
+          { value: "sushi", label: "\u{1F363} Sushi" },
+          { value: "ramen", label: "\u{1F35C} Ramen" },
+          { value: "tacos", label: "\u{1F32E} Tacos" },
+          { value: "fish", label: "\u{1F41F} Fish" },
+          { value: "chicken", label: "\u{1F357} Chicken" }
+        ]
+      }
+    },
+    {
+      name: "some notes",
+      label: "Multi line notes",
+      description: "Put your thouhts here",
+      input: {
+        type: "textarea"
+      }
+    },
+    {
+      name: "Tags",
+      description: "Tags input example",
+      input: { type: "tag" }
+    },
+    {
+      name: "document",
+      description: "Document block example",
+      input: {
+        type: "document_block",
+        body: "return `Hello ${form.name}!<br> Your best friend is <b>${form.best_fried}</b>`"
+      }
+    }
+  ]
+};
+
 // src/API.ts
 function isPickOption(opts) {
   return "pick" in opts && Array.isArray(opts.pick);
@@ -6642,7 +8190,7 @@ var API = class {
         (name) => resolve_tfile(name, this.app),
         E.map((f) => this.app.metadataCache.getCache(f.path)),
         E.chainW(E.fromNullable(new Error("No cache found"))),
-        E.map((tf) => (0, import_obsidian10.parseFrontMatterAliases)(tf.frontmatter)),
+        E.map((tf) => (0, import_obsidian9.parseFrontMatterAliases)(tf.frontmatter)),
         E.match(
           () => [],
           (aliases) => aliases
@@ -6700,7 +8248,7 @@ var API = class {
   /**
    * Opens a named form, limiting/filtering the fields included
    * @param {string} name - The name of the form to open
-   * @param {limitOptions} limitOpts - The options to apply when filtering fields 
+   * @param {limitOptions} limitOpts - The options to apply when filtering fields
    * @param {FormOptions} formOpts - Form options to use when opening the form once filtered
    * @returns {Promise<FormResult>} - A promise that resolves with the form result
    * @throws {ModalFormError} - Throws an error if the form definition is not found
@@ -6718,7 +8266,9 @@ var API = class {
       } else if (isPickOption(limitOpts)) {
         newFormDefinition = {
           ...formDefinition,
-          fields: formDefinition.fields.filter((field) => limitOpts.pick.includes(field.name))
+          fields: formDefinition.fields.filter(
+            (field) => limitOpts.pick.includes(field.name)
+          )
         };
       } else {
         throw new ModalFormError(
@@ -6746,6 +8296,77 @@ var API = class {
       return this.openModalForm(formReference, options);
     }
   }
+  openInTemplateBuilder(name) {
+    const form = this.getFormByName(name);
+    if (form) {
+      this.plugin.openTemplateBuilder({ formDefinition: form });
+    }
+  }
+};
+
+// src/ModalFormSettingTab.ts
+var import_obsidian10 = require("obsidian");
+
+// src/core/settings.ts
+var OpenPositionSchema = enumType(["left", "right", "mainView"]);
+function isValidOpenPosition(position) {
+  return is(OpenPositionSchema, position);
+}
+var ModalFormSettingsSchema = object({
+  editorPosition: optional(OpenPositionSchema, "right"),
+  attachShortcutToGlobalWindow: optional(boolean(), false),
+  globalNamespace: optional(enumType(["MF", "ModalForm"]), "MF"),
+  formDefinitions: array2(unknown())
+});
+function getDefaultSettings() {
+  return {
+    editorPosition: "right",
+    attachShortcutToGlobalWindow: false,
+    globalNamespace: "MF",
+    formDefinitions: []
+  };
+}
+var NullSettingsError = class {
+  constructor() {
+    this._tag = "NullSettingsError";
+  }
+};
+function parseSettings(maybeSettings) {
+  return pipe2(
+    maybeSettings,
+    fromNullable(new NullSettingsError()),
+    chainW((s) => parse2(ModalFormSettingsSchema, { ...getDefaultSettings(), ...s }))
+  );
+}
+
+// src/ModalFormSettingTab.ts
+var ModalFormSettingTab = class extends import_obsidian10.PluginSettingTab {
+  constructor(app2, plugin) {
+    super(app2, plugin);
+    this.plugin = plugin;
+  }
+  async display() {
+    const { containerEl, plugin } = this;
+    containerEl.empty();
+    containerEl.createEl("a", { text: "Modal Form documentation", cls: "nav-link", href: "https://github.com/danielo515/obsidian-modal-form" });
+    const settings2 = await plugin.getSettings();
+    new import_obsidian10.Setting(containerEl).setName("Editor position").setDesc("Where the form editor will be opened. In mobile it will always be main view.").addDropdown((component) => {
+      component.addOptions({
+        left: "Left",
+        right: "Right",
+        mainView: "Main View"
+      }).setValue(settings2.editorPosition).onChange(async (value) => {
+        if (isValidOpenPosition(value)) {
+          await this.plugin.setEditorPosition(value);
+        }
+      });
+    });
+    new import_obsidian10.Setting(containerEl).setName("Attach Modal-Form Shortcut to Global Window").setDesc("Enable or disable attaching a modal-form shortcut to the global window. If you enable this you will be able to access the API using the global variable `MF`. Enabling is immediate, disabling requires a restart.").addToggle((component) => {
+      component.setValue(settings2.attachShortcutToGlobalWindow).onChange(async (value) => {
+        await this.plugin.setAttachShortcutToGlobalWindow(value);
+      });
+    });
+  }
 };
 
 // src/views/EditFormView.ts
@@ -6772,12 +8393,12 @@ var InputTypeReadable = {
   document_block: "Document block"
 };
 function validateFields(fields) {
-  const result = safeParse(FieldListSchema, fields);
-  if (result.success) {
+  const result2 = safeParse(FieldListSchema, fields);
+  if (result2.success) {
     return [];
   }
-  console.error("Fields issues", result.issues);
-  return result.issues.map((issue) => {
+  console.error("Fields issues", result2.issues);
+  return result2.issues.map((issue) => {
     var _a, _b, _c, _d;
     return {
       message: issue.message,
@@ -6799,7 +8420,7 @@ function isValidFormDefinition(input) {
 function duplicateForm(formName, forms) {
   return pipe2(
     forms,
-    A.findFirstMap((f) => {
+    Array_exports.findFirstMap((f) => {
       if (f instanceof MigrationError) {
         return O.none;
       }
@@ -6940,14 +8561,14 @@ function instance2($$self, $$props, $$invalidate) {
 var Code = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(this, options, instance2, create_fragment2, safe_not_equal, { allowWrap: 0 }, add_css2);
+    init4(this, options, instance2, create_fragment2, safe_not_equal, { allowWrap: 0 }, add_css2);
   }
 };
 var Code_default = Code;
 
 // src/views/components/FormRow.svelte
 function add_css3(target) {
-  append_styles(target, "svelte-1xgum2", ".field-goup.svelte-1xgum2{display:flex;flex-direction:column;gap:0.5rem}.hidden-label.svelte-1xgum2{white-space:nowrap;overflow:hidden;visibility:hidden}");
+  append_styles(target, "svelte-1whkjqf", ".field-group.svelte-1whkjqf{display:flex;flex-direction:column;gap:0.5rem}.inline.svelte-1whkjqf{flex-direction:row;align-items:center;gap:1rem}.hidden-label.svelte-1whkjqf{white-space:nowrap;overflow:hidden;visibility:hidden}");
 }
 function create_fragment3(ctx) {
   let div;
@@ -6957,13 +8578,13 @@ function create_fragment3(ctx) {
   let current;
   const default_slot_template = (
     /*#slots*/
-    ctx[4].default
+    ctx[5].default
   );
   const default_slot = create_slot(
     default_slot_template,
     ctx,
     /*$$scope*/
-    ctx[3],
+    ctx[4],
     null
   );
   return {
@@ -6983,14 +8604,20 @@ function create_fragment3(ctx) {
         /*id*/
         ctx[1]
       );
-      attr(label_1, "class", "svelte-1xgum2");
+      attr(label_1, "class", "svelte-1whkjqf");
       toggle_class(
         label_1,
         "hidden-label",
         /*hideLabel*/
         ctx[2]
       );
-      attr(div, "class", "field-goup svelte-1xgum2");
+      attr(div, "class", "field-group svelte-1whkjqf");
+      toggle_class(
+        div,
+        "inline",
+        /*inline*/
+        ctx[3]
+      );
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -7030,26 +8657,35 @@ function create_fragment3(ctx) {
       }
       if (default_slot) {
         if (default_slot.p && (!current || dirty & /*$$scope*/
-        8)) {
+        16)) {
           update_slot_base(
             default_slot,
             default_slot_template,
             ctx2,
             /*$$scope*/
-            ctx2[3],
+            ctx2[4],
             !current ? get_all_dirty_from_scope(
               /*$$scope*/
-              ctx2[3]
+              ctx2[4]
             ) : get_slot_changes(
               default_slot_template,
               /*$$scope*/
-              ctx2[3],
+              ctx2[4],
               dirty,
               null
             ),
             null
           );
         }
+      }
+      if (!current || dirty & /*inline*/
+      8) {
+        toggle_class(
+          div,
+          "inline",
+          /*inline*/
+          ctx2[3]
+        );
       }
     },
     i(local) {
@@ -7076,6 +8712,7 @@ function instance3($$self, $$props, $$invalidate) {
   let { label } = $$props;
   let { id } = $$props;
   let { hideLabel = false } = $$props;
+  let { inline = false } = $$props;
   $$self.$$set = ($$props2) => {
     if ("label" in $$props2)
       $$invalidate(0, label = $$props2.label);
@@ -7083,15 +8720,17 @@ function instance3($$self, $$props, $$invalidate) {
       $$invalidate(1, id = $$props2.id);
     if ("hideLabel" in $$props2)
       $$invalidate(2, hideLabel = $$props2.hideLabel);
+    if ("inline" in $$props2)
+      $$invalidate(3, inline = $$props2.inline);
     if ("$$scope" in $$props2)
-      $$invalidate(3, $$scope = $$props2.$$scope);
+      $$invalidate(4, $$scope = $$props2.$$scope);
   };
-  return [label, id, hideLabel, $$scope, slots];
+  return [label, id, hideLabel, inline, $$scope, slots];
 }
 var FormRow = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(this, options, instance3, create_fragment3, safe_not_equal, { label: 0, id: 1, hideLabel: 2 }, add_css3);
+    init4(this, options, instance3, create_fragment3, safe_not_equal, { label: 0, id: 1, hideLabel: 2, inline: 3 }, add_css3);
   }
 };
 var FormRow_default = FormRow;
@@ -7300,7 +8939,7 @@ function create_default_slot(ctx) {
       if (if_block)
         if_block.c();
       t12 = space();
-      await_block_anchor = empty3();
+      await_block_anchor = empty4();
       info.block.c();
       attr(span, "class", "modal-form-hint");
       attr(
@@ -7511,7 +9150,7 @@ function instance4($$self, $$props, $$invalidate) {
 var InputBuilderDataview = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(this, options, instance4, create_fragment4, safe_not_equal, { index: 4, value: 0, app: 5 }, add_css4);
+    init4(this, options, instance4, create_fragment4, safe_not_equal, { index: 4, value: 0, app: 5 }, add_css4);
   }
 };
 var inputBuilderDataview_default = InputBuilderDataview;
@@ -7609,7 +9248,7 @@ function instance5($$self, $$props, $$invalidate) {
 var InputFolder = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(this, options, instance5, create_fragment5, safe_not_equal, { index: 3, folder: 2, notifyChange: 4 });
+    init4(this, options, instance5, create_fragment5, safe_not_equal, { index: 3, folder: 2, notifyChange: 4 });
   }
 };
 var InputFolder_default = InputFolder;
@@ -7741,7 +9380,7 @@ function create_default_slot_7(ctx) {
       t2 = space();
       if (if_block1)
         if_block1.c();
-      if_block1_anchor = empty3();
+      if_block1_anchor = empty4();
       option0.__value = "fixed";
       set_input_value(option0, option0.__value);
       option1.__value = "notes";
@@ -7875,7 +9514,7 @@ function create_if_block_3(ctx) {
     ctx[1];
   }
   inputbuilderdataview = new inputBuilderDataview_default({ props: inputbuilderdataview_props });
-  binding_callbacks.push(() => bind2(inputbuilderdataview, "value", inputbuilderdataview_value_binding));
+  binding_callbacks.push(() => bind3(inputbuilderdataview, "value", inputbuilderdataview_value_binding));
   return {
     c() {
       create_component(inputbuilderdataview.$$.fragment);
@@ -7943,7 +9582,7 @@ function create_if_block_2(ctx) {
     ctx[2];
   }
   inputfolder = new InputFolder_default({ props: inputfolder_props });
-  binding_callbacks.push(() => bind2(inputfolder, "folder", inputfolder_folder_binding));
+  binding_callbacks.push(() => bind3(inputfolder, "folder", inputfolder_folder_binding));
   return {
     c() {
       create_component(inputfolder.$$.fragment);
@@ -8676,7 +10315,7 @@ function create_default_slot2(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      each_1_anchor = empty3();
+      each_1_anchor = empty4();
       attr(button, "type", "button");
       attr(button, "class", "svelte-15a6dqv");
     },
@@ -8801,7 +10440,7 @@ function create_fragment6(ctx) {
       t = space();
       if (if_block)
         if_block.c();
-      if_block_anchor = empty3();
+      if_block_anchor = empty4();
     },
     m(target, anchor) {
       mount_component(formrow, target, anchor);
@@ -9012,7 +10651,7 @@ function instance6($$self, $$props, $$invalidate) {
 var InputBuilderSelect = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(
+    init4(
       this,
       options,
       instance6,
@@ -9053,6 +10692,7 @@ function create_fragment7(ctx) {
         ctx[1]
       );
       attr(div, "class", "checkbox-container");
+      attr(div, "role", "checkbox");
       toggle_class(
         div,
         "is-enabled",
@@ -9071,13 +10711,13 @@ function create_fragment7(ctx) {
             input,
             "change",
             /*input_change_handler*/
-            ctx[2]
+            ctx[3]
           ),
           listen(
             div,
             "click",
-            /*click_handler*/
-            ctx[3]
+            /*handleChange*/
+            ctx[2]
           )
         ];
         mounted = true;
@@ -9122,23 +10762,25 @@ function create_fragment7(ctx) {
 function instance7($$self, $$props, $$invalidate) {
   let { checked = false } = $$props;
   let { tabindex = 0 } = $$props;
+  function handleChange() {
+    $$invalidate(0, checked = !checked);
+  }
   function input_change_handler() {
     checked = this.checked;
     $$invalidate(0, checked);
   }
-  const click_handler = () => $$invalidate(0, checked = !checked);
   $$self.$$set = ($$props2) => {
     if ("checked" in $$props2)
       $$invalidate(0, checked = $$props2.checked);
     if ("tabindex" in $$props2)
       $$invalidate(1, tabindex = $$props2.tabindex);
   };
-  return [checked, tabindex, input_change_handler, click_handler];
+  return [checked, tabindex, handleChange, input_change_handler];
 }
 var Toggle = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(this, options, instance7, create_fragment7, safe_not_equal, { checked: 0, tabindex: 1 });
+    init4(this, options, instance7, create_fragment7, safe_not_equal, { checked: 0, tabindex: 1 });
   }
 };
 var Toggle_default = Toggle;
@@ -9179,10 +10821,10 @@ var error = function(input, expected2, fatal) {
 var withExpected = function(err, expected2) {
   return __assign(__assign({}, err), { expected: expected2 });
 };
-var extend = function(err1, err2) {
-  return getSemigroup3().concat(err1, err2);
+var extend2 = function(err1, err2) {
+  return getSemigroup4().concat(err1, err2);
 };
-var getSemigroup3 = function() {
+var getSemigroup4 = function() {
   return {
     concat: function(x, y) {
       if (x.input.cursor < y.input.cursor)
@@ -9192,7 +10834,7 @@ var getSemigroup3 = function() {
       return struct({
         input: first(),
         fatal: first(),
-        expected: getMonoid()
+        expected: getMonoid2()
       }).concat(x, y);
     }
   };
@@ -9249,9 +10891,9 @@ var failAt = function(i) {
   };
 };
 var sat = function(predicate) {
-  return pipe(withStart(item()), chain3(function(_a) {
+  return pipe(withStart(item()), chain4(function(_a) {
     var a = _a[0], start = _a[1];
-    return predicate(a) ? of5(a) : failAt(start);
+    return predicate(a) ? of6(a) : failAt(start);
   }));
 };
 var expected = function(p, message) {
@@ -9273,8 +10915,8 @@ var item = function() {
 };
 var seq = function(fa, f) {
   return function(i) {
-    return pipe(fa(i), chain(function(s) {
-      return pipe(f(s.value)(s.next), chain(function(next) {
+    return pipe(fa(i), chain2(function(s) {
+      return pipe(f(s.value)(s.next), chain2(function(next) {
         return success(next.value, next.next, i);
       }));
     }));
@@ -9290,20 +10932,20 @@ var either = function(p, f) {
       return e;
     }
     return pipe(f()(i), mapLeft(function(err) {
-      return extend(e.left, err);
+      return extend2(e.left, err);
     }));
   };
 };
 var withStart = function(p) {
   return function(i) {
-    return pipe(p(i), map2(function(s) {
+    return pipe(p(i), map3(function(s) {
       return __assign2(__assign2({}, s), { value: [s.value, i] });
     }));
   };
 };
 var maybe = function(M) {
-  return alt3(function() {
-    return of5(M.empty);
+  return alt4(function() {
+    return of6(M.empty);
   });
 };
 var eof = function() {
@@ -9312,39 +10954,39 @@ var eof = function() {
   }, "end of file");
 };
 var many = function(p) {
-  return pipe(many1(p), alt3(function() {
-    return of5([]);
+  return pipe(many1(p), alt4(function() {
+    return of6([]);
   }));
 };
 var many1 = function(parser) {
-  return pipe(parser, chain3(function(head5) {
-    return chainRec_(of3(head5), function(acc) {
+  return pipe(parser, chain4(function(head6) {
+    return chainRec_(of2(head6), function(acc) {
       return pipe(parser, map9(function(a) {
         return left3(append4(a)(acc));
-      }), alt3(function() {
-        return of5(right3(acc));
+      }), alt4(function() {
+        return of6(right3(acc));
       }));
     });
   }));
 };
 var sepBy = function(sep, p) {
-  var nil = of5([]);
-  return pipe(sepBy1(sep, p), alt3(function() {
+  var nil = of6([]);
+  return pipe(sepBy1(sep, p), alt4(function() {
     return nil;
   }));
 };
 var sepBy1 = function(sep, p) {
-  return pipe(p, chain3(function(head5) {
-    return pipe(many(pipe(sep, apSecond(p))), map9(function(tail4) {
-      return prepend3(head5)(tail4);
+  return pipe(p, chain4(function(head6) {
+    return pipe(many(pipe(sep, apSecond3(p))), map9(function(tail5) {
+      return prepend3(head6)(tail5);
     }));
   }));
 };
 var between = function(left6, right6) {
   return function(p) {
-    return pipe(left6, chain3(function() {
+    return pipe(left6, chain4(function() {
       return p;
-    }), chainFirst(function() {
+    }), chainFirst3(function() {
       return right6;
     }));
   };
@@ -9354,22 +10996,22 @@ var surroundedBy = function(bound) {
 };
 var lookAhead = function(p) {
   return function(i) {
-    return pipe(p(i), chain(function(next) {
+    return pipe(p(i), chain2(function(next) {
       return success(next.value, i, i);
     }));
   };
 };
 var optional2 = function(parser) {
-  return pipe(parser, map9(some3), alt3(function() {
+  return pipe(parser, map9(some3), alt4(function() {
     return succeed(none2);
   }));
 };
 var many1Till = function(parser, terminator) {
-  return pipe(parser, chain3(function(x) {
-    return chainRec_(of2(x), function(acc) {
+  return pipe(parser, chain4(function(x) {
+    return chainRec_(of(x), function(acc) {
       return pipe(terminator, map9(function() {
         return right3(acc);
-      }), alt3(function() {
+      }), alt4(function() {
         return pipe(parser, map9(function(a) {
           return left3(append3(a)(acc));
         }));
@@ -9379,7 +11021,7 @@ var many1Till = function(parser, terminator) {
 };
 var map_ = function(ma, f) {
   return function(i) {
-    return pipe(ma(i), map2(function(s) {
+    return pipe(ma(i), map3(function(s) {
       return __assign2(__assign2({}, s), { value: f(s.value) });
     }));
   };
@@ -9394,17 +11036,17 @@ var chain_ = function(ma, f) {
 };
 var chainRec_ = function(a, f) {
   var split2 = function(start) {
-    return function(result) {
-      return isLeft2(result.value) ? left3({ value: result.value.left, stream: result.next }) : right3(success(result.value.right, result.next, start));
+    return function(result2) {
+      return isLeft2(result2.value) ? left3({ value: result2.value.left, stream: result2.next }) : right3(success(result2.value.right, result2.next, start));
     };
   };
   return function(start) {
     return tailRec({ value: a, stream: start }, function(state) {
-      var result = f(state.value)(state.stream);
-      if (isLeft2(result)) {
-        return right3(error(state.stream, result.left.expected, result.left.fatal));
+      var result2 = f(state.value)(state.stream);
+      if (isLeft2(result2)) {
+        return right3(error(state.stream, result2.left.expected, result2.left.fatal));
       }
-      return split2(start)(result.right);
+      return split2(start)(result2.right);
     });
   };
 };
@@ -9416,7 +11058,7 @@ var map9 = function(f) {
     return map_(fa, f);
   };
 };
-var apFirst = function(fb) {
+var apFirst3 = function(fb) {
   return function(fa) {
     return ap_(map_(fa, function(a) {
       return function() {
@@ -9425,7 +11067,7 @@ var apFirst = function(fb) {
     }), fb);
   };
 };
-var apSecond = function(fb) {
+var apSecond3 = function(fb) {
   return function(fa) {
     return ap_(map_(fa, function() {
       return function(b) {
@@ -9434,13 +11076,13 @@ var apSecond = function(fb) {
     }), fb);
   };
 };
-var of5 = succeed;
-var chain3 = function(f) {
+var of6 = succeed;
+var chain4 = function(f) {
   return function(ma) {
     return chain_(ma, f);
   };
 };
-var chainFirst = function(f) {
+var chainFirst3 = function(f) {
   return function(ma) {
     return chain_(ma, function(a) {
       return map_(f(a), function() {
@@ -9449,13 +11091,13 @@ var chainFirst = function(f) {
     });
   };
 };
-var alt3 = function(that) {
+var alt4 = function(that) {
   return function(fa) {
     return alt_(fa, that);
   };
 };
 var URI6 = "Parser";
-var getSemigroup4 = function(S) {
+var getSemigroup5 = function(S) {
   return {
     concat: function(x, y) {
       return ap_(map_(x, function(x2) {
@@ -9466,8 +11108,8 @@ var getSemigroup4 = function(S) {
     }
   };
 };
-var getMonoid3 = function(M) {
-  return __assign2(__assign2({}, getSemigroup4(M)), { empty: succeed(M.empty) });
+var getMonoid4 = function(M) {
+  return __assign2(__assign2({}, getSemigroup5(M)), { empty: succeed(M.empty) });
 };
 var ChainRec = {
   URI: URI6,
@@ -9537,7 +11179,7 @@ var notUpper = expected(sat(not(isUpper)), "anything but an upper case letter");
 var notLower = expected(sat(not(isLower)), "anything but a lower case letter");
 
 // node_modules/fp-ts/es6/Monoid.js
-var concatAll4 = function(M) {
+var concatAll5 = function(M) {
   return concatAll2(M)(M.empty);
 };
 var monoidVoid = {
@@ -9569,15 +11211,15 @@ var monoidProduct = {
 var string2 = function(s) {
   return expected(ChainRec.chainRec(s, function(acc) {
     return pipe(charAt(0, acc), fold2(function() {
-      return of5(right3(s));
+      return of6(right3(s));
     }, function(c) {
-      return pipe(char(c), chain3(function() {
-        return of5(left3(acc.slice(1)));
+      return pipe(char(c), chain4(function() {
+        return of6(left3(acc.slice(1)));
       }));
     }));
   }), JSON.stringify(s));
 };
-var fold3 = concatAll4(getMonoid3(Monoid));
+var fold3 = concatAll5(getMonoid4(Monoid));
 var maybe3 = maybe(Monoid);
 var many3 = function(parser) {
   return maybe3(many13(parser));
@@ -9601,7 +11243,7 @@ var fromString = function(s) {
 var int = expected(pipe(fold3([maybe3(char("-")), many12(digit)]), map9(function(s) {
   return +s;
 })), "an integer");
-var float = expected(pipe(fold3([maybe3(char("-")), many2(digit), maybe3(fold3([char("."), many12(digit)]))]), chain3(function(s) {
+var float = expected(pipe(fold3([maybe3(char("-")), many2(digit), maybe3(fold3([char("."), many12(digit)]))]), chain4(function(s) {
   return pipe(fromString(s), fold2(function() {
     return fail();
   }, succeed));
@@ -9644,11 +11286,11 @@ var sepByComma = sepBy(fold3([char(","), spaces]), identifier);
 var commandOptionParser = (option) => pipe2(
   fold3([string2(option), spaces]),
   // dam prettier
-  apSecond(sepByComma)
+  apSecond3(sepByComma)
 );
 var frontmatterCommandParser = pipe2(
   fold3([string2("frontmatter"), spaces]),
-  apSecond(optional2(commandOptionParser("pick:")))
+  apSecond3(optional2(commandOptionParser("pick:")))
   //P.apFirst(S.spaces),
   // P.chain(commandOptionParser("pick:")),
 );
@@ -9665,8 +11307,8 @@ var commandParser = pipe2(
 );
 var OpenOrEof = pipe2(
   open,
-  alt3(() => commandOpen),
-  alt3(() => EofStr)
+  alt4(() => commandOpen),
+  alt4(() => EofStr)
 );
 var anythingUntilOpenOrEOF = many1Till(item(), lookAhead(OpenOrEof));
 var text2 = pipe2(
@@ -9675,13 +11317,13 @@ var text2 = pipe2(
 );
 var TextOrVariable = pipe2(
   templateIdentifier,
-  alt3(() => commandParser),
-  alt3(() => text2)
+  alt4(() => commandParser),
+  alt4(() => text2)
 );
 var Template = pipe2(
   many(TextOrVariable),
   // dam prettier
-  apFirst(eof())
+  apFirst3(eof())
 );
 function parseTemplate(template) {
   return pipe2(
@@ -9689,7 +11331,7 @@ function parseTemplate(template) {
     run2(template),
     fold(
       ({ expected: expected2 }) => left3(`Expected ${expected2.join(" or ")}`),
-      (result) => right3(result.value)
+      (result2) => right3(result2.value)
     )
   );
 }
@@ -9749,7 +11391,7 @@ function parsedTemplateToString(parsedTemplate) {
   return pipe2(
     // prettier shut up
     parsedTemplate,
-    foldMap2(Monoid)(tokenToString)
+    foldMap3(Monoid)(tokenToString)
   );
 }
 function asFrontmatterString(data) {
@@ -9780,7 +11422,7 @@ function executeTemplate(parsedTemplate, formData) {
         )
       )
     ),
-    foldMap2(Monoid)(String)
+    foldMap3(Monoid)(String)
   );
 }
 
@@ -10034,7 +11676,7 @@ function create_fragment8(ctx) {
       t14 = space();
       if (if_block)
         if_block.c();
-      if_block_anchor = empty3();
+      if_block_anchor = empty4();
       attr(button, "class", "btn btn-primary");
       button.disabled = button_disabled_value = !!/*templateErrorMessage*/
       ctx[3];
@@ -10269,7 +11911,7 @@ function instance8($$self, $$props, $$invalidate) {
 var TemplateEditor = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(
+    init4(
       this,
       options,
       instance8,
@@ -10452,7 +12094,7 @@ function instance9($$self, $$props, $$invalidate) {
 var Tabs = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(this, options, instance9, create_fragment9, safe_not_equal, { activeTab: 0, tabs: 1 }, add_css7);
+    init4(this, options, instance9, create_fragment9, safe_not_equal, { activeTab: 0, tabs: 1 }, add_css7);
   }
 };
 var Tabs_default = Tabs;
@@ -10679,7 +12321,7 @@ function instance10($$self, $$props, $$invalidate) {
 var InputBuilderDocumentBlock = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(this, options, instance10, create_fragment10, safe_not_equal, { body: 0, index: 3 });
+    init4(this, options, instance10, create_fragment10, safe_not_equal, { body: 0, index: 3 });
   }
 };
 var InputBuilderDocumentBlock_default = InputBuilderDocumentBlock;
@@ -11351,7 +12993,7 @@ function create_if_block_12(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      each_1_anchor = empty3();
+      each_1_anchor = empty4();
     },
     m(target, anchor) {
       for (let i = 0; i < each_blocks.length; i += 1) {
@@ -11479,7 +13121,7 @@ function create_default_slot5(ctx) {
     ctx[45].isRequired;
   }
   toggle = new Toggle_default({ props: toggle_props });
-  binding_callbacks.push(() => bind2(toggle, "checked", toggle_checked_binding));
+  binding_callbacks.push(() => bind3(toggle, "checked", toggle_checked_binding));
   return {
     c() {
       create_component(toggle.$$.fragment);
@@ -11566,7 +13208,7 @@ function create_if_block_7(ctx) {
     ctx[45].input.body;
   }
   inputbuilderdocumentblock = new InputBuilderDocumentBlock_default({ props: inputbuilderdocumentblock_props });
-  binding_callbacks.push(() => bind2(inputbuilderdocumentblock, "body", inputbuilderdocumentblock_body_binding));
+  binding_callbacks.push(() => bind3(inputbuilderdocumentblock, "body", inputbuilderdocumentblock_body_binding));
   return {
     c() {
       create_component(inputbuilderdocumentblock.$$.fragment);
@@ -11631,7 +13273,7 @@ function create_if_block_6(ctx) {
     ctx[45].input.query;
   }
   inputbuilderdataview = new inputBuilderDataview_default({ props: inputbuilderdataview_props });
-  binding_callbacks.push(() => bind2(inputbuilderdataview, "value", inputbuilderdataview_value_binding));
+  binding_callbacks.push(() => bind3(inputbuilderdataview, "value", inputbuilderdataview_value_binding));
   return {
     c() {
       create_component(inputbuilderdataview.$$.fragment);
@@ -11700,7 +13342,7 @@ function create_if_block_52(ctx) {
     ctx[45].input.folder;
   }
   inputfolder = new InputFolder_default({ props: inputfolder_props });
-  binding_callbacks.push(() => bind2(inputfolder, "folder", inputfolder_folder_binding));
+  binding_callbacks.push(() => bind3(inputfolder, "folder", inputfolder_folder_binding));
   return {
     c() {
       create_component(inputfolder.$$.fragment);
@@ -11958,11 +13600,11 @@ function create_if_block_32(ctx) {
     ctx[45].input.allowUnknownValues;
   }
   inputbuilderselect = new InputBuilderSelect_default({ props: inputbuilderselect_props });
-  binding_callbacks.push(() => bind2(inputbuilderselect, "source", inputbuilderselect_source_binding_1));
-  binding_callbacks.push(() => bind2(inputbuilderselect, "options", inputbuilderselect_options_binding_1));
-  binding_callbacks.push(() => bind2(inputbuilderselect, "folder", inputbuilderselect_folder_binding_1));
-  binding_callbacks.push(() => bind2(inputbuilderselect, "query", inputbuilderselect_query_binding));
-  binding_callbacks.push(() => bind2(inputbuilderselect, "allowUnknownValues", inputbuilderselect_allowUnknownValues_binding));
+  binding_callbacks.push(() => bind3(inputbuilderselect, "source", inputbuilderselect_source_binding_1));
+  binding_callbacks.push(() => bind3(inputbuilderselect, "options", inputbuilderselect_options_binding_1));
+  binding_callbacks.push(() => bind3(inputbuilderselect, "folder", inputbuilderselect_folder_binding_1));
+  binding_callbacks.push(() => bind3(inputbuilderselect, "query", inputbuilderselect_query_binding));
+  binding_callbacks.push(() => bind3(inputbuilderselect, "allowUnknownValues", inputbuilderselect_allowUnknownValues_binding));
   return {
     c() {
       create_component(inputbuilderselect.$$.fragment);
@@ -12099,9 +13741,9 @@ function create_if_block_22(ctx) {
     ctx[45].input.folder;
   }
   inputbuilderselect = new InputBuilderSelect_default({ props: inputbuilderselect_props });
-  binding_callbacks.push(() => bind2(inputbuilderselect, "source", inputbuilderselect_source_binding));
-  binding_callbacks.push(() => bind2(inputbuilderselect, "options", inputbuilderselect_options_binding));
-  binding_callbacks.push(() => bind2(inputbuilderselect, "folder", inputbuilderselect_folder_binding));
+  binding_callbacks.push(() => bind3(inputbuilderselect, "source", inputbuilderselect_source_binding));
+  binding_callbacks.push(() => bind3(inputbuilderselect, "options", inputbuilderselect_options_binding));
+  binding_callbacks.push(() => bind3(inputbuilderselect, "folder", inputbuilderselect_folder_binding));
   return {
     c() {
       create_component(inputbuilderselect.$$.fragment);
@@ -12738,7 +14380,7 @@ function create_fragment11(ctx) {
     ctx[4];
   }
   tabs = new Tabs_default({ props: tabs_props });
-  binding_callbacks.push(() => bind2(tabs, "activeTab", tabs_activeTab_binding));
+  binding_callbacks.push(() => bind3(tabs, "activeTab", tabs_activeTab_binding));
   const if_block_creators = [create_if_block5, create_else_block3];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
@@ -13077,7 +14719,7 @@ function instance11($$self, $$props, $$invalidate) {
     if ($$self.$$.dirty[0] & /*definition*/
     1) {
       $:
-        $$invalidate(6, fieldNames = pipe2(definition.fields, A.map((f) => f.name)));
+        $$invalidate(6, fieldNames = pipe2(definition.fields, Array_exports.map((f) => f.name)));
     }
   };
   $:
@@ -13132,7 +14774,7 @@ function instance11($$self, $$props, $$invalidate) {
 var FormBuilder = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(
+    init4(
       this,
       options,
       instance11,
@@ -13157,13 +14799,13 @@ var FormBuilder_default = FormBuilder;
 var settings = writable({ ...getDefaultSettings() });
 var formsStore = derived(settings, ($settings) => pipe2(
   $settings.formDefinitions,
-  A.filter((form) => !(form instanceof MigrationError))
+  Array_exports.filter((form) => !(form instanceof MigrationError))
 ));
 var { subscribe: subscribe2, update: update2, set } = settings;
 var invalidFormsStore = derived(settings, ($settings) => {
   return pipe2(
     $settings.formDefinitions,
-    A.filter((form) => form instanceof MigrationError)
+    Array_exports.filter((form) => form instanceof MigrationError)
   );
 });
 var settingsStore = {
@@ -13250,8 +14892,8 @@ var EditFormView = class extends import_obsidian15.ItemView {
           this.plugin.closeEditForm();
         },
         onPreview: async (formDefinition) => {
-          const result = await this.plugin.api.openForm(formDefinition);
-          const result_str = JSON.stringify(result, null, 2);
+          const result2 = await this.plugin.api.openForm(formDefinition);
+          const result_str = JSON.stringify(result2, null, 2);
           log_notice("Form result", result_str);
           console.log(result_str);
         }
@@ -13262,25 +14904,108 @@ var EditFormView = class extends import_obsidian15.ItemView {
     console.log("onClose of edit form called");
     this.formEditor.$destroy();
   }
-  async setState(state, result) {
+  async setState(state, result2) {
     console.log("setState of edit form called", state);
     if (parseState(state)) {
       this.formState = state;
       this.originalFormName = state.name;
       this.formEditor.$set({ definition: this.formState });
     }
-    return super.setState(state, result);
+    return super.setState(state, result2);
   }
   getState() {
     return this.formState;
   }
 };
 
+// src/views/ManageFormsView.ts
+var import_obsidian17 = require("obsidian");
+
+// src/views/components/Button.svelte
+var import_obsidian16 = require("obsidian");
+function create_fragment12(ctx) {
+  let span;
+  return {
+    c() {
+      span = element("span");
+    },
+    m(target, anchor) {
+      insert(target, span, anchor);
+      ctx[6](span);
+    },
+    p: noop,
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(span);
+      }
+      ctx[6](null);
+    }
+  };
+}
+function instance12($$self, $$props, $$invalidate) {
+  let { tooltip = void 0 } = $$props;
+  let { icon = void 0 } = $$props;
+  let { text: text3 = void 0 } = $$props;
+  let { variant = "regular" } = $$props;
+  let { onClick } = $$props;
+  const variants = {
+    regular: "modal-form-regular",
+    danger: "modal-form-danger",
+    primary: "modal-form-primary"
+  };
+  let root;
+  onMount(() => {
+    const btn = new import_obsidian16.ButtonComponent(root);
+    if (icon)
+      btn.setIcon(icon);
+    if (tooltip)
+      btn.setTooltip(tooltip);
+    if (text3)
+      btn.setButtonText(text3);
+    btn.onClick(onClick);
+    btn.setClass(variants[variant]);
+  });
+  function span_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      root = $$value;
+      $$invalidate(0, root);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("tooltip" in $$props2)
+      $$invalidate(1, tooltip = $$props2.tooltip);
+    if ("icon" in $$props2)
+      $$invalidate(2, icon = $$props2.icon);
+    if ("text" in $$props2)
+      $$invalidate(3, text3 = $$props2.text);
+    if ("variant" in $$props2)
+      $$invalidate(4, variant = $$props2.variant);
+    if ("onClick" in $$props2)
+      $$invalidate(5, onClick = $$props2.onClick);
+  };
+  return [root, tooltip, icon, text3, variant, onClick, span_binding];
+}
+var Button = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance12, create_fragment12, safe_not_equal, {
+      tooltip: 1,
+      icon: 2,
+      text: 3,
+      variant: 4,
+      onClick: 5
+    });
+  }
+};
+var Button_default = Button;
+
 // src/views/components/KeyValue.svelte
 function add_css9(target) {
   append_styles(target, "svelte-1i8bb6o", "div.svelte-1i8bb6o{display:flex;flex-direction:row;align-items:flex-start;gap:var(--mf-spacing)}.key.svelte-1i8bb6o{color:var(--text-faint)}");
 }
-function create_fragment12(ctx) {
+function create_fragment13(ctx) {
   let div;
   let span;
   let t0;
@@ -13375,7 +15100,7 @@ function create_fragment12(ctx) {
     }
   };
 }
-function instance12($$self, $$props, $$invalidate) {
+function instance13($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { key } = $$props;
   $$self.$$set = ($$props2) => {
@@ -13389,90 +15114,10 @@ function instance12($$self, $$props, $$invalidate) {
 var KeyValue = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(this, options, instance12, create_fragment12, safe_not_equal, { key: 0 }, add_css9);
+    init4(this, options, instance13, create_fragment13, safe_not_equal, { key: 0 }, add_css9);
   }
 };
 var KeyValue_default = KeyValue;
-
-// src/views/components/Button.svelte
-var import_obsidian16 = require("obsidian");
-function create_fragment13(ctx) {
-  let span;
-  return {
-    c() {
-      span = element("span");
-    },
-    m(target, anchor) {
-      insert(target, span, anchor);
-      ctx[6](span);
-    },
-    p: noop,
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(span);
-      }
-      ctx[6](null);
-    }
-  };
-}
-function instance13($$self, $$props, $$invalidate) {
-  let { tooltip = void 0 } = $$props;
-  let { icon = void 0 } = $$props;
-  let { text: text3 = void 0 } = $$props;
-  let { variant = "regular" } = $$props;
-  let { onClick } = $$props;
-  const variants = {
-    regular: "modal-form-regular",
-    danger: "modal-form-danger",
-    primary: "modal-form-primary"
-  };
-  let root;
-  onMount(() => {
-    const btn = new import_obsidian16.ButtonComponent(root);
-    if (icon)
-      btn.setIcon(icon);
-    if (tooltip)
-      btn.setTooltip(tooltip);
-    if (text3)
-      btn.setButtonText(text3);
-    btn.onClick(onClick);
-    btn.setClass(variants[variant]);
-  });
-  function span_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      root = $$value;
-      $$invalidate(0, root);
-    });
-  }
-  $$self.$$set = ($$props2) => {
-    if ("tooltip" in $$props2)
-      $$invalidate(1, tooltip = $$props2.tooltip);
-    if ("icon" in $$props2)
-      $$invalidate(2, icon = $$props2.icon);
-    if ("text" in $$props2)
-      $$invalidate(3, text3 = $$props2.text);
-    if ("variant" in $$props2)
-      $$invalidate(4, variant = $$props2.variant);
-    if ("onClick" in $$props2)
-      $$invalidate(5, onClick = $$props2.onClick);
-  };
-  return [root, tooltip, icon, text3, variant, onClick, span_binding];
-}
-var Button = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init3(this, options, instance13, create_fragment13, safe_not_equal, {
-      tooltip: 1,
-      icon: 2,
-      text: 3,
-      variant: 4,
-      onClick: 5
-    });
-  }
-};
-var Button_default = Button;
 
 // src/views/ManageForms.svelte
 function add_css10(target) {
@@ -13480,38 +15125,38 @@ function add_css10(target) {
 }
 function get_each_context6(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[18] = list[i];
+  child_ctx[21] = list[i];
   return child_ctx;
 }
 function get_each_context_13(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[21] = list[i];
+  child_ctx[24] = list[i];
   return child_ctx;
 }
 function get_each_context_22(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[21] = list[i];
+  child_ctx[24] = list[i];
   return child_ctx;
 }
 function get_each_context_3(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[26] = list[i];
+  child_ctx[29] = list[i];
   return child_ctx;
 }
 function get_each_context_4(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[18] = list[i];
+  child_ctx[21] = list[i];
   return child_ctx;
 }
 function get_each_context_5(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[31] = list[i];
+  child_ctx[34] = list[i];
   return child_ctx;
 }
 function get_each_context_6(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[34] = list[i][0];
-  child_ctx[35] = list[i][1];
+  child_ctx[37] = list[i][0];
+  child_ctx[38] = list[i][1];
   return child_ctx;
 }
 function create_if_block_23(ctx) {
@@ -13566,7 +15211,7 @@ function create_if_block_13(ctx) {
     props: {
       key: (
         /*key*/
-        ctx[34]
+        ctx[37]
       ),
       $$slots: { default: [create_default_slot_32] },
       $$scope: { ctx }
@@ -13585,10 +15230,10 @@ function create_if_block_13(ctx) {
       if (dirty[0] & /*$forms*/
       32)
         keyvalue_changes.key = /*key*/
-        ctx2[34];
+        ctx2[37];
       if (dirty[0] & /*$forms*/
       32 | dirty[1] & /*$$scope*/
-      128) {
+      1024) {
         keyvalue_changes.$$scope = { dirty, ctx: ctx2 };
       }
       keyvalue.$set(keyvalue_changes);
@@ -13612,15 +15257,15 @@ function create_default_slot_32(ctx) {
   let span;
   let t_value = (Array.isArray(
     /*value*/
-    ctx[35]
+    ctx[38]
   ) ? (
     /*value*/
-    ctx[35].length
+    ctx[38].length
   ) : typeof /*value*/
-  ctx[35] === "object" ? !!/*value*/
-  ctx[35] : (
+  ctx[38] === "object" ? !!/*value*/
+  ctx[38] : (
     /*value*/
-    ctx[35]
+    ctx[38]
   )) + "";
   let t;
   return {
@@ -13636,15 +15281,15 @@ function create_default_slot_32(ctx) {
       if (dirty[0] & /*$forms*/
       32 && t_value !== (t_value = (Array.isArray(
         /*value*/
-        ctx2[35]
+        ctx2[38]
       ) ? (
         /*value*/
-        ctx2[35].length
+        ctx2[38].length
       ) : typeof /*value*/
-      ctx2[35] === "object" ? !!/*value*/
-      ctx2[35] : (
+      ctx2[38] === "object" ? !!/*value*/
+      ctx2[38] : (
         /*value*/
-        ctx2[35]
+        ctx2[38]
       )) + ""))
         set_data(t, t_value);
     },
@@ -13660,13 +15305,13 @@ function create_each_block_6(ctx) {
   let current;
   let if_block = (
     /*key*/
-    ctx[34] !== "name" && create_if_block_13(ctx)
+    ctx[37] !== "name" && create_if_block_13(ctx)
   );
   return {
     c() {
       if (if_block)
         if_block.c();
-      if_block_anchor = empty3();
+      if_block_anchor = empty4();
     },
     m(target, anchor) {
       if (if_block)
@@ -13677,7 +15322,7 @@ function create_each_block_6(ctx) {
     p(ctx2, dirty) {
       if (
         /*key*/
-        ctx2[34] !== "name"
+        ctx2[37] !== "name"
       ) {
         if (if_block) {
           if_block.p(ctx2, dirty);
@@ -13722,7 +15367,7 @@ function create_each_block_5(ctx) {
   let span;
   let t0_value = (
     /*field*/
-    ctx[31].name + ""
+    ctx[34].name + ""
   );
   let t0;
   let t1;
@@ -13740,7 +15385,7 @@ function create_each_block_5(ctx) {
     p(ctx2, dirty) {
       if (dirty[0] & /*$forms*/
       32 && t0_value !== (t0_value = /*field*/
-      ctx2[31].name + ""))
+      ctx2[34].name + ""))
         set_data(t0, t0_value);
     },
     d(detaching) {
@@ -13755,7 +15400,7 @@ function create_default_slot_22(ctx) {
   let span;
   let each_value_5 = ensure_array_like(
     /*form*/
-    ctx[18].fields
+    ctx[21].fields
   );
   let each_blocks = [];
   for (let i = 0; i < each_value_5.length; i += 1) {
@@ -13783,7 +15428,7 @@ function create_default_slot_22(ctx) {
       32) {
         each_value_5 = ensure_array_like(
           /*form*/
-          ctx2[18].fields
+          ctx2[21].fields
         );
         let i;
         for (i = 0; i < each_value_5.length; i += 1) {
@@ -13815,7 +15460,7 @@ function create_each_block_4(ctx) {
   let h4;
   let t0_value = (
     /*form*/
-    ctx[18].name + ""
+    ctx[21].name + ""
   );
   let t0;
   let t1;
@@ -13831,12 +15476,14 @@ function create_each_block_4(ctx) {
   let button2;
   let t7;
   let button3;
+  let t9;
+  let button4;
   let current;
   let mounted;
   let dispose;
   let each_value_6 = ensure_array_like(Object.entries(
     /*form*/
-    ctx[18]
+    ctx[21]
   ));
   let each_blocks = [];
   for (let i = 0; i < each_value_6.length; i += 1) {
@@ -13855,9 +15502,9 @@ function create_each_block_4(ctx) {
   function func() {
     return (
       /*func*/
-      ctx[14](
+      ctx[16](
         /*form*/
-        ctx[18]
+        ctx[21]
       )
     );
   }
@@ -13865,7 +15512,7 @@ function create_each_block_4(ctx) {
     props: {
       onClick: func,
       tooltip: `Delete ${/*form*/
-      ctx[18].name}`,
+      ctx[21].name}`,
       icon: "trash",
       variant: "danger"
     }
@@ -13873,9 +15520,9 @@ function create_each_block_4(ctx) {
   function func_1() {
     return (
       /*func_1*/
-      ctx[15](
+      ctx[17](
         /*form*/
-        ctx[18]
+        ctx[21]
       )
     );
   }
@@ -13890,25 +15537,34 @@ function create_each_block_4(ctx) {
   function click_handler() {
     return (
       /*click_handler*/
-      ctx[16](
+      ctx[18](
         /*form*/
-        ctx[18]
+        ctx[21]
+      )
+    );
+  }
+  function click_handler_1() {
+    return (
+      /*click_handler_1*/
+      ctx[19](
+        /*form*/
+        ctx[21]
       )
     );
   }
   function func_2() {
     return (
       /*func_2*/
-      ctx[17](
+      ctx[20](
         /*form*/
-        ctx[18]
+        ctx[21]
       )
     );
   }
-  button3 = new Button_default({
+  button4 = new Button_default({
     props: {
       tooltip: `Copy ${/*form*/
-      ctx[18].name} to clipboard`,
+      ctx[21].name} to clipboard`,
       icon: "clipboard-copy",
       onClick: func_2
     }
@@ -13934,7 +15590,10 @@ function create_each_block_4(ctx) {
       button2 = element("button");
       button2.innerHTML = `<span>Duplicate</span>`;
       t7 = space();
-      create_component(button3.$$.fragment);
+      button3 = element("button");
+      button3.innerHTML = `<span>Open in template editor</span>`;
+      t9 = space();
+      create_component(button4.$$.fragment);
       attr(h4, "class", "form-name svelte-1gkuvrl");
       attr(div1, "class", "form-row-buttons svelte-1gkuvrl");
       attr(div2, "class", "form-row svelte-1gkuvrl");
@@ -13960,10 +15619,15 @@ function create_each_block_4(ctx) {
       append5(div1, t5);
       append5(div1, button2);
       append5(div1, t7);
-      mount_component(button3, div1, null);
+      append5(div1, button3);
+      append5(div1, t9);
+      mount_component(button4, div1, null);
       current = true;
       if (!mounted) {
-        dispose = listen(button2, "click", click_handler);
+        dispose = [
+          listen(button2, "click", click_handler),
+          listen(button3, "click", click_handler_1)
+        ];
         mounted = true;
       }
     },
@@ -13971,13 +15635,13 @@ function create_each_block_4(ctx) {
       ctx = new_ctx;
       if ((!current || dirty[0] & /*$forms*/
       32) && t0_value !== (t0_value = /*form*/
-      ctx[18].name + ""))
+      ctx[21].name + ""))
         set_data(t0, t0_value);
       if (dirty[0] & /*$forms*/
       32) {
         each_value_6 = ensure_array_like(Object.entries(
           /*form*/
-          ctx[18]
+          ctx[21]
         ));
         let i;
         for (i = 0; i < each_value_6.length; i += 1) {
@@ -14001,7 +15665,7 @@ function create_each_block_4(ctx) {
       const keyvalue_changes = {};
       if (dirty[0] & /*$forms*/
       32 | dirty[1] & /*$$scope*/
-      128) {
+      1024) {
         keyvalue_changes.$$scope = { dirty, ctx };
       }
       keyvalue.$set(keyvalue_changes);
@@ -14012,22 +15676,22 @@ function create_each_block_4(ctx) {
       if (dirty[0] & /*$forms*/
       32)
         button0_changes.tooltip = `Delete ${/*form*/
-        ctx[18].name}`;
+        ctx[21].name}`;
       button0.$set(button0_changes);
       const button1_changes = {};
       if (dirty[0] & /*$forms*/
       32)
         button1_changes.onClick = func_1;
       button1.$set(button1_changes);
-      const button3_changes = {};
+      const button4_changes = {};
       if (dirty[0] & /*$forms*/
       32)
-        button3_changes.tooltip = `Copy ${/*form*/
-        ctx[18].name} to clipboard`;
+        button4_changes.tooltip = `Copy ${/*form*/
+        ctx[21].name} to clipboard`;
       if (dirty[0] & /*$forms*/
       32)
-        button3_changes.onClick = func_2;
-      button3.$set(button3_changes);
+        button4_changes.onClick = func_2;
+      button4.$set(button4_changes);
     },
     i(local) {
       if (current)
@@ -14038,7 +15702,7 @@ function create_each_block_4(ctx) {
       transition_in(keyvalue.$$.fragment, local);
       transition_in(button0.$$.fragment, local);
       transition_in(button1.$$.fragment, local);
-      transition_in(button3.$$.fragment, local);
+      transition_in(button4.$$.fragment, local);
       current = true;
     },
     o(local) {
@@ -14049,7 +15713,7 @@ function create_each_block_4(ctx) {
       transition_out(keyvalue.$$.fragment, local);
       transition_out(button0.$$.fragment, local);
       transition_out(button1.$$.fragment, local);
-      transition_out(button3.$$.fragment, local);
+      transition_out(button4.$$.fragment, local);
       current = false;
     },
     d(detaching) {
@@ -14060,9 +15724,9 @@ function create_each_block_4(ctx) {
       destroy_component(keyvalue);
       destroy_component(button0);
       destroy_component(button1);
-      destroy_component(button3);
+      destroy_component(button4);
       mounted = false;
-      dispose();
+      run_all(dispose);
     }
   };
 }
@@ -14160,7 +15824,7 @@ function create_each_block_3(ctx) {
   let span;
   let t_value = (
     /*fieldError*/
-    ctx[26] + ""
+    ctx[29] + ""
   );
   let t;
   return {
@@ -14175,7 +15839,7 @@ function create_each_block_3(ctx) {
     p(ctx2, dirty) {
       if (dirty[0] & /*$invalidForms*/
       16 && t_value !== (t_value = /*fieldError*/
-      ctx2[26] + ""))
+      ctx2[29] + ""))
         set_data(t, t_value);
     },
     d(detaching) {
@@ -14189,7 +15853,7 @@ function create_default_slot_14(ctx) {
   let each_1_anchor;
   let each_value_3 = ensure_array_like(
     /*error*/
-    ctx[21].getFieldErrors()
+    ctx[24].getFieldErrors()
   );
   let each_blocks = [];
   for (let i = 0; i < each_value_3.length; i += 1) {
@@ -14200,7 +15864,7 @@ function create_default_slot_14(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      each_1_anchor = empty3();
+      each_1_anchor = empty4();
     },
     m(target, anchor) {
       for (let i = 0; i < each_blocks.length; i += 1) {
@@ -14215,7 +15879,7 @@ function create_default_slot_14(ctx) {
       16) {
         each_value_3 = ensure_array_like(
           /*error*/
-          ctx2[21].getFieldErrors()
+          ctx2[24].getFieldErrors()
         );
         let i;
         for (i = 0; i < each_value_3.length; i += 1) {
@@ -14249,7 +15913,7 @@ function create_each_block_22(ctx) {
   let t0;
   let t1_value = "\n" + JSON.stringify(
     /*error*/
-    ctx[21].field,
+    ctx[24].field,
     null,
     1
   );
@@ -14264,7 +15928,7 @@ function create_each_block_22(ctx) {
     props: {
       key: (
         /*error*/
-        ctx[21].path
+        ctx[24].path
       ),
       $$slots: { default: [create_default_slot_14] },
       $$scope: { ctx }
@@ -14303,7 +15967,7 @@ function create_each_block_22(ctx) {
       if ((!current || dirty[0] & /*$invalidForms*/
       16) && t1_value !== (t1_value = "\n" + JSON.stringify(
         /*error*/
-        ctx2[21].field,
+        ctx2[24].field,
         null,
         1
       )))
@@ -14312,10 +15976,10 @@ function create_each_block_22(ctx) {
       if (dirty[0] & /*$invalidForms*/
       16)
         keyvalue_changes.key = /*error*/
-        ctx2[21].path;
+        ctx2[24].path;
       if (dirty[0] & /*$invalidForms*/
       16 | dirty[1] & /*$$scope*/
-      128) {
+      1024) {
         keyvalue_changes.$$scope = { dirty, ctx: ctx2 };
       }
       keyvalue.$set(keyvalue_changes);
@@ -14342,7 +16006,7 @@ function create_default_slot6(ctx) {
   let span;
   let t0_value = (
     /*error*/
-    ctx[21].name + ""
+    ctx[24].name + ""
   );
   let t0;
   let t1;
@@ -14360,7 +16024,7 @@ function create_default_slot6(ctx) {
     p(ctx2, dirty) {
       if (dirty[0] & /*$invalidForms*/
       16 && t0_value !== (t0_value = /*error*/
-      ctx2[21].name + ""))
+      ctx2[24].name + ""))
         set_data(t0, t0_value);
     },
     d(detaching) {
@@ -14392,7 +16056,7 @@ function create_each_block_13(ctx) {
       const keyvalue_changes = {};
       if (dirty[0] & /*$invalidForms*/
       16 | dirty[1] & /*$$scope*/
-      128) {
+      1024) {
         keyvalue_changes.$$scope = { dirty, ctx: ctx2 };
       }
       keyvalue.$set(keyvalue_changes);
@@ -14417,7 +16081,7 @@ function create_each_block6(ctx) {
   let h4;
   let t0_value = (
     /*form*/
-    ctx[18].name + ""
+    ctx[21].name + ""
   );
   let t0;
   let t1;
@@ -14426,7 +16090,7 @@ function create_each_block6(ctx) {
   let current;
   let each_value_2 = ensure_array_like(left2(
     /*form*/
-    ctx[18].fieldErrors
+    ctx[21].fieldErrors
   ));
   let each_blocks_1 = [];
   for (let i = 0; i < each_value_2.length; i += 1) {
@@ -14437,7 +16101,7 @@ function create_each_block6(ctx) {
   });
   let each_value_1 = ensure_array_like(right2(
     /*form*/
-    ctx[18].fieldErrors
+    ctx[21].fieldErrors
   ));
   let each_blocks = [];
   for (let i = 0; i < each_value_1.length; i += 1) {
@@ -14485,13 +16149,13 @@ function create_each_block6(ctx) {
     p(ctx2, dirty) {
       if ((!current || dirty[0] & /*$invalidForms*/
       16) && t0_value !== (t0_value = /*form*/
-      ctx2[18].name + ""))
+      ctx2[21].name + ""))
         set_data(t0, t0_value);
       if (dirty[0] & /*$invalidForms*/
       16) {
         each_value_2 = ensure_array_like(left2(
           /*form*/
-          ctx2[18].fieldErrors
+          ctx2[21].fieldErrors
         ));
         let i;
         for (i = 0; i < each_value_2.length; i += 1) {
@@ -14516,7 +16180,7 @@ function create_each_block6(ctx) {
       16) {
         each_value_1 = ensure_array_like(right2(
           /*form*/
-          ctx2[18].fieldErrors
+          ctx2[21].fieldErrors
         ));
         let i;
         for (i = 0; i < each_value_1.length; i += 1) {
@@ -14697,8 +16361,8 @@ function create_fragment14(ctx) {
         if_block0.d(1);
         if_block0 = null;
       }
-      if (dirty[0] & /*$forms, handleCopyForm, handleDuplicateForm, handleEditForm, handleDeleteForm*/
-      992) {
+      if (dirty[0] & /*$forms, handleCopyForm, handleOpenInTemplateBuilder, handleDuplicateForm, handleEditForm, handleDeleteForm*/
+      2016) {
         each_value_4 = ensure_array_like(
           /*$forms*/
           ctx2[5]
@@ -14793,6 +16457,7 @@ function instance14($$self, $$props, $$invalidate) {
   let { duplicateForm: duplicateForm2 } = $$props;
   let { editForm } = $$props;
   let { copyFormToClipboard } = $$props;
+  let { openInTemplateBuilder } = $$props;
   let { openImportFormModal } = $$props;
   let { forms } = $$props;
   $$subscribe_forms();
@@ -14817,21 +16482,28 @@ function instance14($$self, $$props, $$invalidate) {
     console.log(`Copying ${form.name}`);
     copyFormToClipboard(form);
   }
+  function handleOpenInTemplateBuilder(form) {
+    console.log(`Opening ${form.name} in template builder`);
+    openInTemplateBuilder(form);
+  }
   const func = (form) => handleDeleteForm(form.name);
   const func_1 = (form) => handleEditForm(form.name);
   const click_handler = (form) => handleDuplicateForm(form);
+  const click_handler_1 = (form) => handleOpenInTemplateBuilder(form);
   const func_2 = (form) => handleCopyForm(form);
   $$self.$$set = ($$props2) => {
     if ("createNewForm" in $$props2)
       $$invalidate(0, createNewForm = $$props2.createNewForm);
     if ("deleteForm" in $$props2)
-      $$invalidate(10, deleteForm = $$props2.deleteForm);
+      $$invalidate(11, deleteForm = $$props2.deleteForm);
     if ("duplicateForm" in $$props2)
-      $$invalidate(11, duplicateForm2 = $$props2.duplicateForm);
+      $$invalidate(12, duplicateForm2 = $$props2.duplicateForm);
     if ("editForm" in $$props2)
-      $$invalidate(12, editForm = $$props2.editForm);
+      $$invalidate(13, editForm = $$props2.editForm);
     if ("copyFormToClipboard" in $$props2)
-      $$invalidate(13, copyFormToClipboard = $$props2.copyFormToClipboard);
+      $$invalidate(14, copyFormToClipboard = $$props2.copyFormToClipboard);
+    if ("openInTemplateBuilder" in $$props2)
+      $$invalidate(15, openInTemplateBuilder = $$props2.openInTemplateBuilder);
     if ("openImportFormModal" in $$props2)
       $$invalidate(1, openImportFormModal = $$props2.openImportFormModal);
     if ("forms" in $$props2)
@@ -14850,20 +16522,23 @@ function instance14($$self, $$props, $$invalidate) {
     handleEditForm,
     handleDuplicateForm,
     handleCopyForm,
+    handleOpenInTemplateBuilder,
     deleteForm,
     duplicateForm2,
     editForm,
     copyFormToClipboard,
+    openInTemplateBuilder,
     func,
     func_1,
     click_handler,
+    click_handler_1,
     func_2
   ];
 }
 var ManageForms = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(
+    init4(
       this,
       options,
       instance14,
@@ -14871,10 +16546,11 @@ var ManageForms = class extends SvelteComponent {
       safe_not_equal,
       {
         createNewForm: 0,
-        deleteForm: 10,
-        duplicateForm: 11,
-        editForm: 12,
-        copyFormToClipboard: 13,
+        deleteForm: 11,
+        duplicateForm: 12,
+        editForm: 13,
+        copyFormToClipboard: 14,
+        openInTemplateBuilder: 15,
         openImportFormModal: 1,
         forms: 2,
         invalidForms: 3
@@ -14887,7 +16563,6 @@ var ManageForms = class extends SvelteComponent {
 var ManageForms_default = ManageForms;
 
 // src/views/ManageFormsView.ts
-var import_obsidian17 = require("obsidian");
 var MANAGE_FORMS_VIEW = "modal-form-manage-forms-view";
 var ManageFormsView = class extends import_obsidian17.ItemView {
   constructor(leaf, plugin) {
@@ -14928,6 +16603,9 @@ var ManageFormsView = class extends import_obsidian17.ItemView {
         },
         openImportFormModal: () => {
           this.plugin.openImportFormModal();
+        },
+        openInTemplateBuilder: (formDefinition) => {
+          this.plugin.openTemplateBuilder({ formDefinition });
         }
       }
     });
@@ -14937,12 +16615,32 @@ var ManageFormsView = class extends import_obsidian17.ItemView {
   }
 };
 
+// src/suggesters/FormPickerModal.ts
+var import_obsidian18 = require("obsidian");
+var FormPickerModal = class extends import_obsidian18.FuzzySuggestModal {
+  constructor(app2, forms, onSelected) {
+    super(app2);
+    this.forms = forms;
+    this.onSelected = onSelected;
+  }
+  getItems() {
+    return this.forms;
+  }
+  getItemText(item2) {
+    return item2.title;
+  }
+  onChooseItem(item2, _) {
+    this.close();
+    this.onSelected(item2);
+  }
+};
+
 // src/suggesters/NewNoteModal.ts
-var import_obsidian19 = require("obsidian");
+var import_obsidian20 = require("obsidian");
 
 // src/suggesters/suggestGeneric.ts
-var import_obsidian18 = require("obsidian");
-var GenericSuggest = class extends import_obsidian18.AbstractInputSuggest {
+var import_obsidian19 = require("obsidian");
+var GenericSuggest = class extends import_obsidian19.AbstractInputSuggest {
   constructor(app2, inputEl, content, strategy) {
     super(app2, inputEl);
     this.inputEl = inputEl;
@@ -14981,7 +16679,7 @@ var formSuggester = (app2, input, forms, onChange) => new GenericSuggest(
     }
   }
 );
-var NewNoteModal = class extends import_obsidian19.Modal {
+var NewNoteModal = class extends import_obsidian20.Modal {
   constructor(app2, forms, onSelected) {
     super(app2);
     this.forms = forms;
@@ -14993,23 +16691,23 @@ var NewNoteModal = class extends import_obsidian19.Modal {
     let noteName = "";
     const { contentEl } = this;
     contentEl.createEl("h1", { text: "New Note from form" });
-    new import_obsidian19.Setting(contentEl).addSearch((element2) => {
+    new import_obsidian20.Setting(contentEl).addSearch((element2) => {
       formSuggester(this.app, element2.inputEl, this.forms, (value) => {
         form = value;
       });
     }).setDesc("Pick a form");
-    new import_obsidian19.Setting(contentEl).addSearch((element2) => {
+    new import_obsidian20.Setting(contentEl).addSearch((element2) => {
       new FolderSuggest(element2.inputEl, this.app);
       element2.onChange((value) => {
         destinationFolder = value;
       });
     }).setName("Destination folder");
-    new import_obsidian19.Setting(contentEl).addText((element2) => {
+    new import_obsidian20.Setting(contentEl).addText((element2) => {
       element2.onChange((value) => {
         noteName = value;
       });
     }).setName("Note name");
-    new import_obsidian19.Setting(contentEl).addButton((element2) => {
+    new import_obsidian20.Setting(contentEl).addButton((element2) => {
       element2.setButtonText("Create new note");
       element2.onClick(() => {
         if (!form || !destinationFolder.trim() || !noteName.trim()) {
@@ -15028,26 +16726,6 @@ var NewNoteModal = class extends import_obsidian19.Modal {
   onClose() {
     const { contentEl } = this;
     contentEl.empty();
-  }
-};
-
-// src/suggesters/FormPickerModal.ts
-var import_obsidian20 = require("obsidian");
-var FormPickerModal = class extends import_obsidian20.FuzzySuggestModal {
-  constructor(app2, forms, onSelected) {
-    super(app2);
-    this.forms = forms;
-    this.onSelected = onSelected;
-  }
-  getItems() {
-    return this.forms;
-  }
-  getItemText(item2) {
-    return item2.title;
-  }
-  onChooseItem(item2, _) {
-    this.close();
-    this.onSelected(item2);
   }
 };
 
@@ -15348,7 +17026,7 @@ function instance15($$self, $$props, $$invalidate) {
 var FormImport = class extends SvelteComponent {
   constructor(options) {
     super();
-    init3(this, options, instance15, create_fragment15, safe_not_equal, { model: 4 }, add_css11);
+    init4(this, options, instance15, create_fragment15, safe_not_equal, { model: 4 }, add_css11);
   }
 };
 var FormImport_default = FormImport;
@@ -15364,7 +17042,7 @@ var parse4 = function(s) {
 function matchState(state, matchers) {
   return pipe2(
     state,
-    match(
+    match3(
       matchers.error,
       (form) => pipe2(
         form,
@@ -15377,9 +17055,9 @@ function matchState(state, matchers) {
 function noop2() {
 }
 function makeFormInputModel({ createForm }) {
-  const state = writable(of(O.none));
+  const state = writable(of4(O.none));
   const setErrors = (errors) => state.set(left3(errors));
-  const resetState = () => state.set(of(O.none));
+  const resetState = () => state.set(of4(O.none));
   return {
     state,
     uiState(state2) {
@@ -15404,7 +17082,7 @@ function makeFormInputModel({ createForm }) {
         parse4,
         mapLeft(ensureError),
         chainW(migrateToLatest),
-        match(
+        match3(
           (error2) => {
             if (error2 instanceof InvalidData) {
               setErrors(error2.toArrayOfStrings());
@@ -15417,7 +17095,7 @@ function makeFormInputModel({ createForm }) {
               setErrors(form.toArrayOfStrings());
               return;
             }
-            state.set(of(O.some(form)));
+            state.set(of4(O.some(form)));
             console.log(form);
           }
         )
@@ -15444,6 +17122,1202 @@ var FormImportModal = class extends import_obsidian21.Modal {
   }
 };
 
+// src/views/TemplateBuilderModal.ts
+var import_obsidian23 = require("obsidian");
+
+// src/views/components/Label.svelte
+function add_css12(target) {
+  append_styles(target, "svelte-176ht1g", ".field-group.svelte-176ht1g{display:flex;flex-direction:column;gap:0.5rem}.inline.svelte-176ht1g{flex-direction:row;align-items:center;gap:1rem}");
+}
+function create_fragment16(ctx) {
+  let label_1;
+  let span;
+  let t0;
+  let t1;
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[3].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[2],
+    null
+  );
+  return {
+    c() {
+      label_1 = element("label");
+      span = element("span");
+      t0 = text(
+        /*label*/
+        ctx[0]
+      );
+      t1 = space();
+      if (default_slot)
+        default_slot.c();
+      attr(label_1, "class", "field-group svelte-176ht1g");
+      toggle_class(
+        label_1,
+        "inline",
+        /*inline*/
+        ctx[1]
+      );
+    },
+    m(target, anchor) {
+      insert(target, label_1, anchor);
+      append5(label_1, span);
+      append5(span, t0);
+      append5(label_1, t1);
+      if (default_slot) {
+        default_slot.m(label_1, null);
+      }
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (!current || dirty & /*label*/
+      1)
+        set_data(
+          t0,
+          /*label*/
+          ctx2[0]
+        );
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        4)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[2],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[2]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[2],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      if (!current || dirty & /*inline*/
+      2) {
+        toggle_class(
+          label_1,
+          "inline",
+          /*inline*/
+          ctx2[1]
+        );
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(label_1);
+      }
+      if (default_slot)
+        default_slot.d(detaching);
+    }
+  };
+}
+function instance16($$self, $$props, $$invalidate) {
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { label } = $$props;
+  let { inline = false } = $$props;
+  $$self.$$set = ($$props2) => {
+    if ("label" in $$props2)
+      $$invalidate(0, label = $$props2.label);
+    if ("inline" in $$props2)
+      $$invalidate(1, inline = $$props2.inline);
+    if ("$$scope" in $$props2)
+      $$invalidate(2, $$scope = $$props2.$$scope);
+  };
+  return [label, inline, $$scope, slots];
+}
+var Label = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance16, create_fragment16, safe_not_equal, { label: 0, inline: 1 }, add_css12);
+  }
+};
+var Label_default = Label;
+
+// src/views/components/TemplateBuilder.svelte
+function add_css13(target) {
+  append_styles(target, "svelte-1qlzwkg", ".code.svelte-1qlzwkg{font-family:var(--font-family-monospace);background-color:var(--background-secondary);color:var(--text-muted)}");
+}
+function get_each_context8(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[19] = list[i];
+  return child_ctx;
+}
+function get_each_context_14(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[19] = list[i];
+  return child_ctx;
+}
+function get_each_context_23(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[19] = list[i];
+  return child_ctx;
+}
+function create_each_block_23(ctx) {
+  let div;
+  let label;
+  let input;
+  let input_checked_value;
+  let t0;
+  let span;
+  let t1_value = (
+    /*field*/
+    ctx[19].name + ""
+  );
+  let t1;
+  let t2;
+  let mounted;
+  let dispose;
+  function change_handler(...args) {
+    return (
+      /*change_handler*/
+      ctx[11](
+        /*field*/
+        ctx[19],
+        ...args
+      )
+    );
+  }
+  return {
+    c() {
+      div = element("div");
+      label = element("label");
+      input = element("input");
+      t0 = space();
+      span = element("span");
+      t1 = text(t1_value);
+      t2 = space();
+      attr(input, "type", "checkbox");
+      input.checked = input_checked_value = /*field*/
+      ctx[19].omit;
+      attr(label, "class", "flex gap-1");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append5(div, label);
+      append5(label, input);
+      append5(label, t0);
+      append5(label, span);
+      append5(span, t1);
+      append5(div, t2);
+      if (!mounted) {
+        dispose = listen(input, "change", change_handler);
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*$fields*/
+      64 && input_checked_value !== (input_checked_value = /*field*/
+      ctx[19].omit)) {
+        input.checked = input_checked_value;
+      }
+      if (dirty & /*$fields*/
+      64 && t1_value !== (t1_value = /*field*/
+      ctx[19].name + ""))
+        set_data(t1, t1_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block8(ctx) {
+  let div;
+  let label;
+  let input;
+  let input_checked_value;
+  let t0;
+  let span;
+  let t1_value = (
+    /*field*/
+    ctx[19].name + ""
+  );
+  let t1;
+  let mounted;
+  let dispose;
+  function input_handler(...args) {
+    return (
+      /*input_handler*/
+      ctx[12](
+        /*field*/
+        ctx[19],
+        ...args
+      )
+    );
+  }
+  return {
+    c() {
+      div = element("div");
+      label = element("label");
+      input = element("input");
+      t0 = space();
+      span = element("span");
+      t1 = text(t1_value);
+      attr(input, "type", "checkbox");
+      input.checked = input_checked_value = /*field*/
+      ctx[19].onFrontmatter;
+      attr(label, "class", "flex gap-1");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append5(div, label);
+      append5(label, input);
+      append5(label, t0);
+      append5(label, span);
+      append5(span, t1);
+      if (!mounted) {
+        dispose = listen(input, "input", input_handler);
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*$fields*/
+      64 && input_checked_value !== (input_checked_value = /*field*/
+      ctx[19].onFrontmatter)) {
+        input.checked = input_checked_value;
+      }
+      if (dirty & /*$fields*/
+      64 && t1_value !== (t1_value = /*field*/
+      ctx[19].name + ""))
+        set_data(t1, t1_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_each_block_14(key_1, ctx) {
+  let first2;
+  let if_block_anchor;
+  let if_block = (
+    /*field*/
+    ctx[19].omit === false && create_if_block8(ctx)
+  );
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      first2 = empty4();
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty4();
+      this.first = first2;
+    },
+    m(target, anchor) {
+      insert(target, first2, anchor);
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (
+        /*field*/
+        ctx[19].omit === false
+      ) {
+        if (if_block) {
+          if_block.p(ctx, dirty);
+        } else {
+          if_block = create_if_block8(ctx);
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(first2);
+        detach(if_block_anchor);
+      }
+      if (if_block)
+        if_block.d(detaching);
+    }
+  };
+}
+function create_each_block8(ctx) {
+  let button;
+  let t0_value = (
+    /*field*/
+    ctx[19].name + ""
+  );
+  let t0;
+  let t1;
+  let mounted;
+  let dispose;
+  function click_handler() {
+    return (
+      /*click_handler*/
+      ctx[14](
+        /*field*/
+        ctx[19]
+      )
+    );
+  }
+  return {
+    c() {
+      button = element("button");
+      t0 = text(t0_value);
+      t1 = space();
+      attr(button, "type", "button");
+    },
+    m(target, anchor) {
+      insert(target, button, anchor);
+      append5(button, t0);
+      append5(button, t1);
+      if (!mounted) {
+        dispose = listen(button, "click", click_handler);
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*$fields*/
+      64 && t0_value !== (t0_value = /*field*/
+      ctx[19].name + ""))
+        set_data(t0, t0_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(button);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_default_slot_23(ctx) {
+  let input;
+  let input_checked_value;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      input = element("input");
+      attr(input, "type", "checkbox");
+      input.checked = input_checked_value = /*$options*/
+      ctx[8].includeFences;
+    },
+    m(target, anchor) {
+      insert(target, input, anchor);
+      if (!mounted) {
+        dispose = listen(
+          input,
+          "change",
+          /*change_handler_2*/
+          ctx[16]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$options*/
+      256 && input_checked_value !== (input_checked_value = /*$options*/
+      ctx2[8].includeFences)) {
+        input.checked = input_checked_value;
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(input);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_default_slot_15(ctx) {
+  let input;
+  let input_value_value;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      input = element("input");
+      attr(input, "type", "text");
+      input.value = input_value_value = /*$options*/
+      ctx[8].resultName;
+    },
+    m(target, anchor) {
+      insert(target, input, anchor);
+      if (!mounted) {
+        dispose = listen(
+          input,
+          "input",
+          /*input_handler_1*/
+          ctx[17]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$options*/
+      256 && input_value_value !== (input_value_value = /*$options*/
+      ctx2[8].resultName) && input.value !== input_value_value) {
+        input.value = input_value_value;
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(input);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_default_slot7(ctx) {
+  let t;
+  return {
+    c() {
+      t = text(
+        /*$code*/
+        ctx[9]
+      );
+    },
+    m(target, anchor) {
+      insert(target, t, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$code*/
+      512)
+        set_data(
+          t,
+          /*$code*/
+          ctx2[9]
+        );
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t);
+      }
+    }
+  };
+}
+function create_fragment17(ctx) {
+  let div9;
+  let h2;
+  let t0;
+  let t1_value = (
+    /*model*/
+    ctx[0].title + ""
+  );
+  let t1;
+  let t2;
+  let div2;
+  let div0;
+  let h30;
+  let t4;
+  let t5;
+  let div1;
+  let h31;
+  let t7;
+  let each_blocks_1 = [];
+  let each1_lookup = /* @__PURE__ */ new Map();
+  let t8;
+  let label0;
+  let input;
+  let t9;
+  let t10;
+  let div5;
+  let h32;
+  let t12;
+  let div3;
+  let p0;
+  let t14;
+  let p1;
+  let t15;
+  let span;
+  let t17;
+  let t18;
+  let div4;
+  let t19;
+  let textarea;
+  let t20;
+  let div6;
+  let h33;
+  let t22;
+  let label1;
+  let t23;
+  let formrow;
+  let t24;
+  let div8;
+  let h34;
+  let t26;
+  let div7;
+  let button;
+  let t28;
+  let code_1;
+  let current;
+  let mounted;
+  let dispose;
+  let each_value_2 = ensure_array_like(
+    /*$fields*/
+    ctx[6]
+  );
+  let each_blocks_2 = [];
+  for (let i = 0; i < each_value_2.length; i += 1) {
+    each_blocks_2[i] = create_each_block_23(get_each_context_23(ctx, each_value_2, i));
+  }
+  let each_value_1 = ensure_array_like(
+    /*$fields*/
+    ctx[6]
+  );
+  const get_key = (ctx2) => (
+    /*field*/
+    ctx2[19].name
+  );
+  for (let i = 0; i < each_value_1.length; i += 1) {
+    let child_ctx = get_each_context_14(ctx, each_value_1, i);
+    let key = get_key(child_ctx);
+    each1_lookup.set(key, each_blocks_1[i] = create_each_block_14(key, child_ctx));
+  }
+  let each_value = ensure_array_like(
+    /*$fields*/
+    ctx[6]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block8(get_each_context8(ctx, each_value, i));
+  }
+  label1 = new Label_default({
+    props: {
+      label: "Include frontmatter fences",
+      inline: true,
+      $$slots: { default: [create_default_slot_23] },
+      $$scope: { ctx }
+    }
+  });
+  formrow = new FormRow_default({
+    props: {
+      label: "Result variable name",
+      id: `result_variable_name`,
+      inline: true,
+      $$slots: { default: [create_default_slot_15] },
+      $$scope: { ctx }
+    }
+  });
+  code_1 = new Code_default({
+    props: {
+      allowWrap: true,
+      $$slots: { default: [create_default_slot7] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      div9 = element("div");
+      h2 = element("h2");
+      t0 = text("Template for: ");
+      t1 = text(t1_value);
+      t2 = space();
+      div2 = element("div");
+      div0 = element("div");
+      h30 = element("h3");
+      h30.textContent = "Fields to exclude";
+      t4 = space();
+      for (let i = 0; i < each_blocks_2.length; i += 1) {
+        each_blocks_2[i].c();
+      }
+      t5 = space();
+      div1 = element("div");
+      h31 = element("h3");
+      h31.textContent = "Fields to include in frontmatter";
+      t7 = space();
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        each_blocks_1[i].c();
+      }
+      t8 = space();
+      label0 = element("label");
+      input = element("input");
+      t9 = text("\n                All");
+      t10 = space();
+      div5 = element("div");
+      h32 = element("h3");
+      h32.textContent = "Body template";
+      t12 = space();
+      div3 = element("div");
+      p0 = element("p");
+      p0.textContent = "Whatever you write here will be used in the body part of the template (after the\n                frontmatter).";
+      t14 = space();
+      p1 = element("p");
+      t15 = text("You can use ");
+      span = element("span");
+      span.textContent = `${/*templateMessage*/
+      ctx[10]}`;
+      t17 = text(" syntax to build the body of the\n                template.");
+      t18 = space();
+      div4 = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      t19 = space();
+      textarea = element("textarea");
+      t20 = space();
+      div6 = element("div");
+      h33 = element("h3");
+      h33.textContent = "Options";
+      t22 = space();
+      create_component(label1.$$.fragment);
+      t23 = space();
+      create_component(formrow.$$.fragment);
+      t24 = space();
+      div8 = element("div");
+      h34 = element("h3");
+      h34.textContent = "Template";
+      t26 = space();
+      div7 = element("div");
+      button = element("button");
+      button.textContent = "Copy to clipboard";
+      t28 = space();
+      create_component(code_1.$$.fragment);
+      set_style(h2, "margin-bottom", "0");
+      attr(div0, "class", "flex gap-1 flex-col");
+      attr(input, "type", "checkbox");
+      attr(div1, "class", "flex flex-col gap-1");
+      attr(div2, "class", "flex gap-2");
+      set_style(p0, "margin", "0");
+      set_style(p0, "padding", "0");
+      attr(span, "class", "code svelte-1qlzwkg");
+      set_style(p1, "margin", "0");
+      set_style(p1, "padding", "0");
+      attr(div4, "class", "flex gap-1");
+      attr(textarea, "class", "w-full");
+      attr(textarea, "rows", "10");
+      attr(div5, "class", "flex flex-col gap-2");
+      attr(div6, "class", "flex flex-col flex-1 gap-1");
+      attr(button, "type", "button");
+      attr(div7, "class", "flex gap-1");
+      attr(div8, "class", "flex flex-col flex-1");
+      attr(div9, "class", "modal-form flex flex-col gap-2");
+    },
+    m(target, anchor) {
+      insert(target, div9, anchor);
+      append5(div9, h2);
+      append5(h2, t0);
+      append5(h2, t1);
+      append5(div9, t2);
+      append5(div9, div2);
+      append5(div2, div0);
+      append5(div0, h30);
+      append5(div0, t4);
+      for (let i = 0; i < each_blocks_2.length; i += 1) {
+        if (each_blocks_2[i]) {
+          each_blocks_2[i].m(div0, null);
+        }
+      }
+      append5(div2, t5);
+      append5(div2, div1);
+      append5(div1, h31);
+      append5(div1, t7);
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        if (each_blocks_1[i]) {
+          each_blocks_1[i].m(div1, null);
+        }
+      }
+      append5(div1, t8);
+      append5(div1, label0);
+      append5(label0, input);
+      append5(label0, t9);
+      append5(div9, t10);
+      append5(div9, div5);
+      append5(div5, h32);
+      append5(div5, t12);
+      append5(div5, div3);
+      append5(div3, p0);
+      append5(div3, t14);
+      append5(div3, p1);
+      append5(p1, t15);
+      append5(p1, span);
+      append5(p1, t17);
+      append5(div5, t18);
+      append5(div5, div4);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div4, null);
+        }
+      }
+      append5(div5, t19);
+      append5(div5, textarea);
+      set_input_value(
+        textarea,
+        /*$bodyTemplate*/
+        ctx[7]
+      );
+      append5(div9, t20);
+      append5(div9, div6);
+      append5(div6, h33);
+      append5(div6, t22);
+      mount_component(label1, div6, null);
+      append5(div6, t23);
+      mount_component(formrow, div6, null);
+      append5(div9, t24);
+      append5(div9, div8);
+      append5(div8, h34);
+      append5(div8, t26);
+      append5(div8, div7);
+      append5(div7, button);
+      append5(div8, t28);
+      mount_component(code_1, div8, null);
+      current = true;
+      if (!mounted) {
+        dispose = [
+          listen(
+            input,
+            "change",
+            /*change_handler_1*/
+            ctx[13]
+          ),
+          listen(
+            textarea,
+            "input",
+            /*textarea_input_handler*/
+            ctx[15]
+          ),
+          listen(
+            button,
+            "click",
+            /*click_handler_1*/
+            ctx[18]
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if ((!current || dirty & /*model*/
+      1) && t1_value !== (t1_value = /*model*/
+      ctx2[0].title + ""))
+        set_data(t1, t1_value);
+      if (dirty & /*$fields, model*/
+      65) {
+        each_value_2 = ensure_array_like(
+          /*$fields*/
+          ctx2[6]
+        );
+        let i;
+        for (i = 0; i < each_value_2.length; i += 1) {
+          const child_ctx = get_each_context_23(ctx2, each_value_2, i);
+          if (each_blocks_2[i]) {
+            each_blocks_2[i].p(child_ctx, dirty);
+          } else {
+            each_blocks_2[i] = create_each_block_23(child_ctx);
+            each_blocks_2[i].c();
+            each_blocks_2[i].m(div0, null);
+          }
+        }
+        for (; i < each_blocks_2.length; i += 1) {
+          each_blocks_2[i].d(1);
+        }
+        each_blocks_2.length = each_value_2.length;
+      }
+      if (dirty & /*$fields, model*/
+      65) {
+        each_value_1 = ensure_array_like(
+          /*$fields*/
+          ctx2[6]
+        );
+        each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx2, each_value_1, each1_lookup, div1, destroy_block, create_each_block_14, t8, get_each_context_14);
+      }
+      if (dirty & /*$bodyTemplate, $fields*/
+      192) {
+        each_value = ensure_array_like(
+          /*$fields*/
+          ctx2[6]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context8(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block8(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(div4, null);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
+      }
+      if (dirty & /*$bodyTemplate*/
+      128) {
+        set_input_value(
+          textarea,
+          /*$bodyTemplate*/
+          ctx2[7]
+        );
+      }
+      const label1_changes = {};
+      if (dirty & /*$$scope, $options*/
+      67109120) {
+        label1_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      label1.$set(label1_changes);
+      const formrow_changes = {};
+      if (dirty & /*$$scope, $options*/
+      67109120) {
+        formrow_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      formrow.$set(formrow_changes);
+      const code_1_changes = {};
+      if (dirty & /*$$scope, $code*/
+      67109376) {
+        code_1_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      code_1.$set(code_1_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(label1.$$.fragment, local);
+      transition_in(formrow.$$.fragment, local);
+      transition_in(code_1.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(label1.$$.fragment, local);
+      transition_out(formrow.$$.fragment, local);
+      transition_out(code_1.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div9);
+      }
+      destroy_each(each_blocks_2, detaching);
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        each_blocks_1[i].d();
+      }
+      destroy_each(each_blocks, detaching);
+      destroy_component(label1);
+      destroy_component(formrow);
+      destroy_component(code_1);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function instance17($$self, $$props, $$invalidate) {
+  let fields;
+  let code;
+  let options;
+  let bodyTemplate;
+  let $fields, $$unsubscribe_fields = noop, $$subscribe_fields = () => ($$unsubscribe_fields(), $$unsubscribe_fields = subscribe(fields, ($$value) => $$invalidate(6, $fields = $$value)), fields);
+  let $bodyTemplate, $$unsubscribe_bodyTemplate = noop, $$subscribe_bodyTemplate = () => ($$unsubscribe_bodyTemplate(), $$unsubscribe_bodyTemplate = subscribe(bodyTemplate, ($$value) => $$invalidate(7, $bodyTemplate = $$value)), bodyTemplate);
+  let $options, $$unsubscribe_options = noop, $$subscribe_options = () => ($$unsubscribe_options(), $$unsubscribe_options = subscribe(options, ($$value) => $$invalidate(8, $options = $$value)), options);
+  let $code, $$unsubscribe_code = noop, $$subscribe_code = () => ($$unsubscribe_code(), $$unsubscribe_code = subscribe(code, ($$value) => $$invalidate(9, $code = $$value)), code);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_fields());
+  $$self.$$.on_destroy.push(() => $$unsubscribe_bodyTemplate());
+  $$self.$$.on_destroy.push(() => $$unsubscribe_options());
+  $$self.$$.on_destroy.push(() => $$unsubscribe_code());
+  let { model } = $$props;
+  let { copyToClipboard: copyToClipboard2 } = $$props;
+  const templateMessage = `{{fieldName}} `;
+  const change_handler = (field, v) => model.setField(field.name, { omit: v.currentTarget.checked });
+  const input_handler = (field, v) => model.setField(field.name, { onFrontmatter: v.currentTarget.checked });
+  const change_handler_1 = (e) => model.toggleAllFrontmatter(e.currentTarget.checked);
+  const click_handler = (field) => set_store_value(bodyTemplate, $bodyTemplate += `{{${field.name}}}
+`, $bodyTemplate);
+  function textarea_input_handler() {
+    $bodyTemplate = this.value;
+    bodyTemplate.set($bodyTemplate);
+  }
+  const change_handler_2 = (e) => set_store_value(options, $options.includeFences = e.currentTarget.checked, $options);
+  const input_handler_1 = (e) => set_store_value(options, $options.resultName = e.currentTarget.value, $options);
+  const click_handler_1 = () => copyToClipboard2($code);
+  $$self.$$set = ($$props2) => {
+    if ("model" in $$props2)
+      $$invalidate(0, model = $$props2.model);
+    if ("copyToClipboard" in $$props2)
+      $$invalidate(1, copyToClipboard2 = $$props2.copyToClipboard);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*model*/
+    1) {
+      $:
+        $$subscribe_fields($$invalidate(5, fields = model.fields));
+    }
+    if ($$self.$$.dirty & /*model*/
+    1) {
+      $:
+        $$subscribe_code($$invalidate(4, code = model.code));
+    }
+    if ($$self.$$.dirty & /*model*/
+    1) {
+      $:
+        $$subscribe_options($$invalidate(3, options = model.options));
+    }
+    if ($$self.$$.dirty & /*model*/
+    1) {
+      $:
+        $$subscribe_bodyTemplate($$invalidate(2, bodyTemplate = model.bodyTemplate));
+    }
+  };
+  return [
+    model,
+    copyToClipboard2,
+    bodyTemplate,
+    options,
+    code,
+    fields,
+    $fields,
+    $bodyTemplate,
+    $options,
+    $code,
+    templateMessage,
+    change_handler,
+    input_handler,
+    change_handler_1,
+    click_handler,
+    textarea_input_handler,
+    change_handler_2,
+    input_handler_1,
+    click_handler_1
+  ];
+}
+var TemplateBuilder = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance17, create_fragment17, safe_not_equal, { model: 0, copyToClipboard: 1 }, add_css13);
+  }
+};
+var TemplateBuilder_default = TemplateBuilder;
+
+// src/views/copyToClipboard.ts
+var import_obsidian22 = require("obsidian");
+function copyToClipboard(text3) {
+  navigator.clipboard.writeText(text3).then(
+    () => {
+      new import_obsidian22.Notice("Template has been copied to the clipboard");
+    },
+    (err) => {
+      console.error("Could not copy text: ", err);
+    }
+  );
+}
+
+// src/views/TemplateBuilderModal.ts
+var TemplateBuilderModal = class extends import_obsidian23.Modal {
+  constructor(app2, deps) {
+    super(app2);
+    this.deps = deps;
+  }
+  onClose() {
+    this._component.$destroy();
+  }
+  onOpen() {
+    const { contentEl } = this;
+    this._component = new TemplateBuilder_default({
+      target: contentEl,
+      props: { model: this.deps, copyToClipboard }
+    });
+  }
+};
+
+// src/views/TemplateBuilderView.ts
+var import_obsidian24 = require("obsidian");
+
+// src/core/templater/builder.ts
+function getFunctionBody(fn) {
+  return fn.toString().replace(/^[^{]*{/, "").replace(/}[^}]*$/, "").trim();
+}
+function get_value() {
+  result.get("__key__");
+}
+function buildResultBody(fields, template, options) {
+  const getTemplate = getFunctionBody(get_value).replace(/result/, options.resultName).replace(/;$/, "");
+  console.log({ getTemplate });
+  return fields.reduce((template2, field) => {
+    return template2.replace(
+      new RegExp(`{{${field}}}`, "g"),
+      `<% ${getTemplate.replace(/__key__/, field)} %>`
+    );
+  }, template);
+}
+
+// src/views/components/TemplateBuilder.ts
+var Field2 = (name) => ({
+  name,
+  onFrontmatter: false,
+  onBody: false,
+  omit: false
+});
+function compileFrontmatter(fields, resultName) {
+  const frontmatterFields = fields.filter((field) => field.onFrontmatter).map((field) => field.name);
+  if (frontmatterFields.length === 0) {
+    return "";
+  }
+  if (frontmatterFields.length === fields.length) {
+    return `tR += ${resultName}.asFrontmatterString();`;
+  }
+  return `tR += ${resultName}.asFrontmatterString({ pick: ${JSON.stringify(
+    frontmatterFields,
+    null,
+    16
+  )} 	});`;
+}
+function compileOpenForm(formName, resultName, fieldsToOmit, usesGlobal = false) {
+  const omitOptions = fieldsToOmit.length > 0 ? `, ${JSON.stringify({ omit: fieldsToOmit }, null, 8)}` : "";
+  const args = `"${formName}"${omitOptions}`;
+  console.log({ args });
+  if (usesGlobal) {
+    return [`const ${resultName} = await MF.openForm(${args});`];
+  }
+  return `
+    const modalForm = app.plugins.plugins.modalforms.api;
+    const ${resultName} = await modalForm.openForm(${args});`.trim().split("\n").map((x) => x.trim());
+}
+function compileTemplaterTemplate(formName) {
+  return ([fields, options, bodyTemplate]) => {
+    const fieldsToInclude = fields.filter((field) => !field.omit);
+    const fieldsToOmit = fields.filter((field) => field.omit);
+    const openTheform = compileOpenForm(
+      formName,
+      options.resultName,
+      fieldsToOmit.map((x) => x.name)
+    ).join("\n  ");
+    return [
+      options.includeFences ? `<% "---" %>` : "",
+      `<%*`,
+      `  ${openTheform}`,
+      `  ${compileFrontmatter(fieldsToInclude, options.resultName)}`,
+      `-%>`,
+      options.includeFences ? `<% "---" %>` : "",
+      buildResultBody(
+        fieldsToInclude.map((f) => f.name),
+        bodyTemplate,
+        options
+      )
+    ].join("\n");
+  };
+}
+var makeModel = (formDefinition) => {
+  const fields = writable(
+    formDefinition.fields.reduce((acc, { name }) => [...acc, Field2(name)], [])
+  );
+  const options = writable({ includeFences: true, resultName: "result" });
+  const bodyTemplate = writable("");
+  const code = derived(
+    [fields, options, bodyTemplate],
+    compileTemplaterTemplate(formDefinition.name)
+  );
+  function setField(name, newValues) {
+    console.log({ name, newValues });
+    fields.update(
+      ($fields) => pipe2(
+        $fields,
+        Array_exports.updateFirst(
+          (f) => f.name === name,
+          (f) => {
+            return { ...f, ...newValues };
+          }
+        )
+      )
+    );
+  }
+  function toggleAllFrontmatter(value) {
+    fields.update(
+      ($fields) => $fields.map((f) => {
+        if (f.omit) {
+          return f;
+        }
+        return { ...f, onFrontmatter: value };
+      })
+    );
+  }
+  function omitField(name, value) {
+    setField(name, { omit: value });
+  }
+  return {
+    fields,
+    setField,
+    code,
+    omitField,
+    toggleAllFrontmatter,
+    options,
+    bodyTemplate,
+    title: formDefinition.name
+  };
+};
+
+// src/views/TemplateBuilderView.ts
+var TEMPLATE_BUILDER_VIEW = "modal-form-template-builder-view";
+var TemplateBuilderView = class extends import_obsidian24.ItemView {
+  constructor(leaf, plugin) {
+    super(leaf);
+    this.leaf = leaf;
+    this.plugin = plugin;
+  }
+  getViewType() {
+    return TEMPLATE_BUILDER_VIEW;
+  }
+  getDisplayText() {
+    return "Template Builder";
+  }
+  async onClose() {
+    var _a;
+    (_a = this._component) == null ? void 0 : _a.$destroy();
+  }
+  async onOpen() {
+    const { contentEl } = this;
+    if (!this.model) {
+      console.log("No model found");
+      return;
+    }
+    contentEl.empty();
+    this._component = new TemplateBuilder_default({
+      target: contentEl,
+      props: { model: makeModel(this.model), copyToClipboard }
+    });
+  }
+  getState() {
+    return this.model;
+  }
+  async setState(state, result2) {
+    console.log("Setting state", state);
+    this.model = state;
+    this.app.workspace.trigger("view-state-change", result2);
+    await this.onOpen();
+  }
+};
+
 // src/main.ts
 function notifyParsingErrors(errors) {
   if (errors.length === 0) {
@@ -15465,7 +18339,7 @@ function notifyMigrationErrors(errors) {
             ${errors.map((e) => e.name).join("\n")}`
   );
 }
-var ModalFormPlugin = class extends import_obsidian22.Plugin {
+var ModalFormPlugin = class extends import_obsidian25.Plugin {
   constructor() {
     super(...arguments);
     this.unsubscribeSettingsStore = () => {
@@ -15502,6 +18376,17 @@ var ModalFormPlugin = class extends import_obsidian22.Plugin {
     });
     importModal.open();
   }
+  openTemplateBuilder({
+    // We need the state to be serializable for the view, so we can't get the model directly
+    formDefinition,
+    openOnModal = false
+  }) {
+    if (openOnModal) {
+      new TemplateBuilderModal(this.app, makeModel(formDefinition)).open();
+    } else {
+      this.activateView(TEMPLATE_BUILDER_VIEW, formDefinition);
+    }
+  }
   closeEditForm() {
     this.app.workspace.detachLeavesOfType(EDIT_FORM_VIEW);
   }
@@ -15514,7 +18399,7 @@ var ModalFormPlugin = class extends import_obsidian22.Plugin {
     let leaf = workspace.getLeavesOfType(viewType)[0];
     if (leaf) {
       console.info("found leaf, no reason to create a new one");
-    } else if (import_obsidian22.Platform.isMobile || ((_a = this.settings) == null ? void 0 : _a.editorPosition) === "mainView") {
+    } else if (import_obsidian25.Platform.isMobile || ((_a = this.settings) == null ? void 0 : _a.editorPosition) === "mainView") {
       leaf = this.app.workspace.getLeaf("tab");
     } else if (((_b = this.settings) == null ? void 0 : _b.editorPosition) === "right") {
       leaf = this.app.workspace.getRightLeaf(false);
@@ -15541,7 +18426,7 @@ var ModalFormPlugin = class extends import_obsidian22.Plugin {
       parseSettings(data),
       E.map((settings3) => {
         const migrationIsNeeded2 = settings3.formDefinitions.some(formNeedsMigration);
-        const { right: formDefinitions, left: errors } = A.partitionMap(migrateToLatest)(
+        const { right: formDefinitions, left: errors } = Array_exports.partitionMap(migrateToLatest)(
           settings3.formDefinitions
         );
         notifyParsingErrors(errors);
@@ -15585,7 +18470,7 @@ var ModalFormPlugin = class extends import_obsidian22.Plugin {
   get validFormDefinitions() {
     return pipe2(
       this.settings.formDefinitions,
-      A.filterMap((form) => form instanceof MigrationError ? O.none : O.some(form))
+      Array_exports.filterMap((form) => form instanceof MigrationError ? O.none : O.some(form))
     );
   }
   async onload() {
@@ -15603,6 +18488,7 @@ var ModalFormPlugin = class extends import_obsidian22.Plugin {
     this.attachShortcutToGlobalWindow();
     this.registerView(EDIT_FORM_VIEW, (leaf) => new EditFormView(leaf, this));
     this.registerView(MANAGE_FORMS_VIEW, (leaf) => new ManageFormsView(leaf, this));
+    this.registerView(TEMPLATE_BUILDER_VIEW, (leaf) => new TemplateBuilderView(leaf, this));
     this.addRibbonIcon("documents", "Edit forms", (evt) => {
       this.manageForms();
     });
@@ -15670,7 +18556,7 @@ var ModalFormPlugin = class extends import_obsidian22.Plugin {
   createNoteFromForm() {
     const formsWithTemplates = pipe2(
       this.settings.formDefinitions,
-      A.filterMap((form) => {
+      Array_exports.filterMap((form) => {
         if (form instanceof MigrationError) {
           return O.none;
         }

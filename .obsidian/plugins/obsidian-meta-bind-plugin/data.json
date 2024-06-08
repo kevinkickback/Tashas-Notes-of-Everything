@@ -218,7 +218,8 @@
           "fileName": "temp",
           "openNote": false
         }
-      ]
+      ],
+      "icon": ""
     },
     {
       "label": "+ ADD CONTINENT",
@@ -236,6 +237,24 @@
           "openNote": false
         }
       ]
+    },
+    {
+      "label": "+ ADD PLAYER",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "pc",
+      "style": "default",
+      "actions": [
+        {
+          "type": "templaterCreateNote",
+          "templateFile": "Assets/Templates/PLAYER.md",
+          "folderPath": "Compendium/Party/Player Characters",
+          "fileName": "temp",
+          "openNote": false
+        }
+      ],
+      "icon": ""
     }
   ],
   "excludedFolders": [

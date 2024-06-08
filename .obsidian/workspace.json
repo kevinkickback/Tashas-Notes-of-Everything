@@ -1,14 +1,14 @@
 {
   "main": {
-    "id": "37851a3ed664027e",
+    "id": "c530face6c21a68a",
     "type": "split",
     "children": [
       {
-        "id": "d22329d7b9c2697f",
+        "id": "87bc7bdee4d74769",
         "type": "tabs",
         "children": [
           {
-            "id": "a58bc185899c937e",
+            "id": "efe9ee71c27edfb4",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -26,16 +26,16 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "6d4a1682a5ce5a91",
+    "id": "a0f9c0e9714a9650",
     "type": "split",
     "children": [
       {
-        "id": "9ebca63e5ad41f49",
+        "id": "b0963ff0c5da124c",
         "type": "tabs",
-        "dimension": 23.99425287356322,
+        "dimension": 23.060344827586206,
         "children": [
           {
-            "id": "5d147873dd2a9c1d",
+            "id": "a58c95d8f0002a0b",
             "type": "leaf",
             "state": {
               "type": "image",
@@ -47,31 +47,16 @@
         ]
       },
       {
-        "id": "4e4b925e77e3b6ae",
+        "id": "ec977c9092a10bf2",
         "type": "tabs",
-        "dimension": 76.00574712643679,
+        "dimension": 76.9396551724138,
         "children": [
           {
-            "id": "97418e9d456729af",
+            "id": "e493bc2564fcbecb",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
-              }
-            }
-          },
-          {
-            "id": "7a9cb58b5c9e6a9a",
-            "type": "leaf",
-            "state": {
-              "type": "search",
-              "state": {
-                "query": "tag:#event",
-                "matchingCase": false,
-                "explainSearch": false,
-                "collapseAll": false,
-                "extraContext": false,
                 "sortOrder": "alphabetical"
               }
             }
@@ -80,19 +65,19 @@
       }
     ],
     "direction": "horizontal",
-    "width": 341.5
+    "width": 319.5
   },
   "right": {
-    "id": "8c5f2a8505d045f7",
+    "id": "cbcc3a597fb0833b",
     "type": "split",
     "children": [
       {
-        "id": "dfebf11a40fbf1b5",
+        "id": "36fb3699cc5e9295",
         "type": "tabs",
-        "dimension": 23.132183908045977,
+        "dimension": 20.617816091954023,
         "children": [
           {
-            "id": "a875f997562b811f",
+            "id": "34783b92fcf002b0",
             "type": "leaf",
             "state": {
               "type": "graph",
@@ -102,12 +87,38 @@
         ]
       },
       {
-        "id": "bb4d43a389629645",
+        "id": "1f6fc3dcaa6b4b26",
         "type": "tabs",
-        "dimension": 76.86781609195403,
+        "dimension": 79.38218390804597,
         "children": [
           {
-            "id": "090116e58b2c55d1",
+            "id": "37992ec5383e3e3d",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "5313bc1a958e6408",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "f0a8a458c094cb80",
             "type": "leaf",
             "state": {
               "type": "backlink",
@@ -122,24 +133,12 @@
                 "unlinkedCollapsed": true
               }
             }
-          },
-          {
-            "id": "d23823e162f4be73",
-            "type": "leaf",
-            "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": true
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 343.5
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -148,44 +147,34 @@
       "modalforms:Edit forms": false
     }
   },
-  "active": "a58bc185899c937e",
+  "active": "efe9ee71c27edfb4",
   "lastOpenFiles": [
-    "Assets/Templates/OBJECT.md",
-    "Assets/Templates/NPC.md",
-    "Assets/Templates/CONTINENT.md",
-    "Assets/Templates/LOCALE.md",
-    "Compendium/Party/Player Characters/Moira Belkas.md",
-    "Assets/Templates/PLANE.md",
-    "Assets/Templates/LANDMARK.md",
-    "INDEX.md",
-    "temp.md",
+    "Assets/Templates/STARTUP.md",
     "Assets/Templates/REGION.md",
-    "Compendium/Atlas/undefined",
-    "Compendium/Atlas/undefined/undefined.md",
+    "Assets/Templates/REFRESH.md",
     "Assets/Templates/REALM.md",
     "Assets/Templates/QUEST.md",
+    "Assets/Templates/PLAYER.md",
+    "Assets/Templates/PLANE.md",
     "Assets/Templates/ORGANIZATION.md",
+    "Assets/Templates/OBJECT.md",
+    "Assets/Templates/NPC.md",
     "Assets/Templates/NOTE.md",
-    "Assets/Templates/GOD.md",
+    "Assets/Templates/LOCALE.md",
     "Assets/Templates/EVENT.md",
-    "Compendium/Atlas/test.md",
-    "Ddi it Work.md",
-    "Compendium/NPC's/Tinkera Drenn.md",
+    "Assets/Templates/GOD.md",
+    "Assets/Templates/CONTINENT.md",
+    "Assets/Templates/LANDMARK.md",
+    "INDEX.md",
+    "Compendium/Party/Player Characters/aaaaaaa.md",
+    "Compendium/Party/Player Characters/sdfgs.md",
+    "Compendium/Party/Player Characters/gsdfgs.md",
+    "Compendium/Party/Player Characters/dfgsdfg.md",
+    "Compendium/Party/Player Characters/sdfghbdfghbdfg.md",
     "Compendium/Party/Player Characters/Alaric Waycrest.md",
-    "Compendium/NPC's/Paloma Beltre.md",
-    "Compendium/Lore/Events/temp.md",
-    "Compendium/Lore/Deities/temp.md",
-    "Compendium/Party/Quests/temp.md",
-    "Compendium/NPC's/temp.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/dfghdfgh",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/hyhyhyhyh",
-    "Compendium/Atlas/qweqweqwe",
-    "Compendium/Atlas/asd",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Test Location",
-    "Compendium/Atlas/zzz",
-    "Compendium/Atlas/qwe",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/asd",
-    "Compendium/Atlas/a",
+    "Compendium/Party/Player Characters/asdfasdfa.md",
+    "Compendium/Party/Player Characters/dfghdh.md",
+    "Compendium/Party/Player Characters/dfthd erawer.md",
     "Assets/Images/header.png"
   ]
 }

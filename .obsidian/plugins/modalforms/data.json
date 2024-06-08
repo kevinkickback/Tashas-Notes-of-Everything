@@ -71,12 +71,7 @@
       "version": "1",
       "template": {
         "createCommand": true,
-        "parsedTemplate": [
-          {
-            "_tag": "text",
-            "value": "what the fuck? {[Name}}"
-          }
-        ]
+        "parsedTemplate": []
       }
     },
     {
@@ -422,7 +417,7 @@
           "isRequired": false,
           "input": {
             "type": "dataview",
-            "query": "['Armor','Jewelry','Magic Item','Weapon','Religious Artifact','Treasure','Jewelry']"
+            "query": "['Armor','Jewelry','Magic Item','Weapon','Religious Artifact','Treasure']"
           }
         }
       ],
@@ -581,26 +576,8 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "select",
-            "source": "fixed",
-            "options": [
-              {
-                "value": "Country",
-                "label": "Country"
-              },
-              {
-                "value": "General Region",
-                "label": "General Region"
-              },
-              {
-                "value": "Kingdom",
-                "label": "Kingdom"
-              },
-              {
-                "value": "Nation",
-                "label": "Nation"
-              }
-            ]
+            "type": "dataview",
+            "query": "['Country','General Region','Kingdom','Nation']"
           }
         },
         {
@@ -615,6 +592,75 @@
         }
       ],
       "version": "1"
+    },
+    {
+      "title": "Add New Player",
+      "name": "PC",
+      "customClassname": "",
+      "fields": [
+        {
+          "name": "Name",
+          "label": "Name:",
+          "description": "",
+          "isRequired": true,
+          "input": {
+            "type": "text"
+          }
+        },
+        {
+          "name": "Race",
+          "label": "Race:",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "dataview",
+            "query": "['Aarakocra','Aasimar','Bugbear','Centaur','Changeling','Dragonborn','Dwarf','Elf','Fairy','Firbolg','Genasi','Gnome','Goblin','Goliath','Grung','Halfling','Half-Elf','Half-Orc','Hobgoblin','Human','Kalashtar','Kenku','Kobold','Leonin','Lizardfolk','Loxodon','Minotaur','Orc','Owlfolk','Satyr','Shifter','Simic Hybrid','Tabaxi','Tiefling','Tortle','Triton','Vedalken','Verdan','Warforged','Yuan-Ti Pureblood']"
+          }
+        },
+        {
+          "name": "Level",
+          "label": "Level:",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "text"
+          }
+        },
+        {
+          "name": "pClass",
+          "label": "Class:",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "dataview",
+            "query": "['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard', 'Artificer']"
+          }
+        },
+        {
+          "name": "subClass",
+          "label": "Sub Class:",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "dataview",
+            "query": "['Ancestral Guardian', 'Battlerager', 'Berserker', 'Storm Herald', 'Totem Warrior', 'Zealot', 'College of Creation', 'College of Eloquence', 'College of Glamour', 'College of Lore', 'College of Swords', 'College of Valor', 'College of Whispers', 'Arcana Domain', 'Death Domain', 'Forge Domain', 'Grave Domain', 'Knowledge Domain', 'Life Domain', 'Light Domain', 'Nature Domain', 'Order Domain', 'Peace Domain', 'Tempest Domain', 'Trickery Domain', 'Twilight Domain', 'War Domain', 'Circle of Dreams', 'Circle of Spores', 'Circle of Stars', 'Circle of the Land', 'Circle of the Moon', 'Circle of the Shepherd', 'Circle of Wildfire', 'Arcane Archer', 'Battle Master', 'Cavalier', 'Champion', 'Echo Knight', 'Eldritch Knight', 'Psi Warrior', 'Purple Dragon Knight', 'Rune Knight', 'Samurai', 'Drunken Master', 'Four Elements', 'Kensei', 'Long Death', 'Mercy', 'Open Hand', 'Shadow', 'Sun Soul', 'Ancients', 'Conquest', 'Crown', 'Devotion', 'Glory', 'Oathbreaker', 'Redemption', 'Vengeance', 'Watchers', 'Beast Master', 'Fey Wanderer', 'Gloom Stalker', 'Horizon Walker', 'Hunter', 'Monster Slayer', 'Swarmkeeper', 'Arcane Trickster', 'Assassin', 'Inquisitive', 'Mastermind', 'Phantom', 'Scout', 'Soulknife', 'Swashbuckler', 'Thief', 'Aberrant Mind', 'Clockwork Soul', 'Divine Soul', 'Draconic Bloodline', 'Shadow Magic', 'Storm Sorcery', 'Wild Magic', 'Archfey', 'Celestial', 'Fathomless', 'Fiend', 'Genie', 'Great Old One', 'Hexblade', 'Undead', 'Undying', 'Bladesinging', 'Chronurgy', 'Graviturgy', 'Lore Mastery', 'Order of Scribes', 'School of Abjuration', 'School of Conjuration', 'School of Divination', 'School of Enchantment', 'School of Evocation', 'School of Illusion', 'School of Necromancy', 'School of Transmutation', 'War Magic', 'Alchemist', 'Armorer', 'Artillerist', 'Battle Smith']"
+          }
+        },
+        {
+          "name": "Quote",
+          "label": "Quote:",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "text"
+          }
+        }
+      ],
+      "version": "1",
+      "template": {
+        "createCommand": true,
+        "parsedTemplate": []
+      }
     }
   ]
 }

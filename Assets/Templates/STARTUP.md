@@ -28,24 +28,25 @@ console.log('NPC Toggle: event listener attached');
 //              FIX BROKEN ICON CODES ON STARTUP
 // ###########################################################
 
-// Intercept console.log messages & trigger reload on match
-console.log = ((originalConsoleLog) => (...args) => {
-    originalConsoleLog.apply(console, args);
-    const trigger = 'loaded icon pack remix-icons';
+// Intercept console.info messages & trigger reload on match
+console.info = ((originalConsoleInfo) => (...args) => {
+    originalConsoleInfo.apply(console, args);
+    const trigger = "Loaded icon pack 'remix-icons'";
     if (args[0].includes(trigger)) {
         reload();
     }
-})(console.log);
+})(console.info);
 
 // Reload Tabs (only if reading view mode & broken icons detected)
 const reload = async () => {
     const leaves = this.app.workspace.getLeavesOfType('markdown');
     const blank = this.app.vault.getAbstractFileByPath('Assets/Templates/REFRESH.md');
+    console.log(leaves);
     for (const leaf of leaves) {
         // Can add "leaf.width > 0"  below to check if tab is visible.
         if (leaf.view.currentMode.type === 'preview' && /:[A-z]+:/.test(leaf.containerEl.innerHTML)) {
-            const tab = app.workspace.getLeafById(leaf.id)
-            const file = leaf.view.file
+            const tab = app.workspace.getLeafById(leaf.id);
+            const file = leaf.view.file;
             await tab.openFile(blank, { active: false });
             await tab.openFile(file, { active: false });
             console.log('Reloaded tab:', leaf.view.file.basename);

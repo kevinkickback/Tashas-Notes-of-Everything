@@ -58,7 +58,6 @@ if (result.status === 'ok') {
 } else {
 
     // Fire toast notifcation & exit templater
-    console.log('Modal form cancelled');
     new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Region has not been added`;
     return;
 }

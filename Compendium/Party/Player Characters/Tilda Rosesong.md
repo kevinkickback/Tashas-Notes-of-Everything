@@ -4,9 +4,9 @@ tags:
 - race/tiefling
 - class/sorcerer
 headerLink: "[[Tilda Rosesong#Tilda Rosesong]]"
-level: 3
-race: Tiefling
-class: Sorcerer
+level: "3"
+race: "Tiefling"
+class: "Sorcerer"
 subClass: "Divine Soul"
 cover: "/Assets/Images/Party/tilda.webp"
 ---

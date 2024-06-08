@@ -3,7 +3,7 @@ cssClasses: index
 ---
 ![[compendium.jpg|banner]]
 ###### <span class="head">Campaign Journal</span> 
-
+ 
 ```dataviewjs
 // Set path and class
 const vault = this.app.vault.adapter.getResourcePath("").split("?")[0];
@@ -21,7 +21,7 @@ dv.table(["cover", "name", "details"],
 );
 ```
 
-> [!npc]-   NPC's<br><span class="sub">Non-Player Character</span>
+> [!npc]-   NPC's<br><span class="sub">Non-Player Characters</span>
 > ```dataviewjs
 > dv.container.className += ' listMe';
 > let pages = dv.pages('"Compendium/NPC\'s"').sort(p => p.file.name, "asc");  
@@ -29,7 +29,7 @@ dv.table(["cover", "name", "details"],
 >```
 > `BUTTON[npc]`
 
-> [!agenda]-  Agenda<br><span class="sub">Objectives, Pursuits, & Quests</span>
+> [!agenda]-  The Party<br><span class="sub">Objectives, Players, & Quests</span>
 >```dataviewjs
 >dv.container.className += ' listMe';
 >let tags = [];
@@ -41,7 +41,7 @@ dv.table(["cover", "name", "details"],
 >return [`- ${page.headerLink} ${status}`, status];
 >}));
 >```
-> `BUTTON[quest]`
+> `BUTTON[pc]` `BUTTON[quest]`
 
 > [!genloc]-  Locations<br><span class="sub">Countries, Settlements, & Topography</span>
 > ```dataviewjs

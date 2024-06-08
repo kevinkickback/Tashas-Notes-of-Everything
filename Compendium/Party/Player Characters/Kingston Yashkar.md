@@ -4,10 +4,10 @@ tags:
 - race/tabaxi
 - class/paladin
 headerLink: "[[Kingston Yashkar#Kingston Yashkar]]"
-level: 3
-race: Tabaxi
-class: Paladin
-subClass: Conquest
+level: "3"
+race: "Tabaxi"
+class: "Paladin"
+subClass: "Conquest"
 cover: "/Assets/Images/Party/kingston.png"
 ---
 ###### Kingston Yashkar
@@ -20,7 +20,7 @@ ___
 > | ---- | ---- |
 > | :FasCrown: Level   | `=this.level` |
 > | :RiSwordFill: Class |  `=this.class`|
-> | :FasHandsPraying: Oath |  `=this.subClass`|
+> | :FasFireFlameCurved: Oath |  `=this.subClass`|
 > |  :FasUserGroup: Race |  `=this.race`|
 
 > [!quote|no-t]

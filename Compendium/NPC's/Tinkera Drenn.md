@@ -19,7 +19,7 @@ ___
 > | Type | Stat |
 > | ---- | ---- |
 > | :FasBriefcase:  Job | Shopkeeper |
-> | :fas_venus_mars: Gender | Female |
+> | :FasVenusMars: Gender | Female |
 > | :FasUser: Race | Gnome |
 <span class="clearfix"></span>
 

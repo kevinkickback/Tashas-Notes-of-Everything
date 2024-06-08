@@ -4,9 +4,9 @@ tags:
 - race/human
 - class/ranger
 headerLink: "[[Moira Belkas#Moira Belkas]]"
-level: 3
-race: Human
-class: Ranger
+level: "3"
+race: "Human"
+class: "Ranger"
 subClass: "Gloom Stalker"
 cover: "/Assets/Images/Party/moira.jpg"
 ---
