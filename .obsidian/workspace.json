@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "87bc7bdee4d74769",
+        "id": "fb1c8ec5c26cf366",
         "type": "tabs",
         "children": [
           {
-            "id": "efe9ee71c27edfb4",
+            "id": "7403ed8009f595c8",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -108,7 +108,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#domain",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -144,37 +144,41 @@
     "hiddenItems": {
       "graph:Open graph view": false,
       "command-palette:Open command palette": false,
-      "modalforms:Edit forms": false
+      "modalforms:Edit forms": false,
+      "templater-obsidian:Templater": false
     }
   },
-  "active": "efe9ee71c27edfb4",
+  "active": "7403ed8009f595c8",
   "lastOpenFiles": [
-    "Assets/Templates/STARTUP.md",
-    "Assets/Templates/REGION.md",
-    "Assets/Templates/REFRESH.md",
-    "Assets/Templates/REALM.md",
-    "Assets/Templates/QUEST.md",
-    "Assets/Templates/PLAYER.md",
-    "Assets/Templates/PLANE.md",
-    "Assets/Templates/ORGANIZATION.md",
-    "Assets/Templates/OBJECT.md",
-    "Assets/Templates/NPC.md",
-    "Assets/Templates/NOTE.md",
-    "Assets/Templates/LOCALE.md",
-    "Assets/Templates/EVENT.md",
-    "Assets/Templates/GOD.md",
-    "Assets/Templates/CONTINENT.md",
-    "Assets/Templates/LANDMARK.md",
+    "README.md",
     "INDEX.md",
-    "Compendium/Party/Player Characters/aaaaaaa.md",
-    "Compendium/Party/Player Characters/sdfgs.md",
-    "Compendium/Party/Player Characters/gsdfgs.md",
-    "Compendium/Party/Player Characters/dfgsdfg.md",
-    "Compendium/Party/Player Characters/sdfghbdfghbdfg.md",
+    "Assets/Templates/LOCALE.md",
+    "Assets/Templates/LANDMARK.md",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/fixed/fixed.md",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/fixed",
+    "Assets/Templates/NOTE.md",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Waterdeep/Waterdeep.md",
+    "Compendium/Atlas/broken 2/broken 2.md",
+    "Compendium/Atlas/broken 2",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/broken/broken.md",
+    "{broken.md",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/broken",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Baldurs Gate.md",
+    "Assets/Templates/CONTINENT.md",
+    "Compendium/Party/Quests/Double Trouble.md",
     "Compendium/Party/Player Characters/Alaric Waycrest.md",
-    "Compendium/Party/Player Characters/asdfasdfa.md",
-    "Compendium/Party/Player Characters/dfghdh.md",
-    "Compendium/Party/Player Characters/dfthd erawer.md",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/Baldurs Gate/Sorcerous Sundries.md",
+    "Compendium/Party/Player Characters/Kingston Yashkar.md",
+    "Assets/Templates/STARTUP.md",
+    "Assets/Templates/REALM.md",
+    "Assets/Templates/OBJECT.md",
+    "Compendium/NPC's/Eleidin Verlice.md",
+    "Compendium/Party/Quests/temp.md",
+    "Compendium/Lore/Deities/temp.md",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/The Sword Coast/The Sword Coast.md",
+    "Compendium/Lore/Deities/Beshaba.md",
+    "Compendium/Party/Player Characters/Tilda Rosesong.md",
+    "Compendium/Party/Player Characters/Moira Belkas.md",
     "Assets/Images/header.png"
   ]
 }

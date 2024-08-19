@@ -41,7 +41,6 @@ console.info = ((originalConsoleInfo) => (...args) => {
 const reload = async () => {
     const leaves = this.app.workspace.getLeavesOfType('markdown');
     const blank = this.app.vault.getAbstractFileByPath('Assets/Templates/REFRESH.md');
-    console.log(leaves);
     for (const leaf of leaves) {
         // Can add "leaf.width > 0"  below to check if tab is visible.
         if (leaf.view.currentMode.type === 'preview' && /:[A-z]+:/.test(leaf.containerEl.innerHTML)) {

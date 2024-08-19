@@ -36,7 +36,7 @@ ul li ul.dropdown.npcedit {
 /* remove dropdown default bullets */ 
 .sortMenu .list-bullet::after  { 
 background-color: transparent;
-content: "  ";
+display: none;
 }
 
 /* dropdown menu icon */ 
@@ -54,7 +54,7 @@ content: "  ";
 }
 .sortIcon svg {
   margin-top: -2em;
-  color: #a5a3a3;;
+  color: #a5a3a3;
 }
 
 /* dropdown menu styles */ 
@@ -94,7 +94,6 @@ content: "  ";
 /* selected option bullet indicator */ 
 .active::after {
   content: '';
-  display: inline-block;
   width: 6px;
   height: 6px;
   margin-top: 4px;

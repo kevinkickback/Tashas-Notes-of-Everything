@@ -37,12 +37,12 @@
     "Buttons",
     "Embed Adjustments",
     "Image Adjustments",
-    "Lists",
     "Prism Theme Edits",
     "Tables",
     "Popup",
     "NPC Toggle",
-    "Modal Form"
+    "Modal Form",
+    "Lists"
   ],
   "baseFontSizeAction": false,
   "accentColor": "#8a5cf5",

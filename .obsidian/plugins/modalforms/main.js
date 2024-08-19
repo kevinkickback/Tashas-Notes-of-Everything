@@ -26,6 +26,19 @@ var __publicField = (obj, key, value) => {
   __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
   return value;
 };
+var __accessCheck = (obj, member, msg) => {
+  if (!member.has(obj))
+    throw TypeError("Cannot " + msg);
+};
+var __privateGet = (obj, member, getter) => {
+  __accessCheck(obj, member, "read from private field");
+  return getter ? getter.call(obj) : member.get(obj);
+};
+var __privateAdd = (obj, member, value) => {
+  if (member.has(obj))
+    throw TypeError("Cannot add the same private member more than once");
+  member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
+};
 
 // src/main.ts
 var main_exports = {};
@@ -41,7 +54,9 @@ __export(std_exports, {
   E: () => E,
   EFunSemigroup: () => EFunSemigroup,
   NEA: () => NEA,
-  O: () => O,
+  O: () => Option_exports,
+  Str: () => string_exports,
+  Struct: () => struct_exports,
   absurd: () => absurd2,
   ensureError: () => ensureError,
   flow: () => flow2,
@@ -69,6 +84,13 @@ var __spreadArray = function(to, from, pack) {
 function identity(a) {
   return a;
 }
+function constant(a) {
+  return function() {
+    return a;
+  };
+}
+var constNull = /* @__PURE__ */ constant(null);
+var constUndefined = /* @__PURE__ */ constant(void 0);
 function flow(ab, bc, cd, de, ef, fg, gh, hi, ij) {
   switch (arguments.length) {
     case 1:
@@ -201,6 +223,7 @@ var head = function(as6) {
 var tail = function(as6) {
   return as6.slice(1);
 };
+var emptyReadonlyArray = [];
 var emptyRecord = {};
 var has = Object.prototype.hasOwnProperty;
 var fromReadonlyNonEmptyArray = function(as6) {
@@ -260,6 +283,19 @@ function apS(F) {
     };
   };
 }
+function getApplySemigroup(F) {
+  return function(S) {
+    return {
+      concat: function(first2, second) {
+        return F.ap(F.map(first2, function(x) {
+          return function(y) {
+            return S.concat(x, y);
+          };
+        }), second);
+      }
+    };
+  };
+}
 
 // node_modules/fp-ts/es6/Chain.js
 function chainFirst(M) {
@@ -296,6 +332,14 @@ function bind(M) {
 function fromEitherK(F) {
   return function(f) {
     return flow(f, F.fromEither);
+  };
+}
+function chainEitherK(F, M) {
+  var fromEitherKF = fromEitherK(F);
+  return function(f) {
+    return function(ma) {
+      return M.chain(ma, fromEitherKF(f));
+    };
   };
 }
 function tapEither(F, M) {
@@ -367,6 +411,16 @@ var fromEquals = function(equals) {
     }
   };
 };
+var struct = function(eqs) {
+  return fromEquals(function(first2, second) {
+    for (var key in eqs) {
+      if (!eqs[key].equals(first2[key], second[key])) {
+        return false;
+      }
+    }
+    return true;
+  });
+};
 var eqStrict = {
   equals: function(a, b) {
     return a === b;
@@ -426,14 +480,14 @@ var concatAll = function(M) {
 };
 
 // node_modules/fp-ts/es6/Semigroup.js
-var constant = function(a) {
+var constant2 = function(a) {
   return {
     concat: function() {
       return a;
     }
   };
 };
-var struct = function(semigroups) {
+var struct2 = function(semigroups) {
   return {
     concat: function(first2, second) {
       var r = {};
@@ -455,7 +509,7 @@ var last = function() {
   } };
 };
 var concatAll2 = concatAll;
-var semigroupVoid = constant(void 0);
+var semigroupVoid = constant2(void 0);
 var semigroupAll = {
   concat: function(x, y) {
     return x && y;
@@ -662,9 +716,9 @@ function concat(x, y) {
     return y2.concat(x);
   };
 }
-var sort = function(O2) {
+var sort = function(O) {
   return function(as6) {
-    return as6.slice().sort(O2.compare);
+    return as6.slice().sort(O.compare);
   };
 };
 var copy = fromReadonlyNonEmptyArray2;
@@ -1014,13 +1068,13 @@ var getEq2 = function(E2) {
     });
   });
 };
-var getOrd = function(O2) {
+var getOrd = function(O) {
   return fromCompare(function(a, b) {
     var aLen = a.length;
     var bLen = b.length;
     var len = Math.min(aLen, bLen);
     for (var i = 0; i < len; i++) {
-      var ordering = O2.compare(a[i], b[i]);
+      var ordering = O.compare(a[i], b[i]);
       if (ordering !== 0) {
         return ordering;
       }
@@ -1283,9 +1337,9 @@ var lefts = function(as6) {
   }
   return r;
 };
-var sort2 = function(O2) {
+var sort2 = function(O) {
   return function(as6) {
-    return as6.length <= 1 ? copy2(as6) : as6.slice().sort(O2.compare);
+    return as6.length <= 1 ? copy2(as6) : as6.slice().sort(O.compare);
   };
 };
 var zipWith = function(fa, fb, f) {
@@ -1987,6 +2041,17 @@ var array = {
   wilt: _wilt
 };
 
+// node_modules/fp-ts/es6/Applicative.js
+function getApplicativeMonoid(F) {
+  var f = getApplySemigroup(F);
+  return function(M) {
+    return {
+      concat: f(M).concat,
+      empty: F.of(M.empty)
+    };
+  };
+}
+
 // node_modules/fp-ts/es6/ChainRec.js
 var tailRec = function(startWith, f) {
   var ab = f(startWith);
@@ -2104,6 +2169,112 @@ var tryCatchK = function(f, onThrow) {
 var chainW = flatMap2;
 var chain2 = flatMap2;
 
+// node_modules/fp-ts/es6/Option.js
+var Option_exports = {};
+__export(Option_exports, {
+  Alt: () => Alt2,
+  Alternative: () => Alternative2,
+  ApT: () => ApT,
+  Applicative: () => Applicative2,
+  Apply: () => Apply3,
+  Chain: () => Chain3,
+  Compactable: () => Compactable2,
+  Do: () => Do2,
+  Extend: () => Extend2,
+  Filterable: () => Filterable2,
+  Foldable: () => Foldable2,
+  FromEither: () => FromEither3,
+  Functor: () => Functor3,
+  Monad: () => Monad2,
+  MonadThrow: () => MonadThrow,
+  Pointed: () => Pointed2,
+  Traversable: () => Traversable2,
+  URI: () => URI3,
+  Witherable: () => Witherable2,
+  Zero: () => Zero2,
+  alt: () => alt2,
+  altW: () => altW2,
+  ap: () => ap4,
+  apFirst: () => apFirst3,
+  apS: () => apS3,
+  apSecond: () => apSecond3,
+  as: () => as3,
+  asUnit: () => asUnit3,
+  bind: () => bind3,
+  bindTo: () => bindTo3,
+  chain: () => chain3,
+  chainEitherK: () => chainEitherK2,
+  chainFirst: () => chainFirst3,
+  chainFirstEitherK: () => chainFirstEitherK,
+  chainNullableK: () => chainNullableK,
+  compact: () => compact2,
+  duplicate: () => duplicate2,
+  elem: () => elem3,
+  exists: () => exists2,
+  extend: () => extend2,
+  filter: () => filter2,
+  filterMap: () => filterMap2,
+  flap: () => flap4,
+  flatMap: () => flatMap3,
+  flatten: () => flatten2,
+  fold: () => fold2,
+  foldMap: () => foldMap4,
+  foldW: () => foldW,
+  fromEither: () => fromEither2,
+  fromEitherK: () => fromEitherK3,
+  fromNullable: () => fromNullable2,
+  fromNullableK: () => fromNullableK,
+  fromPredicate: () => fromPredicate2,
+  getApplyMonoid: () => getApplyMonoid,
+  getApplySemigroup: () => getApplySemigroup2,
+  getEq: () => getEq4,
+  getFirstMonoid: () => getFirstMonoid,
+  getLastMonoid: () => getLastMonoid,
+  getLeft: () => getLeft,
+  getMonoid: () => getMonoid3,
+  getOrElse: () => getOrElse2,
+  getOrElseW: () => getOrElseW2,
+  getOrd: () => getOrd3,
+  getRefinement: () => getRefinement,
+  getRight: () => getRight,
+  getShow: () => getShow4,
+  guard: () => guard3,
+  isNone: () => isNone2,
+  isSome: () => isSome2,
+  let: () => let_3,
+  map: () => map4,
+  mapNullable: () => mapNullable,
+  match: () => match4,
+  matchW: () => matchW4,
+  none: () => none2,
+  of: () => of5,
+  option: () => option,
+  orElse: () => orElse2,
+  partition: () => partition2,
+  partitionMap: () => partitionMap2,
+  reduce: () => reduce4,
+  reduceRight: () => reduceRight4,
+  separate: () => separate2,
+  sequence: () => sequence2,
+  sequenceArray: () => sequenceArray,
+  some: () => some3,
+  tap: () => tap3,
+  tapEither: () => tapEither2,
+  throwError: () => throwError,
+  toNullable: () => toNullable,
+  toUndefined: () => toUndefined,
+  traverse: () => traverse2,
+  traverseArray: () => traverseArray,
+  traverseArrayWithIndex: () => traverseArrayWithIndex,
+  traverseReadonlyArrayWithIndex: () => traverseReadonlyArrayWithIndex,
+  traverseReadonlyNonEmptyArrayWithIndex: () => traverseReadonlyNonEmptyArrayWithIndex,
+  tryCatch: () => tryCatch2,
+  tryCatchK: () => tryCatchK2,
+  wilt: () => wilt2,
+  wither: () => wither2,
+  zero: () => zero2
+});
+
 // node_modules/fp-ts/es6/Predicate.js
 var not = function(predicate) {
   return function(a) {
@@ -2119,6 +2290,9 @@ function fromPredicate2(predicate) {
     return predicate(a) ? some3(a) : none2;
   };
 }
+var getLeft = function(ma) {
+  return ma._tag === "Right" ? none2 : some3(ma.left);
+};
 var getRight = function(ma) {
   return ma._tag === "Left" ? none2 : some3(ma.right);
 };
@@ -2128,7 +2302,73 @@ var _map3 = function(fa, f) {
 var _ap3 = function(fab, fa) {
   return pipe(fab, ap4(fa));
 };
+var _reduce2 = function(fa, b, f) {
+  return pipe(fa, reduce4(b, f));
+};
+var _foldMap2 = function(M) {
+  var foldMapM = foldMap4(M);
+  return function(fa, f) {
+    return pipe(fa, foldMapM(f));
+  };
+};
+var _reduceRight2 = function(fa, b, f) {
+  return pipe(fa, reduceRight4(b, f));
+};
+var _traverse2 = function(F) {
+  var traverseF = traverse2(F);
+  return function(ta, f) {
+    return pipe(ta, traverseF(f));
+  };
+};
+var _alt2 = function(fa, that) {
+  return pipe(fa, alt2(that));
+};
+var _filter2 = function(fa, predicate) {
+  return pipe(fa, filter2(predicate));
+};
+var _filterMap2 = function(fa, f) {
+  return pipe(fa, filterMap2(f));
+};
+var _extend2 = function(wa, f) {
+  return pipe(wa, extend2(f));
+};
+var _partition2 = function(fa, predicate) {
+  return pipe(fa, partition2(predicate));
+};
+var _partitionMap2 = function(fa, f) {
+  return pipe(fa, partitionMap2(f));
+};
 var URI3 = "Option";
+var getShow4 = function(S) {
+  return {
+    show: function(ma) {
+      return isNone2(ma) ? "none" : "some(".concat(S.show(ma.value), ")");
+    }
+  };
+};
+var getEq4 = function(E2) {
+  return {
+    equals: function(x, y) {
+      return x === y || (isNone2(x) ? isNone2(y) : isNone2(y) ? false : E2.equals(x.value, y.value));
+    }
+  };
+};
+var getOrd3 = function(O) {
+  return {
+    equals: getEq4(O).equals,
+    compare: function(x, y) {
+      return x === y ? 0 : isSome2(x) ? isSome2(y) ? O.compare(x.value, y.value) : 1 : -1;
+    }
+  };
+};
+var getMonoid3 = function(S) {
+  return {
+    concat: function(x, y) {
+      return isNone2(x) ? y : isNone2(y) ? x : some3(S.concat(x.value, y.value));
+    },
+    empty: none2
+  };
+};
 var map4 = function(f) {
   return function(fa) {
     return isNone2(fa) ? none2 : some3(f(fa.value));
@@ -2140,10 +2380,26 @@ var Functor3 = {
 };
 var as3 = dual(2, as(Functor3));
 var asUnit3 = asUnit(Functor3);
+var of5 = some3;
+var Pointed2 = {
+  URI: URI3,
+  of: of5
+};
 var ap4 = function(fa) {
   return function(fab) {
     return isNone2(fab) ? none2 : isNone2(fa) ? none2 : some3(fab.value(fa.value));
   };
+};
+var Apply3 = {
+  URI: URI3,
+  map: _map3,
+  ap: _ap3
+};
+var Applicative2 = {
+  URI: URI3,
+  map: _map3,
+  ap: _ap3,
+  of: of5
 };
 var flatMap3 = /* @__PURE__ */ dual(2, function(ma, f) {
   return isNone2(ma) ? none2 : f(ma.value);
@@ -2154,10 +2410,177 @@ var Chain3 = {
   ap: _ap3,
   chain: flatMap3
 };
+var Monad2 = {
+  URI: URI3,
+  map: _map3,
+  ap: _ap3,
+  of: of5,
+  chain: flatMap3
+};
+var reduce4 = function(b, f) {
+  return function(fa) {
+    return isNone2(fa) ? b : f(b, fa.value);
+  };
+};
+var foldMap4 = function(M) {
+  return function(f) {
+    return function(fa) {
+      return isNone2(fa) ? M.empty : f(fa.value);
+    };
+  };
+};
+var reduceRight4 = function(b, f) {
+  return function(fa) {
+    return isNone2(fa) ? b : f(fa.value, b);
+  };
+};
+var Foldable2 = {
+  URI: URI3,
+  reduce: _reduce2,
+  foldMap: _foldMap2,
+  reduceRight: _reduceRight2
+};
 var orElse2 = dual(2, function(self, that) {
   return isNone2(self) ? that() : self;
 });
+var altW2 = orElse2;
 var alt2 = orElse2;
+var Alt2 = {
+  URI: URI3,
+  map: _map3,
+  alt: _alt2
+};
+var zero2 = function() {
+  return none2;
+};
+var Zero2 = {
+  URI: URI3,
+  zero: zero2
+};
+var guard3 = /* @__PURE__ */ guard(Zero2, Pointed2);
+var Alternative2 = {
+  URI: URI3,
+  map: _map3,
+  ap: _ap3,
+  of: of5,
+  alt: _alt2,
+  zero: zero2
+};
+var extend2 = function(f) {
+  return function(wa) {
+    return isNone2(wa) ? none2 : some3(f(wa));
+  };
+};
+var Extend2 = {
+  URI: URI3,
+  map: _map3,
+  extend: _extend2
+};
+var compact2 = /* @__PURE__ */ flatMap3(identity);
+var defaultSeparated = /* @__PURE__ */ separated(none2, none2);
+var separate2 = function(ma) {
+  return isNone2(ma) ? defaultSeparated : separated(getLeft(ma.value), getRight(ma.value));
+};
+var Compactable2 = {
+  URI: URI3,
+  compact: compact2,
+  separate: separate2
+};
+var filter2 = function(predicate) {
+  return function(fa) {
+    return isNone2(fa) ? none2 : predicate(fa.value) ? fa : none2;
+  };
+};
+var filterMap2 = function(f) {
+  return function(fa) {
+    return isNone2(fa) ? none2 : f(fa.value);
+  };
+};
+var partition2 = function(predicate) {
+  return function(fa) {
+    return separated(_filter2(fa, not(predicate)), _filter2(fa, predicate));
+  };
+};
+var partitionMap2 = function(f) {
+  return flow(map4(f), separate2);
+};
+var Filterable2 = {
+  URI: URI3,
+  map: _map3,
+  compact: compact2,
+  separate: separate2,
+  filter: _filter2,
+  filterMap: _filterMap2,
+  partition: _partition2,
+  partitionMap: _partitionMap2
+};
+var traverse2 = function(F) {
+  return function(f) {
+    return function(ta) {
+      return isNone2(ta) ? F.of(none2) : F.map(f(ta.value), some3);
+    };
+  };
+};
+var sequence2 = function(F) {
+  return function(ta) {
+    return isNone2(ta) ? F.of(none2) : F.map(ta.value, some3);
+  };
+};
+var Traversable2 = {
+  URI: URI3,
+  map: _map3,
+  reduce: _reduce2,
+  foldMap: _foldMap2,
+  reduceRight: _reduceRight2,
+  traverse: _traverse2,
+  sequence: sequence2
+};
+var _wither2 = /* @__PURE__ */ witherDefault(Traversable2, Compactable2);
+var _wilt2 = /* @__PURE__ */ wiltDefault(Traversable2, Compactable2);
+var wither2 = function(F) {
+  var _witherF = _wither2(F);
+  return function(f) {
+    return function(fa) {
+      return _witherF(fa, f);
+    };
+  };
+};
+var wilt2 = function(F) {
+  var _wiltF = _wilt2(F);
+  return function(f) {
+    return function(fa) {
+      return _wiltF(fa, f);
+    };
+  };
+};
+var Witherable2 = {
+  URI: URI3,
+  map: _map3,
+  reduce: _reduce2,
+  foldMap: _foldMap2,
+  reduceRight: _reduceRight2,
+  traverse: _traverse2,
+  sequence: sequence2,
+  compact: compact2,
+  separate: separate2,
+  filter: _filter2,
+  filterMap: _filterMap2,
+  partition: _partition2,
+  partitionMap: _partitionMap2,
+  wither: _wither2,
+  wilt: _wilt2
+};
+var throwError = function() {
+  return none2;
+};
+var MonadThrow = {
+  URI: URI3,
+  map: _map3,
+  ap: _ap3,
+  of: of5,
+  chain: flatMap3,
+  throwError
+};
 var fromEither2 = getRight;
 var FromEither3 = {
   URI: URI3,
@@ -2172,6 +2595,7 @@ var matchW4 = function(onNone, onSome) {
     return isNone2(ma) ? onNone() : onSome(ma.value);
   };
 };
+var foldW = matchW4;
 var match4 = matchW4;
 var fold2 = match4;
 var getOrElseW2 = function(onNone) {
@@ -2180,12 +2604,139 @@ var getOrElseW2 = function(onNone) {
   };
 };
 var getOrElse2 = getOrElseW2;
+var flap4 = /* @__PURE__ */ flap(Functor3);
+var apFirst3 = /* @__PURE__ */ apFirst(Apply3);
+var apSecond3 = /* @__PURE__ */ apSecond(Apply3);
+var flatten2 = compact2;
 var tap3 = /* @__PURE__ */ dual(2, tap(Chain3));
 var tapEither2 = /* @__PURE__ */ dual(2, tapEither(FromEither3, Chain3));
+var duplicate2 = /* @__PURE__ */ extend2(identity);
+var fromEitherK3 = /* @__PURE__ */ fromEitherK(FromEither3);
+var chainEitherK2 = /* @__PURE__ */ chainEitherK(FromEither3, Chain3);
+var chainFirstEitherK = tapEither2;
 var fromNullable2 = function(a) {
   return a == null ? none2 : some3(a);
 };
+var tryCatch2 = function(f) {
+  try {
+    return some3(f());
+  } catch (e) {
+    return none2;
+  }
+};
+var tryCatchK2 = function(f) {
+  return function() {
+    var a = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+      a[_i] = arguments[_i];
+    }
+    return tryCatch2(function() {
+      return f.apply(void 0, a);
+    });
+  };
+};
+var fromNullableK = function(f) {
+  return flow(f, fromNullable2);
+};
+var chainNullableK = function(f) {
+  return function(ma) {
+    return isNone2(ma) ? none2 : fromNullable2(f(ma.value));
+  };
+};
+var toNullable = /* @__PURE__ */ match4(constNull, identity);
+var toUndefined = /* @__PURE__ */ match4(constUndefined, identity);
+function elem3(E2) {
+  return function(a, ma) {
+    if (ma === void 0) {
+      var elemE_1 = elem3(E2);
+      return function(ma2) {
+        return elemE_1(a, ma2);
+      };
+    }
+    return isNone2(ma) ? false : E2.equals(a, ma.value);
+  };
+}
+var exists2 = function(predicate) {
+  return function(ma) {
+    return isNone2(ma) ? false : predicate(ma.value);
+  };
+};
+var Do2 = /* @__PURE__ */ of5(emptyRecord);
+var bindTo3 = /* @__PURE__ */ bindTo(Functor3);
+var let_3 = /* @__PURE__ */ let_(Functor3);
+var bind3 = /* @__PURE__ */ bind(Chain3);
+var apS3 = /* @__PURE__ */ apS(Apply3);
+var ApT = /* @__PURE__ */ of5(emptyReadonlyArray);
+var traverseReadonlyNonEmptyArrayWithIndex = function(f) {
+  return function(as6) {
+    var o = f(0, head(as6));
+    if (isNone2(o)) {
+      return none2;
+    }
+    var out = [o.value];
+    for (var i = 1; i < as6.length; i++) {
+      var o_1 = f(i, as6[i]);
+      if (isNone2(o_1)) {
+        return none2;
+      }
+      out.push(o_1.value);
+    }
+    return some3(out);
+  };
+};
+var traverseReadonlyArrayWithIndex = function(f) {
+  var g = traverseReadonlyNonEmptyArrayWithIndex(f);
+  return function(as6) {
+    return isNonEmpty(as6) ? g(as6) : ApT;
+  };
+};
+var traverseArrayWithIndex = traverseReadonlyArrayWithIndex;
+var traverseArray = function(f) {
+  return traverseReadonlyArrayWithIndex(function(_, a) {
+    return f(a);
+  });
+};
+var sequenceArray = /* @__PURE__ */ traverseArray(identity);
 var chain3 = flatMap3;
+var chainFirst3 = tap3;
+function getRefinement(getOption) {
+  return function(a) {
+    return isSome2(getOption(a));
+  };
+}
+var mapNullable = chainNullableK;
+var option = {
+  URI: URI3,
+  map: _map3,
+  of: of5,
+  ap: _ap3,
+  chain: flatMap3,
+  reduce: _reduce2,
+  foldMap: _foldMap2,
+  reduceRight: _reduceRight2,
+  traverse: _traverse2,
+  sequence: sequence2,
+  zero: zero2,
+  alt: _alt2,
+  extend: _extend2,
+  compact: compact2,
+  separate: separate2,
+  filter: _filter2,
+  filterMap: _filterMap2,
+  partition: _partition2,
+  partitionMap: _partitionMap2,
+  wither: _wither2,
+  wilt: _wilt2,
+  throwError
+};
+var getApplySemigroup2 = /* @__PURE__ */ getApplySemigroup(Apply3);
+var getApplyMonoid = /* @__PURE__ */ getApplicativeMonoid(Applicative2);
+var getFirstMonoid = function() {
+  return getMonoid3(first());
+};
+var getLastMonoid = function() {
+  return getMonoid3(last());
+};
 
 // node_modules/fp-ts/es6/EitherT.js
 function right4(F) {
@@ -2301,7 +2852,7 @@ var ap6 = function(fa) {
     };
   };
 };
-var of5 = function(a) {
+var of6 = function(a) {
   return function() {
     return Promise.resolve(a);
   };
@@ -2320,9 +2871,9 @@ var Functor4 = {
 };
 var as4 = dual(2, as(Functor4));
 var asUnit4 = asUnit(Functor4);
-var Pointed2 = {
+var Pointed3 = {
   URI: URI4,
-  of: of5
+  of: of6
 };
 var ApplyPar = {
   URI: URI4,
@@ -2335,10 +2886,10 @@ var Chain4 = {
   ap: _apPar,
   chain: flatMap5
 };
-var Monad2 = {
+var Monad3 = {
   URI: URI4,
   map: _map4,
-  of: of5,
+  of: of6,
   ap: _apPar,
   chain: flatMap5
 };
@@ -2460,16 +3011,16 @@ var __generator = function(thisArg, body) {
     return { value: op[0] ? op[1] : void 0, done: true };
   }
 };
-var left5 = /* @__PURE__ */ left4(Pointed2);
-var right5 = /* @__PURE__ */ right4(Pointed2);
+var left5 = /* @__PURE__ */ left4(Pointed3);
+var right5 = /* @__PURE__ */ right4(Pointed3);
 var rightTask = /* @__PURE__ */ rightF(Functor4);
 var rightIO = /* @__PURE__ */ flow(fromIO, rightTask);
 var fromIO2 = rightIO;
 var fromTask = rightTask;
-var fromEither3 = of5;
+var fromEither3 = of6;
 var match6 = /* @__PURE__ */ match5(Functor4);
-var getOrElse4 = /* @__PURE__ */ getOrElse3(Monad2);
-var tryCatch2 = function(f, onRejected) {
+var getOrElse4 = /* @__PURE__ */ getOrElse3(Monad3);
+var tryCatch3 = function(f, onRejected) {
   return function() {
     return __awaiter(void 0, void 0, void 0, function() {
       var reason_1;
@@ -2493,18 +3044,18 @@ var tryCatch2 = function(f, onRejected) {
     });
   };
 };
-var tryCatchK2 = function(f, onRejected) {
+var tryCatchK3 = function(f, onRejected) {
   return function() {
     var a = [];
     for (var _i = 0; _i < arguments.length; _i++) {
       a[_i] = arguments[_i];
     }
-    return tryCatch2(function() {
+    return tryCatch3(function() {
       return f.apply(void 0, a);
     }, onRejected);
   };
 };
-var tapError2 = /* @__PURE__ */ dual(2, tapError(Monad2));
+var tapError2 = /* @__PURE__ */ dual(2, tapError(Monad3));
 var _map5 = function(fa, f) {
   return pipe(fa, map7(f));
 };
@@ -2516,7 +3067,7 @@ var mapBoth2 = /* @__PURE__ */ dual(3, mapBoth(Functor4));
 var mapError2 = /* @__PURE__ */ dual(2, mapError(Functor4));
 var mapLeft2 = mapError2;
 var ap7 = /* @__PURE__ */ ap5(ApplyPar);
-var flatMap6 = /* @__PURE__ */ dual(2, flatMap4(Monad2));
+var flatMap6 = /* @__PURE__ */ dual(2, flatMap4(Monad3));
 var URI5 = "TaskEither";
 var Functor5 = {
   URI: URI5,
@@ -3150,6 +3701,137 @@ function minLength(requirement, error2) {
   return (input) => input.length < requirement ? getPipeIssues("min_length", error2 || "Invalid length", input) : getOutput(input);
 }
 
+// node_modules/fp-ts/es6/string.js
+var string_exports = {};
+__export(string_exports, {
+  Eq: () => Eq2,
+  Monoid: () => Monoid,
+  Ord: () => Ord2,
+  Semigroup: () => Semigroup,
+  Show: () => Show,
+  empty: () => empty3,
+  endsWith: () => endsWith,
+  includes: () => includes,
+  isEmpty: () => isEmpty2,
+  isString: () => isString,
+  replace: () => replace,
+  size: () => size2,
+  slice: () => slice,
+  split: () => split,
+  startsWith: () => startsWith,
+  toLowerCase: () => toLowerCase,
+  toUpperCase: () => toUpperCase,
+  trim: () => trim,
+  trimLeft: () => trimLeft,
+  trimRight: () => trimRight
+});
+var Eq2 = {
+  equals: function(first2, second) {
+    return first2 === second;
+  }
+};
+var Semigroup = {
+  concat: function(first2, second) {
+    return first2 + second;
+  }
+};
+var empty3 = "";
+var Monoid = {
+  concat: Semigroup.concat,
+  empty: empty3
+};
+var Ord2 = {
+  equals: Eq2.equals,
+  compare: function(first2, second) {
+    return first2 < second ? -1 : first2 > second ? 1 : 0;
+  }
+};
+var Show = {
+  show: function(s) {
+    return JSON.stringify(s);
+  }
+};
+var isString = function(u) {
+  return typeof u === "string";
+};
+var toUpperCase = function(s) {
+  return s.toUpperCase();
+};
+var toLowerCase = function(s) {
+  return s.toLowerCase();
+};
+var replace = function(searchValue, replaceValue) {
+  return function(s) {
+    return s.replace(searchValue, replaceValue);
+  };
+};
+var trim = function(s) {
+  return s.trim();
+};
+var trimLeft = function(s) {
+  return s.trimLeft();
+};
+var trimRight = function(s) {
+  return s.trimRight();
+};
+var slice = function(start, end) {
+  return function(s) {
+    return s.slice(start, end);
+  };
+};
+var isEmpty2 = function(s) {
+  return s.length === 0;
+};
+var size2 = function(s) {
+  return s.length;
+};
+var split = function(separator) {
+  return function(s) {
+    var out = s.split(separator);
+    return isNonEmpty2(out) ? out : [s];
+  };
+};
+var includes = function(searchString, position) {
+  return function(s) {
+    return s.includes(searchString, position);
+  };
+};
+var startsWith = function(searchString, position) {
+  return function(s) {
+    return s.startsWith(searchString, position);
+  };
+};
+var endsWith = function(searchString, position) {
+  return function(s) {
+    return s.endsWith(searchString, position);
+  };
+};
+
+// node_modules/fp-ts/es6/struct.js
+var struct_exports = {};
+__export(struct_exports, {
+  evolve: () => evolve,
+  getAssignSemigroup: () => getAssignSemigroup
+});
+var getAssignSemigroup = function() {
+  return {
+    concat: function(first2, second) {
+      return Object.assign({}, first2, second);
+    }
+  };
+};
+var evolve = function(transformations) {
+  return function(a) {
+    var out = {};
+    for (var k in a) {
+      if (has.call(a, k)) {
+        out[k] = transformations[k](a[k]);
+      }
+    }
+    return out;
+  };
+};
+
 // src/std/Array.ts
 var Array_exports = {};
 __export(Array_exports, {
@@ -3356,20 +4038,6 @@ var E = {
   chainW,
   fold: match3
 };
-var O = {
-  map: map4,
-  getOrElse: getOrElse2,
-  some: some3,
-  none: none2,
-  fold: fold2,
-  fromNullable: fromNullable2,
-  chain: chain3,
-  fromPredicate: fromPredicate2,
-  isNone: isNone2,
-  isSome: isSome2,
-  alt: alt2,
-  match: match4
-};
 var parse2 = tryCatchK(parse, (e) => e);
 function parseC(schema, options) {
   return (input, moreOptions) => parse2(schema, input, { ...options, ...moreOptions });
@@ -3420,531 +4088,25 @@ function parseFunctionBody(body, ...args) {
 ${body}`;
   try {
     const fn = AsyncFunction(...args, fnBody);
-    return right3(tryCatchK2(fn, ensureError));
+    return right3(tryCatchK3(fn, ensureError));
   } catch (e) {
     return left3(ensureError(e));
   }
 }
 
 // src/main.ts
-var import_obsidian25 = require("obsidian");
+var import_obsidian28 = require("obsidian");
 
 // src/API.ts
-var import_obsidian9 = require("obsidian");
-
-// node_modules/fp-ts/es6/string.js
-var Eq2 = {
-  equals: function(first2, second) {
-    return first2 === second;
-  }
-};
-var Semigroup2 = {
-  concat: function(first2, second) {
-    return first2 + second;
-  }
-};
-var empty3 = "";
-var Monoid = {
-  concat: Semigroup2.concat,
-  empty: empty3
-};
-var Ord2 = {
-  equals: Eq2.equals,
-  compare: function(first2, second) {
-    return first2 < second ? -1 : first2 > second ? 1 : 0;
-  }
-};
-var isString = function(u) {
-  return typeof u === "string";
-};
-var trim = function(s) {
-  return s.trim();
-};
-var split = function(separator) {
-  return function(s) {
-    var out = s.split(separator);
-    return isNonEmpty2(out) ? out : [s];
-  };
-};
-
-// node_modules/fp-ts/es6/ReadonlyRecord.js
-function filterMapWithIndex2(f) {
-  return function(r) {
-    var out = {};
-    for (var k in r) {
-      if (has.call(r, k)) {
-        var ob = f(k, r[k]);
-        if (isSome(ob)) {
-          out[k] = ob.value;
-        }
-      }
-    }
-    return out;
-  };
-}
-function filterWithIndex2(predicateWithIndex) {
-  return function(fa) {
-    var out = {};
-    var changed = false;
-    for (var key in fa) {
-      if (has.call(fa, key)) {
-        var a = fa[key];
-        if (predicateWithIndex(key, a)) {
-          out[key] = a;
-        } else {
-          changed = true;
-        }
-      }
-    }
-    return changed ? out : fa;
-  };
-}
-function fromFoldable(M, F) {
-  var fromFoldableMapM = fromFoldableMap(M, F);
-  return function(fka) {
-    return fromFoldableMapM(fka, identity);
-  };
-}
-function fromFoldableMap(M, F) {
-  return function(ta, f) {
-    return F.reduce(ta, {}, function(r, a) {
-      var _a = f(a), k = _a[0], b = _a[1];
-      r[k] = has.call(r, k) ? M.concat(r[k], b) : b;
-      return r;
-    });
-  };
-}
-var filterMap2 = function(f) {
-  return filterMapWithIndex2(function(_, a) {
-    return f(a);
-  });
-};
-
-// node_modules/fp-ts/es6/Record.js
-var keys_ = function(O2) {
-  return function(r) {
-    return Object.keys(r).sort(O2.compare);
-  };
-};
-function collect(O2) {
-  if (typeof O2 === "function") {
-    return collect(Ord2)(O2);
-  }
-  var keysO = keys_(O2);
-  return function(f) {
-    return function(r) {
-      var out = [];
-      for (var _i = 0, _a = keysO(r); _i < _a.length; _i++) {
-        var key = _a[_i];
-        out.push(f(key, r[key]));
-      }
-      return out;
-    };
-  };
-}
-var toArray = /* @__PURE__ */ collect(Ord2)(function(k, a) {
-  return [
-    k,
-    a
-  ];
-});
-var filterMapWithIndex3 = filterMapWithIndex2;
-function filterWithIndex3(predicateWithIndex) {
-  return filterWithIndex2(predicateWithIndex);
-}
-function fromFoldable2(M, F) {
-  return fromFoldable(M, F);
-}
-var toEntries = toArray;
-var fromEntries = function(fa) {
-  return fromFoldable2(last(), Foldable)(fa);
-};
-var filterMap3 = filterMap2;
+var import_obsidian12 = require("obsidian");
 
 // src/FormModal.ts
-var import_obsidian8 = require("obsidian");
-
-// src/utils/Log.ts
-var import_obsidian = require("obsidian");
-
-// src/utils/ModalFormError.ts
-var ModalFormError = class extends Error {
-  constructor(msg, console_msg) {
-    super(msg);
-    this.console_msg = console_msg;
-    this.name = this.constructor.name;
-    Error.captureStackTrace(this, this.constructor);
-  }
-};
-
-// src/utils/Log.ts
-function log_notice(title, msg, titleClass, bodyClass) {
-  const notice = new import_obsidian.Notice("", 15e3);
-  const el = notice.noticeEl;
-  el.empty();
-  const head6 = el.createEl("h6", { text: title, cls: titleClass });
-  head6.setCssStyles({ marginTop: "0px" });
-  const body = el.createEl("div", { text: msg, cls: bodyClass });
-  el.append(head6, body);
-}
-function log_error(e) {
-  if (e instanceof ModalFormError && e.console_msg) {
-    log_notice("Modal from error: ", e.message + "\n" + e.console_msg, "var(--text-error)");
-    console.error(`Modal form Error:`, e.message, "\n", e.console_msg);
-  } else {
-    log_notice("Modal from error", e.message);
-  }
-}
-var notifyError = (title) => (msg) => log_notice(`\u{1F6A8} ${title} \u{1F6A8}`, msg, "notice-error");
-
-// src/core/ResultValue.ts
-function _toBulletList(value) {
-  if (Array.isArray(value)) {
-    return value.map((v) => `- ${v}`).join("\n");
-  }
-  return Object.entries(value).map(([key, value2]) => `- ${key}: ${value2}`).join("\n");
-}
-function isRecord(value) {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
-}
-function deepMap(value, fn) {
-  if (Array.isArray(value)) {
-    return value.map((v) => deepMap(v, fn));
-  }
-  if (isRecord(value)) {
-    return Object.fromEntries(
-      Object.entries(value).map(([key, value2]) => [key, deepMap(value2, fn)])
-    );
-  }
-  return fn(value);
-}
-var ResultValue = class {
-  constructor(value, name, notify2 = notify2) {
-    this.value = value;
-    this.name = name;
-    this.notify = notify2;
-    /** Alias for `toDataview` */
-    this.toDv = this.toDataview;
-    /** Alias for `toBulletList` */
-    this.toBullets = this.toBulletList;
-  }
-  static from(value, name, notify2 = notifyError) {
-    return new ResultValue(value, name, notify2);
-  }
-  /**
-   * Returns the value as a string.
-   * If the value is an array, it will be joined with a comma.
-   * If the value is an object, it will be stringified.
-   * This is convenient because it is the default method called automatically
-   * when the value needs to be rendered as a string, so you can just drop
-   * the value directly into a template without having to call this method.
-   * @returns string
-   */
-  toString() {
-    switch (typeof this.value) {
-      case "string":
-        return this.value;
-      case "number":
-      case "boolean":
-        return this.value.toString();
-      case "object":
-        if (Array.isArray(this.value)) {
-          return this.value.join(", ");
-        }
-        return JSON.stringify(this.value);
-      default:
-        return "";
-    }
-  }
-  /**
-   * Returns the value as a bullet list.
-   * If the value is empty or undefined, it will return an empty string.
-   * If the value is a single value, it will return as a single item bullet list.
-   * If the value is an array, it will return a bullet list with each item in the array.
-   * If the value is an object, it will return a bullet list with each key/value pair in the object.
-   * @returns string
-   */
-  toBulletList() {
-    switch (typeof this.value) {
-      case "boolean":
-      case "number":
-      case "string":
-        return `- ${this.value}`;
-      case "object": {
-        const value = this.value;
-        if (value === null)
-          return "";
-        if (Array.isArray(value)) {
-          return _toBulletList(value);
-        }
-        if (isRecord(value)) {
-          return _toBulletList(value);
-        }
-        return `- ${JSON.stringify(value)}`;
-      }
-      default:
-        return "";
-    }
-  }
-  /**
-   * Converts the value to a dataview property using the field name as the key.
-   * If the value is empty or undefined, it will return an empty string and not render anything.
-   */
-  toDataview() {
-    const value = this.value;
-    if (value === void 0)
-      return "";
-    if (Array.isArray(value)) {
-      return `[${this.name}:: ${JSON.stringify(value).slice(1, -1)}]`;
-    }
-    return `[${this.name}:: ${this.toString()}]`;
-  }
-  /**
-   * Transforms the containerd value using the provided function.
-   * If the value is undefined or null the function will not be called
-   * and the result will be the same as the original.
-   * This is useful if you want to apply somme modifications to the value
-   * before rendering it, for example if none of the existing format methods suit your needs.
-   * @param {function} fn the function to transform the values
-   * @returns a new FormValue with the transformed value
-   **/
-  map(fn) {
-    const safeFn = E.tryCatchK(fn, ensureError);
-    const unchanged = () => this;
-    return pipe2(
-      this.value,
-      O.fromNullable,
-      O.map(safeFn),
-      O.fold(
-        unchanged,
-        (v) => pipe2(
-          v,
-          E.fold(
-            (e) => {
-              this.notify("Error in map of " + this.name)(e.message);
-              return unchanged();
-            },
-            (v2) => ResultValue.from(v2, this.name, this.notify)
-          )
-        )
-      )
-    );
-  }
-  /**
-   * Convenient getter to get the value as bullets, so you don't need to call `toBulletList` manually.
-   * example:
-   * ```ts
-   *  result.getValue("myField").bullets;
-   * ```
-   */
-  get bullets() {
-    return this.toBulletList();
-  }
-  /**
-   * getter that returns all the string values uppercased.
-   * If the value is an array, it will return an array with all the strings uppercased.
-   */
-  get upper() {
-    return this.map(
-      (v) => deepMap(v, (it) => typeof it === "string" ? it.toLocaleUpperCase() : it)
-    );
-  }
-  /**
-   * getter that returns all the string values lowercased.
-   * If the value is an array, it will return an array with all the strings lowercased.
-   * If the value is an object, it will return an object with all the string values lowercased.
-   * @returns FormValue
-   */
-  get lower() {
-    return this.map(
-      (v) => deepMap(v, (it) => typeof it === "string" ? it.toLocaleLowerCase() : it)
-    );
-  }
-  /**
-   * getter that returns all the string values trimmed.
-   * */
-  get trimmed() {
-    return this.map((v) => deepMap(v, (it) => typeof it === "string" ? it.trim() : it));
-  }
-};
-
-// src/core/objectSelect.ts
-var KeysSchema = array2(coerce(string(), String));
-var PickOmitSchema = object({
-  pick: optional(KeysSchema),
-  omit: optional(KeysSchema)
-});
-function picKeys(obj) {
-  return (keys) => pipe2(
-    obj,
-    filterWithIndex3((k) => keys.includes(k))
-  );
-}
-function omitKeys(obj) {
-  return (keys) => pipe2(
-    obj,
-    filterWithIndex3((k) => !keys.includes(k))
-  );
-}
-function objectSelect(obj, opts) {
-  return pipe2(
-    parse2(PickOmitSchema, opts, { abortEarly: true }),
-    E.map(
-      (opts2) => {
-        const picked = pipe2(
-          fromNullable2(opts2.pick),
-          flatMap3(fromArray),
-          map4(picKeys(obj)),
-          getOrElse2(() => obj)
-        );
-        return pipe2(
-          fromNullable2(opts2.omit),
-          flatMap3(fromArray),
-          map4(omitKeys(picked)),
-          getOrElse2(() => picked)
-        );
-      }
-    ),
-    E.getOrElse(() => obj)
-  );
-}
-
-// src/core/FormResult.ts
-var import_obsidian2 = require("obsidian");
-function isPrimitive(value) {
-  return typeof value === "string" || typeof value === "boolean" || typeof value === "number";
-}
-function isPrimitiveArray(value) {
-  return Array.isArray(value) && value.every(isPrimitive);
-}
-var FormResult = class {
-  constructor(data, status) {
-    this.data = data;
-    this.status = status;
-    // alias
-    this.getV = this.getValue;
-    /* == Aliases ==*/
-    /** just an alias for `asFrontmatterString` */
-    this.asFrontmatter = this.asFrontmatterString;
-    /** just an alias for `asFrontmatterString` */
-    this.asYaml = this.asFrontmatterString;
-    /** just an alias for `asDataviewProperties` */
-    this.asDataview = this.asDataviewProperties;
-    /** just an alias for `asDataviewProperties` */
-    this.asDv = this.asDataviewProperties;
-  }
-  static make(data, status) {
-    return new Proxy(new FormResult(data, status), {
-      get(target, key, receiver) {
-        if (key in target || typeof key !== "string") {
-          return Reflect.get(target, key, receiver);
-        }
-        return target.getValue(key);
-      }
-    });
-  }
-  /**
-   * Transform  the current data into a frontmatter string, which is expected
-   * to be enclosed in `---` when used in a markdown file.
-   * This method does not add the enclosing `---` to the string,
-   * so you can put it anywhere inside the frontmatter.
-   * @param {Object} [options] an options object describing what options to pick or omit
-   * @param {string[]} [options.pick] an array of key names to pick from the data
-   * @param {string[]} [options.omit] an array of key names to omit from the data
-   * @returns the data formatted as a frontmatter string
-   */
-  asFrontmatterString(options) {
-    const data = objectSelect(this.data, options);
-    return (0, import_obsidian2.stringifyYaml)(data);
-  }
-  /**
-   * Return the current data as a block of dataview properties
-   * @param {Object} [options] an options object describing what options to pick or omit
-   * @param {string[]} [options.pick] an array of key names to pick from the data
-   * @param {string[]} [options.omit] an array of key names to omit from the data
-   * @returns string
-   */
-  asDataviewProperties(options) {
-    const data = objectSelect(this.data, options);
-    return Object.entries(data).map(([key, value]) => `${key}:: ${Array.isArray(value) ? value.map((v) => JSON.stringify(v)) : value}`).join("\n");
-  }
-  /**
-  Returns a copy of the data contained on this result.
-  */
-  getData() {
-    return { ...this.data };
-  }
-  /**
-   * Returns the data formatted as a string matching the provided
-   * template.
-   */
-  asString(template) {
-    let result2 = template;
-    for (const [key, value] of Object.entries(this.data)) {
-      result2 = result2.replace(new RegExp(`{{${key}}}`, "g"), value + "");
-    }
-    return result2;
-  }
-  /**
-   * Gets a single value from the data.
-   * It takes an optiional mapping function thatt can be used to transform the value.
-   * The function will only be called if the value exists.
-   * @param {string} key the key to get the value from
-   * @param {function} [mapFn] a function to transform the value
-   * @returns the value transformed by the function if it was provided, the value or empty string if it doesn't exist
-   */
-  get(key, mapFn) {
-    const value = this.data[key];
-    if (value === void 0) {
-      return "";
-    }
-    if (mapFn) {
-      return mapFn(value);
-    }
-    if (typeof value === "object") {
-      return JSON.stringify(value);
-    }
-    return value;
-  }
-  getValue(key) {
-    return ResultValue.from(this.data[key], key);
-  }
-};
-
-// src/core/formDataFromFormDefaults.ts
-function formDataFromFormDefaults(fields, values) {
-  const result2 = {};
-  const invalidKeys = [];
-  for (const [key, value] of Object.entries(values)) {
-    if (Array.isArray(value) && isPrimitiveArray(value)) {
-      result2[key] = value;
-    } else if (isPrimitive(value)) {
-      result2[key] = value;
-    } else {
-      invalidKeys.push(key);
-    }
-  }
-  if (invalidKeys.length > 0) {
-    log_error(new ModalFormError(`Invalid keys in form options: ${invalidKeys.join(", ")}`));
-  }
-  return pipe2(
-    fields,
-    Array_exports.map((field) => {
-      return pipe2(
-        result2[field.name],
-        fromNullable2,
-        match4(() => field.input.type === "toggle" ? some3(false) : none2, some3),
-        map4((value) => [field.name, value])
-      );
-    }),
-    Array_exports.compact,
-    fromEntries
-  );
-}
+var import_obsidian11 = require("obsidian");
 
 // node_modules/svelte/src/runtime/internal/utils.js
 function noop() {
 }
+var identity2 = (x) => x;
 function assign(tar, src) {
   for (const k in src)
     tar[k] = src[k];
@@ -4045,6 +4207,37 @@ function action_destroyer(action_result) {
   return action_result && is_function(action_result.destroy) ? action_result.destroy : noop;
 }
 
+// node_modules/svelte/src/runtime/internal/environment.js
+var is_client = typeof window !== "undefined";
+var now = is_client ? () => window.performance.now() : () => Date.now();
+var raf = is_client ? (cb) => requestAnimationFrame(cb) : noop;
+
+// node_modules/svelte/src/runtime/internal/loop.js
+var tasks = /* @__PURE__ */ new Set();
+function run_tasks(now2) {
+  tasks.forEach((task) => {
+    if (!task.c(now2)) {
+      tasks.delete(task);
+      task.f();
+    }
+  });
+  if (tasks.size !== 0)
+    raf(run_tasks);
+}
+function loop(callback) {
+  let task;
+  if (tasks.size === 0)
+    raf(run_tasks);
+  return {
+    promise: new Promise((fulfill) => {
+      tasks.add(task = { c: callback, f: fulfill });
+    }),
+    abort() {
+      tasks.delete(task);
+    }
+  };
+}
+
 // node_modules/svelte/src/runtime/internal/globals.js
 var globals = typeof window !== "undefined" ? window : typeof globalThis !== "undefined" ? globalThis : (
   // @ts-ignore Node typings have this
@@ -4132,6 +4325,12 @@ function get_root_for_style(node) {
   }
   return node.ownerDocument;
 }
+function append_empty_stylesheet(node) {
+  const style_element = element("style");
+  style_element.textContent = "/* empty */";
+  append_stylesheet(get_root_for_style(node), style_element);
+  return style_element.sheet;
+}
 function append_stylesheet(node, style) {
   append5(
     /** @type {Document} */
@@ -4207,9 +4406,9 @@ function set_style(node, key, value, important) {
 }
 function select_option(select, value, mounting) {
   for (let i = 0; i < select.options.length; i += 1) {
-    const option = select.options[i];
-    if (option.__value === value) {
-      option.selected = true;
+    const option2 = select.options[i];
+    if (option2.__value === value) {
+      option2.selected = true;
       return;
     }
   }
@@ -4224,6 +4423,9 @@ function select_value(select) {
 function toggle_class(element2, name, toggle) {
   element2.classList.toggle(name, !!toggle);
 }
+function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
+  return new CustomEvent(type, { detail, bubbles, cancelable });
+}
 function get_custom_elements_slots(element2) {
   const result2 = {};
   element2.childNodes.forEach(
@@ -4233,6 +4435,70 @@ function get_custom_elements_slots(element2) {
     }
   );
   return result2;
+}
+
+// node_modules/svelte/src/runtime/internal/style_manager.js
+var managed_styles = /* @__PURE__ */ new Map();
+var active = 0;
+function hash(str) {
+  let hash2 = 5381;
+  let i = str.length;
+  while (i--)
+    hash2 = (hash2 << 5) - hash2 ^ str.charCodeAt(i);
+  return hash2 >>> 0;
+}
+function create_style_information(doc, node) {
+  const info = { stylesheet: append_empty_stylesheet(node), rules: {} };
+  managed_styles.set(doc, info);
+  return info;
+}
+function create_rule(node, a, b, duration, delay, ease, fn, uid = 0) {
+  const step = 16.666 / duration;
+  let keyframes = "{\n";
+  for (let p = 0; p <= 1; p += step) {
+    const t = a + (b - a) * ease(p);
+    keyframes += p * 100 + `%{${fn(t, 1 - t)}}
+`;
+  }
+  const rule = keyframes + `100% {${fn(b, 1 - b)}}
+}`;
+  const name = `__svelte_${hash(rule)}_${uid}`;
+  const doc = get_root_for_style(node);
+  const { stylesheet, rules } = managed_styles.get(doc) || create_style_information(doc, node);
+  if (!rules[name]) {
+    rules[name] = true;
+    stylesheet.insertRule(`@keyframes ${name} ${rule}`, stylesheet.cssRules.length);
+  }
+  const animation = node.style.animation || "";
+  node.style.animation = `${animation ? `${animation}, ` : ""}${name} ${duration}ms linear ${delay}ms 1 both`;
+  active += 1;
+  return name;
+}
+function delete_rule(node, name) {
+  const previous = (node.style.animation || "").split(", ");
+  const next = previous.filter(
+    name ? (anim) => anim.indexOf(name) < 0 : (anim) => anim.indexOf("__svelte") === -1
+    // remove all Svelte animations
+  );
+  const deleted = previous.length - next.length;
+  if (deleted) {
+    node.style.animation = next.join(", ");
+    active -= deleted;
+    if (!active)
+      clear_rules();
+  }
+}
+function clear_rules() {
+  raf(() => {
+    if (active)
+      return;
+    managed_styles.forEach((info) => {
+      const { ownerNode } = info.stylesheet;
+      if (ownerNode)
+        detach(ownerNode);
+    });
+    managed_styles.clear();
+  });
 }
 
 // node_modules/svelte/src/runtime/internal/lifecycle.js
@@ -4328,6 +4594,19 @@ function flush_render_callbacks(fns) {
 }
 
 // node_modules/svelte/src/runtime/internal/transitions.js
+var promise;
+function wait() {
+  if (!promise) {
+    promise = Promise.resolve();
+    promise.then(() => {
+      promise = null;
+    });
+  }
+  return promise;
+}
+function dispatch(node, direction, kind) {
+  node.dispatchEvent(custom_event(`${direction ? "intro" : "outro"}${kind}`));
+}
 var outroing = /* @__PURE__ */ new Set();
 var outros;
 function group_outros() {
@@ -4368,9 +4647,135 @@ function transition_out(block, local, detach2, callback) {
     callback();
   }
 }
+var null_transition = { duration: 0 };
+function create_bidirectional_transition(node, fn, params, intro) {
+  const options = { direction: "both" };
+  let config = fn(node, params, options);
+  let t = intro ? 0 : 1;
+  let running_program = null;
+  let pending_program = null;
+  let animation_name = null;
+  let original_inert_value;
+  function clear_animation() {
+    if (animation_name)
+      delete_rule(node, animation_name);
+  }
+  function init5(program, duration) {
+    const d = (
+      /** @type {Program['d']} */
+      program.b - t
+    );
+    duration *= Math.abs(d);
+    return {
+      a: t,
+      b: program.b,
+      d,
+      duration,
+      start: program.start,
+      end: program.start + duration,
+      group: program.group
+    };
+  }
+  function go(b) {
+    const {
+      delay = 0,
+      duration = 300,
+      easing = identity2,
+      tick: tick2 = noop,
+      css
+    } = config || null_transition;
+    const program = {
+      start: now() + delay,
+      b
+    };
+    if (!b) {
+      program.group = outros;
+      outros.r += 1;
+    }
+    if ("inert" in node) {
+      if (b) {
+        if (original_inert_value !== void 0) {
+          node.inert = original_inert_value;
+        }
+      } else {
+        original_inert_value = /** @type {HTMLElement} */
+        node.inert;
+        node.inert = true;
+      }
+    }
+    if (running_program || pending_program) {
+      pending_program = program;
+    } else {
+      if (css) {
+        clear_animation();
+        animation_name = create_rule(node, t, b, duration, delay, easing, css);
+      }
+      if (b)
+        tick2(0, 1);
+      running_program = init5(program, duration);
+      add_render_callback(() => dispatch(node, b, "start"));
+      loop((now2) => {
+        if (pending_program && now2 > pending_program.start) {
+          running_program = init5(pending_program, duration);
+          pending_program = null;
+          dispatch(node, running_program.b, "start");
+          if (css) {
+            clear_animation();
+            animation_name = create_rule(
+              node,
+              t,
+              running_program.b,
+              running_program.duration,
+              0,
+              easing,
+              config.css
+            );
+          }
+        }
+        if (running_program) {
+          if (now2 >= running_program.end) {
+            tick2(t = running_program.b, 1 - t);
+            dispatch(node, running_program.b, "end");
+            if (!pending_program) {
+              if (running_program.b) {
+                clear_animation();
+              } else {
+                if (!--running_program.group.r)
+                  run_all(running_program.group.c);
+              }
+            }
+            running_program = null;
+          } else if (now2 >= running_program.start) {
+            const p = now2 - running_program.start;
+            t = running_program.a + running_program.d * easing(p / running_program.duration);
+            tick2(t, 1 - t);
+          }
+        }
+        return !!(running_program || pending_program);
+      });
+    }
+  }
+  return {
+    run(b) {
+      if (is_function(config)) {
+        wait().then(() => {
+          const opts = { direction: b ? "in" : "out" };
+          config = config(opts);
+          go(b);
+        });
+      } else {
+        go(b);
+      }
+    },
+    end() {
+      clear_animation();
+      running_program = pending_program = null;
+    }
+  };
+}
 
 // node_modules/svelte/src/runtime/internal/await_block.js
-function handle_promise(promise, info) {
+function handle_promise(promise2, info) {
   const token = info.token = {};
   function update3(type, index, key, value) {
     if (info.token !== token)
@@ -4411,9 +4816,9 @@ function handle_promise(promise, info) {
       flush();
     }
   }
-  if (is_promise(promise)) {
+  if (is_promise(promise2)) {
     const current_component2 = get_current_component();
-    promise.then(
+    promise2.then(
       (value) => {
         set_current_component(current_component2);
         update3(info.then, 1, info.value, value);
@@ -4434,11 +4839,11 @@ function handle_promise(promise, info) {
     }
   } else {
     if (info.current !== info.then) {
-      update3(info.then, 1, info.value, promise);
+      update3(info.then, 1, info.value, promise2);
       return true;
     }
     info.resolved = /** @type {T} */
-    promise;
+    promise2;
   }
 }
 function update_await_block_branch(info, ctx, dirty) {
@@ -4461,7 +4866,7 @@ function destroy_block(block, lookup4) {
   block.d(1);
   lookup4.delete(block.key);
 }
-function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, lookup4, node, destroy, create_each_block9, next, get_context) {
+function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, lookup4, node, destroy, create_each_block13, next, get_context) {
   let o = old_blocks.length;
   let n = list.length;
   let i = o;
@@ -4478,7 +4883,7 @@ function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, looku
     const key = get_key(child_ctx);
     let block = lookup4.get(key);
     if (!block) {
-      block = create_each_block9(key, child_ctx);
+      block = create_each_block13(key, child_ctx);
       block.c();
     } else if (dynamic) {
       updates.push(() => block.p(child_ctx, dirty));
@@ -4565,7 +4970,7 @@ var _boolean_attributes = (
 var boolean_attributes = /* @__PURE__ */ new Set([..._boolean_attributes]);
 
 // node_modules/svelte/src/runtime/internal/Component.js
-function bind3(component, name, callback) {
+function bind4(component, name, callback) {
   const index = component.$$.props[name];
   if (index !== void 0) {
     component.$$.bound[index] = callback;
@@ -4607,7 +5012,7 @@ function make_dirty(component, i) {
   }
   component.$$.dirty[i / 31 | 0] |= 1 << i % 31;
 }
-function init4(component, options, instance18, create_fragment18, not_equal, props, append_styles2, dirty = [-1]) {
+function init4(component, options, instance34, create_fragment34, not_equal, props, append_styles2, dirty = [-1]) {
   const parent_component = current_component;
   set_current_component(component);
   const $$ = component.$$ = {
@@ -4633,7 +5038,7 @@ function init4(component, options, instance18, create_fragment18, not_equal, pro
   };
   append_styles2 && append_styles2($$.root);
   let ready = false;
-  $$.ctx = instance18 ? instance18(component, options.props || {}, (i, ret, ...rest) => {
+  $$.ctx = instance34 ? instance34(component, options.props || {}, (i, ret, ...rest) => {
     const value = rest.length ? rest[0] : ret;
     if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
       if (!$$.skip_bound && $$.bound[i])
@@ -4646,7 +5051,7 @@ function init4(component, options, instance18, create_fragment18, not_equal, pro
   $$.update();
   ready = true;
   run_all($$.before_update);
-  $$.fragment = create_fragment18 ? create_fragment18($$.ctx) : false;
+  $$.fragment = create_fragment34 ? create_fragment34($$.ctx) : false;
   if (options.target) {
     if (options.hydrate) {
       start_hydrating();
@@ -4915,6 +5320,467 @@ var SvelteComponent = class {
 // node_modules/svelte/src/shared/version.js
 var PUBLIC_VERSION = "4";
 
+// node_modules/svelte/src/runtime/internal/disclose-version/index.js
+if (typeof window !== "undefined")
+  (window.__svelte || (window.__svelte = { v: /* @__PURE__ */ new Set() })).v.add(PUBLIC_VERSION);
+
+// src/views/components/Form/InputField.svelte
+function create_if_block_6(ctx) {
+  let input;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      input = element("input");
+      attr(input, "type", "datetime-local");
+    },
+    m(target, anchor) {
+      insert(target, input, anchor);
+      set_input_value(
+        input,
+        /*$value*/
+        ctx[2]
+      );
+      if (!mounted) {
+        dispose = listen(
+          input,
+          "input",
+          /*input_input_handler_6*/
+          ctx[9]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$value*/
+      4) {
+        set_input_value(
+          input,
+          /*$value*/
+          ctx2[2]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(input);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_5(ctx) {
+  let input;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      input = element("input");
+      attr(input, "type", "time");
+    },
+    m(target, anchor) {
+      insert(target, input, anchor);
+      set_input_value(
+        input,
+        /*$value*/
+        ctx[2]
+      );
+      if (!mounted) {
+        dispose = listen(
+          input,
+          "input",
+          /*input_input_handler_5*/
+          ctx[8]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$value*/
+      4) {
+        set_input_value(
+          input,
+          /*$value*/
+          ctx2[2]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(input);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_4(ctx) {
+  let input;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      input = element("input");
+      attr(input, "type", "date");
+    },
+    m(target, anchor) {
+      insert(target, input, anchor);
+      set_input_value(
+        input,
+        /*$value*/
+        ctx[2]
+      );
+      if (!mounted) {
+        dispose = listen(
+          input,
+          "input",
+          /*input_input_handler_4*/
+          ctx[7]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$value*/
+      4) {
+        set_input_value(
+          input,
+          /*$value*/
+          ctx2[2]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(input);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_3(ctx) {
+  let input;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      input = element("input");
+      attr(input, "type", "tel");
+    },
+    m(target, anchor) {
+      insert(target, input, anchor);
+      set_input_value(
+        input,
+        /*$value*/
+        ctx[2]
+      );
+      if (!mounted) {
+        dispose = listen(
+          input,
+          "input",
+          /*input_input_handler_3*/
+          ctx[6]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$value*/
+      4) {
+        set_input_value(
+          input,
+          /*$value*/
+          ctx2[2]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(input);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_2(ctx) {
+  let input;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      input = element("input");
+      attr(input, "type", "email");
+    },
+    m(target, anchor) {
+      insert(target, input, anchor);
+      set_input_value(
+        input,
+        /*$value*/
+        ctx[2]
+      );
+      if (!mounted) {
+        dispose = listen(
+          input,
+          "input",
+          /*input_input_handler_2*/
+          ctx[5]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$value*/
+      4 && input.value !== /*$value*/
+      ctx2[2]) {
+        set_input_value(
+          input,
+          /*$value*/
+          ctx2[2]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(input);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_1(ctx) {
+  let input;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      input = element("input");
+      attr(input, "type", "text");
+    },
+    m(target, anchor) {
+      insert(target, input, anchor);
+      set_input_value(
+        input,
+        /*$value*/
+        ctx[2]
+      );
+      if (!mounted) {
+        dispose = listen(
+          input,
+          "input",
+          /*input_input_handler_1*/
+          ctx[4]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$value*/
+      4 && input.value !== /*$value*/
+      ctx2[2]) {
+        set_input_value(
+          input,
+          /*$value*/
+          ctx2[2]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(input);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block(ctx) {
+  let input;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      input = element("input");
+      attr(input, "type", "number");
+    },
+    m(target, anchor) {
+      insert(target, input, anchor);
+      set_input_value(
+        input,
+        /*$value*/
+        ctx[2]
+      );
+      if (!mounted) {
+        dispose = listen(
+          input,
+          "input",
+          /*input_input_handler*/
+          ctx[3]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$value*/
+      4 && to_number(input.value) !== /*$value*/
+      ctx2[2]) {
+        set_input_value(
+          input,
+          /*$value*/
+          ctx2[2]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(input);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_fragment(ctx) {
+  let if_block_anchor;
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*inputType*/
+      ctx2[1] === "number"
+    )
+      return create_if_block;
+    if (
+      /*inputType*/
+      ctx2[1] === "text"
+    )
+      return create_if_block_1;
+    if (
+      /*inputType*/
+      ctx2[1] === "email"
+    )
+      return create_if_block_2;
+    if (
+      /*inputType*/
+      ctx2[1] === "tel"
+    )
+      return create_if_block_3;
+    if (
+      /*inputType*/
+      ctx2[1] === "date"
+    )
+      return create_if_block_4;
+    if (
+      /*inputType*/
+      ctx2[1] === "time"
+    )
+      return create_if_block_5;
+    if (
+      /*inputType*/
+      ctx2[1] === "datetime"
+    )
+      return create_if_block_6;
+  }
+  let current_block_type = select_block_type(ctx, -1);
+  let if_block = current_block_type && current_block_type(ctx);
+  return {
+    c() {
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty4();
+    },
+    m(target, anchor) {
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+    },
+    p(ctx2, [dirty]) {
+      if (current_block_type === (current_block_type = select_block_type(ctx2, dirty)) && if_block) {
+        if_block.p(ctx2, dirty);
+      } else {
+        if (if_block)
+          if_block.d(1);
+        if_block = current_block_type && current_block_type(ctx2);
+        if (if_block) {
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      }
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (if_block) {
+        if_block.d(detaching);
+      }
+    }
+  };
+}
+function instance($$self, $$props, $$invalidate) {
+  let $value, $$unsubscribe_value = noop, $$subscribe_value = () => ($$unsubscribe_value(), $$unsubscribe_value = subscribe(value, ($$value) => $$invalidate(2, $value = $$value)), value);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_value());
+  let { value } = $$props;
+  $$subscribe_value();
+  let { inputType: inputType2 } = $$props;
+  function input_input_handler() {
+    $value = to_number(this.value);
+    value.set($value);
+  }
+  function input_input_handler_1() {
+    $value = this.value;
+    value.set($value);
+  }
+  function input_input_handler_2() {
+    $value = this.value;
+    value.set($value);
+  }
+  function input_input_handler_3() {
+    $value = this.value;
+    value.set($value);
+  }
+  function input_input_handler_4() {
+    $value = this.value;
+    value.set($value);
+  }
+  function input_input_handler_5() {
+    $value = this.value;
+    value.set($value);
+  }
+  function input_input_handler_6() {
+    $value = this.value;
+    value.set($value);
+  }
+  $$self.$$set = ($$props2) => {
+    if ("value" in $$props2)
+      $$subscribe_value($$invalidate(0, value = $$props2.value));
+    if ("inputType" in $$props2)
+      $$invalidate(1, inputType2 = $$props2.inputType);
+  };
+  return [
+    value,
+    inputType2,
+    $value,
+    input_input_handler,
+    input_input_handler_1,
+    input_input_handler_2,
+    input_input_handler_3,
+    input_input_handler_4,
+    input_input_handler_5,
+    input_input_handler_6
+  ];
+}
+var InputField = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance, create_fragment, safe_not_equal, { value: 0, inputType: 1 });
+  }
+};
+var InputField_default = InputField;
+
 // node_modules/svelte/src/runtime/store/index.js
 var subscriber_queue = [];
 function readable(value, start) {
@@ -5012,200 +5878,988 @@ function derived(stores, fn, initial_value) {
   });
 }
 
-// src/store/formStore.ts
-function requiredRule(fieldName, message) {
-  return { tag: "required", message: message != null ? message : `'${fieldName}' is required` };
+// src/views/components/Form/ObsidianInputWrapper.svelte
+function add_css(target) {
+  append_styles(target, "svelte-1v9nyvr", ".required.svelte-1v9nyvr{color:var(--color-red)}.setting-item.svelte-1v9nyvr{align-items:baseline}.error.svelte-1v9nyvr{color:var(--text-error)}.error.svelte-1v9nyvr input{border-color:var(--text-error)}");
 }
-function FieldFailed(field, failedRule) {
-  return { ...field, rules: failedRule, errors: [failedRule.message] };
+var get_info_slot_changes = (dirty) => ({});
+var get_info_slot_context = (ctx) => ({});
+function get_each_context(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[8] = list[i];
+  return child_ctx;
 }
-function nonEmptyValue(s) {
-  switch (typeof s) {
-    case "string":
-      return s.length > 0 ? some3(s) : none2;
-    case "number":
-    case "boolean":
-      return some3(s);
-    case "object":
-      return Array.isArray(s) ? s.length > 0 ? some3(s) : none2 : none2;
-    default:
-      return absurd(s);
-  }
-}
-function parseField(field) {
-  if (!field.rules)
-    return right3(field);
-  const rule = field.rules;
-  switch (rule.tag) {
-    case "required":
-      return pipe2(
-        field.value,
-        chain3(nonEmptyValue),
-        match4(
-          () => left3(FieldFailed(field, rule)),
-          (value) => right3(field)
-        )
-      );
-    default:
-      return absurd(rule.tag);
-  }
-}
-function parseForm(fields) {
-  const { right: ok, left: failed } = pipe2(
-    fields,
-    Object.values,
-    map2(parseField),
-    separate
-  );
-  if (failed.length > 0)
-    return left3(failed);
-  return right3(
-    pipe2(
-      ok,
-      map2(
-        (field) => pipe2(
-          field.value,
-          map4((value) => [field.name, value])
-        )
-      ),
-      compact,
-      fromEntries
-    )
-  );
-}
-function makeFormEngine({
-  onSubmit,
-  onCancel,
-  defaultValues = {}
-}) {
-  const formStore = writable({ fields: {}, status: "draft" });
-  function setFormField(name) {
-    function initField(errors = [], rules) {
-      formStore.update((form) => {
-        return {
-          ...form,
-          fields: {
-            ...form.fields,
-            [name]: { value: fromNullable2(defaultValues[name]), name, errors, rules }
-          }
-        };
-      });
-    }
-    function setValue(value) {
-      formStore.update((form) => {
-        const field = form.fields[name];
-        if (!field) {
-          console.error(new Error(`Field ${name} does not exist`));
-          return form;
-        }
-        return {
-          ...form,
-          fields: {
-            ...form.fields,
-            [name]: { ...field, value: some3(value), errors: [] }
-          }
-        };
-      });
-    }
-    return { initField, setValue };
-  }
-  function setErrors(failedFields) {
-    formStore.update((form) => {
-      return pipe2(
-        failedFields,
-        reduce3(form, (form2, field) => {
-          return {
-            ...form2,
-            fields: { ...form2.fields, [field.name]: field }
-          };
-        })
-      );
-    });
-  }
+function create_if_block2(ctx) {
+  let span;
   return {
-    subscribe: formStore.subscribe,
-    isValid: derived(
-      formStore,
-      ({ fields }) => pipe2(
-        fields,
-        toEntries,
-        some2(([_, f]) => f.errors.length > 0),
-        (x) => !x
-      )
-    ),
-    triggerSubmit() {
-      formStore.update((form) => ({ ...form, status: "submitted" }));
-      const formState = get_store_value(formStore);
-      pipe2(
-        formState.fields,
-        parseForm,
-        match3(setErrors, onSubmit)
-      );
+    c() {
+      span = element("span");
+      span.textContent = "*";
+      attr(span, "class", "required svelte-1v9nyvr");
     },
-    triggerCancel() {
-      formStore.update((form) => ({ ...form, status: "cancelled" }));
-      onCancel == null ? void 0 : onCancel();
+    m(target, anchor) {
+      insert(target, span, anchor);
     },
-    addField: (field) => {
-      const { initField: setField, setValue } = setFormField(field.name);
-      setField([], field.isRequired ? requiredRule(field.label || field.name) : void 0);
-      const fieldStore = derived(formStore, ({ fields }) => fields[field.name]);
-      const fieldValueStore = {
-        subscribe(cb) {
-          return fieldStore.subscribe(
-            (x) => pipe2(
-              x,
-              fromNullable2,
-              chain3((x2) => x2.value),
-              map4(cb)
-            )
-          );
-        },
-        set(value) {
-          setValue(value);
-        },
-        update: (updater) => {
-          formStore.update((form) => {
-            const current = form.fields[field.name];
-            if (!current) {
-              console.error(new Error(`Field ${field.name} does not exist`));
-              return form;
-            }
-            const newValue = pipe2(
-              // fuck prettier
-              current.value,
-              map4(updater)
-            );
-            return {
-              ...form,
-              fields: {
-                ...form.fields,
-                [field.name]: {
-                  ...current,
-                  value: newValue,
-                  errors: []
-                }
-              }
-            };
-          });
-        }
-      };
-      return {
-        value: fieldValueStore,
-        errors: derived(formStore, ({ fields }) => {
-          var _a, _b;
-          return (_b = (_a = fields[field.name]) == null ? void 0 : _a.errors) != null ? _b : [];
-        })
-      };
+    d(detaching) {
+      if (detaching) {
+        detach(span);
+      }
     }
   };
 }
+function create_each_block(ctx) {
+  let div;
+  let t_value = (
+    /*error*/
+    ctx[8] + ""
+  );
+  let t;
+  return {
+    c() {
+      div = element("div");
+      t = text(t_value);
+      attr(div, "class", "setting-item-description error svelte-1v9nyvr");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append5(div, t);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$errors*/
+      32 && t_value !== (t_value = /*error*/
+      ctx2[8] + ""))
+        set_data(t, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+    }
+  };
+}
+function create_fragment2(ctx) {
+  let div4;
+  let div2;
+  let div0;
+  let t0;
+  let t1;
+  let t2;
+  let div1;
+  let t3;
+  let t4;
+  let t5;
+  let t6;
+  let div3;
+  let div4_class_value;
+  let current;
+  let if_block = (
+    /*required*/
+    ctx[3] && create_if_block2(ctx)
+  );
+  let each_value = ensure_array_like(
+    /*$errors*/
+    ctx[5]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+  }
+  const info_slot_template = (
+    /*#slots*/
+    ctx[7].info
+  );
+  const info_slot = create_slot(
+    info_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[6],
+    get_info_slot_context
+  );
+  const default_slot_template = (
+    /*#slots*/
+    ctx[7].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[6],
+    null
+  );
+  return {
+    c() {
+      div4 = element("div");
+      div2 = element("div");
+      div0 = element("div");
+      t0 = text(
+        /*label*/
+        ctx[1]
+      );
+      t1 = space();
+      if (if_block)
+        if_block.c();
+      t2 = space();
+      div1 = element("div");
+      t3 = text(
+        /*description*/
+        ctx[2]
+      );
+      t4 = space();
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      t5 = space();
+      if (info_slot)
+        info_slot.c();
+      t6 = space();
+      div3 = element("div");
+      if (default_slot)
+        default_slot.c();
+      attr(div0, "class", "setting-item-name");
+      attr(div1, "class", "setting-item-description");
+      attr(div2, "class", "setting-item-info");
+      attr(div3, "class", "setting-item-control svelte-1v9nyvr");
+      toggle_class(
+        div3,
+        "error",
+        /*$errors*/
+        ctx[5].length > 0
+      );
+      attr(div4, "class", div4_class_value = "setting-item " + /*className*/
+      ctx[4] + " svelte-1v9nyvr");
+    },
+    m(target, anchor) {
+      insert(target, div4, anchor);
+      append5(div4, div2);
+      append5(div2, div0);
+      append5(div0, t0);
+      append5(div0, t1);
+      if (if_block)
+        if_block.m(div0, null);
+      append5(div2, t2);
+      append5(div2, div1);
+      append5(div1, t3);
+      append5(div2, t4);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div2, null);
+        }
+      }
+      append5(div2, t5);
+      if (info_slot) {
+        info_slot.m(div2, null);
+      }
+      append5(div4, t6);
+      append5(div4, div3);
+      if (default_slot) {
+        default_slot.m(div3, null);
+      }
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (!current || dirty & /*label*/
+      2)
+        set_data(
+          t0,
+          /*label*/
+          ctx2[1]
+        );
+      if (
+        /*required*/
+        ctx2[3]
+      ) {
+        if (if_block) {
+        } else {
+          if_block = create_if_block2(ctx2);
+          if_block.c();
+          if_block.m(div0, null);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+      if (!current || dirty & /*description*/
+      4)
+        set_data(
+          t3,
+          /*description*/
+          ctx2[2]
+        );
+      if (dirty & /*$errors*/
+      32) {
+        each_value = ensure_array_like(
+          /*$errors*/
+          ctx2[5]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(div2, t5);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
+      }
+      if (info_slot) {
+        if (info_slot.p && (!current || dirty & /*$$scope*/
+        64)) {
+          update_slot_base(
+            info_slot,
+            info_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[6],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[6]
+            ) : get_slot_changes(
+              info_slot_template,
+              /*$$scope*/
+              ctx2[6],
+              dirty,
+              get_info_slot_changes
+            ),
+            get_info_slot_context
+          );
+        }
+      }
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        64)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[6],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[6]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[6],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      if (!current || dirty & /*$errors*/
+      32) {
+        toggle_class(
+          div3,
+          "error",
+          /*$errors*/
+          ctx2[5].length > 0
+        );
+      }
+      if (!current || dirty & /*className*/
+      16 && div4_class_value !== (div4_class_value = "setting-item " + /*className*/
+      ctx2[4] + " svelte-1v9nyvr")) {
+        attr(div4, "class", div4_class_value);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(info_slot, local);
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(info_slot, local);
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div4);
+      }
+      if (if_block)
+        if_block.d();
+      destroy_each(each_blocks, detaching);
+      if (info_slot)
+        info_slot.d(detaching);
+      if (default_slot)
+        default_slot.d(detaching);
+    }
+  };
+}
+function instance2($$self, $$props, $$invalidate) {
+  let $errors, $$unsubscribe_errors = noop, $$subscribe_errors = () => ($$unsubscribe_errors(), $$unsubscribe_errors = subscribe(errors, ($$value) => $$invalidate(5, $errors = $$value)), errors);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_errors());
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { errors = readable([]) } = $$props;
+  $$subscribe_errors();
+  let { label = "" } = $$props;
+  let { description = "" } = $$props;
+  let { required = false } = $$props;
+  let { className = "" } = $$props;
+  $$self.$$set = ($$props2) => {
+    if ("errors" in $$props2)
+      $$subscribe_errors($$invalidate(0, errors = $$props2.errors));
+    if ("label" in $$props2)
+      $$invalidate(1, label = $$props2.label);
+    if ("description" in $$props2)
+      $$invalidate(2, description = $$props2.description);
+    if ("required" in $$props2)
+      $$invalidate(3, required = $$props2.required);
+    if ("className" in $$props2)
+      $$invalidate(4, className = $$props2.className);
+    if ("$$scope" in $$props2)
+      $$invalidate(6, $$scope = $$props2.$$scope);
+  };
+  return [errors, label, description, required, className, $errors, $$scope, slots];
+}
+var ObsidianInputWrapper = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(
+      this,
+      options,
+      instance2,
+      create_fragment2,
+      safe_not_equal,
+      {
+        errors: 0,
+        label: 1,
+        description: 2,
+        required: 3,
+        className: 4
+      },
+      add_css
+    );
+  }
+};
+var ObsidianInputWrapper_default = ObsidianInputWrapper;
+
+// node_modules/fp-ts/es6/ReadonlyRecord.js
+function filterMapWithIndex2(f) {
+  return function(r) {
+    var out = {};
+    for (var k in r) {
+      if (has.call(r, k)) {
+        var ob = f(k, r[k]);
+        if (isSome(ob)) {
+          out[k] = ob.value;
+        }
+      }
+    }
+    return out;
+  };
+}
+function filterWithIndex2(predicateWithIndex) {
+  return function(fa) {
+    var out = {};
+    var changed = false;
+    for (var key in fa) {
+      if (has.call(fa, key)) {
+        var a = fa[key];
+        if (predicateWithIndex(key, a)) {
+          out[key] = a;
+        } else {
+          changed = true;
+        }
+      }
+    }
+    return changed ? out : fa;
+  };
+}
+function fromFoldable(M, F) {
+  var fromFoldableMapM = fromFoldableMap(M, F);
+  return function(fka) {
+    return fromFoldableMapM(fka, identity);
+  };
+}
+function fromFoldableMap(M, F) {
+  return function(ta, f) {
+    return F.reduce(ta, {}, function(r, a) {
+      var _a = f(a), k = _a[0], b = _a[1];
+      r[k] = has.call(r, k) ? M.concat(r[k], b) : b;
+      return r;
+    });
+  };
+}
+var filterMap3 = function(f) {
+  return filterMapWithIndex2(function(_, a) {
+    return f(a);
+  });
+};
+
+// node_modules/fp-ts/es6/Record.js
+var keys_ = function(O) {
+  return function(r) {
+    return Object.keys(r).sort(O.compare);
+  };
+};
+function collect(O) {
+  if (typeof O === "function") {
+    return collect(Ord2)(O);
+  }
+  var keysO = keys_(O);
+  return function(f) {
+    return function(r) {
+      var out = [];
+      for (var _i = 0, _a = keysO(r); _i < _a.length; _i++) {
+        var key = _a[_i];
+        out.push(f(key, r[key]));
+      }
+      return out;
+    };
+  };
+}
+var toArray = /* @__PURE__ */ collect(Ord2)(function(k, a) {
+  return [
+    k,
+    a
+  ];
+});
+var filterMapWithIndex3 = filterMapWithIndex2;
+function filterWithIndex3(predicateWithIndex) {
+  return filterWithIndex2(predicateWithIndex);
+}
+function fromFoldable2(M, F) {
+  return fromFoldable(M, F);
+}
+var toEntries = toArray;
+var fromEntries = function(fa) {
+  return fromFoldable2(last(), Foldable)(fa);
+};
+var filterMap4 = filterMap3;
+
+// src/views/components/Form/DocumentBlock.svelte
+var import_obsidian2 = require("obsidian");
+
+// src/utils/Log.ts
+var import_obsidian = require("obsidian");
+
+// src/utils/ModalFormError.ts
+var ModalFormError = class extends Error {
+  constructor(msg, console_msg) {
+    super(msg);
+    this.console_msg = console_msg;
+    this.name = this.constructor.name;
+    Error.captureStackTrace(this, this.constructor);
+  }
+};
+
+// src/utils/Log.ts
+function log_notice(title, msg, titleClass, bodyClass) {
+  const notice = new import_obsidian.Notice("", 15e3);
+  const el = notice.noticeEl;
+  el.empty();
+  const head6 = el.createEl("h6", { text: title, cls: titleClass });
+  head6.setCssStyles({ marginTop: "0px" });
+  const body = el.createEl("div", { text: msg, cls: bodyClass });
+  el.append(head6, body);
+}
+function log_error(e) {
+  if (e instanceof ModalFormError && e.console_msg) {
+    log_notice("Modal from error: ", e.message + "\n" + e.console_msg, "var(--text-error)");
+    console.error(`Modal form Error:`, e.message, "\n", e.console_msg);
+  } else {
+    log_notice("Modal from error", e.message);
+  }
+}
+var notifyError = (title) => (msg) => log_notice(`\u{1F6A8} ${title} \u{1F6A8}`, msg, "notice-error");
+var notifyWarning = (title) => (msg) => log_notice(`\u26A0\uFE0F ${title} \u26A0\uFE0F`, msg, "notice-warning");
+
+// src/views/components/Form/DocumentBlock.svelte
+function create_fragment3(ctx) {
+  let div;
+  let generateContent_action;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      attr(div, "class", "document-block");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      if (!mounted) {
+        dispose = action_destroyer(generateContent_action = /*generateContent*/
+        ctx[2].call(
+          null,
+          div,
+          /*$form*/
+          ctx[1]
+        ));
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (generateContent_action && is_function(generateContent_action.update) && dirty & /*$form*/
+      2)
+        generateContent_action.update.call(
+          null,
+          /*$form*/
+          ctx2[1]
+        );
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function instance3($$self, $$props, $$invalidate) {
+  let functionParsed;
+  let $form, $$unsubscribe_form = noop, $$subscribe_form = () => ($$unsubscribe_form(), $$unsubscribe_form = subscribe(form, ($$value) => $$invalidate(1, $form = $$value)), form);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_form());
+  let { form } = $$props;
+  $$subscribe_form();
+  let { field } = $$props;
+  function generateContent(parent, form2) {
+    pipe2(functionParsed, fromEither3, chainW2((fn) => pipe2(form2.fields, filterMap4((field2) => field2.value), fn)), match6(
+      (error2) => {
+        console.error(error2);
+        notifyError("Error in document block")(String(error2));
+      },
+      (newText) => parent.setText((0, import_obsidian2.sanitizeHTMLToDom)(newText))
+    ))();
+    return {
+      update(newForm) {
+        generateContent(parent, newForm);
+      }
+    };
+  }
+  $$self.$$set = ($$props2) => {
+    if ("form" in $$props2)
+      $$subscribe_form($$invalidate(0, form = $$props2.form));
+    if ("field" in $$props2)
+      $$invalidate(3, field = $$props2.field);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*field*/
+    8) {
+      $:
+        functionParsed = parseFunctionBody(field.body, "form");
+    }
+  };
+  return [form, $form, generateContent, field];
+}
+var DocumentBlock = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance3, create_fragment3, safe_not_equal, { form: 0, field: 3 });
+  }
+};
+var DocumentBlock_default = DocumentBlock;
+
+// src/suggesters/suggestFromDataview.ts
+var import_obsidian3 = require("obsidian");
+
+// src/suggesters/SafeDataviewQuery.ts
+function sandboxedDvQuery(query) {
+  if (!query.startsWith("return")) {
+    query = "return " + query;
+  }
+  const parsed = parseFunctionBody(query, "dv", "pages");
+  return (dv, pages) => pipe2(
+    parsed,
+    fromEither3,
+    mapLeft2(
+      (err) => new ModalFormError("Error evaluating the dataview query", err.message)
+    ),
+    flatMap6((fn) => fn(dv, pages)),
+    flatMap6((result2) => {
+      if (!Array.isArray(result2)) {
+        return left5(
+          new ModalFormError("The dataview query did not return an array")
+        );
+      }
+      return right5(result2);
+    })
+  );
+}
+function executeSandboxedDvQuery(query, app2, logger3 = log_error) {
+  var _a;
+  const dv = (_a = app2.plugins.plugins.dataview) == null ? void 0 : _a.api;
+  if (!dv) {
+    logger3(new ModalFormError("Dataview plugin is not enabled"));
+    return of6([]);
+  }
+  const pages = dv.pages;
+  return pipe2(
+    query(dv, pages),
+    getOrElse4((e) => {
+      logger3(e);
+      return of6([]);
+    })
+  );
+}
+
+// src/suggesters/createRegexFromInput.ts
+var splitString = flow2(trim, split(" "));
+function createRegexFromInput(input) {
+  return pipe2(
+    fromNullable2(input),
+    map4(splitString),
+    map4((parts) => parts.join(".*")),
+    map4((s) => new RegExp(s, "i")),
+    getOrElse2(() => new RegExp(".*"))
+  );
+}
+
+// src/suggesters/suggestFromDataview.ts
+var DataviewSuggest = class extends import_obsidian3.AbstractInputSuggest {
+  constructor(inputEl, dvQuery, app2) {
+    super(app2, inputEl);
+    this.inputEl = inputEl;
+    this.app = app2;
+    this.sandboxedQuery = sandboxedDvQuery(dvQuery);
+  }
+  getSuggestions(inputStr) {
+    const result2 = executeSandboxedDvQuery(this.sandboxedQuery, this.app);
+    if (!inputStr) {
+      return result2();
+    }
+    const regex = createRegexFromInput(inputStr);
+    return result2().then((res) => res.filter((r) => regex.test(r)));
+  }
+  renderSuggestion(option2, el) {
+    el.setText(option2);
+  }
+  selectSuggestion(option2) {
+    this.inputEl.value = option2;
+    this.inputEl.trigger("input");
+    this.close();
+  }
+};
+
+// src/views/components/Form/InputDataview.svelte
+function create_default_slot(ctx) {
+  let input_1;
+  let dataviewSuggest_action;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      input_1 = element("input");
+      attr(input_1, "type", "text");
+    },
+    m(target, anchor) {
+      insert(target, input_1, anchor);
+      set_input_value(
+        input_1,
+        /*$value*/
+        ctx[3]
+      );
+      if (!mounted) {
+        dispose = [
+          listen(
+            input_1,
+            "input",
+            /*input_1_input_handler*/
+            ctx[7]
+          ),
+          action_destroyer(dataviewSuggest_action = /*dataviewSuggest*/
+          ctx[4].call(null, input_1))
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$value*/
+      8 && input_1.value !== /*$value*/
+      ctx2[3]) {
+        set_input_value(
+          input_1,
+          /*$value*/
+          ctx2[3]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(input_1);
+      }
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function create_fragment4(ctx) {
+  let obsidianinputwrapper;
+  let current;
+  obsidianinputwrapper = new ObsidianInputWrapper_default({
+    props: {
+      errors: (
+        /*errors*/
+        ctx[2]
+      ),
+      label: (
+        /*field*/
+        ctx[0].label || /*field*/
+        ctx[0].name
+      ),
+      description: (
+        /*field*/
+        ctx[0].description
+      ),
+      $$slots: { default: [create_default_slot] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(obsidianinputwrapper.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(obsidianinputwrapper, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const obsidianinputwrapper_changes = {};
+      if (dirty & /*errors*/
+      4)
+        obsidianinputwrapper_changes.errors = /*errors*/
+        ctx2[2];
+      if (dirty & /*field*/
+      1)
+        obsidianinputwrapper_changes.label = /*field*/
+        ctx2[0].label || /*field*/
+        ctx2[0].name;
+      if (dirty & /*field*/
+      1)
+        obsidianinputwrapper_changes.description = /*field*/
+        ctx2[0].description;
+      if (dirty & /*$$scope, $value*/
+      264) {
+        obsidianinputwrapper_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      obsidianinputwrapper.$set(obsidianinputwrapper_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(obsidianinputwrapper.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(obsidianinputwrapper.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(obsidianinputwrapper, detaching);
+    }
+  };
+}
+function instance4($$self, $$props, $$invalidate) {
+  let $value, $$unsubscribe_value = noop, $$subscribe_value = () => ($$unsubscribe_value(), $$unsubscribe_value = subscribe(value, ($$value) => $$invalidate(3, $value = $$value)), value);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_value());
+  let { field } = $$props;
+  let { input } = $$props;
+  let { value } = $$props;
+  $$subscribe_value();
+  let { app: app2 } = $$props;
+  let { errors } = $$props;
+  function dataviewSuggest(el) {
+    new DataviewSuggest(el, input.query, app2);
+  }
+  function input_1_input_handler() {
+    $value = this.value;
+    value.set($value);
+  }
+  $$self.$$set = ($$props2) => {
+    if ("field" in $$props2)
+      $$invalidate(0, field = $$props2.field);
+    if ("input" in $$props2)
+      $$invalidate(5, input = $$props2.input);
+    if ("value" in $$props2)
+      $$subscribe_value($$invalidate(1, value = $$props2.value));
+    if ("app" in $$props2)
+      $$invalidate(6, app2 = $$props2.app);
+    if ("errors" in $$props2)
+      $$invalidate(2, errors = $$props2.errors);
+  };
+  return [
+    field,
+    value,
+    errors,
+    $value,
+    dataviewSuggest,
+    input,
+    app2,
+    input_1_input_handler
+  ];
+}
+var InputDataview = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance4, create_fragment4, safe_not_equal, {
+      field: 0,
+      input: 5,
+      value: 1,
+      app: 6,
+      errors: 2
+    });
+  }
+};
+var InputDataview_default = InputDataview;
+
+// src/suggesters/suggestFolder.ts
+var import_obsidian4 = require("obsidian");
+var FolderSuggest = class extends import_obsidian4.AbstractInputSuggest {
+  constructor(inputEl, app2) {
+    super(app2, inputEl);
+    this.inputEl = inputEl;
+    this.app = app2;
+  }
+  getSuggestions(inputStr) {
+    const abstractFiles = this.app.vault.getAllLoadedFiles();
+    const lowerCaseInputStr = inputStr.toLowerCase();
+    const folders = abstractFiles.reduce((acc, folder) => {
+      if (folder instanceof import_obsidian4.TFolder && folder.path.toLowerCase().contains(lowerCaseInputStr)) {
+        acc.push(folder);
+      }
+      return acc;
+    }, []);
+    return folders;
+  }
+  renderSuggestion(file, el) {
+    el.setText(file.path);
+  }
+  selectSuggestion(file) {
+    this.inputEl.value = file.path;
+    this.inputEl.trigger("input");
+    this.close();
+  }
+};
+
+// src/views/components/Form/useObsidianSetting.ts
+var import_obsidian5 = require("obsidian");
+function useSetting(element2, field) {
+  new import_obsidian5.Setting(element2).setName(field.name).setDesc(field.description).then(field.customizer || (() => {
+  }));
+}
+
+// src/views/components/Form/InputFolder.svelte
+function create_fragment5(ctx) {
+  let div;
+  let useSetting_action;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      div.innerHTML = `<span style="display: none;">dummy to prevent the setting from being the first child</span>`;
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      if (!mounted) {
+        dispose = action_destroyer(useSetting_action = useSetting.call(null, div, {
+          name: (
+            /*field*/
+            ctx[0].label || /*field*/
+            ctx[0].name
+          ),
+          description: (
+            /*field*/
+            ctx[0].description || ""
+          ),
+          customizer: (
+            /*customizer*/
+            ctx[2]
+          )
+        }));
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (useSetting_action && is_function(useSetting_action.update) && dirty & /*field*/
+      1)
+        useSetting_action.update.call(null, {
+          name: (
+            /*field*/
+            ctx2[0].label || /*field*/
+            ctx2[0].name
+          ),
+          description: (
+            /*field*/
+            ctx2[0].description || ""
+          ),
+          customizer: (
+            /*customizer*/
+            ctx2[2]
+          )
+        });
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function instance5($$self, $$props, $$invalidate) {
+  let $value, $$unsubscribe_value = noop, $$subscribe_value = () => ($$unsubscribe_value(), $$unsubscribe_value = subscribe(value, ($$value) => $$invalidate(5, $value = $$value)), value);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_value());
+  let { field } = $$props;
+  let { value } = $$props;
+  $$subscribe_value();
+  let { app: app2 } = $$props;
+  let search_;
+  function customizer(setting) {
+    setting.addSearch((component) => {
+      new FolderSuggest(component.inputEl, app2);
+      $$invalidate(4, search_ = component);
+      component.onChange((v) => {
+        set_store_value(value, $value = v, $value);
+      });
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("field" in $$props2)
+      $$invalidate(0, field = $$props2.field);
+    if ("value" in $$props2)
+      $$subscribe_value($$invalidate(1, value = $$props2.value));
+    if ("app" in $$props2)
+      $$invalidate(3, app2 = $$props2.app);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*search_, $value*/
+    48) {
+      $:
+        if (search_) {
+          search_.setValue($value);
+        }
+    }
+  };
+  return [field, value, customizer, app2, search_, $value];
+}
+var InputFolder = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance5, create_fragment5, safe_not_equal, { field: 0, value: 1, app: 3 });
+  }
+};
+var InputFolder_default = InputFolder;
 
 // src/suggesters/suggestFile.ts
-var import_obsidian4 = require("obsidian");
+var import_obsidian7 = require("obsidian");
 
 // src/utils/files.ts
-var import_obsidian3 = require("obsidian");
+var import_obsidian6 = require("obsidian");
 var FolderDoesNotExistError = class extends Error {
 };
 FolderDoesNotExistError.tag = "FolderDoesNotExistError";
@@ -5232,11 +6886,11 @@ var NotAFileError = class extends Error {
 NotAFileError.tag = "NotAFileError";
 function resolve_tfolder(folder_str, app2) {
   return pipe2(
-    (0, import_obsidian3.normalizePath)(folder_str),
+    (0, import_obsidian6.normalizePath)(folder_str),
     (path) => app2.vault.getAbstractFileByPath(path),
     E.fromNullable(new FolderDoesNotExistError(`Folder "${folder_str}" doesn't exist`)),
     E.flatMap((file) => {
-      if (!(file instanceof import_obsidian3.TFolder)) {
+      if (!(file instanceof import_obsidian6.TFolder)) {
         return E.left(new NotAFolderError(file));
       }
       return E.right(file);
@@ -5245,11 +6899,11 @@ function resolve_tfolder(folder_str, app2) {
 }
 function resolve_tfile(file_str, app2) {
   return pipe2(
-    (0, import_obsidian3.normalizePath)(file_str),
+    (0, import_obsidian6.normalizePath)(file_str),
     (path) => app2.vault.getAbstractFileByPath(path),
     E.fromNullable(FileDoesNotExistError.of(file_str)),
     E.flatMap((file) => {
-      if (!(file instanceof import_obsidian3.TFile)) {
+      if (!(file instanceof import_obsidian6.TFile)) {
         return E.left(new NotAFileError(file));
       }
       return E.right(file);
@@ -5261,8 +6915,8 @@ function get_tfiles_from_folder(folder_str, app2) {
     resolve_tfolder(folder_str, app2),
     E.flatMap((folder) => {
       const files = [];
-      import_obsidian3.Vault.recurseChildren(folder, (file) => {
-        if (file instanceof import_obsidian3.TFile) {
+      import_obsidian6.Vault.recurseChildren(folder, (file) => {
+        if (file instanceof import_obsidian6.TFile) {
           files.push(file);
         }
       });
@@ -5280,21 +6934,21 @@ function isArrayOfStrings(value) {
 }
 var splitIfString = (value) => pipe2(
   value,
-  O.fromPredicate(isString),
-  O.map((s) => s.split(","))
+  Option_exports.fromPredicate(isString),
+  Option_exports.map((s) => s.split(","))
 );
 function parseToArrOfStr(str) {
   return pipe2(
     str,
-    O.fromNullable,
-    O.chain(
+    Option_exports.fromNullable,
+    Option_exports.chain(
       (value) => pipe2(
         value,
         splitIfString,
         /* prettier-ignore */
-        O.alt(() => pipe2(
+        Option_exports.alt(() => pipe2(
           value,
-          O.fromPredicate(isArrayOfStrings)
+          Option_exports.fromPredicate(isArrayOfStrings)
         ))
       )
     )
@@ -5303,13 +6957,13 @@ function parseToArrOfStr(str) {
 function extract_tags(cache) {
   const bodyTags = pipe2(
     cache.tags,
-    O.fromNullable,
-    O.map(Array_exports.map((tag) => tag.tag))
+    Option_exports.fromNullable,
+    Option_exports.map(Array_exports.map((tag) => tag.tag))
   );
   const frontmatterTags = pipe2(
     cache.frontmatter,
-    O.fromNullable,
-    O.chain((frontmatter) => parseToArrOfStr(frontmatter.tags))
+    Option_exports.fromNullable,
+    Option_exports.chain((frontmatter) => parseToArrOfStr(frontmatter.tags))
   );
   return pipe2(
     [bodyTags, frontmatterTags],
@@ -5325,15 +6979,15 @@ function enrich_tfile(file, app2) {
     frontmatter: (_a = metadata == null ? void 0 : metadata.frontmatter) != null ? _a : {},
     tags: pipe2(
       metadata,
-      O.fromNullable,
-      O.map(extract_tags),
-      O.getOrElse(() => [])
+      Option_exports.fromNullable,
+      Option_exports.map(extract_tags),
+      Option_exports.getOrElse(() => [])
     )
   };
 }
 function file_exists(file_str, app2) {
   return pipe2(
-    (0, import_obsidian3.normalizePath)(file_str),
+    (0, import_obsidian6.normalizePath)(file_str),
     (path) => app2.vault.getAbstractFileByPath(path),
     (value) => value !== null
   );
@@ -6650,7 +8304,7 @@ Fuse.config = Config;
 }
 
 // src/suggesters/suggestFile.ts
-var FileSuggest = class extends import_obsidian4.AbstractInputSuggest {
+var FileSuggest = class extends import_obsidian7.AbstractInputSuggest {
   constructor(app2, inputEl, strategy, folder) {
     super(app2, inputEl);
     this.app = app2;
@@ -6674,9 +8328,10 @@ var FileSuggest = class extends import_obsidian4.AbstractInputSuggest {
       includeScore: true,
       shouldSort: true,
       keys: [
-        { name: "path", weight: 2 },
-        { name: "tags", weight: 1 },
-        { name: "frontmatter.aliases", weight: 2 }
+        { name: "name", weight: 3 },
+        { name: "frontmatter.aliases", weight: 2 },
+        { name: "path", weight: 1 },
+        { name: "tags", weight: 1 }
       ]
     });
     return fuse.search(lower_input_str).map((result2) => {
@@ -6714,7 +8369,7 @@ var FileSuggest = class extends import_obsidian4.AbstractInputSuggest {
       text: (_a = file.parent) == null ? void 0 : _a.path
     });
     const icon = el.createSpan({ cls: "suggestion-icon" });
-    (0, import_obsidian4.setIcon)(icon, "folder");
+    (0, import_obsidian7.setIcon)(icon, "folder");
     subtitle.prepend(icon);
     const body = el.createDiv({ cls: "suggestion-content" });
     body.appendChild(title);
@@ -6728,122 +8383,182 @@ var FileSuggest = class extends import_obsidian4.AbstractInputSuggest {
   }
 };
 
-// src/suggesters/suggestFolder.ts
-var import_obsidian5 = require("obsidian");
-var FolderSuggest = class extends import_obsidian5.AbstractInputSuggest {
-  constructor(inputEl, app2) {
-    super(app2, inputEl);
-    this.inputEl = inputEl;
-    this.app = app2;
-  }
-  getSuggestions(inputStr) {
-    const abstractFiles = this.app.vault.getAllLoadedFiles();
-    const lowerCaseInputStr = inputStr.toLowerCase();
-    const folders = abstractFiles.reduce((acc, folder) => {
-      if (folder instanceof import_obsidian5.TFolder && folder.path.toLowerCase().contains(lowerCaseInputStr)) {
-        acc.push(folder);
+// src/views/components/Form/InputNote.svelte
+function create_default_slot2(ctx) {
+  let input_1;
+  let noteSuggest_action;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      input_1 = element("input");
+      attr(input_1, "type", "text");
+    },
+    m(target, anchor) {
+      insert(target, input_1, anchor);
+      set_input_value(
+        input_1,
+        /*$value*/
+        ctx[3]
+      );
+      if (!mounted) {
+        dispose = [
+          listen(
+            input_1,
+            "input",
+            /*input_1_input_handler*/
+            ctx[7]
+          ),
+          action_destroyer(noteSuggest_action = /*noteSuggest*/
+          ctx[4].call(null, input_1))
+        ];
+        mounted = true;
       }
-      return acc;
-    }, []);
-    return folders;
-  }
-  renderSuggestion(file, el) {
-    el.setText(file.path);
-  }
-  selectSuggestion(file) {
-    this.inputEl.value = file.path;
-    this.inputEl.trigger("input");
-    this.close();
-  }
-};
-
-// src/suggesters/suggestFromDataview.ts
-var import_obsidian6 = require("obsidian");
-
-// src/suggesters/SafeDataviewQuery.ts
-function sandboxedDvQuery(query) {
-  if (!query.startsWith("return")) {
-    query = "return " + query;
-  }
-  const parsed = parseFunctionBody(query, "dv", "pages");
-  return (dv, pages) => pipe2(
-    parsed,
-    fromEither3,
-    mapLeft2(
-      (err) => new ModalFormError("Error evaluating the dataview query", err.message)
-    ),
-    flatMap6((fn) => fn(dv, pages)),
-    flatMap6((result2) => {
-      if (!Array.isArray(result2)) {
-        return left5(
-          new ModalFormError("The dataview query did not return an array")
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$value*/
+      8 && input_1.value !== /*$value*/
+      ctx2[3]) {
+        set_input_value(
+          input_1,
+          /*$value*/
+          ctx2[3]
         );
       }
-      return right5(result2);
-    })
-  );
-}
-function executeSandboxedDvQuery(query, app2, logger = log_error) {
-  var _a;
-  const dv = (_a = app2.plugins.plugins.dataview) == null ? void 0 : _a.api;
-  if (!dv) {
-    logger(new ModalFormError("Dataview plugin is not enabled"));
-    return of5([]);
-  }
-  const pages = dv.pages;
-  return pipe2(
-    query(dv, pages),
-    getOrElse4((e) => {
-      logger(e);
-      return of5([]);
-    })
-  );
-}
-
-// src/suggesters/createRegexFromInput.ts
-var splitString = flow2(trim, split(" "));
-function createRegexFromInput(input) {
-  return pipe2(
-    fromNullable2(input),
-    map4(splitString),
-    map4((parts) => parts.join(".*")),
-    map4((s) => new RegExp(s, "i")),
-    getOrElse2(() => new RegExp(".*"))
-  );
-}
-
-// src/suggesters/suggestFromDataview.ts
-var DataviewSuggest = class extends import_obsidian6.AbstractInputSuggest {
-  constructor(inputEl, dvQuery, app2) {
-    super(app2, inputEl);
-    this.inputEl = inputEl;
-    this.app = app2;
-    this.sandboxedQuery = sandboxedDvQuery(dvQuery);
-  }
-  getSuggestions(inputStr) {
-    const result2 = executeSandboxedDvQuery(this.sandboxedQuery, this.app);
-    if (!inputStr) {
-      return result2();
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(input_1);
+      }
+      mounted = false;
+      run_all(dispose);
     }
-    const regex = createRegexFromInput(inputStr);
-    return result2().then((res) => res.filter((r) => regex.test(r)));
+  };
+}
+function create_fragment6(ctx) {
+  let obsidianinputwrapper;
+  let current;
+  obsidianinputwrapper = new ObsidianInputWrapper_default({
+    props: {
+      errors: (
+        /*errors*/
+        ctx[2]
+      ),
+      label: (
+        /*field*/
+        ctx[0].label || /*field*/
+        ctx[0].name
+      ),
+      description: (
+        /*field*/
+        ctx[0].description
+      ),
+      $$slots: { default: [create_default_slot2] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(obsidianinputwrapper.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(obsidianinputwrapper, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const obsidianinputwrapper_changes = {};
+      if (dirty & /*errors*/
+      4)
+        obsidianinputwrapper_changes.errors = /*errors*/
+        ctx2[2];
+      if (dirty & /*field*/
+      1)
+        obsidianinputwrapper_changes.label = /*field*/
+        ctx2[0].label || /*field*/
+        ctx2[0].name;
+      if (dirty & /*field*/
+      1)
+        obsidianinputwrapper_changes.description = /*field*/
+        ctx2[0].description;
+      if (dirty & /*$$scope, $value*/
+      264) {
+        obsidianinputwrapper_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      obsidianinputwrapper.$set(obsidianinputwrapper_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(obsidianinputwrapper.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(obsidianinputwrapper.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(obsidianinputwrapper, detaching);
+    }
+  };
+}
+function instance6($$self, $$props, $$invalidate) {
+  let $value, $$unsubscribe_value = noop, $$subscribe_value = () => ($$unsubscribe_value(), $$unsubscribe_value = subscribe(value, ($$value) => $$invalidate(3, $value = $$value)), value);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_value());
+  let { field } = $$props;
+  let { input } = $$props;
+  let { value } = $$props;
+  $$subscribe_value();
+  let { app: app2 } = $$props;
+  let { errors } = $$props;
+  function noteSuggest(el) {
+    new FileSuggest(
+      app2,
+      el,
+      {
+        renderSuggestion(file) {
+          return file.basename;
+        },
+        selectSuggestion(file) {
+          return file.basename;
+        }
+      },
+      input.folder
+    );
   }
-  renderSuggestion(option, el) {
-    el.setText(option);
+  function input_1_input_handler() {
+    $value = this.value;
+    value.set($value);
   }
-  selectSuggestion(option) {
-    this.inputEl.value = option;
-    this.inputEl.trigger("input");
-    this.close();
+  $$self.$$set = ($$props2) => {
+    if ("field" in $$props2)
+      $$invalidate(0, field = $$props2.field);
+    if ("input" in $$props2)
+      $$invalidate(5, input = $$props2.input);
+    if ("value" in $$props2)
+      $$subscribe_value($$invalidate(1, value = $$props2.value));
+    if ("app" in $$props2)
+      $$invalidate(6, app2 = $$props2.app);
+    if ("errors" in $$props2)
+      $$invalidate(2, errors = $$props2.errors);
+  };
+  return [field, value, errors, $value, noteSuggest, input, app2, input_1_input_handler];
+}
+var InputNote = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance6, create_fragment6, safe_not_equal, {
+      field: 0,
+      input: 5,
+      value: 1,
+      app: 6,
+      errors: 2
+    });
   }
 };
-
-// node_modules/svelte/src/runtime/internal/disclose-version/index.js
-if (typeof window !== "undefined")
-  (window.__svelte || (window.__svelte = { v: /* @__PURE__ */ new Set() })).v.add(PUBLIC_VERSION);
+var InputNote_default = InputNote;
 
 // src/views/components/MultiSelect.svelte
-function add_css(target) {
+function add_css2(target) {
   append_styles(target, "svelte-168eg05", ".multi-select-root.svelte-168eg05.svelte-168eg05{display:flex;flex-direction:column;gap:0.5rem;flex:1;--button-size:1.5rem}.badge.svelte-168eg05.svelte-168eg05{--icon-size:var(--icon-xs);--icon-stroke:var(--icon-xs-stroke-width);display:flex;align-items:center;background-color:var(--pill-background);border:var(--pill-border-width) solid var(--pill-border-color);border-radius:var(--pill-radius);color:var(--pill-color);cursor:var(--cursor);font-weight:var(--pill-weight);padding-top:var(--pill-padding-y);padding-bottom:var(--pill-padding-y);padding-left:var(--pill-padding-x);padding-right:var(--pill-padding-x);line-height:1;max-width:100%;gap:var(--size-4-2);justify-content:center;align-items:center}.hidden.svelte-168eg05.svelte-168eg05{visibility:hidden}.hidden.svelte-168eg05 span.svelte-168eg05{height:var(--button-size)}.badge.svelte-168eg05 span.svelte-168eg05{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:1rem}.badges.svelte-168eg05.svelte-168eg05{display:flex;flex-wrap:wrap;gap:8px;min-height:2rem;padding:0.5rem 0 0 0}button.svelte-168eg05.svelte-168eg05{background:none;border:none;color:inherit;font:inherit;line-height:inherit;padding:0;-webkit-appearance:none;-moz-appearance:none;-o-appearance:none;appearance:none;box-shadow:none;border:none;cursor:pointer;height:var(--button-size);width:var(--button-size)}");
 }
 function get_then_context(ctx) {
@@ -6854,7 +8569,7 @@ function get_then_context(ctx) {
   ctx[7] = constants_0.createInput;
   ctx[8] = constants_0.removeValue;
 }
-function get_each_context(ctx, list, i) {
+function get_each_context2(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[9] = list[i];
   return child_ctx;
@@ -6910,37 +8625,25 @@ function create_then_block(ctx) {
     /*$errors*/
     ctx[3]
   );
-  let each_blocks_1 = [];
-  for (let i = 0; i < each_value_1.length; i += 1) {
-    each_blocks_1[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
-  }
-  let each_value = ensure_array_like(
-    /*$values*/
-    ctx[4]
-  );
   let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+  for (let i = 0; i < each_value_1.length; i += 1) {
+    each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
   }
-  let each1_else = null;
-  if (!each_value.length) {
-    each1_else = create_else_block(ctx);
-  }
+  let if_block = (
+    /*$values*/
+    ctx[4] !== void 0 && create_if_block3(ctx)
+  );
   return {
     c() {
       input = element("input");
       t0 = space();
-      for (let i = 0; i < each_blocks_1.length; i += 1) {
-        each_blocks_1[i].c();
-      }
-      t1 = space();
-      div = element("div");
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      if (each1_else) {
-        each1_else.c();
-      }
+      t1 = space();
+      div = element("div");
+      if (if_block)
+        if_block.c();
       attr(input, "type", "text");
       attr(input, "class", "form-control");
       attr(input, "placeholder", "Select");
@@ -6955,21 +8658,15 @@ function create_then_block(ctx) {
     m(target, anchor) {
       insert(target, input, anchor);
       insert(target, t0, anchor);
-      for (let i = 0; i < each_blocks_1.length; i += 1) {
-        if (each_blocks_1[i]) {
-          each_blocks_1[i].m(target, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
         }
       }
       insert(target, t1, anchor);
       insert(target, div, anchor);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(div, null);
-        }
-      }
-      if (each1_else) {
-        each1_else.m(div, null);
-      }
+      if (if_block)
+        if_block.m(div, null);
       if (!mounted) {
         dispose = action_destroyer(createInput_action = /*createInput*/
         ctx[7].call(null, input));
@@ -6996,50 +8693,33 @@ function create_then_block(ctx) {
         let i;
         for (i = 0; i < each_value_1.length; i += 1) {
           const child_ctx = get_each_context_1(ctx2, each_value_1, i);
-          if (each_blocks_1[i]) {
-            each_blocks_1[i].p(child_ctx, dirty);
-          } else {
-            each_blocks_1[i] = create_each_block_1(child_ctx);
-            each_blocks_1[i].c();
-            each_blocks_1[i].m(t1.parentNode, t1);
-          }
-        }
-        for (; i < each_blocks_1.length; i += 1) {
-          each_blocks_1[i].d(1);
-        }
-        each_blocks_1.length = each_value_1.length;
-      }
-      if (dirty & /*model, $values*/
-      20) {
-        each_value = ensure_array_like(
-          /*$values*/
-          ctx2[4]
-        );
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block(child_ctx);
+            each_blocks[i] = create_each_block_1(child_ctx);
             each_blocks[i].c();
-            each_blocks[i].m(div, null);
+            each_blocks[i].m(t1.parentNode, t1);
           }
         }
         for (; i < each_blocks.length; i += 1) {
           each_blocks[i].d(1);
         }
-        each_blocks.length = each_value.length;
-        if (!each_value.length && each1_else) {
-          each1_else.p(ctx2, dirty);
-        } else if (!each_value.length) {
-          each1_else = create_else_block(ctx2);
-          each1_else.c();
-          each1_else.m(div, null);
-        } else if (each1_else) {
-          each1_else.d(1);
-          each1_else = null;
+        each_blocks.length = each_value_1.length;
+      }
+      if (
+        /*$values*/
+        ctx2[4] !== void 0
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block3(ctx2);
+          if_block.c();
+          if_block.m(div, null);
         }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
       }
     },
     d(detaching) {
@@ -7049,10 +8729,9 @@ function create_then_block(ctx) {
         detach(t1);
         detach(div);
       }
-      destroy_each(each_blocks_1, detaching);
       destroy_each(each_blocks, detaching);
-      if (each1_else)
-        each1_else.d();
+      if (if_block)
+        if_block.d();
       mounted = false;
       dispose();
     }
@@ -7088,6 +8767,85 @@ function create_each_block_1(ctx) {
     }
   };
 }
+function create_if_block3(ctx) {
+  let each_1_anchor;
+  let each_value = ensure_array_like(
+    /*$values*/
+    ctx[4]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block2(get_each_context2(ctx, each_value, i));
+  }
+  let each_1_else = null;
+  if (!each_value.length) {
+    each_1_else = create_else_block(ctx);
+  }
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      each_1_anchor = empty4();
+      if (each_1_else) {
+        each_1_else.c();
+      }
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, each_1_anchor, anchor);
+      if (each_1_else) {
+        each_1_else.m(target, anchor);
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*model, $values*/
+      20) {
+        each_value = ensure_array_like(
+          /*$values*/
+          ctx2[4]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context2(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block2(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
+        if (!each_value.length && each_1_else) {
+          each_1_else.p(ctx2, dirty);
+        } else if (!each_value.length) {
+          each_1_else = create_else_block(ctx2);
+          each_1_else.c();
+          each_1_else.m(each_1_anchor.parentNode, each_1_anchor);
+        } else if (each_1_else) {
+          each_1_else.d(1);
+          each_1_else = null;
+        }
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(each_1_anchor);
+      }
+      destroy_each(each_blocks, detaching);
+      if (each_1_else)
+        each_1_else.d(detaching);
+    }
+  };
+}
 function create_else_block(ctx) {
   let div;
   return {
@@ -7107,7 +8865,7 @@ function create_else_block(ctx) {
     }
   };
 }
-function create_each_block(ctx) {
+function create_each_block2(ctx) {
   let div;
   let span;
   let t0_value = (
@@ -7175,9 +8933,9 @@ function create_each_block(ctx) {
 function create_pending_block(ctx) {
   return { c: noop, m: noop, p: noop, d: noop };
 }
-function create_fragment(ctx) {
+function create_fragment7(ctx) {
   let div;
-  let promise;
+  let promise2;
   let info = {
     ctx,
     current: null,
@@ -7189,7 +8947,7 @@ function create_fragment(ctx) {
     value: 2,
     error: 12
   };
-  handle_promise(promise = /*model*/
+  handle_promise(promise2 = /*model*/
   ctx[2], info);
   return {
     c() {
@@ -7207,8 +8965,8 @@ function create_fragment(ctx) {
       ctx = new_ctx;
       info.ctx = ctx;
       if (dirty & /*model*/
-      4 && promise !== (promise = /*model*/
-      ctx[2]) && handle_promise(promise, info)) {
+      4 && promise2 !== (promise2 = /*model*/
+      ctx[2]) && handle_promise(promise2, info)) {
       } else {
         update_await_block_branch(info, ctx, dirty);
       }
@@ -7225,7 +8983,7 @@ function create_fragment(ctx) {
     }
   };
 }
-function instance($$self, $$props, $$invalidate) {
+function instance7($$self, $$props, $$invalidate) {
   let $errors, $$unsubscribe_errors = noop, $$subscribe_errors = () => ($$unsubscribe_errors(), $$unsubscribe_errors = subscribe(errors, ($$value) => $$invalidate(3, $errors = $$value)), errors);
   let $values, $$unsubscribe_values = noop, $$subscribe_values = () => ($$unsubscribe_values(), $$unsubscribe_values = subscribe(values, ($$value) => $$invalidate(4, $values = $$value)), values);
   $$self.$$.on_destroy.push(() => $$unsubscribe_errors());
@@ -7235,8 +8993,8 @@ function instance($$self, $$props, $$invalidate) {
   $$subscribe_errors();
   let { values } = $$props;
   $$subscribe_values();
-  let { setting } = $$props;
-  setting.settingEl.setCssStyles({ alignItems: "baseline" });
+  let { setting = void 0 } = $$props;
+  setting === null || setting === void 0 ? void 0 : setting.settingEl.setCssStyles({ alignItems: "baseline" });
   const click_handler = (removeValue, value) => removeValue(value);
   $$self.$$set = ($$props2) => {
     if ("model" in $$props2)
@@ -7256,8 +9014,8 @@ var MultiSelect = class extends SvelteComponent {
     init4(
       this,
       options,
-      instance,
-      create_fragment,
+      instance7,
+      create_fragment7,
       safe_not_equal,
       {
         model: 2,
@@ -7265,15 +9023,15 @@ var MultiSelect = class extends SvelteComponent {
         values: 1,
         setting: 5
       },
-      add_css
+      add_css2
     );
   }
 };
 var MultiSelect_default = MultiSelect;
 
 // src/suggesters/StringSuggest.ts
-var import_obsidian7 = require("obsidian");
-var StringSuggest = class extends import_obsidian7.AbstractInputSuggest {
+var import_obsidian8 = require("obsidian");
+var StringSuggest = class extends import_obsidian8.AbstractInputSuggest {
   constructor(inputEl, content, onSelectCb, app2, allowUnknownValues = false) {
     super(app2, inputEl);
     this.inputEl = inputEl;
@@ -7371,7 +9129,10 @@ function MultiSelectTags(fieldInput, app2, values) {
         remainingOptions,
         (selected) => {
           remainingOptions.delete(selected);
-          values.update((x) => [...x, selected]);
+          values.update((x) => {
+            console.log(x);
+            return x == void 0 ? [selected] : [...x, selected];
+          });
         },
         app2,
         true
@@ -7381,7 +9142,7 @@ function MultiSelectTags(fieldInput, app2, values) {
       remainingOptions.add(value);
       values.update(
         (x) => pipe2(
-          x,
+          x || [],
           Array_exports.filter((x2) => x2 !== value)
         )
       );
@@ -7389,298 +9150,2902 @@ function MultiSelectTags(fieldInput, app2, values) {
   };
 }
 
-// src/FormModal.ts
-var notify = throttle(
-  (msg) => log_notice("\u26A0\uFE0F  The form has errors \u26A0\uFE0F", msg, "notice-warning"),
-  2e3
-);
-var notifyError2 = (title) => throttle((msg) => log_notice(`\u{1F6A8} ${title} \u{1F6A8}`, msg, "notice-error"), 2e3);
-var FormModal = class extends import_obsidian8.Modal {
-  constructor(app2, modalDefinition, onSubmit, options) {
-    var _a;
-    super(app2);
-    this.modalDefinition = modalDefinition;
-    this.onSubmit = onSubmit;
-    this.svelteComponents = [];
-    this.subscriptions = [];
-    this.initialFormValues = formDataFromFormDefaults(
-      modalDefinition.fields,
-      (_a = options == null ? void 0 : options.values) != null ? _a : {}
-    );
-    this.formEngine = makeFormEngine({
-      onSubmit: (result2) => {
-        this.onSubmit(FormResult.make(result2, "ok"));
-        this.close();
-      },
-      onCancel: () => {
-        this.onSubmit(FormResult.make({}, "cancelled"));
-        this.close();
-      },
-      defaultValues: this.initialFormValues
-    });
-  }
-  onOpen() {
-    const { contentEl } = this;
-    contentEl.addClass("modal-form");
-    if (this.modalDefinition.customClassname)
-      contentEl.addClass(this.modalDefinition.customClassname);
-    contentEl.createEl("h1", { text: this.modalDefinition.title });
-    this.modalDefinition.fields.forEach((definition) => {
-      var _a;
-      const name = definition.label || definition.name;
-      const required = (_a = definition.isRequired) != null ? _a : false;
-      const fieldBase = new import_obsidian8.Setting(contentEl).setName(`${name} ${required ? "*" : ""}`.trim()).setDesc(definition.description);
-      const fieldInput = definition.input;
-      const type = fieldInput.type;
-      const initialValue = this.initialFormValues[definition.name];
-      const fieldStore = this.formEngine.addField(definition);
-      const subToErrors = (input) => {
-        this.subscriptions.push(
-          fieldStore.errors.subscribe((errs) => {
-            errs.length > 0 ? console.log("errors", errs) : void 0;
-            errs.forEach(notify);
-            input.setCustomValidity(errs.join("\n"));
-          })
+// src/views/components/Form/InputTag.svelte
+function create_fragment8(ctx) {
+  let multiselect2;
+  let current;
+  multiselect2 = new MultiSelect_default({
+    props: {
+      values: (
+        /*values*/
+        ctx[1]
+      ),
+      errors: (
+        /*errors*/
+        ctx[0]
+      ),
+      model: Promise.resolve(
+        /*model*/
+        ctx[2]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(multiselect2.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(multiselect2, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const multiselect_changes = {};
+      if (dirty & /*values*/
+      2)
+        multiselect_changes.values = /*values*/
+        ctx2[1];
+      if (dirty & /*errors*/
+      1)
+        multiselect_changes.errors = /*errors*/
+        ctx2[0];
+      if (dirty & /*model*/
+      4)
+        multiselect_changes.model = Promise.resolve(
+          /*model*/
+          ctx2[2]
         );
-      };
-      switch (type) {
-        case "textarea": {
-          fieldBase.setClass("modal-form-textarea");
-          return fieldBase.addTextArea((textEl) => {
-            textEl.onChange(fieldStore.value.set);
-            subToErrors(textEl.inputEl);
-            if (typeof initialValue === "string") {
-              textEl.setValue(initialValue);
-            }
-            textEl.inputEl.rows = 6;
-            if (import_obsidian8.Platform.isIosApp)
-              textEl.inputEl.style.width = "100%";
-            else if (import_obsidian8.Platform.isDesktopApp) {
-              textEl.inputEl.rows = 10;
-            }
-          });
-        }
-        case "email":
-        case "tel":
-        case "date":
-        case "time":
-        case "text":
-          return fieldBase.addText((text3) => {
-            text3.inputEl.type = type;
-            subToErrors(text3.inputEl);
-            text3.onChange(fieldStore.value.set);
-            initialValue !== void 0 && text3.setValue(String(initialValue));
-          });
-        case "number":
-          return fieldBase.addText((text3) => {
-            text3.inputEl.type = "number";
-            text3.inputEl.step = "any";
-            subToErrors(text3.inputEl);
-            text3.onChange((val) => {
-              if (val !== "") {
-                fieldStore.value.set(Number(val) + "");
-              }
-            });
-            initialValue !== void 0 && text3.setValue(String(initialValue));
-          });
-        case "datetime":
-          return fieldBase.addText((text3) => {
-            text3.inputEl.type = "datetime-local";
-            initialValue !== void 0 && text3.setValue(String(initialValue));
-            subToErrors(text3.inputEl);
-            text3.onChange(fieldStore.value.set);
-          });
-        case "toggle":
-          return fieldBase.addToggle((toggle) => {
-            toggle.setValue(!!initialValue);
-            return toggle.onChange(fieldStore.value.set);
-          });
-        case "note":
-          return fieldBase.addText((element2) => {
-            new FileSuggest(
-              this.app,
-              element2.inputEl,
-              {
-                renderSuggestion(file) {
-                  return file.basename;
-                },
-                selectSuggestion(file) {
-                  return file.basename;
-                }
-              },
-              fieldInput.folder
-            );
-            subToErrors(element2.inputEl);
-            element2.onChange(fieldStore.value.set);
-          });
-        case "folder":
-          return fieldBase.addText((element2) => {
-            new FolderSuggest(element2.inputEl, this.app);
-            subToErrors(element2.inputEl);
-            element2.onChange(fieldStore.value.set);
-          });
-        case "slider":
-          return fieldBase.addSlider((slider) => {
-            slider.setLimits(fieldInput.min, fieldInput.max, 1);
-            slider.setDynamicTooltip();
-            if (typeof initialValue === "number") {
-              slider.setValue(initialValue);
-            } else {
-              slider.setValue(fieldInput.min);
-            }
-            slider.onChange(fieldStore.value.set);
-          });
-        case "multiselect": {
-          fieldStore.value.set(initialValue != null ? initialValue : []);
-          this.svelteComponents.push(
-            new MultiSelect_default({
-              target: fieldBase.controlEl,
-              props: {
-                model: MultiSelectModel(
-                  fieldInput,
-                  this.app,
-                  fieldStore.value
-                ),
-                values: fieldStore.value,
-                errors: fieldStore.errors,
-                setting: fieldBase
-              }
-            })
-          );
-          return;
-        }
-        case "tag": {
-          fieldStore.value.set(initialValue != null ? initialValue : []);
-          this.svelteComponents.push(
-            new MultiSelect_default({
-              target: fieldBase.controlEl,
-              props: {
-                values: fieldStore.value,
-                setting: fieldBase,
-                errors: fieldStore.errors,
-                model: Promise.resolve(
-                  MultiSelectTags(
-                    fieldInput,
-                    this.app,
-                    fieldStore.value
-                  )
-                )
-              }
-            })
-          );
-          return;
-        }
-        case "dataview": {
-          const query = fieldInput.query;
-          return fieldBase.addText((element2) => {
-            new DataviewSuggest(element2.inputEl, query, this.app);
-            element2.onChange(fieldStore.value.set);
-            subToErrors(element2.inputEl);
-          });
-        }
-        case "select": {
-          const source = fieldInput.source;
-          switch (source) {
-            case "fixed":
-              return fieldBase.addDropdown((element2) => {
-                fieldInput.options.forEach((option) => {
-                  element2.addOption(option.value, option.label);
-                });
-                initialValue !== void 0 && element2.setValue(String(initialValue));
-                fieldStore.value.set(element2.getValue());
-                element2.onChange(fieldStore.value.set);
-              });
-            case "notes":
-              return fieldBase.addDropdown((element2) => {
-                const files = get_tfiles_from_folder(fieldInput.folder, this.app);
-                pipe2(
-                  files,
-                  E.map(
-                    (files2) => files2.reduce((acc, option) => {
-                      acc[option.basename] = option.basename;
-                      return acc;
-                    }, {})
-                  ),
-                  E.mapLeft((err) => {
-                    log_error(err);
-                    return err;
-                  }),
-                  E.map((options) => {
-                    element2.addOptions(options);
-                  })
-                );
-                fieldStore.value.set(element2.getValue());
-                element2.onChange(fieldStore.value.set);
-              });
-            default:
-              absurd2(source);
-          }
-          break;
-        }
-        case "document_block": {
-          const functionBody = fieldInput.body;
-          const functionParsed = parseFunctionBody(
-            functionBody,
-            "form"
-          );
-          const domNode = fieldBase.infoEl.createDiv();
-          const sub = this.formEngine.subscribe((form) => {
-            pipe2(
-              functionParsed,
-              fromEither3,
-              chainW2(
-                (fn) => pipe2(
-                  form.fields,
-                  filterMap3((field) => field.value),
-                  fn
-                )
-              ),
-              match6(
-                (error2) => {
-                  console.error(error2);
-                  notifyError2("Error in document block")(String(error2));
-                },
-                (newText) => domNode.setText((0, import_obsidian8.sanitizeHTMLToDom)(newText))
-              )
-            )();
-          });
-          return this.subscriptions.push(sub);
-        }
-        default:
-          return absurd2(type);
-      }
-    });
-    const buttons = new import_obsidian8.Setting(contentEl).addButton(
-      (btn) => btn.setButtonText("Cancel").onClick(this.formEngine.triggerCancel)
-    );
-    buttons.addButton(
-      (btn) => btn.setButtonText("Submit").setCta().onClick(this.formEngine.triggerSubmit)
-    );
-    const submitEnterCallback = (evt) => {
-      if ((evt.ctrlKey || evt.metaKey) && evt.key === "Enter") {
-        evt.preventDefault();
-        this.formEngine.triggerSubmit();
-      }
-    };
-    const cancelEscapeCallback = (evt) => {
-      if (!(evt.ctrlKey || evt.metaKey) && evt.key === "Escape") {
-        evt.preventDefault();
-        this.formEngine.triggerCancel();
-      }
-    };
-    contentEl.addEventListener("keydown", submitEnterCallback);
-    contentEl.addEventListener("keydown", cancelEscapeCallback);
+      multiselect2.$set(multiselect_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(multiselect2.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(multiselect2.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(multiselect2, detaching);
+    }
+  };
+}
+function instance8($$self, $$props, $$invalidate) {
+  let model;
+  let values;
+  let { input } = $$props;
+  let { app: app2 } = $$props;
+  let { errors } = $$props;
+  let { value } = $$props;
+  $$self.$$set = ($$props2) => {
+    if ("input" in $$props2)
+      $$invalidate(3, input = $$props2.input);
+    if ("app" in $$props2)
+      $$invalidate(4, app2 = $$props2.app);
+    if ("errors" in $$props2)
+      $$invalidate(0, errors = $$props2.errors);
+    if ("value" in $$props2)
+      $$invalidate(5, value = $$props2.value);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*input, app, value*/
+    56) {
+      $:
+        $$invalidate(2, model = MultiSelectTags(input, app2, value));
+    }
+    if ($$self.$$.dirty & /*value*/
+    32) {
+      $:
+        $$invalidate(1, values = value);
+    }
+  };
+  return [errors, values, model, input, app2, value];
+}
+var InputTag = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance8, create_fragment8, safe_not_equal, { input: 3, app: 4, errors: 0, value: 5 });
   }
-  onClose() {
-    const { contentEl } = this;
-    this.svelteComponents.forEach((component) => component.$destroy());
-    this.subscriptions.forEach((subscription) => subscription());
-    contentEl.empty();
-    this.initialFormValues = {};
+};
+var InputTag_default = InputTag;
+
+// src/views/components/Form/InputTextArea.svelte
+var import_obsidian9 = require("obsidian");
+function create_default_slot3(ctx) {
+  let textarea;
+  let customizeTextArea_action;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      textarea = element("textarea");
+    },
+    m(target, anchor) {
+      insert(target, textarea, anchor);
+      set_input_value(
+        textarea,
+        /*$value*/
+        ctx[3]
+      );
+      if (!mounted) {
+        dispose = [
+          listen(
+            textarea,
+            "input",
+            /*textarea_input_handler*/
+            ctx[5]
+          ),
+          action_destroyer(customizeTextArea_action = /*customizeTextArea*/
+          ctx[4].call(null, textarea))
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$value*/
+      8) {
+        set_input_value(
+          textarea,
+          /*$value*/
+          ctx2[3]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(textarea);
+      }
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function create_fragment9(ctx) {
+  let obsidianinputwrapper;
+  let current;
+  obsidianinputwrapper = new ObsidianInputWrapper_default({
+    props: {
+      errors: (
+        /*errors*/
+        ctx[2]
+      ),
+      label: (
+        /*field*/
+        ctx[0].label || /*field*/
+        ctx[0].name
+      ),
+      description: (
+        /*field*/
+        ctx[0].description
+      ),
+      className: "modal-form-textarea",
+      $$slots: { default: [create_default_slot3] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(obsidianinputwrapper.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(obsidianinputwrapper, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const obsidianinputwrapper_changes = {};
+      if (dirty & /*errors*/
+      4)
+        obsidianinputwrapper_changes.errors = /*errors*/
+        ctx2[2];
+      if (dirty & /*field*/
+      1)
+        obsidianinputwrapper_changes.label = /*field*/
+        ctx2[0].label || /*field*/
+        ctx2[0].name;
+      if (dirty & /*field*/
+      1)
+        obsidianinputwrapper_changes.description = /*field*/
+        ctx2[0].description;
+      if (dirty & /*$$scope, $value*/
+      72) {
+        obsidianinputwrapper_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      obsidianinputwrapper.$set(obsidianinputwrapper_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(obsidianinputwrapper.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(obsidianinputwrapper.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(obsidianinputwrapper, detaching);
+    }
+  };
+}
+function instance9($$self, $$props, $$invalidate) {
+  let $value, $$unsubscribe_value = noop, $$subscribe_value = () => ($$unsubscribe_value(), $$unsubscribe_value = subscribe(value, ($$value) => $$invalidate(3, $value = $$value)), value);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_value());
+  let { field } = $$props;
+  let { value } = $$props;
+  $$subscribe_value();
+  let { errors } = $$props;
+  function customizeTextArea(el) {
+    if (import_obsidian9.Platform.isIosApp)
+      el.style.width = "100%";
+    else if (import_obsidian9.Platform.isDesktopApp) {
+      el.rows = 10;
+    }
+  }
+  function textarea_input_handler() {
+    $value = this.value;
+    value.set($value);
+  }
+  $$self.$$set = ($$props2) => {
+    if ("field" in $$props2)
+      $$invalidate(0, field = $$props2.field);
+    if ("value" in $$props2)
+      $$subscribe_value($$invalidate(1, value = $$props2.value));
+    if ("errors" in $$props2)
+      $$invalidate(2, errors = $$props2.errors);
+  };
+  return [field, value, errors, $value, customizeTextArea, textarea_input_handler];
+}
+var InputTextArea = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance9, create_fragment9, safe_not_equal, { field: 0, value: 1, errors: 2 });
+  }
+};
+var InputTextArea_default = InputTextArea;
+
+// src/views/components/Form/MultiSelectField.svelte
+function create_fragment10(ctx) {
+  let multiselect2;
+  let current;
+  multiselect2 = new MultiSelect_default({
+    props: {
+      values: (
+        /*values*/
+        ctx[1]
+      ),
+      errors: (
+        /*errors*/
+        ctx[0]
+      ),
+      model: (
+        /*model*/
+        ctx[2]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(multiselect2.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(multiselect2, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const multiselect_changes = {};
+      if (dirty & /*values*/
+      2)
+        multiselect_changes.values = /*values*/
+        ctx2[1];
+      if (dirty & /*errors*/
+      1)
+        multiselect_changes.errors = /*errors*/
+        ctx2[0];
+      if (dirty & /*model*/
+      4)
+        multiselect_changes.model = /*model*/
+        ctx2[2];
+      multiselect2.$set(multiselect_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(multiselect2.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(multiselect2.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(multiselect2, detaching);
+    }
+  };
+}
+function instance10($$self, $$props, $$invalidate) {
+  let model;
+  let values;
+  let { input } = $$props;
+  let { app: app2 } = $$props;
+  let { errors } = $$props;
+  let { value } = $$props;
+  $$self.$$set = ($$props2) => {
+    if ("input" in $$props2)
+      $$invalidate(3, input = $$props2.input);
+    if ("app" in $$props2)
+      $$invalidate(4, app2 = $$props2.app);
+    if ("errors" in $$props2)
+      $$invalidate(0, errors = $$props2.errors);
+    if ("value" in $$props2)
+      $$invalidate(5, value = $$props2.value);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*input, app, value*/
+    56) {
+      $:
+        $$invalidate(2, model = MultiSelectModel(input, app2, value));
+    }
+    if ($$self.$$.dirty & /*value*/
+    32) {
+      $:
+        $$invalidate(1, values = value);
+    }
+  };
+  return [errors, values, model, input, app2, value];
+}
+var MultiSelectField = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance10, create_fragment10, safe_not_equal, { input: 3, app: 4, errors: 0, value: 5 });
+  }
+};
+var MultiSelectField_default = MultiSelectField;
+
+// src/views/components/Form/ObsidianSelect.svelte
+function get_each_context_12(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[3] = list[i][0];
+  child_ctx[12] = list[i][1];
+  return child_ctx;
+}
+function get_each_context3(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[8] = list[i];
+  return child_ctx;
+}
+function get_else_ctx(ctx) {
+  const child_ctx = ctx.slice();
+  const constants_0 = (
+    /*getNoteOptions*/
+    child_ctx[5](
+      /*input*/
+      child_ctx[1].folder
+    )
+  );
+  child_ctx[11] = constants_0;
+  return child_ctx;
+}
+function create_else_block2(ctx) {
+  let select;
+  let mounted;
+  let dispose;
+  let each_value_1 = ensure_array_like(Object.entries(
+    /*options*/
+    ctx[11]
+  ));
+  let each_blocks = [];
+  for (let i = 0; i < each_value_1.length; i += 1) {
+    each_blocks[i] = create_each_block_12(get_each_context_12(ctx, each_value_1, i));
+  }
+  return {
+    c() {
+      select = element("select");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(select, "class", "dropdown");
+      if (
+        /*$value*/
+        ctx[4] === void 0
+      )
+        add_render_callback(() => (
+          /*select_change_handler_1*/
+          ctx[7].call(select)
+        ));
+    },
+    m(target, anchor) {
+      insert(target, select, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(select, null);
+        }
+      }
+      select_option(
+        select,
+        /*$value*/
+        ctx[4],
+        true
+      );
+      if (!mounted) {
+        dispose = listen(
+          select,
+          "change",
+          /*select_change_handler_1*/
+          ctx[7]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*Object, getNoteOptions, input*/
+      34) {
+        each_value_1 = ensure_array_like(Object.entries(
+          /*options*/
+          ctx2[11]
+        ));
+        let i;
+        for (i = 0; i < each_value_1.length; i += 1) {
+          const child_ctx = get_each_context_12(ctx2, each_value_1, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block_12(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(select, null);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value_1.length;
+      }
+      if (dirty & /*$value, Object, getNoteOptions, input*/
+      50) {
+        select_option(
+          select,
+          /*$value*/
+          ctx2[4]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(select);
+      }
+      destroy_each(each_blocks, detaching);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block4(ctx) {
+  let select;
+  let mounted;
+  let dispose;
+  let each_value = ensure_array_like(
+    /*input*/
+    ctx[1].options
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block3(get_each_context3(ctx, each_value, i));
+  }
+  return {
+    c() {
+      select = element("select");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(select, "class", "dropdown");
+      if (
+        /*$value*/
+        ctx[4] === void 0
+      )
+        add_render_callback(() => (
+          /*select_change_handler*/
+          ctx[6].call(select)
+        ));
+    },
+    m(target, anchor) {
+      insert(target, select, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(select, null);
+        }
+      }
+      select_option(
+        select,
+        /*$value*/
+        ctx[4],
+        true
+      );
+      if (!mounted) {
+        dispose = listen(
+          select,
+          "change",
+          /*select_change_handler*/
+          ctx[6]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*input*/
+      2) {
+        each_value = ensure_array_like(
+          /*input*/
+          ctx2[1].options
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context3(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block3(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(select, null);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
+      }
+      if (dirty & /*$value, Object, getNoteOptions, input*/
+      50) {
+        select_option(
+          select,
+          /*$value*/
+          ctx2[4]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(select);
+      }
+      destroy_each(each_blocks, detaching);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_each_block_12(ctx) {
+  let option_1;
+  let t_value = (
+    /*label*/
+    ctx[12] + ""
+  );
+  let t;
+  let option_1_value_value;
+  return {
+    c() {
+      option_1 = element("option");
+      t = text(t_value);
+      option_1.__value = option_1_value_value = /*value*/
+      ctx[3];
+      set_input_value(option_1, option_1.__value);
+    },
+    m(target, anchor) {
+      insert(target, option_1, anchor);
+      append5(option_1, t);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*input*/
+      2 && t_value !== (t_value = /*label*/
+      ctx2[12] + ""))
+        set_data(t, t_value);
+      if (dirty & /*input*/
+      2 && option_1_value_value !== (option_1_value_value = /*value*/
+      ctx2[3])) {
+        option_1.__value = option_1_value_value;
+        set_input_value(option_1, option_1.__value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(option_1);
+      }
+    }
+  };
+}
+function create_each_block3(ctx) {
+  let option_1;
+  let t_value = (
+    /*option*/
+    ctx[8].label + ""
+  );
+  let t;
+  let option_1_value_value;
+  return {
+    c() {
+      option_1 = element("option");
+      t = text(t_value);
+      option_1.__value = option_1_value_value = /*option*/
+      ctx[8].value;
+      set_input_value(option_1, option_1.__value);
+    },
+    m(target, anchor) {
+      insert(target, option_1, anchor);
+      append5(option_1, t);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*input*/
+      2 && t_value !== (t_value = /*option*/
+      ctx2[8].label + ""))
+        set_data(t, t_value);
+      if (dirty & /*input*/
+      2 && option_1_value_value !== (option_1_value_value = /*option*/
+      ctx2[8].value)) {
+        option_1.__value = option_1_value_value;
+        set_input_value(option_1, option_1.__value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(option_1);
+      }
+    }
+  };
+}
+function create_default_slot4(ctx) {
+  let if_block_anchor;
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*input*/
+      ctx2[1].source === "fixed"
+    )
+      return create_if_block4;
+    return create_else_block2;
+  }
+  function select_block_ctx(ctx2, type) {
+    if (type === create_else_block2)
+      return get_else_ctx(ctx2);
+    return ctx2;
+  }
+  let current_block_type = select_block_type(ctx, -1);
+  let if_block = current_block_type(select_block_ctx(ctx, current_block_type));
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty4();
+    },
+    m(target, anchor) {
+      if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (current_block_type === (current_block_type = select_block_type(ctx2, dirty)) && if_block) {
+        if_block.p(select_block_ctx(ctx2, current_block_type), dirty);
+      } else {
+        if_block.d(1);
+        if_block = current_block_type(select_block_ctx(ctx2, current_block_type));
+        if (if_block) {
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_block.d(detaching);
+    }
+  };
+}
+function create_fragment11(ctx) {
+  let obsidianinput;
+  let current;
+  obsidianinput = new ObsidianInputWrapper_default({
+    props: {
+      errors: (
+        /*errors*/
+        ctx[2]
+      ),
+      label: (
+        /*field*/
+        ctx[0].label || /*field*/
+        ctx[0].name
+      ),
+      description: (
+        /*field*/
+        ctx[0].description
+      ),
+      $$slots: { default: [create_default_slot4] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(obsidianinput.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(obsidianinput, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const obsidianinput_changes = {};
+      if (dirty & /*errors*/
+      4)
+        obsidianinput_changes.errors = /*errors*/
+        ctx2[2];
+      if (dirty & /*field*/
+      1)
+        obsidianinput_changes.label = /*field*/
+        ctx2[0].label || /*field*/
+        ctx2[0].name;
+      if (dirty & /*field*/
+      1)
+        obsidianinput_changes.description = /*field*/
+        ctx2[0].description;
+      if (dirty & /*$$scope, $value, input*/
+      32786) {
+        obsidianinput_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      obsidianinput.$set(obsidianinput_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(obsidianinput.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(obsidianinput.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(obsidianinput, detaching);
+    }
+  };
+}
+function instance11($$self, $$props, $$invalidate) {
+  let $value, $$unsubscribe_value = noop, $$subscribe_value = () => ($$unsubscribe_value(), $$unsubscribe_value = subscribe(value, ($$value) => $$invalidate(4, $value = $$value)), value);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_value());
+  let { field } = $$props;
+  let { input } = $$props;
+  let { value } = $$props;
+  $$subscribe_value();
+  let { errors } = $$props;
+  function getNoteOptions(folder) {
+    const files = get_tfiles_from_folder(folder, app);
+    return pipe2(
+      files,
+      E.map((files2) => files2.reduce(
+        (acc, option2) => {
+          acc[option2.basename] = option2.basename;
+          return acc;
+        },
+        {}
+      )),
+      E.mapLeft((err) => {
+        log_error(err);
+        return err;
+      }),
+      E.getOrElse(() => ({}))
+    );
+  }
+  function select_change_handler() {
+    $value = select_value(this);
+    value.set($value);
+    $$invalidate(5, getNoteOptions);
+    $$invalidate(1, input);
+  }
+  function select_change_handler_1() {
+    $value = select_value(this);
+    value.set($value);
+    $$invalidate(5, getNoteOptions);
+    $$invalidate(1, input);
+  }
+  $$self.$$set = ($$props2) => {
+    if ("field" in $$props2)
+      $$invalidate(0, field = $$props2.field);
+    if ("input" in $$props2)
+      $$invalidate(1, input = $$props2.input);
+    if ("value" in $$props2)
+      $$subscribe_value($$invalidate(3, value = $$props2.value));
+    if ("errors" in $$props2)
+      $$invalidate(2, errors = $$props2.errors);
+  };
+  return [
+    field,
+    input,
+    errors,
+    value,
+    $value,
+    getNoteOptions,
+    select_change_handler,
+    select_change_handler_1
+  ];
+}
+var ObsidianSelect = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance11, create_fragment11, safe_not_equal, { field: 0, input: 1, value: 3, errors: 2 });
+  }
+};
+var ObsidianSelect_default = ObsidianSelect;
+
+// src/views/components/Form/ObsidianToggle.svelte
+function create_fragment12(ctx) {
+  let div;
+  let useSetting_action;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      div.innerHTML = `<span style="display: none;">dummy to prevent the setting from being the first child</span>`;
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      if (!mounted) {
+        dispose = action_destroyer(useSetting_action = useSetting.call(null, div, {
+          name: (
+            /*field*/
+            ctx[0].label || /*field*/
+            ctx[0].name
+          ),
+          description: (
+            /*field*/
+            ctx[0].description || ""
+          ),
+          customizer: (
+            /*customizer*/
+            ctx[2]
+          )
+        }));
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (useSetting_action && is_function(useSetting_action.update) && dirty & /*field*/
+      1)
+        useSetting_action.update.call(null, {
+          name: (
+            /*field*/
+            ctx2[0].label || /*field*/
+            ctx2[0].name
+          ),
+          description: (
+            /*field*/
+            ctx2[0].description || ""
+          ),
+          customizer: (
+            /*customizer*/
+            ctx2[2]
+          )
+        });
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function instance12($$self, $$props, $$invalidate) {
+  let $value, $$unsubscribe_value = noop, $$subscribe_value = () => ($$unsubscribe_value(), $$unsubscribe_value = subscribe(value, ($$value) => $$invalidate(4, $value = $$value)), value);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_value());
+  let { field } = $$props;
+  let { value } = $$props;
+  $$subscribe_value();
+  let toggle_;
+  function customizer(setting) {
+    setting.addToggle((toggle) => {
+      toggle.onChange((v) => {
+        set_store_value(value, $value = v, $value);
+      });
+      $$invalidate(3, toggle_ = toggle);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("field" in $$props2)
+      $$invalidate(0, field = $$props2.field);
+    if ("value" in $$props2)
+      $$subscribe_value($$invalidate(1, value = $$props2.value));
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*toggle_, $value*/
+    24) {
+      $:
+        if (toggle_) {
+          toggle_.setValue($value);
+        }
+    }
+  };
+  return [field, value, customizer, toggle_, $value];
+}
+var ObsidianToggle = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance12, create_fragment12, safe_not_equal, { field: 0, value: 1 });
+  }
+};
+var ObsidianToggle_default = ObsidianToggle;
+
+// src/utils/Logger.ts
+function noop2() {
+}
+var _level;
+var _Logger = class {
+  constructor() {
+    __privateAdd(this, _level, false ? "DEBUG" : "ERROR");
+  }
+  static getInstance() {
+    if (!_Logger.instance) {
+      _Logger.instance = new _Logger();
+    }
+    return _Logger.instance;
+  }
+  log(message) {
+    console.log(message);
+  }
+  error(...args) {
+    console.error(...args);
+  }
+  get debug() {
+    if (__privateGet(this, _level) === "DEBUG")
+      return console.log.bind(console, "[DEBUG]");
+    return noop2;
+  }
+};
+var Logger = _Logger;
+_level = new WeakMap();
+var logger = Logger.getInstance();
+
+// src/views/components/Form/inputSlider.svelte
+function add_css3(target) {
+  append_styles(target, "svelte-b9v0e5", ".wrapper.svelte-b9v0e5{display:flex;justify-content:flex-start;align-items:center;gap:1rem}");
+}
+function create_fragment13(ctx) {
+  let div;
+  let span;
+  let t0_value = (
+    /*$value*/
+    (ctx[2] === void 0 ? (
+      /*input*/
+      ctx[1].min
+    ) : (
+      /*$value*/
+      ctx[2]
+    )) + ""
+  );
+  let t0;
+  let t1;
+  let input_1;
+  let input_1_min_value;
+  let input_1_max_value;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      span = element("span");
+      t0 = text(t0_value);
+      t1 = space();
+      input_1 = element("input");
+      attr(input_1, "type", "range");
+      attr(input_1, "class", "slider");
+      attr(input_1, "min", input_1_min_value = /*input*/
+      ctx[1].min);
+      attr(input_1, "max", input_1_max_value = /*input*/
+      ctx[1].max);
+      attr(div, "class", "wrapper svelte-b9v0e5");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append5(div, span);
+      append5(span, t0);
+      append5(div, t1);
+      append5(div, input_1);
+      set_input_value(
+        input_1,
+        /*$value*/
+        ctx[2]
+      );
+      if (!mounted) {
+        dispose = [
+          listen(
+            input_1,
+            "change",
+            /*input_1_change_input_handler*/
+            ctx[3]
+          ),
+          listen(
+            input_1,
+            "input",
+            /*input_1_change_input_handler*/
+            ctx[3]
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*$value, input*/
+      6 && t0_value !== (t0_value = /*$value*/
+      (ctx2[2] === void 0 ? (
+        /*input*/
+        ctx2[1].min
+      ) : (
+        /*$value*/
+        ctx2[2]
+      )) + ""))
+        set_data(t0, t0_value);
+      if (dirty & /*input*/
+      2 && input_1_min_value !== (input_1_min_value = /*input*/
+      ctx2[1].min)) {
+        attr(input_1, "min", input_1_min_value);
+      }
+      if (dirty & /*input*/
+      2 && input_1_max_value !== (input_1_max_value = /*input*/
+      ctx2[1].max)) {
+        attr(input_1, "max", input_1_max_value);
+      }
+      if (dirty & /*$value*/
+      4) {
+        set_input_value(
+          input_1,
+          /*$value*/
+          ctx2[2]
+        );
+      }
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function instance13($$self, $$props, $$invalidate) {
+  let $value, $$unsubscribe_value = noop, $$subscribe_value = () => ($$unsubscribe_value(), $$unsubscribe_value = subscribe(value, ($$value) => $$invalidate(2, $value = $$value)), value);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_value());
+  let { value } = $$props;
+  $$subscribe_value();
+  let { input } = $$props;
+  function input_1_change_input_handler() {
+    $value = to_number(this.value);
+    value.set($value);
+  }
+  $$self.$$set = ($$props2) => {
+    if ("value" in $$props2)
+      $$subscribe_value($$invalidate(0, value = $$props2.value));
+    if ("input" in $$props2)
+      $$invalidate(1, input = $$props2.input);
+  };
+  return [value, input, $value, input_1_change_input_handler];
+}
+var InputSlider = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance13, create_fragment13, safe_not_equal, { value: 0, input: 1 }, add_css3);
+  }
+};
+var inputSlider_default = InputSlider;
+
+// src/views/components/Form/RenderField.svelte
+function create_if_block_12(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [
+    create_if_block_22,
+    create_if_block_32,
+    create_if_block_42,
+    create_if_block_52,
+    create_if_block_62,
+    create_if_block_7,
+    create_if_block_8,
+    create_else_block3
+  ];
+  const if_blocks = [];
+  function select_block_type_1(ctx2, dirty) {
+    if (
+      /*definition*/
+      ctx2[0].input.type === "select"
+    )
+      return 0;
+    if (
+      /*definition*/
+      ctx2[0].input.type === "toggle"
+    )
+      return 1;
+    if (
+      /*definition*/
+      ctx2[0].input.type === "folder"
+    )
+      return 2;
+    if (
+      /*definition*/
+      ctx2[0].input.type === "dataview"
+    )
+      return 3;
+    if (
+      /*definition*/
+      ctx2[0].input.type === "note"
+    )
+      return 4;
+    if (
+      /*definition*/
+      ctx2[0].input.type === "textarea"
+    )
+      return 5;
+    if (
+      /*definition*/
+      ctx2[0].input.type === "document_block"
+    )
+      return 6;
+    return 7;
+  }
+  current_block_type_index = select_block_type_1(ctx, -1);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty4();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type_1(ctx2, dirty);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(if_block_anchor.parentNode, if_block_anchor);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_blocks[current_block_type_index].d(detaching);
+    }
+  };
+}
+function create_if_block5(ctx) {
+  let obsidianinputwrapper;
+  let current;
+  obsidianinputwrapper = new ObsidianInputWrapper_default({
+    props: {
+      label: (
+        /*definition*/
+        ctx[0].label || /*definition*/
+        ctx[0].name
+      ),
+      description: (
+        /*definition*/
+        ctx[0].description
+      ),
+      errors: (
+        /*visibleError*/
+        ctx[4]
+      ),
+      $$slots: { default: [create_default_slot5] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(obsidianinputwrapper.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(obsidianinputwrapper, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const obsidianinputwrapper_changes = {};
+      if (dirty & /*definition*/
+      1)
+        obsidianinputwrapper_changes.label = /*definition*/
+        ctx2[0].label || /*definition*/
+        ctx2[0].name;
+      if (dirty & /*definition*/
+      1)
+        obsidianinputwrapper_changes.description = /*definition*/
+        ctx2[0].description;
+      if (dirty & /*visibleError*/
+      16)
+        obsidianinputwrapper_changes.errors = /*visibleError*/
+        ctx2[4];
+      if (dirty & /*$$scope*/
+      1024) {
+        obsidianinputwrapper_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      obsidianinputwrapper.$set(obsidianinputwrapper_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(obsidianinputwrapper.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(obsidianinputwrapper.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(obsidianinputwrapper, detaching);
+    }
+  };
+}
+function create_else_block3(ctx) {
+  let obsidianinputwrapper;
+  let current;
+  obsidianinputwrapper = new ObsidianInputWrapper_default({
+    props: {
+      errors: (
+        /*errors*/
+        ctx[6]
+      ),
+      label: (
+        /*definition*/
+        ctx[0].label || /*definition*/
+        ctx[0].name
+      ),
+      description: (
+        /*definition*/
+        ctx[0].description
+      ),
+      required: (
+        /*definition*/
+        ctx[0].isRequired
+      ),
+      $$slots: { default: [create_default_slot_1] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(obsidianinputwrapper.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(obsidianinputwrapper, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const obsidianinputwrapper_changes = {};
+      if (dirty & /*errors*/
+      64)
+        obsidianinputwrapper_changes.errors = /*errors*/
+        ctx2[6];
+      if (dirty & /*definition*/
+      1)
+        obsidianinputwrapper_changes.label = /*definition*/
+        ctx2[0].label || /*definition*/
+        ctx2[0].name;
+      if (dirty & /*definition*/
+      1)
+        obsidianinputwrapper_changes.description = /*definition*/
+        ctx2[0].description;
+      if (dirty & /*definition*/
+      1)
+        obsidianinputwrapper_changes.required = /*definition*/
+        ctx2[0].isRequired;
+      if (dirty & /*$$scope, definition, value, errors, app*/
+      1221) {
+        obsidianinputwrapper_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      obsidianinputwrapper.$set(obsidianinputwrapper_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(obsidianinputwrapper.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(obsidianinputwrapper.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(obsidianinputwrapper, detaching);
+    }
+  };
+}
+function create_if_block_8(ctx) {
+  let obsidianinputwrapper;
+  let current;
+  obsidianinputwrapper = new ObsidianInputWrapper_default({
+    props: {
+      label: (
+        /*definition*/
+        ctx[0].label || /*definition*/
+        ctx[0].name
+      ),
+      description: (
+        /*definition*/
+        ctx[0].description
+      ),
+      $$slots: { info: [create_info_slot] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(obsidianinputwrapper.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(obsidianinputwrapper, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const obsidianinputwrapper_changes = {};
+      if (dirty & /*definition*/
+      1)
+        obsidianinputwrapper_changes.label = /*definition*/
+        ctx2[0].label || /*definition*/
+        ctx2[0].name;
+      if (dirty & /*definition*/
+      1)
+        obsidianinputwrapper_changes.description = /*definition*/
+        ctx2[0].description;
+      if (dirty & /*$$scope, definition, formEngine*/
+      1027) {
+        obsidianinputwrapper_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      obsidianinputwrapper.$set(obsidianinputwrapper_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(obsidianinputwrapper.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(obsidianinputwrapper.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(obsidianinputwrapper, detaching);
+    }
+  };
+}
+function create_if_block_7(ctx) {
+  let inputtextarea;
+  let current;
+  inputtextarea = new InputTextArea_default({
+    props: {
+      field: (
+        /*definition*/
+        ctx[0]
+      ),
+      value: (
+        /*value*/
+        ctx[7]
+      ),
+      errors: (
+        /*errors*/
+        ctx[6]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(inputtextarea.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(inputtextarea, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const inputtextarea_changes = {};
+      if (dirty & /*definition*/
+      1)
+        inputtextarea_changes.field = /*definition*/
+        ctx2[0];
+      if (dirty & /*value*/
+      128)
+        inputtextarea_changes.value = /*value*/
+        ctx2[7];
+      if (dirty & /*errors*/
+      64)
+        inputtextarea_changes.errors = /*errors*/
+        ctx2[6];
+      inputtextarea.$set(inputtextarea_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(inputtextarea.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(inputtextarea.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(inputtextarea, detaching);
+    }
+  };
+}
+function create_if_block_62(ctx) {
+  let inputnote;
+  let current;
+  inputnote = new InputNote_default({
+    props: {
+      field: (
+        /*definition*/
+        ctx[0]
+      ),
+      input: (
+        /*definition*/
+        ctx[0].input
+      ),
+      value: (
+        /*value*/
+        ctx[7]
+      ),
+      errors: (
+        /*errors*/
+        ctx[6]
+      ),
+      app: (
+        /*app*/
+        ctx[2]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(inputnote.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(inputnote, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const inputnote_changes = {};
+      if (dirty & /*definition*/
+      1)
+        inputnote_changes.field = /*definition*/
+        ctx2[0];
+      if (dirty & /*definition*/
+      1)
+        inputnote_changes.input = /*definition*/
+        ctx2[0].input;
+      if (dirty & /*value*/
+      128)
+        inputnote_changes.value = /*value*/
+        ctx2[7];
+      if (dirty & /*errors*/
+      64)
+        inputnote_changes.errors = /*errors*/
+        ctx2[6];
+      if (dirty & /*app*/
+      4)
+        inputnote_changes.app = /*app*/
+        ctx2[2];
+      inputnote.$set(inputnote_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(inputnote.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(inputnote.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(inputnote, detaching);
+    }
+  };
+}
+function create_if_block_52(ctx) {
+  let inputdataview;
+  let current;
+  inputdataview = new InputDataview_default({
+    props: {
+      field: (
+        /*definition*/
+        ctx[0]
+      ),
+      input: (
+        /*definition*/
+        ctx[0].input
+      ),
+      value: (
+        /*value*/
+        ctx[7]
+      ),
+      errors: (
+        /*errors*/
+        ctx[6]
+      ),
+      app: (
+        /*app*/
+        ctx[2]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(inputdataview.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(inputdataview, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const inputdataview_changes = {};
+      if (dirty & /*definition*/
+      1)
+        inputdataview_changes.field = /*definition*/
+        ctx2[0];
+      if (dirty & /*definition*/
+      1)
+        inputdataview_changes.input = /*definition*/
+        ctx2[0].input;
+      if (dirty & /*value*/
+      128)
+        inputdataview_changes.value = /*value*/
+        ctx2[7];
+      if (dirty & /*errors*/
+      64)
+        inputdataview_changes.errors = /*errors*/
+        ctx2[6];
+      if (dirty & /*app*/
+      4)
+        inputdataview_changes.app = /*app*/
+        ctx2[2];
+      inputdataview.$set(inputdataview_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(inputdataview.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(inputdataview.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(inputdataview, detaching);
+    }
+  };
+}
+function create_if_block_42(ctx) {
+  let inputfolder;
+  let current;
+  inputfolder = new InputFolder_default({
+    props: {
+      field: (
+        /*definition*/
+        ctx[0]
+      ),
+      value: (
+        /*value*/
+        ctx[7]
+      ),
+      app: (
+        /*app*/
+        ctx[2]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(inputfolder.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(inputfolder, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const inputfolder_changes = {};
+      if (dirty & /*definition*/
+      1)
+        inputfolder_changes.field = /*definition*/
+        ctx2[0];
+      if (dirty & /*value*/
+      128)
+        inputfolder_changes.value = /*value*/
+        ctx2[7];
+      if (dirty & /*app*/
+      4)
+        inputfolder_changes.app = /*app*/
+        ctx2[2];
+      inputfolder.$set(inputfolder_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(inputfolder.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(inputfolder.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(inputfolder, detaching);
+    }
+  };
+}
+function create_if_block_32(ctx) {
+  let obsidiantoggle;
+  let current;
+  obsidiantoggle = new ObsidianToggle_default({
+    props: {
+      field: (
+        /*definition*/
+        ctx[0]
+      ),
+      value: (
+        /*value*/
+        ctx[7]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(obsidiantoggle.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(obsidiantoggle, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const obsidiantoggle_changes = {};
+      if (dirty & /*definition*/
+      1)
+        obsidiantoggle_changes.field = /*definition*/
+        ctx2[0];
+      if (dirty & /*value*/
+      128)
+        obsidiantoggle_changes.value = /*value*/
+        ctx2[7];
+      obsidiantoggle.$set(obsidiantoggle_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(obsidiantoggle.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(obsidiantoggle.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(obsidiantoggle, detaching);
+    }
+  };
+}
+function create_if_block_22(ctx) {
+  let obsidianselect;
+  let current;
+  obsidianselect = new ObsidianSelect_default({
+    props: {
+      input: (
+        /*definition*/
+        ctx[0].input
+      ),
+      field: (
+        /*definition*/
+        ctx[0]
+      ),
+      value: (
+        /*value*/
+        ctx[7]
+      ),
+      errors: (
+        /*errors*/
+        ctx[6]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(obsidianselect.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(obsidianselect, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const obsidianselect_changes = {};
+      if (dirty & /*definition*/
+      1)
+        obsidianselect_changes.input = /*definition*/
+        ctx2[0].input;
+      if (dirty & /*definition*/
+      1)
+        obsidianselect_changes.field = /*definition*/
+        ctx2[0];
+      if (dirty & /*value*/
+      128)
+        obsidianselect_changes.value = /*value*/
+        ctx2[7];
+      if (dirty & /*errors*/
+      64)
+        obsidianselect_changes.errors = /*errors*/
+        ctx2[6];
+      obsidianselect.$set(obsidianselect_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(obsidianselect.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(obsidianselect.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(obsidianselect, detaching);
+    }
+  };
+}
+function create_else_block_1(ctx) {
+  let inputfield;
+  let current;
+  inputfield = new InputField_default({
+    props: {
+      value: (
+        /*value*/
+        ctx[7]
+      ),
+      inputType: (
+        /*definition*/
+        ctx[0].input.type
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(inputfield.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(inputfield, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const inputfield_changes = {};
+      if (dirty & /*value*/
+      128)
+        inputfield_changes.value = /*value*/
+        ctx2[7];
+      if (dirty & /*definition*/
+      1)
+        inputfield_changes.inputType = /*definition*/
+        ctx2[0].input.type;
+      inputfield.$set(inputfield_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(inputfield.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(inputfield.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(inputfield, detaching);
+    }
+  };
+}
+function create_if_block_11(ctx) {
+  let inputtag;
+  let current;
+  inputtag = new InputTag_default({
+    props: {
+      input: (
+        /*definition*/
+        ctx[0].input
+      ),
+      value: (
+        /*value*/
+        ctx[7]
+      ),
+      errors: (
+        /*errors*/
+        ctx[6]
+      ),
+      app: (
+        /*app*/
+        ctx[2]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(inputtag.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(inputtag, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const inputtag_changes = {};
+      if (dirty & /*definition*/
+      1)
+        inputtag_changes.input = /*definition*/
+        ctx2[0].input;
+      if (dirty & /*value*/
+      128)
+        inputtag_changes.value = /*value*/
+        ctx2[7];
+      if (dirty & /*errors*/
+      64)
+        inputtag_changes.errors = /*errors*/
+        ctx2[6];
+      if (dirty & /*app*/
+      4)
+        inputtag_changes.app = /*app*/
+        ctx2[2];
+      inputtag.$set(inputtag_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(inputtag.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(inputtag.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(inputtag, detaching);
+    }
+  };
+}
+function create_if_block_10(ctx) {
+  let inputslider;
+  let current;
+  inputslider = new inputSlider_default({
+    props: {
+      input: (
+        /*definition*/
+        ctx[0].input
+      ),
+      value: (
+        /*value*/
+        ctx[7]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(inputslider.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(inputslider, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const inputslider_changes = {};
+      if (dirty & /*definition*/
+      1)
+        inputslider_changes.input = /*definition*/
+        ctx2[0].input;
+      if (dirty & /*value*/
+      128)
+        inputslider_changes.value = /*value*/
+        ctx2[7];
+      inputslider.$set(inputslider_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(inputslider.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(inputslider.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(inputslider, detaching);
+    }
+  };
+}
+function create_if_block_9(ctx) {
+  let multiselectfield;
+  let current;
+  multiselectfield = new MultiSelectField_default({
+    props: {
+      input: (
+        /*definition*/
+        ctx[0].input
+      ),
+      value: (
+        /*value*/
+        ctx[7]
+      ),
+      errors: (
+        /*errors*/
+        ctx[6]
+      ),
+      app: (
+        /*app*/
+        ctx[2]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(multiselectfield.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(multiselectfield, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const multiselectfield_changes = {};
+      if (dirty & /*definition*/
+      1)
+        multiselectfield_changes.input = /*definition*/
+        ctx2[0].input;
+      if (dirty & /*value*/
+      128)
+        multiselectfield_changes.value = /*value*/
+        ctx2[7];
+      if (dirty & /*errors*/
+      64)
+        multiselectfield_changes.errors = /*errors*/
+        ctx2[6];
+      if (dirty & /*app*/
+      4)
+        multiselectfield_changes.app = /*app*/
+        ctx2[2];
+      multiselectfield.$set(multiselectfield_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(multiselectfield.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(multiselectfield.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(multiselectfield, detaching);
+    }
+  };
+}
+function create_default_slot_1(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block_9, create_if_block_10, create_if_block_11, create_else_block_1];
+  const if_blocks = [];
+  function select_block_type_2(ctx2, dirty) {
+    if (
+      /*definition*/
+      ctx2[0].input.type === "multiselect"
+    )
+      return 0;
+    if (
+      /*definition*/
+      ctx2[0].input.type === "slider"
+    )
+      return 1;
+    if (
+      /*definition*/
+      ctx2[0].input.type === "tag"
+    )
+      return 2;
+    return 3;
+  }
+  current_block_type_index = select_block_type_2(ctx, -1);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty4();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type_2(ctx2, dirty);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(if_block_anchor.parentNode, if_block_anchor);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_blocks[current_block_type_index].d(detaching);
+    }
+  };
+}
+function create_info_slot(ctx) {
+  let documentblock;
+  let current;
+  documentblock = new DocumentBlock_default({
+    props: {
+      field: (
+        /*definition*/
+        ctx[0].input
+      ),
+      form: (
+        /*formEngine*/
+        ctx[1]
+      ),
+      slot: "info"
+    }
+  });
+  return {
+    c() {
+      create_component(documentblock.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(documentblock, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const documentblock_changes = {};
+      if (dirty & /*definition*/
+      1)
+        documentblock_changes.field = /*definition*/
+        ctx2[0].input;
+      if (dirty & /*formEngine*/
+      2)
+        documentblock_changes.form = /*formEngine*/
+        ctx2[1];
+      documentblock.$set(documentblock_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(documentblock.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(documentblock.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(documentblock, detaching);
+    }
+  };
+}
+function create_default_slot5(ctx) {
+  let input;
+  return {
+    c() {
+      input = element("input");
+      attr(input, "type", "text");
+      attr(input, "class", "input");
+      input.disabled = true;
+      attr(input, "placeholder", "Condition error");
+    },
+    m(target, anchor) {
+      insert(target, input, anchor);
+    },
+    p: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(input);
+      }
+    }
+  };
+}
+function create_fragment14(ctx) {
+  let show_if;
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block5, create_if_block_12];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (dirty & /*$isVisible*/
+    8)
+      show_if = null;
+    if (show_if == null)
+      show_if = !!E.isLeft(
+        /*$isVisible*/
+        ctx2[3]
+      );
+    if (show_if)
+      return 0;
+    if (
+      /*$isVisible*/
+      ctx2[3].right
+    )
+      return 1;
+    return -1;
+  }
+  if (~(current_block_type_index = select_block_type(ctx, -1))) {
+    if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  }
+  return {
+    c() {
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty4();
+    },
+    m(target, anchor) {
+      if (~current_block_type_index) {
+        if_blocks[current_block_type_index].m(target, anchor);
+      }
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2, dirty);
+      if (current_block_type_index === previous_block_index) {
+        if (~current_block_type_index) {
+          if_blocks[current_block_type_index].p(ctx2, dirty);
+        }
+      } else {
+        if (if_block) {
+          group_outros();
+          transition_out(if_blocks[previous_block_index], 1, 1, () => {
+            if_blocks[previous_block_index] = null;
+          });
+          check_outros();
+        }
+        if (~current_block_type_index) {
+          if_block = if_blocks[current_block_type_index];
+          if (!if_block) {
+            if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+            if_block.c();
+          } else {
+            if_block.p(ctx2, dirty);
+          }
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        } else {
+          if_block = null;
+        }
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (~current_block_type_index) {
+        if_blocks[current_block_type_index].d(detaching);
+      }
+    }
+  };
+}
+function instance14($$self, $$props, $$invalidate) {
+  let value;
+  let errors;
+  let isVisible;
+  let visibleError;
+  let $isVisible, $$unsubscribe_isVisible = noop, $$subscribe_isVisible = () => ($$unsubscribe_isVisible(), $$unsubscribe_isVisible = subscribe(isVisible, ($$value) => $$invalidate(3, $isVisible = $$value)), isVisible);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_isVisible());
+  let { model } = $$props;
+  let { definition } = $$props;
+  let { formEngine } = $$props;
+  let { app: app2 } = $$props;
+  let { logger: logger3 = logger } = $$props;
+  $$self.$$set = ($$props2) => {
+    if ("model" in $$props2)
+      $$invalidate(8, model = $$props2.model);
+    if ("definition" in $$props2)
+      $$invalidate(0, definition = $$props2.definition);
+    if ("formEngine" in $$props2)
+      $$invalidate(1, formEngine = $$props2.formEngine);
+    if ("app" in $$props2)
+      $$invalidate(2, app2 = $$props2.app);
+    if ("logger" in $$props2)
+      $$invalidate(9, logger3 = $$props2.logger);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*model*/
+    256) {
+      $:
+        $$invalidate(7, value = model.value);
+    }
+    if ($$self.$$.dirty & /*model*/
+    256) {
+      $:
+        $$invalidate(6, errors = model.errors);
+    }
+    if ($$self.$$.dirty & /*model*/
+    256) {
+      $:
+        $$subscribe_isVisible($$invalidate(5, isVisible = model.isVisible));
+    }
+    if ($$self.$$.dirty & /*model*/
+    256) {
+      $:
+        $$invalidate(4, visibleError = derived(model.isVisible, ($isVisible2) => E.isLeft($isVisible2) ? [$isVisible2.left] : []));
+    }
+    if ($$self.$$.dirty & /*logger, $isVisible*/
+    520) {
+      $:
+        logger3.debug($isVisible);
+    }
+  };
+  return [
+    definition,
+    formEngine,
+    app2,
+    $isVisible,
+    visibleError,
+    isVisible,
+    errors,
+    value,
+    model,
+    logger3
+  ];
+}
+var RenderField = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance14, create_fragment14, safe_not_equal, {
+      model: 8,
+      definition: 0,
+      formEngine: 1,
+      app: 2,
+      logger: 9
+    });
+  }
+};
+var RenderField_default = RenderField;
+
+// src/FormModal.svelte
+function get_each_context4(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[6] = list[i];
+  return child_ctx;
+}
+function create_each_block4(ctx) {
+  let renderfield;
+  let current;
+  renderfield = new RenderField_default({
+    props: {
+      definition: (
+        /*definition*/
+        ctx[6]
+      ),
+      model: (
+        /*formEngine*/
+        ctx[1].addField(
+          /*definition*/
+          ctx[6]
+        )
+      ),
+      formEngine: (
+        /*formEngine*/
+        ctx[1]
+      ),
+      app: (
+        /*app*/
+        ctx[0]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(renderfield.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(renderfield, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const renderfield_changes = {};
+      if (dirty & /*fields*/
+      4)
+        renderfield_changes.definition = /*definition*/
+        ctx2[6];
+      if (dirty & /*formEngine, fields*/
+      6)
+        renderfield_changes.model = /*formEngine*/
+        ctx2[1].addField(
+          /*definition*/
+          ctx2[6]
+        );
+      if (dirty & /*formEngine*/
+      2)
+        renderfield_changes.formEngine = /*formEngine*/
+        ctx2[1];
+      if (dirty & /*app*/
+      1)
+        renderfield_changes.app = /*app*/
+        ctx2[0];
+      renderfield.$set(renderfield_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(renderfield.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(renderfield.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(renderfield, detaching);
+    }
+  };
+}
+function create_fragment15(ctx) {
+  let each_1_anchor;
+  let current;
+  let each_value = ensure_array_like(
+    /*fields*/
+    ctx[2]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block4(get_each_context4(ctx, each_value, i));
+  }
+  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  });
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      each_1_anchor = empty4();
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, each_1_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*fields, formEngine, app*/
+      7) {
+        each_value = ensure_array_like(
+          /*fields*/
+          ctx2[2]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context4(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block4(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+          }
+        }
+        group_outros();
+        for (i = each_value.length; i < each_blocks.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(each_1_anchor);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function instance15($$self, $$props, $$invalidate) {
+  let errors;
+  let $errors, $$unsubscribe_errors = noop, $$subscribe_errors = () => ($$unsubscribe_errors(), $$unsubscribe_errors = subscribe(errors, ($$value) => $$invalidate(5, $errors = $$value)), errors);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_errors());
+  let { app: app2 } = $$props;
+  let { reportFormErrors } = $$props;
+  let { formEngine } = $$props;
+  let { fields } = $$props;
+  $$self.$$set = ($$props2) => {
+    if ("app" in $$props2)
+      $$invalidate(0, app2 = $$props2.app);
+    if ("reportFormErrors" in $$props2)
+      $$invalidate(4, reportFormErrors = $$props2.reportFormErrors);
+    if ("formEngine" in $$props2)
+      $$invalidate(1, formEngine = $$props2.formEngine);
+    if ("fields" in $$props2)
+      $$invalidate(2, fields = $$props2.fields);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*formEngine*/
+    2) {
+      $:
+        $$subscribe_errors($$invalidate(3, errors = formEngine.errors));
+    }
+    if ($$self.$$.dirty & /*$errors, reportFormErrors*/
+    48) {
+      $:
+        $errors.length && reportFormErrors($errors);
+    }
+  };
+  return [app2, formEngine, fields, errors, reportFormErrors, $errors];
+}
+var FormModal = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance15, create_fragment15, safe_not_equal, {
+      app: 0,
+      reportFormErrors: 4,
+      formEngine: 1,
+      fields: 2
+    });
+  }
+};
+var FormModal_default = FormModal;
+
+// src/core/ResultValue.ts
+function _toBulletList(value) {
+  if (Array.isArray(value)) {
+    return value.map((v) => `- ${v}`).join("\n");
+  }
+  return Object.entries(value).map(([key, value2]) => `- ${key}: ${value2}`).join("\n");
+}
+function isRecord(value) {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+function deepMap(value, fn) {
+  if (Array.isArray(value)) {
+    return value.map((v) => deepMap(v, fn));
+  }
+  if (isRecord(value)) {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, value2]) => [key, deepMap(value2, fn)])
+    );
+  }
+  return fn(value);
+}
+var ResultValue = class {
+  constructor(value, name, notify2 = notify2) {
+    this.value = value;
+    this.name = name;
+    this.notify = notify2;
+    /** Alias for `toDataview` */
+    this.toDv = this.toDataview;
+    /** Alias for `toBulletList` */
+    this.toBullets = this.toBulletList;
+  }
+  static from(value, name, notify2 = notifyError) {
+    return new ResultValue(value, name, notify2);
+  }
+  /**
+   * Returns the value as a string.
+   * If the value is an array, it will be joined with a comma.
+   * If the value is an object, it will be stringified.
+   * This is convenient because it is the default method called automatically
+   * when the value needs to be rendered as a string, so you can just drop
+   * the value directly into a template without having to call this method.
+   * @returns string
+   */
+  toString() {
+    switch (typeof this.value) {
+      case "string":
+        return this.value;
+      case "number":
+      case "boolean":
+        return this.value.toString();
+      case "object":
+        if (Array.isArray(this.value)) {
+          return this.value.join(", ");
+        }
+        return JSON.stringify(this.value);
+      default:
+        return "";
+    }
+  }
+  /**
+   * Returns the value as a bullet list.
+   * If the value is empty or undefined, it will return an empty string.
+   * If the value is a single value, it will return as a single item bullet list.
+   * If the value is an array, it will return a bullet list with each item in the array.
+   * If the value is an object, it will return a bullet list with each key/value pair in the object.
+   * @returns string
+   */
+  toBulletList() {
+    switch (typeof this.value) {
+      case "boolean":
+      case "number":
+      case "string":
+        return `- ${this.value}`;
+      case "object": {
+        const value = this.value;
+        if (value === null)
+          return "";
+        if (Array.isArray(value)) {
+          return _toBulletList(value);
+        }
+        if (isRecord(value)) {
+          return _toBulletList(value);
+        }
+        return `- ${JSON.stringify(value)}`;
+      }
+      default:
+        return "";
+    }
+  }
+  /**
+   * Converts the value to a dataview property using the field name as the key.
+   * If the value is empty or undefined, it will return an empty string and not render anything.
+   */
+  toDataview() {
+    const value = this.value;
+    if (value === void 0)
+      return "";
+    if (Array.isArray(value)) {
+      return `[${this.name}:: ${JSON.stringify(value).slice(1, -1)}]`;
+    }
+    return `[${this.name}:: ${this.toString()}]`;
+  }
+  /**
+   * Transforms the containerd value using the provided function.
+   * If the value is undefined or null the function will not be called
+   * and the result will be the same as the original.
+   * This is useful if you want to apply somme modifications to the value
+   * before rendering it, for example if none of the existing format methods suit your needs.
+   * @param {function} fn the function to transform the values
+   * @returns a new FormValue with the transformed value
+   **/
+  map(fn) {
+    const safeFn = E.tryCatchK(fn, ensureError);
+    const unchanged = () => this;
+    return pipe2(
+      this.value,
+      Option_exports.fromNullable,
+      Option_exports.map(safeFn),
+      Option_exports.fold(
+        unchanged,
+        (v) => pipe2(
+          v,
+          E.fold(
+            (e) => {
+              this.notify("Error in map of " + this.name)(e.message);
+              return unchanged();
+            },
+            (v2) => ResultValue.from(v2, this.name, this.notify)
+          )
+        )
+      )
+    );
+  }
+  /**
+   * Convenient getter to get the value as bullets, so you don't need to call `toBulletList` manually.
+   * example:
+   * ```ts
+   *  result.getValue("myField").bullets;
+   * ```
+   */
+  get bullets() {
+    return this.toBulletList();
+  }
+  /**
+   * getter that returns all the string values uppercased.
+   * If the value is an array, it will return an array with all the strings uppercased.
+   */
+  get upper() {
+    return this.map(
+      (v) => deepMap(v, (it) => typeof it === "string" ? it.toLocaleUpperCase() : it)
+    );
+  }
+  /**
+   * getter that returns all the string values lowercased.
+   * If the value is an array, it will return an array with all the strings lowercased.
+   * If the value is an object, it will return an object with all the string values lowercased.
+   * @returns FormValue
+   */
+  get lower() {
+    return this.map(
+      (v) => deepMap(v, (it) => typeof it === "string" ? it.toLocaleLowerCase() : it)
+    );
+  }
+  /**
+   * getter that returns all the string values trimmed.
+   * */
+  get trimmed() {
+    return this.map((v) => deepMap(v, (it) => typeof it === "string" ? it.trim() : it));
   }
 };
 
-// src/core/InputDefinitionSchema.ts
+// src/core/objectSelect.ts
+var KeysSchema = array2(coerce(string(), String));
+var PickOmitSchema = object({
+  pick: optional(KeysSchema),
+  omit: optional(KeysSchema)
+});
+function picKeys(obj) {
+  return (keys) => pipe2(
+    obj,
+    filterWithIndex3((k) => keys.includes(k))
+  );
+}
+function omitKeys(obj) {
+  return (keys) => pipe2(
+    obj,
+    filterWithIndex3((k) => !keys.includes(k))
+  );
+}
+function objectSelect(obj, opts) {
+  return pipe2(
+    parse2(PickOmitSchema, opts, { abortEarly: true }),
+    E.map(
+      (opts2) => {
+        const picked = pipe2(
+          fromNullable2(opts2.pick),
+          flatMap3(fromArray),
+          map4(picKeys(obj)),
+          getOrElse2(() => obj)
+        );
+        return pipe2(
+          fromNullable2(opts2.omit),
+          flatMap3(fromArray),
+          map4(omitKeys(picked)),
+          getOrElse2(() => picked)
+        );
+      }
+    ),
+    E.getOrElse(() => obj)
+  );
+}
+
+// src/core/FormResult.ts
+var import_obsidian10 = require("obsidian");
+function isPrimitive(value) {
+  return typeof value === "string" || typeof value === "boolean" || typeof value === "number";
+}
+function isPrimitiveArray(value) {
+  return Array.isArray(value) && value.every(isPrimitive);
+}
+var FormResult = class {
+  constructor(data, status) {
+    this.data = data;
+    this.status = status;
+    // alias
+    this.getV = this.getValue;
+    /* == Aliases ==*/
+    /** just an alias for `asFrontmatterString` */
+    this.asFrontmatter = this.asFrontmatterString;
+    /** just an alias for `asFrontmatterString` */
+    this.asYaml = this.asFrontmatterString;
+    /** just an alias for `asDataviewProperties` */
+    this.asDataview = this.asDataviewProperties;
+    /** just an alias for `asDataviewProperties` */
+    this.asDv = this.asDataviewProperties;
+  }
+  static make(data, status) {
+    return new Proxy(new FormResult(data, status), {
+      get(target, key, receiver) {
+        if (key in target || typeof key !== "string") {
+          return Reflect.get(target, key, receiver);
+        }
+        return target.getValue(key);
+      }
+    });
+  }
+  /**
+   * Transform  the current data into a frontmatter string, which is expected
+   * to be enclosed in `---` when used in a markdown file.
+   * This method does not add the enclosing `---` to the string,
+   * so you can put it anywhere inside the frontmatter.
+   * @param {Object} [options] an options object describing what options to pick or omit
+   * @param {string[]} [options.pick] an array of key names to pick from the data
+   * @param {string[]} [options.omit] an array of key names to omit from the data
+   * @returns the data formatted as a frontmatter string
+   */
+  asFrontmatterString(options) {
+    const data = objectSelect(this.data, options);
+    return (0, import_obsidian10.stringifyYaml)(data);
+  }
+  /**
+   * Return the current data as a block of dataview properties
+   * @param {Object} [options] an options object describing what options to pick or omit
+   * @param {string[]} [options.pick] an array of key names to pick from the data
+   * @param {string[]} [options.omit] an array of key names to omit from the data
+   * @returns string
+   */
+  asDataviewProperties(options) {
+    const data = objectSelect(this.data, options);
+    return Object.entries(data).map(([key, value]) => `${key}:: ${Array.isArray(value) ? value.map((v) => JSON.stringify(v)) : value}`).join("\n");
+  }
+  /**
+  Returns a copy of the data contained on this result.
+  */
+  getData() {
+    return { ...this.data };
+  }
+  /**
+   * Returns the data formatted as a string matching the provided
+   * template.
+   */
+  asString(template) {
+    let result2 = template;
+    for (const [key, value] of Object.entries(this.data)) {
+      result2 = result2.replace(new RegExp(`{{${key}}}`, "g"), value + "");
+    }
+    return result2;
+  }
+  /**
+   * Gets a single value from the data.
+   * It takes an optiional mapping function thatt can be used to transform the value.
+   * The function will only be called if the value exists.
+   * @param {string} key the key to get the value from
+   * @param {function} [mapFn] a function to transform the value
+   * @returns the value transformed by the function if it was provided, the value or empty string if it doesn't exist
+   */
+  get(key, mapFn) {
+    const value = this.data[key];
+    if (value === void 0) {
+      return "";
+    }
+    if (mapFn) {
+      return mapFn(value);
+    }
+    if (typeof value === "object") {
+      return JSON.stringify(value);
+    }
+    return value;
+  }
+  getValue(key) {
+    return ResultValue.from(this.data[key], key);
+  }
+};
+
+// src/core/formDataFromFormDefaults.ts
+function formDataFromFormDefaults(fields, values) {
+  const result2 = {};
+  const invalidKeys = [];
+  for (const [key, value] of Object.entries(values)) {
+    if (Array.isArray(value) && isPrimitiveArray(value)) {
+      result2[key] = value;
+    } else if (isPrimitive(value)) {
+      result2[key] = value;
+    } else {
+      invalidKeys.push(key);
+    }
+  }
+  if (invalidKeys.length > 0) {
+    log_error(new ModalFormError(`Invalid keys in form options: ${invalidKeys.join(", ")}`));
+  }
+  return pipe2(
+    fields,
+    Array_exports.map((field) => {
+      return pipe2(
+        result2[field.name],
+        fromNullable2,
+        match4(() => field.input.type === "toggle" ? some3(false) : none2, some3),
+        map4((value) => [field.name, value])
+      );
+    }),
+    Array_exports.compact,
+    fromEntries
+  );
+}
+
+// src/core/input/index.ts
+var input_exports = {};
+__export(input_exports, {
+  ConditionEq: () => ConditionEq,
+  ConditionSchema: () => ConditionSchema,
+  InputBasicSchema: () => InputBasicSchema,
+  InputDataviewSourceSchema: () => InputDataviewSourceSchema,
+  InputFolderSchema: () => InputFolderSchema,
+  InputNoteFromFolderSchema: () => InputNoteFromFolderSchema,
+  InputSelectFixedSchema: () => InputSelectFixedSchema,
+  InputSliderSchema: () => InputSliderSchema,
+  InputTagSchema: () => InputTagSchema,
+  InputTypeSchema: () => InputTypeSchema,
+  InputTypeToParserMap: () => InputTypeToParserMap,
+  MultiselectSchema: () => MultiselectSchema,
+  SelectFromNotesSchema: () => SelectFromNotesSchema,
+  allowsUnknownValues: () => allowsUnknownValues,
+  availableConditionsForInput: () => availableConditionsForInput,
+  canAllowUnknownValues: () => canAllowUnknownValues,
+  isBasicInputType: () => isBasicInputType,
+  nonEmptyString: () => nonEmptyString,
+  requiresListOfStrings: () => requiresListOfStrings,
+  valueMeetsCondition: () => valueMeetsCondition
+});
+
+// src/core/input/InputDefinitionSchema.ts
 function nonEmptyString(name) {
   return string(`${name} should be a string`, [
     toTrimmed(),
@@ -7698,6 +12063,7 @@ var InputBasicTypeSchema = enumType([
   "email",
   "tel"
 ]);
+var isBasicInputType = (type) => is(InputBasicTypeSchema, type);
 var SelectFromNotesSchema = object({
   type: literal("select"),
   source: literal("notes"),
@@ -7756,12 +12122,17 @@ var MultiSelectQuerySchema = object({
 function canAllowUnknownValues(type, source) {
   return type === "multiselect" && (source === "dataview" || source === "fixed");
 }
+function allowsUnknownValues(input) {
+  if (input.source === "notes")
+    return false;
+  return input.allowUnknownValues;
+}
 var MultiselectSchema = union4([
   MultiSelectNotesSchema,
   MultiSelectFixedSchema,
   MultiSelectQuerySchema
 ]);
-var DocumentBlock = object({
+var DocumentBlock2 = object({
   type: literal("document_block"),
   body: string()
 });
@@ -7775,7 +12146,7 @@ var InputTypeSchema = union4([
   InputDataviewSourceSchema,
   InputSelectFixedSchema,
   MultiselectSchema,
-  DocumentBlock
+  DocumentBlock2
 ]);
 var InputTypeToParserMap = {
   number: parseC(InputBasicSchema),
@@ -7794,7 +12165,449 @@ var InputTypeToParserMap = {
   select: trySchemas([SelectFromNotesSchema, InputSelectFixedSchema]),
   dataview: parseC(InputDataviewSourceSchema),
   multiselect: parseC(MultiselectSchema),
-  document_block: parseC(DocumentBlock)
+  document_block: parseC(DocumentBlock2)
+};
+function requiresListOfStrings(input) {
+  const type = input.type;
+  switch (type) {
+    case "multiselect":
+    case "tag":
+      return true;
+    case "select":
+    case "dataview":
+    case "note":
+    case "folder":
+    case "slider":
+    case "document_block":
+    case "number":
+    case "text":
+    case "date":
+    case "time":
+    case "datetime":
+    case "textarea":
+    case "toggle":
+    case "email":
+    case "tel":
+      return false;
+    default:
+      return absurd(type);
+  }
+}
+
+// src/core/input/dependentFields.ts
+var isSet = object({ dependencyName: string(), type: literal("isSet") });
+var booleanValue = object({
+  dependencyName: string(),
+  type: literal("boolean"),
+  value: boolean()
+});
+var startsWith2 = object({
+  dependencyName: string(),
+  type: enumType(["startsWith", "endsWith", "isExactly", "contains"]),
+  value: string()
+});
+var above = object({
+  dependencyName: string(),
+  type: enumType(["above", "aboveOrEqual", "below", "belowOrEqual", "exactly"]),
+  value: number()
+});
+var ConditionSchema = union4([isSet, booleanValue, startsWith2, above]);
+var ConditionEq = struct({
+  dependencyName: string_exports.Eq,
+  type: string_exports.Eq,
+  value: string_exports.Eq
+});
+function availableConditionsForInput(input) {
+  switch (input.type) {
+    case "text":
+    case "textarea":
+    case "email":
+    case "folder":
+    case "note":
+    case "tel":
+      return ["isSet", "startsWith", "endsWith", "isExactly", "contains"];
+    case "slider":
+    case "number":
+      return ["isSet", "above", "aboveOrEqual", "below", "belowOrEqual", "exactly"];
+    case "toggle":
+      return ["boolean"];
+    case "date":
+    case "time":
+    case "datetime":
+      return ["isSet"];
+    case "select":
+      return ["startsWith", "endsWith", "isExactly", "contains"];
+    case "multiselect":
+    case "tag":
+    case "dataview":
+    case "document_block":
+      return [];
+    default:
+      return absurd(input);
+  }
+}
+function processIsSet(_condition, value) {
+  if (value === null || value === void 0) {
+    return false;
+  }
+  if (typeof value === "string") {
+    return value !== "";
+  }
+  return true;
+}
+function processStringCondition(condition, value) {
+  if (typeof value !== "string") {
+    return false;
+  }
+  switch (condition.type) {
+    case "startsWith":
+      return value.startsWith(condition.value);
+    case "contains":
+      return value.includes(condition.value);
+    case "endsWith":
+      return value.endsWith(condition.value);
+    case "isExactly":
+      return value === condition.value;
+    default:
+      return absurd(condition.type);
+  }
+}
+function processNumberCondition(condition, value) {
+  if (typeof value !== "number") {
+    return false;
+  }
+  switch (condition.type) {
+    case "above":
+      return value > condition.value;
+    case "below":
+      return value < condition.value;
+    case "aboveOrEqual":
+      return value >= condition.value;
+    case "belowOrEqual":
+      return value <= condition.value;
+    case "exactly":
+      return value === condition.value;
+    default:
+      return absurd(condition.type);
+  }
+}
+function valueMeetsCondition(condition, value) {
+  switch (condition.type) {
+    case "isSet":
+      return processIsSet(condition, value);
+    case "startsWith":
+    case "contains":
+    case "endsWith":
+    case "isExactly":
+      return processStringCondition(condition, value);
+    case "above":
+    case "below":
+    case "aboveOrEqual":
+    case "belowOrEqual":
+    case "exactly":
+      return processNumberCondition(condition, value);
+    case "boolean":
+      return value === condition.value;
+    default:
+      return absurd(condition);
+  }
+}
+
+// src/store/formStore.ts
+function requiredRule(fieldName, message) {
+  return { tag: "required", message: message != null ? message : `'${fieldName}' is required` };
+}
+function FieldFailed(field, failedRule) {
+  return { ...field, rules: failedRule, errors: [failedRule.message] };
+}
+function nonEmptyValue(s) {
+  switch (typeof s) {
+    case "string":
+      return s.length > 0 ? some3(s) : none2;
+    case "number":
+    case "boolean":
+      return some3(s);
+    case "object":
+      return Array.isArray(s) ? s.length > 0 ? some3(s) : none2 : none2;
+    default:
+      return absurd(s);
+  }
+}
+function parseField(field) {
+  if (!field.rules)
+    return right3(field);
+  const rule = field.rules;
+  switch (rule.tag) {
+    case "required":
+      return pipe2(
+        field.value,
+        chain3(nonEmptyValue),
+        match4(
+          () => left3(FieldFailed(field, rule)),
+          (value) => right3(field)
+        )
+      );
+    default:
+      return absurd(rule.tag);
+  }
+}
+function parseForm(fields) {
+  const { right: ok, left: failed } = pipe2(
+    fields,
+    Object.values,
+    map2(parseField),
+    separate
+  );
+  if (failed.length > 0)
+    return left3(failed);
+  return right3(
+    pipe2(
+      ok,
+      map2(
+        (field) => pipe2(
+          field.value,
+          map4((value) => [field.name, value])
+        )
+      ),
+      compact,
+      fromEntries
+    )
+  );
+}
+function makeFormEngine({
+  onSubmit,
+  onCancel,
+  defaultValues = {},
+  logger: l = logger
+}) {
+  const formStore = writable({ fields: {}, status: "draft" });
+  function setFormField({ name, input }) {
+    function initField(errors2 = [], rules) {
+      formStore.update((form) => {
+        return {
+          ...form,
+          fields: {
+            ...form.fields,
+            [name]: { value: fromNullable2(defaultValues[name]), name, errors: errors2, rules }
+          }
+        };
+      });
+    }
+    function setValue(value) {
+      formStore.update((form) => {
+        const field = form.fields[name];
+        if (!field) {
+          l.error(new Error(`Field ${name} does not exist`));
+          return form;
+        }
+        return {
+          ...form,
+          fields: {
+            ...form.fields,
+            [name]: { ...field, value: some3(value), errors: [] }
+          }
+        };
+      });
+    }
+    return { initField, setValue };
+  }
+  function setErrors(failedFields) {
+    formStore.update((form) => {
+      return pipe2(
+        failedFields,
+        reduce3(form, (form2, field) => {
+          return {
+            ...form2,
+            fields: { ...form2.fields, [field.name]: field }
+          };
+        })
+      );
+    });
+  }
+  const errors = derived(
+    formStore,
+    ({ fields }) => pipe2(
+      fields,
+      toEntries,
+      filterMap(([_, f]) => f.errors.length > 0 ? some3(f.errors) : none2),
+      flatten
+    )
+  );
+  return {
+    subscribe: formStore.subscribe,
+    errors,
+    isValid: derived(
+      formStore,
+      ({ fields }) => pipe2(
+        fields,
+        toEntries,
+        some2(([_, f]) => f.errors.length > 0),
+        (x) => !x
+      )
+    ),
+    triggerSubmit() {
+      formStore.update((form) => ({ ...form, status: "submitted" }));
+      const formState = get_store_value(formStore);
+      pipe2(
+        formState.fields,
+        parseForm,
+        match3(setErrors, onSubmit)
+      );
+    },
+    triggerCancel() {
+      formStore.update((form) => ({ ...form, status: "cancelled" }));
+      onCancel == null ? void 0 : onCancel();
+    },
+    addField(field) {
+      l.debug("Adding field", field.name);
+      const { initField: setField, setValue } = setFormField(field);
+      setField([], field.isRequired ? requiredRule(field.label || field.name) : void 0);
+      const fieldStore = derived(formStore, ({ fields }) => fields[field.name]);
+      const fieldValueStore = {
+        subscribe(cb) {
+          return fieldStore.subscribe(
+            (x) => pipe2(
+              x,
+              fromNullable2,
+              chain3((x2) => x2.value),
+              map4(cb)
+            )
+          );
+        },
+        set(value) {
+          setValue(value);
+        },
+        update: (updater) => {
+          formStore.update((form) => {
+            const current = form.fields[field.name];
+            if (!current) {
+              console.error(new Error(`Field ${field.name} does not exist`));
+              return form;
+            }
+            const newValue = pipe2(
+              // fuck prettier
+              current.value,
+              input_exports.requiresListOfStrings(field.input) ? match4(() => of5(updater([])), flow2(updater, of5)) : map4(updater)
+            );
+            return {
+              ...form,
+              fields: {
+                ...form.fields,
+                [field.name]: {
+                  ...current,
+                  value: newValue,
+                  errors: []
+                }
+              }
+            };
+          });
+        }
+      };
+      const isVisible = derived(formStore, ($form) => {
+        l.debug(
+          "condition",
+          field.name,
+          field.condition && $form.fields[field.condition.dependencyName]
+        );
+        if (field.isRequired)
+          return of4(true);
+        const condition = field.condition;
+        if (condition === void 0)
+          return of4(true);
+        return pipe2(
+          $form.fields[condition.dependencyName],
+          fromNullable(
+            `Field '${condition.dependencyName}' which is a dependency of '${field.name}' does not exist`
+          ),
+          map3((f) => valueMeetsCondition(condition, toUndefined(f.value)))
+        );
+      });
+      return {
+        value: fieldValueStore,
+        isVisible,
+        errors: derived(formStore, ({ fields }) => {
+          var _a, _b;
+          return (_b = (_a = fields[field.name]) == null ? void 0 : _a.errors) != null ? _b : [];
+        })
+      };
+    }
+  };
+}
+
+// src/FormModal.ts
+var notify = throttle(
+  (msg) => log_notice("\u26A0\uFE0F  The form has errors \u26A0\uFE0F", msg.join("\n"), "notice-warning"),
+  2e3
+);
+var FormModal2 = class extends import_obsidian11.Modal {
+  constructor(app2, modalDefinition, onSubmit, options) {
+    var _a;
+    super(app2);
+    this.modalDefinition = modalDefinition;
+    this.onSubmit = onSubmit;
+    this.svelteComponents = [];
+    this.subscriptions = [];
+    this.initialFormValues = formDataFromFormDefaults(
+      modalDefinition.fields,
+      (_a = options == null ? void 0 : options.values) != null ? _a : {}
+    );
+    this.formEngine = makeFormEngine({
+      onSubmit: (result2) => {
+        this.onSubmit(FormResult.make(result2, "ok"));
+        this.close();
+      },
+      onCancel: () => {
+        this.onSubmit(FormResult.make({}, "cancelled"));
+        this.close();
+      },
+      defaultValues: this.initialFormValues
+    });
+  }
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.addClass("modal-form");
+    if (this.modalDefinition.customClassname)
+      contentEl.addClass(this.modalDefinition.customClassname);
+    contentEl.createEl("h1", { text: this.modalDefinition.title });
+    this.svelteComponents.push(
+      new FormModal_default({
+        target: contentEl,
+        props: {
+          formEngine: this.formEngine,
+          fields: this.modalDefinition.fields,
+          app: this.app,
+          reportFormErrors: notify
+        }
+      })
+    );
+    const buttons = new import_obsidian11.Setting(contentEl).addButton(
+      (btn) => btn.setButtonText("Cancel").onClick(this.formEngine.triggerCancel)
+    );
+    buttons.addButton(
+      (btn) => btn.setButtonText("Submit").setCta().onClick(this.formEngine.triggerSubmit)
+    );
+    const submitEnterCallback = (evt) => {
+      if ((evt.ctrlKey || evt.metaKey) && evt.key === "Enter") {
+        evt.preventDefault();
+        this.formEngine.triggerSubmit();
+      }
+    };
+    const cancelEscapeCallback = (evt) => {
+      if (!(evt.ctrlKey || evt.metaKey) && evt.key === "Escape") {
+        evt.preventDefault();
+        this.formEngine.triggerCancel();
+      }
+    };
+    contentEl.addEventListener("keydown", submitEnterCallback);
+    contentEl.addEventListener("keydown", cancelEscapeCallback);
+  }
+  onClose() {
+    const { contentEl } = this;
+    this.svelteComponents.forEach((component) => component.$destroy());
+    this.subscriptions.forEach((subscription) => subscription());
+    contentEl.empty();
+    this.initialFormValues = {};
+  }
 };
 
 // src/core/findInputDefinitionSchema.ts
@@ -7916,6 +12729,7 @@ var FieldDefinitionSchema = object({
   label: optional(string()),
   description: string(),
   isRequired: optional(boolean()),
+  condition: optional(input_exports.ConditionSchema),
   input: InputTypeSchema
 });
 var FieldMinimalSchema = passthrough(
@@ -8190,7 +13004,7 @@ var API = class {
         (name) => resolve_tfile(name, this.app),
         E.map((f) => this.app.metadataCache.getCache(f.path)),
         E.chainW(E.fromNullable(new Error("No cache found"))),
-        E.map((tf) => (0, import_obsidian9.parseFrontMatterAliases)(tf.frontmatter)),
+        E.map((tf) => (0, import_obsidian12.parseFrontMatterAliases)(tf.frontmatter)),
         E.match(
           () => [],
           (aliases) => aliases
@@ -8209,7 +13023,7 @@ var API = class {
    */
   openModalForm(formDefinition, options) {
     return new Promise((resolve) => {
-      new FormModal(this.app, formDefinition, resolve, options).open();
+      new FormModal2(this.app, formDefinition, resolve, options).open();
     });
   }
   exampleForm(options) {
@@ -8305,7 +13119,7 @@ var API = class {
 };
 
 // src/ModalFormSettingTab.ts
-var import_obsidian10 = require("obsidian");
+var import_obsidian13 = require("obsidian");
 
 // src/core/settings.ts
 var OpenPositionSchema = enumType(["left", "right", "mainView"]);
@@ -8340,7 +13154,7 @@ function parseSettings(maybeSettings) {
 }
 
 // src/ModalFormSettingTab.ts
-var ModalFormSettingTab = class extends import_obsidian10.PluginSettingTab {
+var ModalFormSettingTab = class extends import_obsidian13.PluginSettingTab {
   constructor(app2, plugin) {
     super(app2, plugin);
     this.plugin = plugin;
@@ -8350,7 +13164,7 @@ var ModalFormSettingTab = class extends import_obsidian10.PluginSettingTab {
     containerEl.empty();
     containerEl.createEl("a", { text: "Modal Form documentation", cls: "nav-link", href: "https://github.com/danielo515/obsidian-modal-form" });
     const settings2 = await plugin.getSettings();
-    new import_obsidian10.Setting(containerEl).setName("Editor position").setDesc("Where the form editor will be opened. In mobile it will always be main view.").addDropdown((component) => {
+    new import_obsidian13.Setting(containerEl).setName("Editor position").setDesc("Where the form editor will be opened. In mobile it will always be main view.").addDropdown((component) => {
       component.addOptions({
         left: "Left",
         right: "Right",
@@ -8361,7 +13175,7 @@ var ModalFormSettingTab = class extends import_obsidian10.PluginSettingTab {
         }
       });
     });
-    new import_obsidian10.Setting(containerEl).setName("Attach Modal-Form Shortcut to Global Window").setDesc("Enable or disable attaching a modal-form shortcut to the global window. If you enable this you will be able to access the API using the global variable `MF`. Enabling is immediate, disabling requires a restart.").addToggle((component) => {
+    new import_obsidian13.Setting(containerEl).setName("Attach Modal-Form Shortcut to Global Window").setDesc("Enable or disable attaching a modal-form shortcut to the global window. If you enable this you will be able to access the API using the global variable `MF`. Enabling is immediate, disabling requires a restart.").addToggle((component) => {
       component.setValue(settings2.attachShortcutToGlobalWindow).onChange(async (value) => {
         await this.plugin.setAttachShortcutToGlobalWindow(value);
       });
@@ -8370,7 +13184,10 @@ var ModalFormSettingTab = class extends import_obsidian10.PluginSettingTab {
 };
 
 // src/views/EditFormView.ts
-var import_obsidian15 = require("obsidian");
+var import_obsidian18 = require("obsidian");
+
+// src/views/FormBuilder.svelte
+var import_obsidian17 = require("obsidian");
 
 // src/core/formDefinition.ts
 var InputTypeReadable = {
@@ -8422,14 +13239,14 @@ function duplicateForm(formName, forms) {
     forms,
     Array_exports.findFirstMap((f) => {
       if (f instanceof MigrationError) {
-        return O.none;
+        return Option_exports.none;
       }
       if (f.name === formName) {
-        return O.some(f);
+        return Option_exports.some(f);
       }
-      return O.none;
+      return Option_exports.none;
     }),
-    O.map((f) => {
+    Option_exports.map((f) => {
       let newName = f.name + "-copy";
       let i = 1;
       while (forms.some((f2) => f2.name === newName)) {
@@ -8438,139 +13255,695 @@ function duplicateForm(formName, forms) {
       }
       return { ...f, name: newName };
     }),
-    O.map((f) => {
+    Option_exports.map((f) => {
       return [...forms, f];
     }),
-    O.getOrElse(() => forms)
+    Option_exports.getOrElse(() => forms)
   );
 }
 
-// src/views/FormBuilder.svelte
+// src/core/template/templateParser.ts
 var import_obsidian14 = require("obsidian");
 
-// src/views/components/Code.svelte
-function add_css2(target) {
-  append_styles(target, "svelte-1ovxcwm", "pre.svelte-1ovxcwm{background-color:var(--background-secondary);border-radius:var(--border-radius);padding:0.5rem}code.svelte-1ovxcwm{font-family:var(--font-family-monospace)}code.allowWrap.svelte-1ovxcwm{white-space:pre-wrap}div.svelte-1ovxcwm{display:flex}");
-}
-function create_fragment2(ctx) {
-  let div;
-  let pre;
-  let code;
-  let current;
-  const default_slot_template = (
-    /*#slots*/
-    ctx[2].default
-  );
-  const default_slot = create_slot(
-    default_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[1],
-    null
-  );
+// node_modules/parser-ts/es6/ParseResult.js
+var __assign = function() {
+  __assign = Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+      for (var p in s)
+        if (Object.prototype.hasOwnProperty.call(s, p))
+          t[p] = s[p];
+    }
+    return t;
+  };
+  return __assign.apply(this, arguments);
+};
+var success = function(value, next, start) {
+  return right3({
+    value,
+    next,
+    start
+  });
+};
+var error = function(input, expected2, fatal) {
+  if (expected2 === void 0) {
+    expected2 = [];
+  }
+  if (fatal === void 0) {
+    fatal = false;
+  }
+  return left3({
+    input,
+    expected: expected2,
+    fatal
+  });
+};
+var withExpected = function(err, expected2) {
+  return __assign(__assign({}, err), { expected: expected2 });
+};
+var extend3 = function(err1, err2) {
+  return getSemigroup4().concat(err1, err2);
+};
+var getSemigroup4 = function() {
   return {
-    c() {
-      div = element("div");
-      pre = element("pre");
-      code = element("code");
-      if (default_slot)
-        default_slot.c();
-      attr(code, "class", "svelte-1ovxcwm");
-      toggle_class(
-        code,
-        "allowWrap",
-        /*allowWrap*/
-        ctx[0]
-      );
-      attr(pre, "class", "svelte-1ovxcwm");
-      attr(div, "class", "svelte-1ovxcwm");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      append5(div, pre);
-      append5(pre, code);
-      if (default_slot) {
-        default_slot.m(code, null);
+    concat: function(x, y) {
+      if (x.input.cursor < y.input.cursor)
+        return last().concat(x, y);
+      if (x.input.cursor > y.input.cursor)
+        return first().concat(x, y);
+      return struct2({
+        input: first(),
+        fatal: first(),
+        expected: getMonoid2()
+      }).concat(x, y);
+    }
+  };
+};
+
+// node_modules/parser-ts/es6/Stream.js
+var stream = function(buffer, cursor) {
+  if (cursor === void 0) {
+    cursor = 0;
+  }
+  return {
+    buffer,
+    cursor
+  };
+};
+var get2 = function(s) {
+  return lookup2(s.cursor, s.buffer);
+};
+var atEnd = function(s) {
+  return s.cursor >= s.buffer.length;
+};
+var getAndNext = function(s) {
+  return pipe(get2(s), map4(function(a) {
+    return { value: a, next: { buffer: s.buffer, cursor: s.cursor + 1 } };
+  }));
+};
+
+// node_modules/parser-ts/es6/Parser.js
+var __assign2 = function() {
+  __assign2 = Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+      for (var p in s)
+        if (Object.prototype.hasOwnProperty.call(s, p))
+          t[p] = s[p];
+    }
+    return t;
+  };
+  return __assign2.apply(this, arguments);
+};
+var succeed = function(a) {
+  return function(i) {
+    return success(a, i, i);
+  };
+};
+var fail = function() {
+  return function(i) {
+    return error(i);
+  };
+};
+var failAt = function(i) {
+  return function() {
+    return error(i);
+  };
+};
+var sat = function(predicate) {
+  return pipe(withStart(item()), chain4(function(_a) {
+    var a = _a[0], start = _a[1];
+    return predicate(a) ? of7(a) : failAt(start);
+  }));
+};
+var expected = function(p, message) {
+  return function(i) {
+    return pipe(p(i), mapLeft(function(err) {
+      return withExpected(err, [message]);
+    }));
+  };
+};
+var item = function() {
+  return function(i) {
+    return pipe(getAndNext(i), fold2(function() {
+      return error(i);
+    }, function(_a) {
+      var value = _a.value, next = _a.next;
+      return success(value, next, i);
+    }));
+  };
+};
+var seq = function(fa, f) {
+  return function(i) {
+    return pipe(fa(i), chain2(function(s) {
+      return pipe(f(s.value)(s.next), chain2(function(next) {
+        return success(next.value, next.next, i);
+      }));
+    }));
+  };
+};
+var either = function(p, f) {
+  return function(i) {
+    var e = p(i);
+    if (isRight2(e)) {
+      return e;
+    }
+    if (e.left.fatal) {
+      return e;
+    }
+    return pipe(f()(i), mapLeft(function(err) {
+      return extend3(e.left, err);
+    }));
+  };
+};
+var withStart = function(p) {
+  return function(i) {
+    return pipe(p(i), map3(function(s) {
+      return __assign2(__assign2({}, s), { value: [s.value, i] });
+    }));
+  };
+};
+var maybe = function(M) {
+  return alt4(function() {
+    return of7(M.empty);
+  });
+};
+var eof = function() {
+  return expected(function(i) {
+    return atEnd(i) ? success(void 0, i, i) : error(i);
+  }, "end of file");
+};
+var many = function(p) {
+  return pipe(many1(p), alt4(function() {
+    return of7([]);
+  }));
+};
+var many1 = function(parser) {
+  return pipe(parser, chain4(function(head6) {
+    return chainRec_(of2(head6), function(acc) {
+      return pipe(parser, map9(function(a) {
+        return left3(append4(a)(acc));
+      }), alt4(function() {
+        return of7(right3(acc));
+      }));
+    });
+  }));
+};
+var sepBy = function(sep, p) {
+  var nil = of7([]);
+  return pipe(sepBy1(sep, p), alt4(function() {
+    return nil;
+  }));
+};
+var sepBy1 = function(sep, p) {
+  return pipe(p, chain4(function(head6) {
+    return pipe(many(pipe(sep, apSecond4(p))), map9(function(tail5) {
+      return prepend3(head6)(tail5);
+    }));
+  }));
+};
+var between = function(left6, right6) {
+  return function(p) {
+    return pipe(left6, chain4(function() {
+      return p;
+    }), chainFirst4(function() {
+      return right6;
+    }));
+  };
+};
+var surroundedBy = function(bound) {
+  return between(bound, bound);
+};
+var lookAhead = function(p) {
+  return function(i) {
+    return pipe(p(i), chain2(function(next) {
+      return success(next.value, i, i);
+    }));
+  };
+};
+var optional2 = function(parser) {
+  return pipe(parser, map9(some3), alt4(function() {
+    return succeed(none2);
+  }));
+};
+var many1Till = function(parser, terminator) {
+  return pipe(parser, chain4(function(x) {
+    return chainRec_(of(x), function(acc) {
+      return pipe(terminator, map9(function() {
+        return right3(acc);
+      }), alt4(function() {
+        return pipe(parser, map9(function(a) {
+          return left3(append3(a)(acc));
+        }));
+      }));
+    });
+  }));
+};
+var map_ = function(ma, f) {
+  return function(i) {
+    return pipe(ma(i), map3(function(s) {
+      return __assign2(__assign2({}, s), { value: f(s.value) });
+    }));
+  };
+};
+var ap_ = function(mab, ma) {
+  return chain_(mab, function(f) {
+    return map_(ma, f);
+  });
+};
+var chain_ = function(ma, f) {
+  return seq(ma, f);
+};
+var chainRec_ = function(a, f) {
+  var split2 = function(start) {
+    return function(result2) {
+      return isLeft2(result2.value) ? left3({ value: result2.value.left, stream: result2.next }) : right3(success(result2.value.right, result2.next, start));
+    };
+  };
+  return function(start) {
+    return tailRec({ value: a, stream: start }, function(state) {
+      var result2 = f(state.value)(state.stream);
+      if (isLeft2(result2)) {
+        return right3(error(state.stream, result2.left.expected, result2.left.fatal));
       }
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      if (default_slot) {
-        if (default_slot.p && (!current || dirty & /*$$scope*/
-        2)) {
-          update_slot_base(
-            default_slot,
-            default_slot_template,
-            ctx2,
-            /*$$scope*/
-            ctx2[1],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx2[1]
-            ) : get_slot_changes(
-              default_slot_template,
-              /*$$scope*/
-              ctx2[1],
-              dirty,
-              null
-            ),
-            null
-          );
+      return split2(start)(result2.right);
+    });
+  };
+};
+var alt_ = function(fa, that) {
+  return either(fa, that);
+};
+var map9 = function(f) {
+  return function(fa) {
+    return map_(fa, f);
+  };
+};
+var apFirst4 = function(fb) {
+  return function(fa) {
+    return ap_(map_(fa, function(a) {
+      return function() {
+        return a;
+      };
+    }), fb);
+  };
+};
+var apSecond4 = function(fb) {
+  return function(fa) {
+    return ap_(map_(fa, function() {
+      return function(b) {
+        return b;
+      };
+    }), fb);
+  };
+};
+var of7 = succeed;
+var chain4 = function(f) {
+  return function(ma) {
+    return chain_(ma, f);
+  };
+};
+var chainFirst4 = function(f) {
+  return function(ma) {
+    return chain_(ma, function(a) {
+      return map_(f(a), function() {
+        return a;
+      });
+    });
+  };
+};
+var alt4 = function(that) {
+  return function(fa) {
+    return alt_(fa, that);
+  };
+};
+var URI6 = "Parser";
+var getSemigroup5 = function(S) {
+  return {
+    concat: function(x, y) {
+      return ap_(map_(x, function(x2) {
+        return function(y2) {
+          return S.concat(x2, y2);
+        };
+      }), y);
+    }
+  };
+};
+var getMonoid5 = function(M) {
+  return __assign2(__assign2({}, getSemigroup5(M)), { empty: succeed(M.empty) });
+};
+var ChainRec = {
+  URI: URI6,
+  map: map_,
+  ap: ap_,
+  chain: chain_,
+  chainRec: chainRec_
+};
+
+// node_modules/parser-ts/es6/char.js
+var maybe2 = maybe(Monoid);
+var char = function(c) {
+  return expected(sat(function(s) {
+    return s === c;
+  }), '"'.concat(c, '"'));
+};
+var notChar = function(c) {
+  return expected(sat(function(c1) {
+    return c1 !== c;
+  }), 'anything but "'.concat(c, '"'));
+};
+var many2 = function(parser) {
+  return maybe2(many12(parser));
+};
+var many12 = function(parser) {
+  return pipe(many1(parser), map9(function(nea) {
+    return nea.join("");
+  }));
+};
+var isDigit = function(c) {
+  return "0123456789".indexOf(c) !== -1;
+};
+var digit = expected(sat(isDigit), "a digit");
+var spaceRe = /^\s$/;
+var isSpace = function(c) {
+  return spaceRe.test(c);
+};
+var space2 = expected(sat(isSpace), "a whitespace");
+var isUnderscore = function(c) {
+  return c === "_";
+};
+var isLetter = function(c) {
+  return /[a-z]/.test(c.toLowerCase());
+};
+var isAlphanum = function(c) {
+  return isLetter(c) || isDigit(c) || isUnderscore(c);
+};
+var alphanum = expected(sat(isAlphanum), "a word character");
+var letter = expected(sat(isLetter), "a letter");
+var isUnicodeLetter = function(c) {
+  return c.toLowerCase() !== c.toUpperCase();
+};
+var unicodeLetter = expected(sat(isUnicodeLetter), "an unicode letter");
+var isUpper = function(c) {
+  return isLetter(c) && c === c.toUpperCase();
+};
+var upper = expected(sat(isUpper), "an upper case letter");
+var isLower = function(c) {
+  return isLetter(c) && c === c.toLowerCase();
+};
+var lower = expected(sat(isLower), "a lower case letter");
+var notDigit = expected(sat(not(isDigit)), "a non-digit");
+var notSpace = expected(sat(not(isSpace)), "a non-whitespace character");
+var notAlphanum = expected(sat(not(isAlphanum)), "a non-word character");
+var notLetter = expected(sat(not(isLetter)), "a non-letter character");
+var notUpper = expected(sat(not(isUpper)), "anything but an upper case letter");
+var notLower = expected(sat(not(isLower)), "anything but a lower case letter");
+
+// node_modules/fp-ts/es6/Monoid.js
+var concatAll5 = function(M) {
+  return concatAll2(M)(M.empty);
+};
+var monoidVoid = {
+  concat: semigroupVoid.concat,
+  empty: void 0
+};
+var monoidAll = {
+  concat: semigroupAll.concat,
+  empty: true
+};
+var monoidAny = {
+  concat: semigroupAny.concat,
+  empty: false
+};
+var monoidString = {
+  concat: semigroupString.concat,
+  empty: ""
+};
+var monoidSum = {
+  concat: semigroupSum.concat,
+  empty: 0
+};
+var monoidProduct = {
+  concat: semigroupProduct.concat,
+  empty: 1
+};
+
+// node_modules/parser-ts/es6/string.js
+var string2 = function(s) {
+  return expected(ChainRec.chainRec(s, function(acc) {
+    return pipe(charAt(0, acc), fold2(function() {
+      return of7(right3(s));
+    }, function(c) {
+      return pipe(char(c), chain4(function() {
+        return of7(left3(acc.slice(1)));
+      }));
+    }));
+  }), JSON.stringify(s));
+};
+var fold3 = concatAll5(getMonoid5(Monoid));
+var maybe3 = maybe(Monoid);
+var many3 = function(parser) {
+  return maybe3(many13(parser));
+};
+var many13 = function(parser) {
+  return pipe(many1(parser), map9(function(nea) {
+    return nea.join("");
+  }));
+};
+var charAt = function(index, s) {
+  return index >= 0 && index < s.length ? some3(s.charAt(index)) : none2;
+};
+var spaces = many2(space2);
+var spaces1 = many12(space2);
+var notSpaces = many2(notSpace);
+var notSpaces1 = many12(notSpace);
+var fromString = function(s) {
+  var n = +s;
+  return isNaN(n) || s === "" ? none2 : some3(n);
+};
+var int = expected(pipe(fold3([maybe3(char("-")), many12(digit)]), map9(function(s) {
+  return +s;
+})), "an integer");
+var float = expected(pipe(fold3([maybe3(char("-")), many2(digit), maybe3(fold3([char("."), many12(digit)]))]), chain4(function(s) {
+  return pipe(fromString(s), fold2(function() {
+    return fail();
+  }, succeed));
+})), "a float");
+var doubleQuotedString = surroundedBy(char('"'))(many3(either(string2('\\"'), function() {
+  return notChar('"');
+})));
+function run2(string3) {
+  return function(p) {
+    return p(stream(string3.split("")));
+  };
+}
+
+// src/core/template/templateParser.ts
+function TemplateText(value) {
+  return { _tag: "text", value };
+}
+function TemplateVariable(value) {
+  return { _tag: "variable", value };
+}
+function FrontmatterCommand(pick = [], omit = []) {
+  return { _tag: "frontmatter-command", pick, omit };
+}
+var EofStr = pipe2(
+  eof(),
+  map9(() => "")
+);
+var open = fold3([string2("{{"), spaces]);
+var close = expected(fold3([spaces, string2("}}")]), 'closing variable tag: "}}"');
+var identifier = many13(alphanum);
+var templateIdentifier = pipe2(
+  identifier,
+  between(open, close),
+  map9(TemplateVariable)
+);
+var commandOpen = fold3([string2("{#"), spaces]);
+var commandClose = expected(fold3([spaces, string2("#}")]), 'a closing command tag: "#}"');
+var sepByComma = sepBy(fold3([char(","), spaces]), identifier);
+var commandOptionParser = (option2) => pipe2(
+  fold3([string2(option2), spaces]),
+  // dam prettier
+  apSecond4(sepByComma)
+);
+var frontmatterCommandParser = pipe2(
+  fold3([string2("frontmatter"), spaces]),
+  apSecond4(optional2(commandOptionParser("pick:")))
+  //P.apFirst(S.spaces),
+  // P.chain(commandOptionParser("pick:")),
+);
+var commandParser = pipe2(
+  frontmatterCommandParser,
+  between(commandOpen, commandClose),
+  map9((value) => {
+    return pipe2(
+      value,
+      Option_exports.fold(() => [], identity),
+      FrontmatterCommand
+    );
+  })
+);
+var OpenOrEof = pipe2(
+  open,
+  alt4(() => commandOpen),
+  alt4(() => EofStr)
+);
+var anythingUntilOpenOrEOF = many1Till(item(), lookAhead(OpenOrEof));
+var text2 = pipe2(
+  anythingUntilOpenOrEOF,
+  map9((value) => TemplateText(value.join("")))
+);
+var TextOrVariable = pipe2(
+  templateIdentifier,
+  alt4(() => commandParser),
+  alt4(() => text2)
+);
+var Template = pipe2(
+  many(TextOrVariable),
+  // dam prettier
+  apFirst4(eof())
+);
+function parseTemplate(template) {
+  return pipe2(
+    Template,
+    run2(template),
+    fold(
+      ({ expected: expected2 }) => left3(`Expected ${expected2.join(" or ")}`),
+      (result2) => right3(result2.value)
+    )
+  );
+}
+function templateVariables(parsedTemplate) {
+  return pipe2(
+    parsedTemplate,
+    fold(
+      () => [],
+      filterMap((token) => {
+        if (token._tag === "variable") {
+          return Option_exports.some(token.value);
         }
-      }
-      if (!current || dirty & /*allowWrap*/
-      1) {
-        toggle_class(
-          code,
-          "allowWrap",
-          /*allowWrap*/
-          ctx2[0]
-        );
-      }
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(default_slot, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(default_slot, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      if (default_slot)
-        default_slot.d(detaching);
+        return Option_exports.none;
+      })
+    )
+  );
+}
+function templateError(parsedTemplate) {
+  return pipe2(
+    parsedTemplate,
+    fold(
+      (error2) => error2,
+      () => void 0
+    )
+  );
+}
+function tokenToString(token) {
+  const tag = token._tag;
+  switch (tag) {
+    case "text":
+      return token.value;
+    case "variable":
+      return `{{${token.value}}}`;
+    case "frontmatter-command":
+      return `{{# frontmatter pick: ${token.pick.join(", ")}, omit: ${token.omit.join(
+        ", "
+      )} #}}`;
+    default:
+      return absurd(tag);
+  }
+}
+function matchToken(onText, onVariable, onCommand) {
+  return (token) => {
+    switch (token._tag) {
+      case "text":
+        return onText(token.value);
+      case "variable":
+        return onVariable(token.value);
+      case "frontmatter-command":
+        return onCommand(token);
+      default:
+        return absurd(token);
     }
   };
 }
-function instance2($$self, $$props, $$invalidate) {
-  let { $$slots: slots = {}, $$scope } = $$props;
-  let { allowWrap = false } = $$props;
-  $$self.$$set = ($$props2) => {
-    if ("allowWrap" in $$props2)
-      $$invalidate(0, allowWrap = $$props2.allowWrap);
-    if ("$$scope" in $$props2)
-      $$invalidate(1, $$scope = $$props2.$$scope);
-  };
-  return [allowWrap, $$scope, slots];
+function parsedTemplateToString(parsedTemplate) {
+  return pipe2(
+    // prettier shut up
+    parsedTemplate,
+    foldMap3(Monoid)(tokenToString)
+  );
 }
-var Code = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init4(this, options, instance2, create_fragment2, safe_not_equal, { allowWrap: 0 }, add_css2);
-  }
-};
-var Code_default = Code;
+function asFrontmatterString(data) {
+  return ({ pick, omit }) => pipe2(
+    data,
+    filterMapWithIndex3((key, value) => {
+      if (pick.length === 0)
+        return Option_exports.some(value);
+      return pick.includes(key) ? Option_exports.some(value) : Option_exports.none;
+    }),
+    filterMapWithIndex3((key, value) => !omit.includes(key) ? Option_exports.some(value) : Option_exports.none),
+    import_obsidian14.stringifyYaml
+  );
+}
+function executeTemplate(parsedTemplate, formData) {
+  const toFrontmatter = asFrontmatterString(formData);
+  return pipe2(
+    parsedTemplate,
+    filterMap(
+      matchToken(
+        Option_exports.some,
+        (key) => Option_exports.fromNullable(formData[key]),
+        (command) => pipe2(
+          //prettier
+          command,
+          toFrontmatter,
+          Option_exports.some
+        )
+      )
+    ),
+    foldMap3(Monoid)(String)
+  );
+}
+
+// node_modules/svelte/src/runtime/easing/index.js
+function cubicOut(t) {
+  const f = t - 1;
+  return f * f * f + 1;
+}
+
+// node_modules/svelte/src/runtime/transition/index.js
+function slide(node, { delay = 0, duration = 400, easing = cubicOut, axis = "y" } = {}) {
+  const style = getComputedStyle(node);
+  const opacity = +style.opacity;
+  const primary_property = axis === "y" ? "height" : "width";
+  const primary_property_value = parseFloat(style[primary_property]);
+  const secondary_properties = axis === "y" ? ["top", "bottom"] : ["left", "right"];
+  const capitalized_secondary_properties = secondary_properties.map(
+    (e) => `${e[0].toUpperCase()}${e.slice(1)}`
+  );
+  const padding_start_value = parseFloat(style[`padding${capitalized_secondary_properties[0]}`]);
+  const padding_end_value = parseFloat(style[`padding${capitalized_secondary_properties[1]}`]);
+  const margin_start_value = parseFloat(style[`margin${capitalized_secondary_properties[0]}`]);
+  const margin_end_value = parseFloat(style[`margin${capitalized_secondary_properties[1]}`]);
+  const border_width_start_value = parseFloat(
+    style[`border${capitalized_secondary_properties[0]}Width`]
+  );
+  const border_width_end_value = parseFloat(
+    style[`border${capitalized_secondary_properties[1]}Width`]
+  );
+  return {
+    delay,
+    duration,
+    easing,
+    css: (t) => `overflow: hidden;opacity: ${Math.min(t * 20, 1) * opacity};${primary_property}: ${t * primary_property_value}px;padding-${secondary_properties[0]}: ${t * padding_start_value}px;padding-${secondary_properties[1]}: ${t * padding_end_value}px;margin-${secondary_properties[0]}: ${t * margin_start_value}px;margin-${secondary_properties[1]}: ${t * margin_end_value}px;border-${secondary_properties[0]}-width: ${t * border_width_start_value}px;border-${secondary_properties[1]}-width: ${t * border_width_end_value}px;`
+  };
+}
 
 // src/views/components/FormRow.svelte
-function add_css3(target) {
+function add_css4(target) {
   append_styles(target, "svelte-1whkjqf", ".field-group.svelte-1whkjqf{display:flex;flex-direction:column;gap:0.5rem}.inline.svelte-1whkjqf{flex-direction:row;align-items:center;gap:1rem}.hidden-label.svelte-1whkjqf{white-space:nowrap;overflow:hidden;visibility:hidden}");
 }
-function create_fragment3(ctx) {
+function create_fragment16(ctx) {
   let div;
   let label_1;
   let t0;
@@ -8707,7 +14080,7 @@ function create_fragment3(ctx) {
     }
   };
 }
-function instance3($$self, $$props, $$invalidate) {
+function instance16($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { label } = $$props;
   let { id } = $$props;
@@ -8730,16 +14103,2107 @@ function instance3($$self, $$props, $$invalidate) {
 var FormRow = class extends SvelteComponent {
   constructor(options) {
     super();
-    init4(this, options, instance3, create_fragment3, safe_not_equal, { label: 0, id: 1, hideLabel: 2, inline: 3 }, add_css3);
+    init4(this, options, instance16, create_fragment16, safe_not_equal, { label: 0, id: 1, hideLabel: 2, inline: 3 }, add_css4);
   }
 };
 var FormRow_default = FormRow;
 
+// src/views/components/Toggle.svelte
+function create_fragment17(ctx) {
+  let div;
+  let input;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      input = element("input");
+      attr(input, "type", "checkbox");
+      attr(
+        input,
+        "tabindex",
+        /*tabindex*/
+        ctx[1]
+      );
+      attr(div, "class", "checkbox-container");
+      attr(div, "role", "checkbox");
+      toggle_class(
+        div,
+        "is-enabled",
+        /*checked*/
+        ctx[0]
+      );
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append5(div, input);
+      input.checked = /*checked*/
+      ctx[0];
+      if (!mounted) {
+        dispose = [
+          listen(
+            input,
+            "change",
+            /*input_change_handler*/
+            ctx[3]
+          ),
+          listen(
+            div,
+            "click",
+            /*handleChange*/
+            ctx[2]
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*tabindex*/
+      2) {
+        attr(
+          input,
+          "tabindex",
+          /*tabindex*/
+          ctx2[1]
+        );
+      }
+      if (dirty & /*checked*/
+      1) {
+        input.checked = /*checked*/
+        ctx2[0];
+      }
+      if (dirty & /*checked*/
+      1) {
+        toggle_class(
+          div,
+          "is-enabled",
+          /*checked*/
+          ctx2[0]
+        );
+      }
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function instance17($$self, $$props, $$invalidate) {
+  let { checked = false } = $$props;
+  let { tabindex = 0 } = $$props;
+  function handleChange() {
+    $$invalidate(0, checked = !checked);
+  }
+  function input_change_handler() {
+    checked = this.checked;
+    $$invalidate(0, checked);
+  }
+  $$self.$$set = ($$props2) => {
+    if ("checked" in $$props2)
+      $$invalidate(0, checked = $$props2.checked);
+    if ("tabindex" in $$props2)
+      $$invalidate(1, tabindex = $$props2.tabindex);
+  };
+  return [checked, tabindex, handleChange, input_change_handler];
+}
+var Toggle = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance17, create_fragment17, safe_not_equal, { checked: 0, tabindex: 1 });
+  }
+};
+var Toggle_default = Toggle;
+
+// src/views/components/FormBuilder/ConditionInput.ts
+function buildCondition(conditionType, dependencyName, value) {
+  switch (conditionType) {
+    case "isSet":
+      return {
+        dependencyName,
+        type: "isSet"
+      };
+    case "boolean":
+      return {
+        dependencyName,
+        type: "boolean",
+        value: typeof value === "boolean" ? value : false
+      };
+    case "startsWith":
+    case "contains":
+    case "endsWith":
+    case "isExactly":
+      return {
+        dependencyName,
+        type: conditionType,
+        value: typeof value === "string" ? value : ""
+      };
+    case "above":
+    case "below":
+    case "aboveOrEqual":
+    case "belowOrEqual":
+    case "exactly":
+      return {
+        dependencyName,
+        type: conditionType,
+        value: typeof value === "number" ? value : 0
+      };
+    default:
+      return absurd2(conditionType);
+  }
+}
+function getInitialInputValues(condition) {
+  switch (condition.type) {
+    case "isSet":
+      return { booleanValue: false, textValue: "", numberValue: 0 };
+    case "boolean":
+      return { booleanValue: condition.value, textValue: "", numberValue: 0 };
+    case "startsWith":
+    case "contains":
+    case "endsWith":
+    case "isExactly":
+      return { booleanValue: false, textValue: condition.value, numberValue: 0 };
+    case "above":
+    case "below":
+    case "aboveOrEqual":
+    case "belowOrEqual":
+    case "exactly":
+      return { booleanValue: false, textValue: "", numberValue: condition.value };
+    default:
+      return absurd2(condition);
+  }
+}
+var dummyLogger = { log: (...args) => {
+} };
+var logger2 = dummyLogger;
+function makeModel(siblingFields, condition, onChange) {
+  logger2.log("model creation");
+  function findSibling(dependencyName2) {
+    return pipe2(
+      siblingFields,
+      Array_exports.findFirstMap((f) => f.name === dependencyName2 ? Option_exports.of(f.input) : Option_exports.none)
+    );
+  }
+  const conditionStore = writable(condition);
+  conditionStore.subscribe((c) => logger2.log("condition", c));
+  const dependencyNameStore = derived(conditionStore, ($condition) => $condition.dependencyName);
+  function updateDependencyName(updater) {
+    return conditionStore.update((c) => ({ ...c, dependencyName: updater(c.dependencyName) }));
+  }
+  function setDependencyName(dependencyName2) {
+    updateDependencyName(() => dependencyName2);
+  }
+  const conditionTypeOptions = derived(
+    conditionStore,
+    ($condition) => pipe2(
+      //fuck prettier
+      $condition.dependencyName,
+      findSibling,
+      Option_exports.map(input_exports.availableConditionsForInput)
+    )
+  );
+  const valueField = derived(
+    conditionStore,
+    ($condition) => {
+      switch ($condition.type) {
+        case "isSet":
+          return Option_exports.none;
+        case "boolean":
+          return Option_exports.of({
+            type: "dropdown",
+            options: [true, false],
+            set: (val) => {
+              logger2.log("setting boolean value", val);
+              onChange(
+                buildCondition($condition.type, $condition.dependencyName, val)
+              );
+            }
+          });
+        case "startsWith":
+        case "contains":
+        case "endsWith":
+        case "isExactly":
+          return Option_exports.of({
+            type: "text",
+            set: (val) => {
+              logger2.log("setting text value", val);
+              onChange(
+                buildCondition($condition.type, $condition.dependencyName, val)
+              );
+            }
+          });
+        case "above":
+        case "below":
+        case "aboveOrEqual":
+        case "belowOrEqual":
+        case "exactly":
+          return Option_exports.of({
+            type: "number",
+            set: (val) => {
+              logger2.log("setting number value", val);
+              onChange(
+                buildCondition($condition.type, $condition.dependencyName, val)
+              );
+            }
+          });
+        default:
+          absurd2($condition);
+          return Option_exports.none;
+      }
+    }
+  );
+  const dependencyName = {
+    ...dependencyNameStore,
+    set: setDependencyName,
+    update: updateDependencyName
+  };
+  return {
+    conditionTypeOptions,
+    conditionType: {
+      ...derived(conditionStore, ($condition) => $condition.type),
+      set: (type) => {
+        logger2.log("setting condition type", type);
+        conditionStore.update((c) => {
+          if (c.type === "isSet")
+            return buildCondition(type, c.dependencyName, false);
+          return buildCondition(type, c.dependencyName, c.value);
+        });
+      }
+    },
+    dependencyName,
+    valueField
+  };
+}
+
+// src/views/components/FormBuilder/ConditionInput.svelte
+function get_each_context5(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[21] = list[i];
+  return child_ctx;
+}
+function get_each_context_13(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[21] = list[i];
+  return child_ctx;
+}
+function get_each_context_2(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[26] = list[i];
+  return child_ctx;
+}
+function create_if_block_53(ctx) {
+  let t0;
+  let t1_value = (
+    /*field*/
+    ctx[26].label + ""
+  );
+  let t1;
+  let t2;
+  return {
+    c() {
+      t0 = text("(");
+      t1 = text(t1_value);
+      t2 = text(")");
+    },
+    m(target, anchor) {
+      insert(target, t0, anchor);
+      insert(target, t1, anchor);
+      insert(target, t2, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*siblingFields*/
+      1 && t1_value !== (t1_value = /*field*/
+      ctx2[26].label + ""))
+        set_data(t1, t1_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t0);
+        detach(t1);
+        detach(t2);
+      }
+    }
+  };
+}
+function create_each_block_2(ctx) {
+  let option_1;
+  let t0_value = (
+    /*field*/
+    ctx[26].name + ""
+  );
+  let t0;
+  let t1;
+  let t2;
+  let option_1_value_value;
+  let if_block = (
+    /*field*/
+    ctx[26].label && create_if_block_53(ctx)
+  );
+  return {
+    c() {
+      option_1 = element("option");
+      t0 = text(t0_value);
+      t1 = space();
+      if (if_block)
+        if_block.c();
+      t2 = space();
+      option_1.__value = option_1_value_value = /*field*/
+      ctx[26].name;
+      set_input_value(option_1, option_1.__value);
+    },
+    m(target, anchor) {
+      insert(target, option_1, anchor);
+      append5(option_1, t0);
+      append5(option_1, t1);
+      if (if_block)
+        if_block.m(option_1, null);
+      append5(option_1, t2);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*siblingFields*/
+      1 && t0_value !== (t0_value = /*field*/
+      ctx2[26].name + ""))
+        set_data(t0, t0_value);
+      if (
+        /*field*/
+        ctx2[26].label
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block_53(ctx2);
+          if_block.c();
+          if_block.m(option_1, t2);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+      if (dirty & /*siblingFields*/
+      1 && option_1_value_value !== (option_1_value_value = /*field*/
+      ctx2[26].name)) {
+        option_1.__value = option_1_value_value;
+        set_input_value(option_1, option_1.__value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(option_1);
+      }
+      if (if_block)
+        if_block.d();
+    }
+  };
+}
+function create_default_slot_2(ctx) {
+  let select;
+  let mounted;
+  let dispose;
+  let each_value_2 = ensure_array_like(
+    /*siblingFields*/
+    ctx[0]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value_2.length; i += 1) {
+    each_blocks[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
+  }
+  return {
+    c() {
+      select = element("select");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(select, "class", "dropdown");
+      if (
+        /*$dependencyName*/
+        ctx[6] === void 0
+      )
+        add_render_callback(() => (
+          /*select_change_handler*/
+          ctx[15].call(select)
+        ));
+    },
+    m(target, anchor) {
+      insert(target, select, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(select, null);
+        }
+      }
+      select_option(
+        select,
+        /*$dependencyName*/
+        ctx[6],
+        true
+      );
+      if (!mounted) {
+        dispose = listen(
+          select,
+          "change",
+          /*select_change_handler*/
+          ctx[15]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*siblingFields*/
+      1) {
+        each_value_2 = ensure_array_like(
+          /*siblingFields*/
+          ctx2[0]
+        );
+        let i;
+        for (i = 0; i < each_value_2.length; i += 1) {
+          const child_ctx = get_each_context_2(ctx2, each_value_2, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block_2(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(select, null);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value_2.length;
+      }
+      if (dirty & /*$dependencyName, siblingFields*/
+      65) {
+        select_option(
+          select,
+          /*$dependencyName*/
+          ctx2[6]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(select);
+      }
+      destroy_each(each_blocks, detaching);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_43(ctx) {
+  let formrow;
+  let current;
+  formrow = new FormRow_default({
+    props: {
+      label: "Condition",
+      id: "condition-" + /*name*/
+      ctx[1],
+      $$slots: { default: [create_default_slot_12] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(formrow.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(formrow, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const formrow_changes = {};
+      if (dirty & /*name*/
+      2)
+        formrow_changes.id = "condition-" + /*name*/
+        ctx2[1];
+      if (dirty & /*$$scope, $conditionType, $conditions*/
+      536871552) {
+        formrow_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      formrow.$set(formrow_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(formrow.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(formrow.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(formrow, detaching);
+    }
+  };
+}
+function create_each_block_13(ctx) {
+  let option_1;
+  let t0_value = (
+    /*option*/
+    ctx[21] + ""
+  );
+  let t0;
+  let t1;
+  let option_1_value_value;
+  return {
+    c() {
+      option_1 = element("option");
+      t0 = text(t0_value);
+      t1 = space();
+      option_1.__value = option_1_value_value = /*option*/
+      ctx[21];
+      set_input_value(option_1, option_1.__value);
+    },
+    m(target, anchor) {
+      insert(target, option_1, anchor);
+      append5(option_1, t0);
+      append5(option_1, t1);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$conditions*/
+      512 && t0_value !== (t0_value = /*option*/
+      ctx2[21] + ""))
+        set_data(t0, t0_value);
+      if (dirty & /*$conditions*/
+      512 && option_1_value_value !== (option_1_value_value = /*option*/
+      ctx2[21])) {
+        option_1.__value = option_1_value_value;
+        set_input_value(option_1, option_1.__value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(option_1);
+      }
+    }
+  };
+}
+function create_default_slot_12(ctx) {
+  let select;
+  let mounted;
+  let dispose;
+  let each_value_1 = ensure_array_like(
+    /*$conditions*/
+    ctx[9].value
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value_1.length; i += 1) {
+    each_blocks[i] = create_each_block_13(get_each_context_13(ctx, each_value_1, i));
+  }
+  return {
+    c() {
+      select = element("select");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(select, "class", "dropdown");
+      if (
+        /*$conditionType*/
+        ctx[7] === void 0
+      )
+        add_render_callback(() => (
+          /*select_change_handler_1*/
+          ctx[16].call(select)
+        ));
+    },
+    m(target, anchor) {
+      insert(target, select, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(select, null);
+        }
+      }
+      select_option(
+        select,
+        /*$conditionType*/
+        ctx[7],
+        true
+      );
+      if (!mounted) {
+        dispose = listen(
+          select,
+          "change",
+          /*select_change_handler_1*/
+          ctx[16]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$conditions*/
+      512) {
+        each_value_1 = ensure_array_like(
+          /*$conditions*/
+          ctx2[9].value
+        );
+        let i;
+        for (i = 0; i < each_value_1.length; i += 1) {
+          const child_ctx = get_each_context_13(ctx2, each_value_1, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block_13(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(select, null);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value_1.length;
+      }
+      if (dirty & /*$conditionType, $conditions*/
+      640) {
+        select_option(
+          select,
+          /*$conditionType*/
+          ctx2[7]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(select);
+      }
+      destroy_each(each_blocks, detaching);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block6(ctx) {
+  let formrow;
+  let current;
+  formrow = new FormRow_default({
+    props: {
+      label: "Value",
+      id: "condition-value-" + /*name*/
+      ctx[1],
+      $$slots: { default: [create_default_slot6] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(formrow.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(formrow, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const formrow_changes = {};
+      if (dirty & /*name*/
+      2)
+        formrow_changes.id = "condition-value-" + /*name*/
+        ctx2[1];
+      if (dirty & /*$$scope, textValue, $valueField, numberValue, booleanValue*/
+      536871196) {
+        formrow_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      formrow.$set(formrow_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(formrow.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(formrow.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(formrow, detaching);
+    }
+  };
+}
+function create_if_block_33(ctx) {
+  let select;
+  let mounted;
+  let dispose;
+  let each_value = ensure_array_like(
+    /*$valueField*/
+    ctx[8].value.options
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block5(get_each_context5(ctx, each_value, i));
+  }
+  return {
+    c() {
+      select = element("select");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(select, "class", "dropdown");
+      if (
+        /*booleanValue*/
+        ctx[2] === void 0
+      )
+        add_render_callback(() => (
+          /*select_change_handler_2*/
+          ctx[19].call(select)
+        ));
+    },
+    m(target, anchor) {
+      insert(target, select, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(select, null);
+        }
+      }
+      select_option(
+        select,
+        /*booleanValue*/
+        ctx[2],
+        true
+      );
+      if (!mounted) {
+        dispose = listen(
+          select,
+          "change",
+          /*select_change_handler_2*/
+          ctx[19]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$valueField*/
+      256) {
+        each_value = ensure_array_like(
+          /*$valueField*/
+          ctx2[8].value.options
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context5(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block5(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(select, null);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
+      }
+      if (dirty & /*booleanValue, $valueField*/
+      260) {
+        select_option(
+          select,
+          /*booleanValue*/
+          ctx2[2]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(select);
+      }
+      destroy_each(each_blocks, detaching);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_23(ctx) {
+  let input;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      input = element("input");
+      attr(input, "type", "number");
+      attr(input, "class", "input");
+    },
+    m(target, anchor) {
+      insert(target, input, anchor);
+      set_input_value(
+        input,
+        /*numberValue*/
+        ctx[3]
+      );
+      if (!mounted) {
+        dispose = listen(
+          input,
+          "input",
+          /*input_input_handler_1*/
+          ctx[18]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*numberValue*/
+      8 && to_number(input.value) !== /*numberValue*/
+      ctx2[3]) {
+        set_input_value(
+          input,
+          /*numberValue*/
+          ctx2[3]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(input);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_13(ctx) {
+  let input;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      input = element("input");
+      attr(input, "type", "text");
+      attr(input, "class", "input");
+    },
+    m(target, anchor) {
+      insert(target, input, anchor);
+      set_input_value(
+        input,
+        /*textValue*/
+        ctx[4]
+      );
+      if (!mounted) {
+        dispose = listen(
+          input,
+          "input",
+          /*input_input_handler*/
+          ctx[17]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*textValue*/
+      16 && input.value !== /*textValue*/
+      ctx2[4]) {
+        set_input_value(
+          input,
+          /*textValue*/
+          ctx2[4]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(input);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_each_block5(ctx) {
+  let option_1;
+  let t_value = (
+    /*option*/
+    ctx[21] + ""
+  );
+  let t;
+  let option_1_value_value;
+  return {
+    c() {
+      option_1 = element("option");
+      t = text(t_value);
+      option_1.__value = option_1_value_value = /*option*/
+      ctx[21];
+      set_input_value(option_1, option_1.__value);
+    },
+    m(target, anchor) {
+      insert(target, option_1, anchor);
+      append5(option_1, t);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$valueField*/
+      256 && t_value !== (t_value = /*option*/
+      ctx2[21] + ""))
+        set_data(t, t_value);
+      if (dirty & /*$valueField*/
+      256 && option_1_value_value !== (option_1_value_value = /*option*/
+      ctx2[21])) {
+        option_1.__value = option_1_value_value;
+        set_input_value(option_1, option_1.__value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(option_1);
+      }
+    }
+  };
+}
+function create_default_slot6(ctx) {
+  let if_block_anchor;
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*$valueField*/
+      ctx2[8].value.type === "text"
+    )
+      return create_if_block_13;
+    if (
+      /*$valueField*/
+      ctx2[8].value.type === "number"
+    )
+      return create_if_block_23;
+    if (
+      /*$valueField*/
+      ctx2[8].value.type === "dropdown"
+    )
+      return create_if_block_33;
+  }
+  let current_block_type = select_block_type(ctx, -1);
+  let if_block = current_block_type && current_block_type(ctx);
+  return {
+    c() {
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty4();
+    },
+    m(target, anchor) {
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (current_block_type === (current_block_type = select_block_type(ctx2, dirty)) && if_block) {
+        if_block.p(ctx2, dirty);
+      } else {
+        if (if_block)
+          if_block.d(1);
+        if_block = current_block_type && current_block_type(ctx2);
+        if (if_block) {
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (if_block) {
+        if_block.d(detaching);
+      }
+    }
+  };
+}
+function create_fragment18(ctx) {
+  let formrow;
+  let t0;
+  let show_if_1 = Option_exports.isSome(
+    /*$conditions*/
+    ctx[9]
+  );
+  let t1;
+  let show_if = Option_exports.isSome(
+    /*$valueField*/
+    ctx[8]
+  );
+  let if_block1_anchor;
+  let current;
+  formrow = new FormRow_default({
+    props: {
+      label: "When field",
+      id: "sibling-field-of-" + /*name*/
+      ctx[1],
+      $$slots: { default: [create_default_slot_2] },
+      $$scope: { ctx }
+    }
+  });
+  let if_block0 = show_if_1 && create_if_block_43(ctx);
+  let if_block1 = show_if && create_if_block6(ctx);
+  return {
+    c() {
+      create_component(formrow.$$.fragment);
+      t0 = space();
+      if (if_block0)
+        if_block0.c();
+      t1 = space();
+      if (if_block1)
+        if_block1.c();
+      if_block1_anchor = empty4();
+    },
+    m(target, anchor) {
+      mount_component(formrow, target, anchor);
+      insert(target, t0, anchor);
+      if (if_block0)
+        if_block0.m(target, anchor);
+      insert(target, t1, anchor);
+      if (if_block1)
+        if_block1.m(target, anchor);
+      insert(target, if_block1_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const formrow_changes = {};
+      if (dirty & /*name*/
+      2)
+        formrow_changes.id = "sibling-field-of-" + /*name*/
+        ctx2[1];
+      if (dirty & /*$$scope, $dependencyName, siblingFields*/
+      536870977) {
+        formrow_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      formrow.$set(formrow_changes);
+      if (dirty & /*$conditions*/
+      512)
+        show_if_1 = Option_exports.isSome(
+          /*$conditions*/
+          ctx2[9]
+        );
+      if (show_if_1) {
+        if (if_block0) {
+          if_block0.p(ctx2, dirty);
+          if (dirty & /*$conditions*/
+          512) {
+            transition_in(if_block0, 1);
+          }
+        } else {
+          if_block0 = create_if_block_43(ctx2);
+          if_block0.c();
+          transition_in(if_block0, 1);
+          if_block0.m(t1.parentNode, t1);
+        }
+      } else if (if_block0) {
+        group_outros();
+        transition_out(if_block0, 1, 1, () => {
+          if_block0 = null;
+        });
+        check_outros();
+      }
+      if (dirty & /*$valueField*/
+      256)
+        show_if = Option_exports.isSome(
+          /*$valueField*/
+          ctx2[8]
+        );
+      if (show_if) {
+        if (if_block1) {
+          if_block1.p(ctx2, dirty);
+          if (dirty & /*$valueField*/
+          256) {
+            transition_in(if_block1, 1);
+          }
+        } else {
+          if_block1 = create_if_block6(ctx2);
+          if_block1.c();
+          transition_in(if_block1, 1);
+          if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
+        }
+      } else if (if_block1) {
+        group_outros();
+        transition_out(if_block1, 1, 1, () => {
+          if_block1 = null;
+        });
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(formrow.$$.fragment, local);
+      transition_in(if_block0);
+      transition_in(if_block1);
+      current = true;
+    },
+    o(local) {
+      transition_out(formrow.$$.fragment, local);
+      transition_out(if_block0);
+      transition_out(if_block1);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t0);
+        detach(t1);
+        detach(if_block1_anchor);
+      }
+      destroy_component(formrow, detaching);
+      if (if_block0)
+        if_block0.d(detaching);
+      if (if_block1)
+        if_block1.d(detaching);
+    }
+  };
+}
+function instance18($$self, $$props, $$invalidate) {
+  let conditions;
+  let conditionType;
+  let dependencyName;
+  let valueField;
+  let $dependencyName, $$unsubscribe_dependencyName = noop, $$subscribe_dependencyName = () => ($$unsubscribe_dependencyName(), $$unsubscribe_dependencyName = subscribe(dependencyName, ($$value) => $$invalidate(6, $dependencyName = $$value)), dependencyName);
+  let $conditionType, $$unsubscribe_conditionType = noop, $$subscribe_conditionType = () => ($$unsubscribe_conditionType(), $$unsubscribe_conditionType = subscribe(conditionType, ($$value) => $$invalidate(7, $conditionType = $$value)), conditionType);
+  let $valueField, $$unsubscribe_valueField = noop, $$subscribe_valueField = () => ($$unsubscribe_valueField(), $$unsubscribe_valueField = subscribe(valueField, ($$value) => $$invalidate(8, $valueField = $$value)), valueField);
+  let $conditions, $$unsubscribe_conditions = noop, $$subscribe_conditions = () => ($$unsubscribe_conditions(), $$unsubscribe_conditions = subscribe(conditions, ($$value) => $$invalidate(9, $conditions = $$value)), conditions);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_dependencyName());
+  $$self.$$.on_destroy.push(() => $$unsubscribe_conditionType());
+  $$self.$$.on_destroy.push(() => $$unsubscribe_valueField());
+  $$self.$$.on_destroy.push(() => $$unsubscribe_conditions());
+  let { siblingFields } = $$props;
+  let { name } = $$props;
+  let { condition } = $$props;
+  let { onChange } = $$props;
+  const model = makeModel(siblingFields, condition, onChange);
+  let { booleanValue: booleanValue2, numberValue, textValue } = getInitialInputValues(condition);
+  function select_change_handler() {
+    $dependencyName = select_value(this);
+    dependencyName.set($dependencyName);
+    $$invalidate(0, siblingFields);
+  }
+  function select_change_handler_1() {
+    $conditionType = select_value(this);
+    conditionType.set($conditionType);
+  }
+  function input_input_handler() {
+    textValue = this.value;
+    $$invalidate(4, textValue);
+  }
+  function input_input_handler_1() {
+    numberValue = to_number(this.value);
+    $$invalidate(3, numberValue);
+  }
+  function select_change_handler_2() {
+    booleanValue2 = select_value(this);
+    $$invalidate(2, booleanValue2);
+  }
+  $$self.$$set = ($$props2) => {
+    if ("siblingFields" in $$props2)
+      $$invalidate(0, siblingFields = $$props2.siblingFields);
+    if ("name" in $$props2)
+      $$invalidate(1, name = $$props2.name);
+    if ("condition" in $$props2)
+      $$invalidate(13, condition = $$props2.condition);
+    if ("onChange" in $$props2)
+      $$invalidate(14, onChange = $$props2.onChange);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*name, $conditions, $dependencyName, $valueField*/
+    834) {
+      $:
+        console.log(name, $conditions, $dependencyName, $valueField);
+    }
+    if ($$self.$$.dirty & /*$conditions, $conditionType, $valueField, booleanValue, textValue, numberValue*/
+    924) {
+      $: {
+        pipe2(
+          $conditions,
+          Option_exports.chain((conditions2) => (
+            // if the current condition is not in the list of available conditions, set it to the first available condition
+            conditions2.includes($conditionType) ? Option_exports.none : Array_exports.head(conditions2)
+          )),
+          Option_exports.map((newVAlue) => {
+            set_store_value(conditionType, $conditionType = newVAlue, $conditionType);
+          })
+        );
+        if (Option_exports.isSome($valueField)) {
+          if ($valueField.value.type === "dropdown")
+            $valueField.value.set(booleanValue2);
+          if ($valueField.value.type === "text")
+            $valueField.value.set(textValue);
+          if ($valueField.value.type === "number")
+            $valueField.value.set(numberValue);
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*$conditionType, $dependencyName, condition, onChange*/
+    24768) {
+      $: {
+        if ($conditionType === "isSet") {
+          if ($dependencyName !== condition.dependencyName && $dependencyName !== void 0)
+            onChange({
+              type: "isSet",
+              dependencyName: $dependencyName
+            });
+        }
+      }
+    }
+  };
+  $:
+    $$subscribe_conditions($$invalidate(5, conditions = model.conditionTypeOptions));
+  $:
+    $$subscribe_conditionType($$invalidate(12, conditionType = model.conditionType));
+  $:
+    $$subscribe_dependencyName($$invalidate(11, dependencyName = model.dependencyName));
+  $:
+    $$subscribe_valueField($$invalidate(10, valueField = model.valueField));
+  return [
+    siblingFields,
+    name,
+    booleanValue2,
+    numberValue,
+    textValue,
+    conditions,
+    $dependencyName,
+    $conditionType,
+    $valueField,
+    $conditions,
+    valueField,
+    dependencyName,
+    conditionType,
+    condition,
+    onChange,
+    select_change_handler,
+    select_change_handler_1,
+    input_input_handler,
+    input_input_handler_1,
+    select_change_handler_2
+  ];
+}
+var ConditionInput = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance18, create_fragment18, safe_not_equal, {
+      siblingFields: 0,
+      name: 1,
+      condition: 13,
+      onChange: 14
+    });
+  }
+};
+var ConditionInput_default = ConditionInput;
+
+// src/views/components/FormBuilder/FieldMeta.svelte
+function create_if_block7(ctx) {
+  let div;
+  let formrow;
+  let t;
+  let div_transition;
+  let current;
+  formrow = new FormRow_default({
+    props: {
+      label: "Conditional",
+      id: `conditional-${/*index*/
+      ctx[1]}`,
+      $$slots: { default: [create_default_slot7] },
+      $$scope: { ctx }
+    }
+  });
+  let if_block = (
+    /*field*/
+    ctx[0].condition !== void 0 && create_if_block_14(ctx)
+  );
+  return {
+    c() {
+      div = element("div");
+      create_component(formrow.$$.fragment);
+      t = space();
+      if (if_block)
+        if_block.c();
+      attr(div, "class", "flex gap-2");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      mount_component(formrow, div, null);
+      append5(div, t);
+      if (if_block)
+        if_block.m(div, null);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const formrow_changes = {};
+      if (dirty & /*index*/
+      2)
+        formrow_changes.id = `conditional-${/*index*/
+        ctx2[1]}`;
+      if (dirty & /*$$scope, index, isConditional*/
+      134) {
+        formrow_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      formrow.$set(formrow_changes);
+      if (
+        /*field*/
+        ctx2[0].condition !== void 0
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & /*field*/
+          1) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block_14(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(div, null);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(formrow.$$.fragment, local);
+      transition_in(if_block);
+      if (local) {
+        add_render_callback(() => {
+          if (!current)
+            return;
+          if (!div_transition)
+            div_transition = create_bidirectional_transition(div, slide, {}, true);
+          div_transition.run(1);
+        });
+      }
+      current = true;
+    },
+    o(local) {
+      transition_out(formrow.$$.fragment, local);
+      transition_out(if_block);
+      if (local) {
+        if (!div_transition)
+          div_transition = create_bidirectional_transition(div, slide, {}, false);
+        div_transition.run(0);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_component(formrow);
+      if (if_block)
+        if_block.d();
+      if (detaching && div_transition)
+        div_transition.end();
+    }
+  };
+}
+function create_default_slot7(ctx) {
+  let toggle;
+  let updating_checked;
+  let current;
+  function toggle_checked_binding(value) {
+    ctx[5](value);
+  }
+  let toggle_props = { tabindex: (
+    /*index*/
+    ctx[1]
+  ) };
+  if (
+    /*isConditional*/
+    ctx[2] !== void 0
+  ) {
+    toggle_props.checked = /*isConditional*/
+    ctx[2];
+  }
+  toggle = new Toggle_default({ props: toggle_props });
+  binding_callbacks.push(() => bind4(toggle, "checked", toggle_checked_binding));
+  return {
+    c() {
+      create_component(toggle.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(toggle, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const toggle_changes = {};
+      if (dirty & /*index*/
+      2)
+        toggle_changes.tabindex = /*index*/
+        ctx2[1];
+      if (!updating_checked && dirty & /*isConditional*/
+      4) {
+        updating_checked = true;
+        toggle_changes.checked = /*isConditional*/
+        ctx2[2];
+        add_flush_callback(() => updating_checked = false);
+      }
+      toggle.$set(toggle_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(toggle.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(toggle.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(toggle, detaching);
+    }
+  };
+}
+function create_if_block_14(ctx) {
+  let div;
+  let conditioninput;
+  let div_transition;
+  let current;
+  conditioninput = new ConditionInput_default({
+    props: {
+      siblingFields: (
+        /*availableConditions*/
+        ctx[3]
+      ),
+      name: (
+        /*field*/
+        ctx[0].name
+      ),
+      condition: (
+        /*field*/
+        ctx[0].condition
+      ),
+      onChange: (
+        /*func*/
+        ctx[6]
+      )
+    }
+  });
+  return {
+    c() {
+      div = element("div");
+      create_component(conditioninput.$$.fragment);
+      attr(div, "class", "flex gap-2");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      mount_component(conditioninput, div, null);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const conditioninput_changes = {};
+      if (dirty & /*availableConditions*/
+      8)
+        conditioninput_changes.siblingFields = /*availableConditions*/
+        ctx2[3];
+      if (dirty & /*field*/
+      1)
+        conditioninput_changes.name = /*field*/
+        ctx2[0].name;
+      if (dirty & /*field*/
+      1)
+        conditioninput_changes.condition = /*field*/
+        ctx2[0].condition;
+      if (dirty & /*field*/
+      1)
+        conditioninput_changes.onChange = /*func*/
+        ctx2[6];
+      conditioninput.$set(conditioninput_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(conditioninput.$$.fragment, local);
+      if (local) {
+        add_render_callback(() => {
+          if (!current)
+            return;
+          if (!div_transition)
+            div_transition = create_bidirectional_transition(div, slide, {}, true);
+          div_transition.run(1);
+        });
+      }
+      current = true;
+    },
+    o(local) {
+      transition_out(conditioninput.$$.fragment, local);
+      if (local) {
+        if (!div_transition)
+          div_transition = create_bidirectional_transition(div, slide, {}, false);
+        div_transition.run(0);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_component(conditioninput);
+      if (detaching && div_transition)
+        div_transition.end();
+    }
+  };
+}
+function create_fragment19(ctx) {
+  let if_block_anchor;
+  let current;
+  let if_block = (
+    /*availableConditions*/
+    ctx[3].length > 0 && create_if_block7(ctx)
+  );
+  return {
+    c() {
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty4();
+    },
+    m(target, anchor) {
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (
+        /*availableConditions*/
+        ctx2[3].length > 0
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & /*availableConditions*/
+          8) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block7(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (if_block)
+        if_block.d(detaching);
+    }
+  };
+}
+function instance19($$self, $$props, $$invalidate) {
+  let availableConditions;
+  let { field } = $$props;
+  let { availableFieldsForCondition } = $$props;
+  let { index } = $$props;
+  let isConditional = !!field.condition || false;
+  function toggle_checked_binding(value) {
+    isConditional = value;
+    $$invalidate(2, isConditional);
+  }
+  const func = (condition) => $$invalidate(0, field.condition = condition, field);
+  $$self.$$set = ($$props2) => {
+    if ("field" in $$props2)
+      $$invalidate(0, field = $$props2.field);
+    if ("availableFieldsForCondition" in $$props2)
+      $$invalidate(4, availableFieldsForCondition = $$props2.availableFieldsForCondition);
+    if ("index" in $$props2)
+      $$invalidate(1, index = $$props2.index);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*isConditional, field*/
+    5) {
+      $: {
+        if (isConditional) {
+          $$invalidate(0, field.condition = field.condition || { dependencyName: "", type: "isSet" }, field);
+        } else {
+          $$invalidate(0, field.condition = void 0, field);
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*availableFieldsForCondition, field*/
+    17) {
+      $:
+        $$invalidate(3, availableConditions = availableFieldsForCondition.filter((x) => x.name !== field.name));
+    }
+  };
+  return [
+    field,
+    index,
+    isConditional,
+    availableConditions,
+    availableFieldsForCondition,
+    toggle_checked_binding,
+    func
+  ];
+}
+var FieldMeta = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance19, create_fragment19, safe_not_equal, {
+      field: 0,
+      availableFieldsForCondition: 4,
+      index: 1
+    });
+  }
+};
+var FieldMeta_default = FieldMeta;
+
+// src/views/components/InputBuilderDocumentBlock.svelte
+function create_if_block8(ctx) {
+  let t0;
+  let div;
+  let t1;
+  return {
+    c() {
+      t0 = text("Your function body has errors:\n            ");
+      div = element("div");
+      t1 = text(
+        /*errors*/
+        ctx[1]
+      );
+      attr(div, "class", "modal-form-error-message");
+    },
+    m(target, anchor) {
+      insert(target, t0, anchor);
+      insert(target, div, anchor);
+      append5(div, t1);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*errors*/
+      2)
+        set_data(
+          t1,
+          /*errors*/
+          ctx2[1]
+        );
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t0);
+        detach(div);
+      }
+    }
+  };
+}
+function create_default_slot8(ctx) {
+  let span;
+  let t0;
+  let code;
+  let t2;
+  let pre;
+  let t4;
+  let textarea;
+  let t5;
+  let mounted;
+  let dispose;
+  let if_block = (
+    /*errors*/
+    ctx[1] && create_if_block8(ctx)
+  );
+  return {
+    c() {
+      span = element("span");
+      t0 = text("This is a document block input. It is not meant to be used as a normal\n        input, instead it is to render some instructions to the user. It is\n        expected to be a function body that returns a string. Within the\n        function body, you can access the form data using the ");
+      code = element("code");
+      code.textContent = "form";
+      t2 = text("\n        variable. For example:\n        ");
+      pre = element("pre");
+      pre.textContent = `${placeholder}`;
+      t4 = space();
+      textarea = element("textarea");
+      t5 = space();
+      if (if_block)
+        if_block.c();
+      attr(pre, "class", "language-js");
+      attr(textarea, "name", "document_block");
+      attr(textarea, "class", "form-control");
+      attr(textarea, "rows", "3");
+      attr(textarea, "placeholder", placeholder);
+      attr(span, "class", "modal-form-hint");
+    },
+    m(target, anchor) {
+      insert(target, span, anchor);
+      append5(span, t0);
+      append5(span, code);
+      append5(span, t2);
+      append5(span, pre);
+      append5(span, t4);
+      append5(span, textarea);
+      set_input_value(
+        textarea,
+        /*body*/
+        ctx[0]
+      );
+      append5(span, t5);
+      if (if_block)
+        if_block.m(span, null);
+      if (!mounted) {
+        dispose = listen(
+          textarea,
+          "input",
+          /*textarea_input_handler*/
+          ctx[4]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*body*/
+      1) {
+        set_input_value(
+          textarea,
+          /*body*/
+          ctx2[0]
+        );
+      }
+      if (
+        /*errors*/
+        ctx2[1]
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block8(ctx2);
+          if_block.c();
+          if_block.m(span, null);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(span);
+      }
+      if (if_block)
+        if_block.d();
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_fragment20(ctx) {
+  let formrow;
+  let current;
+  formrow = new FormRow_default({
+    props: {
+      label: "Document block",
+      id: (
+        /*id*/
+        ctx[2]
+      ),
+      $$slots: { default: [create_default_slot8] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(formrow.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(formrow, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const formrow_changes = {};
+      if (dirty & /*id*/
+      4)
+        formrow_changes.id = /*id*/
+        ctx2[2];
+      if (dirty & /*$$scope, errors, body*/
+      35) {
+        formrow_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      formrow.$set(formrow_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(formrow.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(formrow.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(formrow, detaching);
+    }
+  };
+}
+var placeholder = "return `Hello ${form.name}!`";
+function instance20($$self, $$props, $$invalidate) {
+  let id;
+  let errors;
+  let { body = "" } = $$props;
+  let { index } = $$props;
+  function textarea_input_handler() {
+    body = this.value;
+    $$invalidate(0, body);
+  }
+  $$self.$$set = ($$props2) => {
+    if ("body" in $$props2)
+      $$invalidate(0, body = $$props2.body);
+    if ("index" in $$props2)
+      $$invalidate(3, index = $$props2.index);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*index*/
+    8) {
+      $:
+        $$invalidate(2, id = "document_block_" + index);
+    }
+    if ($$self.$$.dirty & /*body*/
+    1) {
+      $:
+        $$invalidate(1, errors = pipe2(parseFunctionBody(body), E.fold((e) => e.message, () => "")));
+    }
+    if ($$self.$$.dirty & /*errors*/
+    2) {
+      $:
+        console.log(errors);
+    }
+  };
+  return [body, errors, id, index, textarea_input_handler];
+}
+var InputBuilderDocumentBlock = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance20, create_fragment20, safe_not_equal, { body: 0, index: 3 });
+  }
+};
+var InputBuilderDocumentBlock_default = InputBuilderDocumentBlock;
+
+// src/views/components/InputBuilderFolder.svelte
+var import_obsidian15 = require("obsidian");
+function create_fragment21(ctx) {
+  let div;
+  let label;
+  let t;
+  let searchFolder_action;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      label = element("label");
+      t = text("Source Folder");
+      attr(
+        label,
+        "for",
+        /*id*/
+        ctx[0]
+      );
+      attr(div, "class", "modal-form flex column gap1 remove-padding remove-border fix-suggest");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append5(div, label);
+      append5(label, t);
+      if (!mounted) {
+        dispose = action_destroyer(searchFolder_action = /*searchFolder*/
+        ctx[1].call(null, div));
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*id*/
+      1) {
+        attr(
+          label,
+          "for",
+          /*id*/
+          ctx2[0]
+        );
+      }
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function instance21($$self, $$props, $$invalidate) {
+  let id;
+  let { index } = $$props;
+  let { folder = "" } = $$props;
+  let { notifyChange } = $$props;
+  function searchFolder(element2) {
+    new import_obsidian15.Setting(element2).addSearch((search2) => {
+      search2.setPlaceholder("Select a folder");
+      search2.setValue(folder);
+      new FolderSuggest(search2.inputEl, app);
+      search2.onChange((value) => {
+        $$invalidate(2, folder = value);
+        notifyChange();
+      });
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("index" in $$props2)
+      $$invalidate(3, index = $$props2.index);
+    if ("folder" in $$props2)
+      $$invalidate(2, folder = $$props2.folder);
+    if ("notifyChange" in $$props2)
+      $$invalidate(4, notifyChange = $$props2.notifyChange);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*index*/
+    8) {
+      $:
+        $$invalidate(0, id = `input_folder_${index}`);
+    }
+  };
+  return [id, searchFolder, folder, index, notifyChange];
+}
+var InputBuilderFolder = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance21, create_fragment21, safe_not_equal, { index: 3, folder: 2, notifyChange: 4 });
+  }
+};
+var InputBuilderFolder_default = InputBuilderFolder;
+
+// src/views/components/InputBuilderSelect.svelte
+var import_obsidian16 = require("obsidian");
+
+// src/views/components/Code.svelte
+function add_css5(target) {
+  append_styles(target, "svelte-1ovxcwm", "pre.svelte-1ovxcwm{background-color:var(--background-secondary);border-radius:var(--border-radius);padding:0.5rem}code.svelte-1ovxcwm{font-family:var(--font-family-monospace)}code.allowWrap.svelte-1ovxcwm{white-space:pre-wrap}div.svelte-1ovxcwm{display:flex}");
+}
+function create_fragment22(ctx) {
+  let div;
+  let pre;
+  let code;
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[2].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[1],
+    null
+  );
+  return {
+    c() {
+      div = element("div");
+      pre = element("pre");
+      code = element("code");
+      if (default_slot)
+        default_slot.c();
+      attr(code, "class", "svelte-1ovxcwm");
+      toggle_class(
+        code,
+        "allowWrap",
+        /*allowWrap*/
+        ctx[0]
+      );
+      attr(pre, "class", "svelte-1ovxcwm");
+      attr(div, "class", "svelte-1ovxcwm");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append5(div, pre);
+      append5(pre, code);
+      if (default_slot) {
+        default_slot.m(code, null);
+      }
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        2)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[1],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[1]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[1],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      if (!current || dirty & /*allowWrap*/
+      1) {
+        toggle_class(
+          code,
+          "allowWrap",
+          /*allowWrap*/
+          ctx2[0]
+        );
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      if (default_slot)
+        default_slot.d(detaching);
+    }
+  };
+}
+function instance22($$self, $$props, $$invalidate) {
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { allowWrap = false } = $$props;
+  $$self.$$set = ($$props2) => {
+    if ("allowWrap" in $$props2)
+      $$invalidate(0, allowWrap = $$props2.allowWrap);
+    if ("$$scope" in $$props2)
+      $$invalidate(1, $$scope = $$props2.$$scope);
+  };
+  return [allowWrap, $$scope, slots];
+}
+var Code = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init4(this, options, instance22, create_fragment22, safe_not_equal, { allowWrap: 0 }, add_css5);
+  }
+};
+var Code_default = Code;
+
 // src/views/components/inputBuilderDataview.svelte
-function add_css4(target) {
+function add_css6(target) {
   append_styles(target, "svelte-ddsol2", "h6.svelte-ddsol2{margin-bottom:0}");
 }
-function create_if_block(ctx) {
+function create_if_block9(ctx) {
   let div;
   let t;
   return {
@@ -8809,7 +16273,7 @@ function create_then_block2(ctx) {
   code = new Code_default({
     props: {
       allowWrap: true,
-      $$slots: { default: [create_default_slot_1] },
+      $$slots: { default: [create_default_slot_13] },
       $$scope: { ctx }
     }
   });
@@ -8844,7 +16308,7 @@ function create_then_block2(ctx) {
     }
   };
 }
-function create_default_slot_1(ctx) {
+function create_default_slot_13(ctx) {
   let t_value = (
     /*previewResult*/
     ctx[9] + ""
@@ -8889,7 +16353,7 @@ function create_pending_block2(ctx) {
     }
   };
 }
-function create_default_slot(ctx) {
+function create_default_slot9(ctx) {
   let span;
   let t8;
   let textarea;
@@ -8898,13 +16362,13 @@ function create_default_slot(ctx) {
   let t11;
   let t12;
   let await_block_anchor;
-  let promise;
+  let promise2;
   let current;
   let mounted;
   let dispose;
   let if_block = (
     /*error*/
-    ctx[3] && create_if_block(ctx)
+    ctx[3] && create_if_block9(ctx)
   );
   let info = {
     ctx,
@@ -8918,7 +16382,7 @@ function create_default_slot(ctx) {
     error: 3,
     blocks: [, , ,]
   };
-  handle_promise(promise = /*preview*/
+  handle_promise(promise2 = /*preview*/
   ctx[1](), info);
   return {
     c() {
@@ -9010,7 +16474,7 @@ function create_default_slot(ctx) {
         if (if_block) {
           if_block.p(ctx, dirty);
         } else {
-          if_block = create_if_block(ctx);
+          if_block = create_if_block9(ctx);
           if_block.c();
           if_block.m(t12.parentNode, t12);
         }
@@ -9020,8 +16484,8 @@ function create_default_slot(ctx) {
       }
       info.ctx = ctx;
       if (dirty & /*preview*/
-      2 && promise !== (promise = /*preview*/
-      ctx[1]()) && handle_promise(promise, info)) {
+      2 && promise2 !== (promise2 = /*preview*/
+      ctx[1]()) && handle_promise(promise2, info)) {
       } else {
         update_await_block_branch(info, ctx, dirty);
       }
@@ -9060,7 +16524,7 @@ function create_default_slot(ctx) {
     }
   };
 }
-function create_fragment4(ctx) {
+function create_fragment23(ctx) {
   let formrow;
   let current;
   formrow = new FormRow_default({
@@ -9070,7 +16534,7 @@ function create_fragment4(ctx) {
         /*id*/
         ctx[2]
       ),
-      $$slots: { default: [create_default_slot] },
+      $$slots: { default: [create_default_slot9] },
       $$scope: { ctx }
     }
   });
@@ -9109,17 +16573,17 @@ function create_fragment4(ctx) {
     }
   };
 }
-function instance4($$self, $$props, $$invalidate) {
+function instance23($$self, $$props, $$invalidate) {
   let id;
   let preview;
   let { index } = $$props;
   let { value = "" } = $$props;
   let { app: app2 } = $$props;
   let error2 = "";
-  const logger = (err) => $$invalidate(3, error2 = err.message);
+  const logger3 = (err) => $$invalidate(3, error2 = err.message);
   const makePreview = function(query) {
     $$invalidate(3, error2 = "");
-    return pipe2(query, sandboxedDvQuery, (query2) => executeSandboxedDvQuery(query2, app2, logger));
+    return pipe2(query, sandboxedDvQuery, (query2) => executeSandboxedDvQuery(query2, app2, logger3));
   };
   function textarea_input_handler() {
     value = this.value;
@@ -9150,114 +16614,16 @@ function instance4($$self, $$props, $$invalidate) {
 var InputBuilderDataview = class extends SvelteComponent {
   constructor(options) {
     super();
-    init4(this, options, instance4, create_fragment4, safe_not_equal, { index: 4, value: 0, app: 5 }, add_css4);
+    init4(this, options, instance23, create_fragment23, safe_not_equal, { index: 4, value: 0, app: 5 }, add_css6);
   }
 };
 var inputBuilderDataview_default = InputBuilderDataview;
 
 // src/views/components/InputBuilderSelect.svelte
-var import_obsidian12 = require("obsidian");
-
-// src/views/components/InputFolder.svelte
-var import_obsidian11 = require("obsidian");
-function create_fragment5(ctx) {
-  let div;
-  let label;
-  let t;
-  let searchFolder_action;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      div = element("div");
-      label = element("label");
-      t = text("Source Folder");
-      attr(
-        label,
-        "for",
-        /*id*/
-        ctx[0]
-      );
-      attr(div, "class", "modal-form flex column gap1 remove-padding remove-border fix-suggest");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      append5(div, label);
-      append5(label, t);
-      if (!mounted) {
-        dispose = action_destroyer(searchFolder_action = /*searchFolder*/
-        ctx[1].call(null, div));
-        mounted = true;
-      }
-    },
-    p(ctx2, [dirty]) {
-      if (dirty & /*id*/
-      1) {
-        attr(
-          label,
-          "for",
-          /*id*/
-          ctx2[0]
-        );
-      }
-    },
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      mounted = false;
-      dispose();
-    }
-  };
-}
-function instance5($$self, $$props, $$invalidate) {
-  let id;
-  let { index } = $$props;
-  let { folder = "" } = $$props;
-  let { notifyChange } = $$props;
-  function searchFolder(element2) {
-    new import_obsidian11.Setting(element2).addSearch((search2) => {
-      search2.setPlaceholder("Select a folder");
-      search2.setValue(folder);
-      new FolderSuggest(search2.inputEl, app);
-      search2.onChange((value) => {
-        $$invalidate(2, folder = value);
-        notifyChange();
-      });
-    });
-  }
-  $$self.$$set = ($$props2) => {
-    if ("index" in $$props2)
-      $$invalidate(3, index = $$props2.index);
-    if ("folder" in $$props2)
-      $$invalidate(2, folder = $$props2.folder);
-    if ("notifyChange" in $$props2)
-      $$invalidate(4, notifyChange = $$props2.notifyChange);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*index*/
-    8) {
-      $:
-        $$invalidate(0, id = `input_folder_${index}`);
-    }
-  };
-  return [id, searchFolder, folder, index, notifyChange];
-}
-var InputFolder = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init4(this, options, instance5, create_fragment5, safe_not_equal, { index: 3, folder: 2, notifyChange: 4 });
-  }
-};
-var InputFolder_default = InputFolder;
-
-// src/views/components/InputBuilderSelect.svelte
-function add_css5(target) {
+function add_css7(target) {
   append_styles(target, "svelte-15a6dqv", "button.svelte-15a6dqv:disabled{opacity:0.5;cursor:forbidden}.unknown-checkbox.svelte-15a6dqv{display:flex;flex-direction:column;align-items:flex-start}");
 }
-function get_each_context2(ctx, list, i) {
+function get_each_context6(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[24] = list[i];
   child_ctx[26] = list;
@@ -9268,7 +16634,7 @@ function get_each_context2(ctx, list, i) {
   child_ctx[25] = constants_0;
   return child_ctx;
 }
-function get_else_ctx(ctx) {
+function get_else_ctx2(ctx) {
   const child_ctx = ctx.slice();
   const constants_0 = `${/*options_id*/
   child_ctx[10]}_option_label_${/*idx*/
@@ -9276,7 +16642,7 @@ function get_else_ctx(ctx) {
   child_ctx[28] = constants_0;
   return child_ctx;
 }
-function create_if_block_5(ctx) {
+function create_if_block_54(ctx) {
   let option_1;
   return {
     c() {
@@ -9295,10 +16661,10 @@ function create_if_block_5(ctx) {
     }
   };
 }
-function create_if_block_4(ctx) {
+function create_if_block_44(ctx) {
   let label;
   let span0;
-  let input;
+  let input_1;
   let t0;
   let t1;
   let span1;
@@ -9308,29 +16674,29 @@ function create_if_block_4(ctx) {
     c() {
       label = element("label");
       span0 = element("span");
-      input = element("input");
+      input_1 = element("input");
       t0 = text("\n                Allow unknown values.");
       t1 = space();
       span1 = element("span");
       span1.textContent = "If checked, the user will be able to type any value in the input even if it is not\n                in the list of options.";
-      attr(input, "type", "checkbox");
+      attr(input_1, "type", "checkbox");
       attr(span1, "class", "modal-form-hint");
       attr(label, "class", "unknown-checkbox svelte-15a6dqv");
     },
     m(target, anchor) {
       insert(target, label, anchor);
       append5(label, span0);
-      append5(span0, input);
-      input.checked = /*allowUnknownValues*/
+      append5(span0, input_1);
+      input_1.checked = /*allowUnknownValues*/
       ctx[3];
       append5(span0, t0);
       append5(label, t1);
       append5(label, span1);
       if (!mounted) {
         dispose = listen(
-          input,
+          input_1,
           "change",
-          /*input_change_handler*/
+          /*input_1_change_handler*/
           ctx[14]
         );
         mounted = true;
@@ -9339,7 +16705,7 @@ function create_if_block_4(ctx) {
     p(ctx2, dirty) {
       if (dirty & /*allowUnknownValues*/
       8) {
-        input.checked = /*allowUnknownValues*/
+        input_1.checked = /*allowUnknownValues*/
         ctx2[3];
       }
     },
@@ -9362,11 +16728,11 @@ function create_default_slot_7(ctx) {
   let dispose;
   let if_block0 = (
     /*is_multi*/
-    ctx[8] && create_if_block_5(ctx)
+    ctx[8] && create_if_block_54(ctx)
   );
   let if_block1 = (
     /*showAllowUnknownValuesOption*/
-    ctx[9] && create_if_block_4(ctx)
+    ctx[9] && create_if_block_44(ctx)
   );
   return {
     c() {
@@ -9433,7 +16799,7 @@ function create_default_slot_7(ctx) {
       ) {
         if (if_block0) {
         } else {
-          if_block0 = create_if_block_5(ctx2);
+          if_block0 = create_if_block_54(ctx2);
           if_block0.c();
           if_block0.m(select, null);
         }
@@ -9465,7 +16831,7 @@ function create_default_slot_7(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block_4(ctx2);
+          if_block1 = create_if_block_44(ctx2);
           if_block1.c();
           if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
         }
@@ -9489,7 +16855,7 @@ function create_default_slot_7(ctx) {
     }
   };
 }
-function create_if_block_3(ctx) {
+function create_if_block_34(ctx) {
   let inputbuilderdataview;
   let updating_value;
   let current;
@@ -9514,7 +16880,7 @@ function create_if_block_3(ctx) {
     ctx[1];
   }
   inputbuilderdataview = new inputBuilderDataview_default({ props: inputbuilderdataview_props });
-  binding_callbacks.push(() => bind3(inputbuilderdataview, "value", inputbuilderdataview_value_binding));
+  binding_callbacks.push(() => bind4(inputbuilderdataview, "value", inputbuilderdataview_value_binding));
   return {
     c() {
       create_component(inputbuilderdataview.$$.fragment);
@@ -9557,7 +16923,7 @@ function create_if_block_3(ctx) {
     }
   };
 }
-function create_if_block_2(ctx) {
+function create_if_block_24(ctx) {
   let inputfolder;
   let updating_folder;
   let current;
@@ -9581,8 +16947,8 @@ function create_if_block_2(ctx) {
     inputfolder_props.folder = /*folder*/
     ctx[2];
   }
-  inputfolder = new InputFolder_default({ props: inputfolder_props });
-  binding_callbacks.push(() => bind3(inputfolder, "folder", inputfolder_folder_binding));
+  inputfolder = new InputBuilderFolder_default({ props: inputfolder_props });
+  binding_callbacks.push(() => bind4(inputfolder, "folder", inputfolder_folder_binding));
   return {
     c() {
       create_component(inputfolder.$$.fragment);
@@ -9625,7 +16991,7 @@ function create_if_block_2(ctx) {
     }
   };
 }
-function create_if_block2(ctx) {
+function create_if_block10(ctx) {
   let formrow;
   let current;
   formrow = new FormRow_default({
@@ -9635,7 +17001,7 @@ function create_if_block2(ctx) {
         /*options_id*/
         ctx[10]
       ),
-      $$slots: { default: [create_default_slot2] },
+      $$slots: { default: [create_default_slot10] },
       $$scope: { ctx }
     }
   });
@@ -9701,7 +17067,7 @@ function create_default_slot_6(ctx) {
       insert(target, button, anchor);
       if (!mounted) {
         dispose = [
-          action_destroyer(setIcon_action = import_obsidian12.setIcon.call(null, button, "arrow-up")),
+          action_destroyer(setIcon_action = import_obsidian16.setIcon.call(null, button, "arrow-up")),
           listen(button, "click", click_handler_1)
         ];
         mounted = true;
@@ -9748,7 +17114,7 @@ function create_default_slot_5(ctx) {
       insert(target, button, anchor);
       if (!mounted) {
         dispose = [
-          action_destroyer(setIcon_action = import_obsidian12.setIcon.call(null, button, "arrow-down")),
+          action_destroyer(setIcon_action = import_obsidian16.setIcon.call(null, button, "arrow-down")),
           listen(button, "click", click_handler_2)
         ];
         mounted = true;
@@ -9773,7 +17139,7 @@ function create_default_slot_5(ctx) {
     }
   };
 }
-function create_else_block2(ctx) {
+function create_else_block4(ctx) {
   let formrow0;
   let formrow1;
   let current;
@@ -9849,7 +17215,7 @@ function create_else_block2(ctx) {
     }
   };
 }
-function create_if_block_1(ctx) {
+function create_if_block_15(ctx) {
   let formrow;
   let current;
   formrow = new FormRow_default({
@@ -9859,7 +17225,7 @@ function create_if_block_1(ctx) {
         /*value_id*/
         ctx[25]
       ),
-      $$slots: { default: [create_default_slot_2] },
+      $$slots: { default: [create_default_slot_22] },
       $$scope: { ctx }
     }
   });
@@ -9899,13 +17265,13 @@ function create_if_block_1(ctx) {
   };
 }
 function create_default_slot_4(ctx) {
-  let input;
-  let input_id_value;
+  let input_1;
+  let input_1_id_value;
   let mounted;
   let dispose;
-  function input_input_handler_1() {
+  function input_1_input_handler_1() {
     ctx[19].call(
-      input,
+      input_1,
       /*each_value*/
       ctx[26],
       /*idx*/
@@ -9914,36 +17280,36 @@ function create_default_slot_4(ctx) {
   }
   return {
     c() {
-      input = element("input");
-      attr(input, "type", "text");
-      attr(input, "placeholder", "Label");
-      attr(input, "id", input_id_value = /*label_id*/
+      input_1 = element("input");
+      attr(input_1, "type", "text");
+      attr(input_1, "placeholder", "Label");
+      attr(input_1, "id", input_1_id_value = /*label_id*/
       ctx[28]);
     },
     m(target, anchor) {
-      insert(target, input, anchor);
+      insert(target, input_1, anchor);
       set_input_value(
-        input,
+        input_1,
         /*option*/
         ctx[24].label
       );
       if (!mounted) {
-        dispose = listen(input, "input", input_input_handler_1);
+        dispose = listen(input_1, "input", input_1_input_handler_1);
         mounted = true;
       }
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
       if (dirty & /*options_id*/
-      1024 && input_id_value !== (input_id_value = /*label_id*/
+      1024 && input_1_id_value !== (input_1_id_value = /*label_id*/
       ctx[28])) {
-        attr(input, "id", input_id_value);
+        attr(input_1, "id", input_1_id_value);
       }
       if (dirty & /*options*/
-      16 && input.value !== /*option*/
+      16 && input_1.value !== /*option*/
       ctx[24].label) {
         set_input_value(
-          input,
+          input_1,
           /*option*/
           ctx[24].label
         );
@@ -9951,7 +17317,7 @@ function create_default_slot_4(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(input);
+        detach(input_1);
       }
       mounted = false;
       dispose();
@@ -9959,13 +17325,13 @@ function create_default_slot_4(ctx) {
   };
 }
 function create_default_slot_3(ctx) {
-  let input;
-  let input_id_value;
+  let input_1;
+  let input_1_id_value;
   let mounted;
   let dispose;
-  function input_input_handler_2() {
+  function input_1_input_handler_2() {
     ctx[20].call(
-      input,
+      input_1,
       /*each_value*/
       ctx[26],
       /*idx*/
@@ -9974,36 +17340,36 @@ function create_default_slot_3(ctx) {
   }
   return {
     c() {
-      input = element("input");
-      attr(input, "type", "text");
-      attr(input, "placeholder", "Value");
-      attr(input, "id", input_id_value = /*value_id*/
+      input_1 = element("input");
+      attr(input_1, "type", "text");
+      attr(input_1, "placeholder", "Value");
+      attr(input_1, "id", input_1_id_value = /*value_id*/
       ctx[25]);
     },
     m(target, anchor) {
-      insert(target, input, anchor);
+      insert(target, input_1, anchor);
       set_input_value(
-        input,
+        input_1,
         /*option*/
         ctx[24].value
       );
       if (!mounted) {
-        dispose = listen(input, "input", input_input_handler_2);
+        dispose = listen(input_1, "input", input_1_input_handler_2);
         mounted = true;
       }
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
       if (dirty & /*options_id*/
-      1024 && input_id_value !== (input_id_value = /*value_id*/
+      1024 && input_1_id_value !== (input_1_id_value = /*value_id*/
       ctx[25])) {
-        attr(input, "id", input_id_value);
+        attr(input_1, "id", input_1_id_value);
       }
       if (dirty & /*options*/
-      16 && input.value !== /*option*/
+      16 && input_1.value !== /*option*/
       ctx[24].value) {
         set_input_value(
-          input,
+          input_1,
           /*option*/
           ctx[24].value
         );
@@ -10011,21 +17377,21 @@ function create_default_slot_3(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(input);
+        detach(input_1);
       }
       mounted = false;
       dispose();
     }
   };
 }
-function create_default_slot_2(ctx) {
-  let input;
-  let input_id_value;
+function create_default_slot_22(ctx) {
+  let input_1;
+  let input_1_id_value;
   let mounted;
   let dispose;
-  function input_input_handler() {
+  function input_1_input_handler() {
     ctx[18].call(
-      input,
+      input_1,
       /*each_value*/
       ctx[26],
       /*idx*/
@@ -10034,36 +17400,36 @@ function create_default_slot_2(ctx) {
   }
   return {
     c() {
-      input = element("input");
-      attr(input, "type", "text");
-      attr(input, "placeholder", "Value");
-      attr(input, "id", input_id_value = /*value_id*/
+      input_1 = element("input");
+      attr(input_1, "type", "text");
+      attr(input_1, "placeholder", "Value");
+      attr(input_1, "id", input_1_id_value = /*value_id*/
       ctx[25]);
     },
     m(target, anchor) {
-      insert(target, input, anchor);
+      insert(target, input_1, anchor);
       set_input_value(
-        input,
+        input_1,
         /*option*/
         ctx[24]
       );
       if (!mounted) {
-        dispose = listen(input, "input", input_input_handler);
+        dispose = listen(input_1, "input", input_1_input_handler);
         mounted = true;
       }
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
       if (dirty & /*options_id*/
-      1024 && input_id_value !== (input_id_value = /*value_id*/
+      1024 && input_1_id_value !== (input_1_id_value = /*value_id*/
       ctx[25])) {
-        attr(input, "id", input_id_value);
+        attr(input_1, "id", input_1_id_value);
       }
       if (dirty & /*options*/
-      16 && input.value !== /*option*/
+      16 && input_1.value !== /*option*/
       ctx[24]) {
         set_input_value(
-          input,
+          input_1,
           /*option*/
           ctx[24]
         );
@@ -10071,14 +17437,14 @@ function create_default_slot_2(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(input);
+        detach(input_1);
       }
       mounted = false;
       dispose();
     }
   };
 }
-function create_default_slot_12(ctx) {
+function create_default_slot_14(ctx) {
   let button;
   let button_id_value;
   let setIcon_action;
@@ -10105,7 +17471,7 @@ function create_default_slot_12(ctx) {
       insert(target, button, anchor);
       if (!mounted) {
         dispose = [
-          action_destroyer(setIcon_action = import_obsidian12.setIcon.call(null, button, "trash")),
+          action_destroyer(setIcon_action = import_obsidian16.setIcon.call(null, button, "trash")),
           listen(button, "click", click_handler_3)
         ];
         mounted = true;
@@ -10128,7 +17494,7 @@ function create_default_slot_12(ctx) {
     }
   };
 }
-function create_each_block2(ctx) {
+function create_each_block6(ctx) {
   let div;
   let formrow0;
   let t0;
@@ -10160,7 +17526,7 @@ function create_each_block2(ctx) {
       $$scope: { ctx }
     }
   });
-  const if_block_creators = [create_if_block_1, create_else_block2];
+  const if_block_creators = [create_if_block_15, create_else_block4];
   const if_blocks = [];
   function select_block_type_1(ctx2, dirty) {
     if ("string" == typeof /*option*/
@@ -10170,7 +17536,7 @@ function create_each_block2(ctx) {
   }
   function select_block_ctx(ctx2, index) {
     if (index === 1)
-      return get_else_ctx(ctx2);
+      return get_else_ctx2(ctx2);
     return ctx2;
   }
   current_block_type_index = select_block_type_1(ctx, -1);
@@ -10181,7 +17547,7 @@ function create_each_block2(ctx) {
       id: "button" + /*value_id*/
       ctx[25],
       hideLabel: true,
-      $$slots: { default: [create_default_slot_12] },
+      $$slots: { default: [create_default_slot_14] },
       $$scope: { ctx }
     }
   });
@@ -10289,7 +17655,7 @@ function create_each_block2(ctx) {
     }
   };
 }
-function create_default_slot2(ctx) {
+function create_default_slot10(ctx) {
   let button;
   let t1;
   let each_1_anchor;
@@ -10302,7 +17668,7 @@ function create_default_slot2(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block2(get_each_context2(ctx, each_value, i));
+    each_blocks[i] = create_each_block6(get_each_context6(ctx, each_value, i));
   }
   const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
@@ -10348,12 +17714,12 @@ function create_default_slot2(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context2(ctx2, each_value, i);
+          const child_ctx = get_each_context6(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block2(child_ctx);
+            each_blocks[i] = create_each_block6(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
@@ -10393,7 +17759,7 @@ function create_default_slot2(ctx) {
     }
   };
 }
-function create_fragment6(ctx) {
+function create_fragment24(ctx) {
   let formrow;
   let t;
   let current_block_type_index;
@@ -10411,7 +17777,7 @@ function create_fragment6(ctx) {
       $$scope: { ctx }
     }
   });
-  const if_block_creators = [create_if_block2, create_if_block_2, create_if_block_3];
+  const if_block_creators = [create_if_block10, create_if_block_24, create_if_block_34];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -10515,7 +17881,7 @@ function create_fragment6(ctx) {
     }
   };
 }
-function instance6($$self, $$props, $$invalidate) {
+function instance24($$self, $$props, $$invalidate) {
   let id;
   let options_id;
   let showAllowUnknownValuesOption;
@@ -10545,7 +17911,7 @@ function instance6($$self, $$props, $$invalidate) {
     source = select_value(this);
     $$invalidate(0, source);
   }
-  function input_change_handler() {
+  function input_1_change_handler() {
     allowUnknownValues = this.checked;
     $$invalidate(3, allowUnknownValues);
   }
@@ -10560,15 +17926,15 @@ function instance6($$self, $$props, $$invalidate) {
   };
   const click_handler_1 = (idx) => moveOption(idx, "up");
   const click_handler_2 = (idx) => moveOption(idx, "down");
-  function input_input_handler(each_value, idx) {
+  function input_1_input_handler(each_value, idx) {
     each_value[idx] = this.value;
     $$invalidate(4, options);
   }
-  function input_input_handler_1(each_value, idx) {
+  function input_1_input_handler_1(each_value, idx) {
     each_value[idx].label = this.value;
     $$invalidate(4, options);
   }
-  function input_input_handler_2(each_value, idx) {
+  function input_1_input_handler_2(each_value, idx) {
     each_value[idx].value = this.value;
     $$invalidate(4, options);
   }
@@ -10618,7 +17984,7 @@ function instance6($$self, $$props, $$invalidate) {
     if ($$self.$$.dirty & /*is_multi, source*/
     257) {
       $:
-        $$invalidate(9, showAllowUnknownValuesOption = is_multi && canAllowUnknownValues("multiselect", source));
+        $$invalidate(9, showAllowUnknownValuesOption = is_multi && input_exports.canAllowUnknownValues("multiselect", source));
     }
   };
   return [
@@ -10636,13 +18002,13 @@ function instance6($$self, $$props, $$invalidate) {
     id,
     moveOption,
     select_change_handler,
-    input_change_handler,
+    input_1_change_handler,
     click_handler,
     click_handler_1,
     click_handler_2,
-    input_input_handler,
-    input_input_handler_1,
-    input_input_handler_2,
+    input_1_input_handler,
+    input_1_input_handler_1,
+    input_1_input_handler_2,
     click_handler_3,
     inputfolder_folder_binding,
     inputbuilderdataview_value_binding
@@ -10654,8 +18020,8 @@ var InputBuilderSelect = class extends SvelteComponent {
     init4(
       this,
       options,
-      instance6,
-      create_fragment6,
+      instance24,
+      create_fragment24,
       safe_not_equal,
       {
         index: 5,
@@ -10668,84 +18034,141 @@ var InputBuilderSelect = class extends SvelteComponent {
         notifyChange: 7,
         is_multi: 8
       },
-      add_css5
+      add_css7
     );
   }
 };
 var InputBuilderSelect_default = InputBuilderSelect;
 
-// src/views/components/Toggle.svelte
-function create_fragment7(ctx) {
+// src/views/components/Tabs.svelte
+function add_css8(target) {
+  append_styles(target, "svelte-1uurynp", '.tabs.svelte-1uurynp{display:flex;flex-direction:row;justify-content:flex-start;padding-top:0.15rem}.tab.svelte-1uurynp{background:none;cursor:pointer;font-size:1rem;color:var(--gray-700);border:none;outline:none;cursor:pointer;padding:1rem;border-radius:10px 10px 0 0;box-shadow:none;text-transform:capitalize;position:relative}.tab.svelte-1uurynp::after{position:absolute;right:-0.5px;width:1px;background-color:var(--tab-divider-color);content:" ";height:20px}button.svelte-1uurynp{appearance:none;border:none}.tab-outer.svelte-1uurynp{padding:1px 0px 3.5px;border-radius:var(--tab-radius-active)}.tab-outer.active.svelte-1uurynp{color:var(--tab-text-color-focused-active);background-color:var(--tab-background-active)}.tabs.svelte-1uurynp{background-color:var(--background-secondary)}.tab-outer.svelte-1uurynp:hover{background-color:var(--background-modifier-border) !important}');
+}
+function get_each_context7(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[3] = list[i];
+  return child_ctx;
+}
+function create_each_block7(ctx) {
   let div;
-  let input;
+  let button;
+  let t0_value = (
+    /*tab*/
+    ctx[3] + ""
+  );
+  let t0;
+  let t1;
   let mounted;
   let dispose;
+  function click_handler() {
+    return (
+      /*click_handler*/
+      ctx[2](
+        /*tab*/
+        ctx[3]
+      )
+    );
+  }
   return {
     c() {
       div = element("div");
-      input = element("input");
-      attr(input, "type", "checkbox");
-      attr(
-        input,
-        "tabindex",
-        /*tabindex*/
-        ctx[1]
-      );
-      attr(div, "class", "checkbox-container");
-      attr(div, "role", "checkbox");
+      button = element("button");
+      t0 = text(t0_value);
+      t1 = space();
+      attr(button, "class", "tab svelte-1uurynp");
+      attr(div, "class", "tab-outer svelte-1uurynp");
       toggle_class(
         div,
-        "is-enabled",
-        /*checked*/
+        "active",
+        /*tab*/
+        ctx[3] === /*activeTab*/
         ctx[0]
       );
     },
     m(target, anchor) {
       insert(target, div, anchor);
-      append5(div, input);
-      input.checked = /*checked*/
-      ctx[0];
+      append5(div, button);
+      append5(button, t0);
+      append5(div, t1);
       if (!mounted) {
-        dispose = [
-          listen(
-            input,
-            "change",
-            /*input_change_handler*/
-            ctx[3]
-          ),
-          listen(
-            div,
-            "click",
-            /*handleChange*/
-            ctx[2]
-          )
-        ];
+        dispose = listen(button, "click", click_handler);
         mounted = true;
       }
     },
-    p(ctx2, [dirty]) {
-      if (dirty & /*tabindex*/
-      2) {
-        attr(
-          input,
-          "tabindex",
-          /*tabindex*/
-          ctx2[1]
-        );
-      }
-      if (dirty & /*checked*/
-      1) {
-        input.checked = /*checked*/
-        ctx2[0];
-      }
-      if (dirty & /*checked*/
-      1) {
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*tabs*/
+      2 && t0_value !== (t0_value = /*tab*/
+      ctx[3] + ""))
+        set_data(t0, t0_value);
+      if (dirty & /*tabs, activeTab*/
+      3) {
         toggle_class(
           div,
-          "is-enabled",
-          /*checked*/
-          ctx2[0]
+          "active",
+          /*tab*/
+          ctx[3] === /*activeTab*/
+          ctx[0]
         );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_fragment25(ctx) {
+  let div;
+  let each_value = ensure_array_like(
+    /*tabs*/
+    ctx[1]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block7(get_each_context7(ctx, each_value, i));
+  }
+  return {
+    c() {
+      div = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(div, "class", "tabs svelte-1uurynp");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div, null);
+        }
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*tabs, activeTab*/
+      3) {
+        each_value = ensure_array_like(
+          /*tabs*/
+          ctx2[1]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context7(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block7(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(div, null);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
       }
     },
     i: noop,
@@ -10754,688 +18177,49 @@ function create_fragment7(ctx) {
       if (detaching) {
         detach(div);
       }
-      mounted = false;
-      run_all(dispose);
+      destroy_each(each_blocks, detaching);
     }
   };
 }
-function instance7($$self, $$props, $$invalidate) {
-  let { checked = false } = $$props;
-  let { tabindex = 0 } = $$props;
-  function handleChange() {
-    $$invalidate(0, checked = !checked);
-  }
-  function input_change_handler() {
-    checked = this.checked;
-    $$invalidate(0, checked);
-  }
-  $$self.$$set = ($$props2) => {
-    if ("checked" in $$props2)
-      $$invalidate(0, checked = $$props2.checked);
-    if ("tabindex" in $$props2)
-      $$invalidate(1, tabindex = $$props2.tabindex);
+function instance25($$self, $$props, $$invalidate) {
+  let { activeTab } = $$props;
+  let { tabs } = $$props;
+  const click_handler = (tab) => {
+    $$invalidate(0, activeTab = tab);
   };
-  return [checked, tabindex, handleChange, input_change_handler];
+  $$self.$$set = ($$props2) => {
+    if ("activeTab" in $$props2)
+      $$invalidate(0, activeTab = $$props2.activeTab);
+    if ("tabs" in $$props2)
+      $$invalidate(1, tabs = $$props2.tabs);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*activeTab*/
+    1) {
+      $:
+        console.log(activeTab);
+    }
+  };
+  return [activeTab, tabs, click_handler];
 }
-var Toggle = class extends SvelteComponent {
+var Tabs = class extends SvelteComponent {
   constructor(options) {
     super();
-    init4(this, options, instance7, create_fragment7, safe_not_equal, { checked: 0, tabindex: 1 });
+    init4(this, options, instance25, create_fragment25, safe_not_equal, { activeTab: 0, tabs: 1 }, add_css8);
   }
 };
-var Toggle_default = Toggle;
-
-// node_modules/parser-ts/es6/ParseResult.js
-var __assign = function() {
-  __assign = Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s)
-        if (Object.prototype.hasOwnProperty.call(s, p))
-          t[p] = s[p];
-    }
-    return t;
-  };
-  return __assign.apply(this, arguments);
-};
-var success = function(value, next, start) {
-  return right3({
-    value,
-    next,
-    start
-  });
-};
-var error = function(input, expected2, fatal) {
-  if (expected2 === void 0) {
-    expected2 = [];
-  }
-  if (fatal === void 0) {
-    fatal = false;
-  }
-  return left3({
-    input,
-    expected: expected2,
-    fatal
-  });
-};
-var withExpected = function(err, expected2) {
-  return __assign(__assign({}, err), { expected: expected2 });
-};
-var extend2 = function(err1, err2) {
-  return getSemigroup4().concat(err1, err2);
-};
-var getSemigroup4 = function() {
-  return {
-    concat: function(x, y) {
-      if (x.input.cursor < y.input.cursor)
-        return last().concat(x, y);
-      if (x.input.cursor > y.input.cursor)
-        return first().concat(x, y);
-      return struct({
-        input: first(),
-        fatal: first(),
-        expected: getMonoid2()
-      }).concat(x, y);
-    }
-  };
-};
-
-// node_modules/parser-ts/es6/Stream.js
-var stream = function(buffer, cursor) {
-  if (cursor === void 0) {
-    cursor = 0;
-  }
-  return {
-    buffer,
-    cursor
-  };
-};
-var get2 = function(s) {
-  return lookup2(s.cursor, s.buffer);
-};
-var atEnd = function(s) {
-  return s.cursor >= s.buffer.length;
-};
-var getAndNext = function(s) {
-  return pipe(get2(s), map4(function(a) {
-    return { value: a, next: { buffer: s.buffer, cursor: s.cursor + 1 } };
-  }));
-};
-
-// node_modules/parser-ts/es6/Parser.js
-var __assign2 = function() {
-  __assign2 = Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-      for (var p in s)
-        if (Object.prototype.hasOwnProperty.call(s, p))
-          t[p] = s[p];
-    }
-    return t;
-  };
-  return __assign2.apply(this, arguments);
-};
-var succeed = function(a) {
-  return function(i) {
-    return success(a, i, i);
-  };
-};
-var fail = function() {
-  return function(i) {
-    return error(i);
-  };
-};
-var failAt = function(i) {
-  return function() {
-    return error(i);
-  };
-};
-var sat = function(predicate) {
-  return pipe(withStart(item()), chain4(function(_a) {
-    var a = _a[0], start = _a[1];
-    return predicate(a) ? of6(a) : failAt(start);
-  }));
-};
-var expected = function(p, message) {
-  return function(i) {
-    return pipe(p(i), mapLeft(function(err) {
-      return withExpected(err, [message]);
-    }));
-  };
-};
-var item = function() {
-  return function(i) {
-    return pipe(getAndNext(i), fold2(function() {
-      return error(i);
-    }, function(_a) {
-      var value = _a.value, next = _a.next;
-      return success(value, next, i);
-    }));
-  };
-};
-var seq = function(fa, f) {
-  return function(i) {
-    return pipe(fa(i), chain2(function(s) {
-      return pipe(f(s.value)(s.next), chain2(function(next) {
-        return success(next.value, next.next, i);
-      }));
-    }));
-  };
-};
-var either = function(p, f) {
-  return function(i) {
-    var e = p(i);
-    if (isRight2(e)) {
-      return e;
-    }
-    if (e.left.fatal) {
-      return e;
-    }
-    return pipe(f()(i), mapLeft(function(err) {
-      return extend2(e.left, err);
-    }));
-  };
-};
-var withStart = function(p) {
-  return function(i) {
-    return pipe(p(i), map3(function(s) {
-      return __assign2(__assign2({}, s), { value: [s.value, i] });
-    }));
-  };
-};
-var maybe = function(M) {
-  return alt4(function() {
-    return of6(M.empty);
-  });
-};
-var eof = function() {
-  return expected(function(i) {
-    return atEnd(i) ? success(void 0, i, i) : error(i);
-  }, "end of file");
-};
-var many = function(p) {
-  return pipe(many1(p), alt4(function() {
-    return of6([]);
-  }));
-};
-var many1 = function(parser) {
-  return pipe(parser, chain4(function(head6) {
-    return chainRec_(of2(head6), function(acc) {
-      return pipe(parser, map9(function(a) {
-        return left3(append4(a)(acc));
-      }), alt4(function() {
-        return of6(right3(acc));
-      }));
-    });
-  }));
-};
-var sepBy = function(sep, p) {
-  var nil = of6([]);
-  return pipe(sepBy1(sep, p), alt4(function() {
-    return nil;
-  }));
-};
-var sepBy1 = function(sep, p) {
-  return pipe(p, chain4(function(head6) {
-    return pipe(many(pipe(sep, apSecond3(p))), map9(function(tail5) {
-      return prepend3(head6)(tail5);
-    }));
-  }));
-};
-var between = function(left6, right6) {
-  return function(p) {
-    return pipe(left6, chain4(function() {
-      return p;
-    }), chainFirst3(function() {
-      return right6;
-    }));
-  };
-};
-var surroundedBy = function(bound) {
-  return between(bound, bound);
-};
-var lookAhead = function(p) {
-  return function(i) {
-    return pipe(p(i), chain2(function(next) {
-      return success(next.value, i, i);
-    }));
-  };
-};
-var optional2 = function(parser) {
-  return pipe(parser, map9(some3), alt4(function() {
-    return succeed(none2);
-  }));
-};
-var many1Till = function(parser, terminator) {
-  return pipe(parser, chain4(function(x) {
-    return chainRec_(of(x), function(acc) {
-      return pipe(terminator, map9(function() {
-        return right3(acc);
-      }), alt4(function() {
-        return pipe(parser, map9(function(a) {
-          return left3(append3(a)(acc));
-        }));
-      }));
-    });
-  }));
-};
-var map_ = function(ma, f) {
-  return function(i) {
-    return pipe(ma(i), map3(function(s) {
-      return __assign2(__assign2({}, s), { value: f(s.value) });
-    }));
-  };
-};
-var ap_ = function(mab, ma) {
-  return chain_(mab, function(f) {
-    return map_(ma, f);
-  });
-};
-var chain_ = function(ma, f) {
-  return seq(ma, f);
-};
-var chainRec_ = function(a, f) {
-  var split2 = function(start) {
-    return function(result2) {
-      return isLeft2(result2.value) ? left3({ value: result2.value.left, stream: result2.next }) : right3(success(result2.value.right, result2.next, start));
-    };
-  };
-  return function(start) {
-    return tailRec({ value: a, stream: start }, function(state) {
-      var result2 = f(state.value)(state.stream);
-      if (isLeft2(result2)) {
-        return right3(error(state.stream, result2.left.expected, result2.left.fatal));
-      }
-      return split2(start)(result2.right);
-    });
-  };
-};
-var alt_ = function(fa, that) {
-  return either(fa, that);
-};
-var map9 = function(f) {
-  return function(fa) {
-    return map_(fa, f);
-  };
-};
-var apFirst3 = function(fb) {
-  return function(fa) {
-    return ap_(map_(fa, function(a) {
-      return function() {
-        return a;
-      };
-    }), fb);
-  };
-};
-var apSecond3 = function(fb) {
-  return function(fa) {
-    return ap_(map_(fa, function() {
-      return function(b) {
-        return b;
-      };
-    }), fb);
-  };
-};
-var of6 = succeed;
-var chain4 = function(f) {
-  return function(ma) {
-    return chain_(ma, f);
-  };
-};
-var chainFirst3 = function(f) {
-  return function(ma) {
-    return chain_(ma, function(a) {
-      return map_(f(a), function() {
-        return a;
-      });
-    });
-  };
-};
-var alt4 = function(that) {
-  return function(fa) {
-    return alt_(fa, that);
-  };
-};
-var URI6 = "Parser";
-var getSemigroup5 = function(S) {
-  return {
-    concat: function(x, y) {
-      return ap_(map_(x, function(x2) {
-        return function(y2) {
-          return S.concat(x2, y2);
-        };
-      }), y);
-    }
-  };
-};
-var getMonoid4 = function(M) {
-  return __assign2(__assign2({}, getSemigroup5(M)), { empty: succeed(M.empty) });
-};
-var ChainRec = {
-  URI: URI6,
-  map: map_,
-  ap: ap_,
-  chain: chain_,
-  chainRec: chainRec_
-};
-
-// node_modules/parser-ts/es6/char.js
-var maybe2 = maybe(Monoid);
-var char = function(c) {
-  return expected(sat(function(s) {
-    return s === c;
-  }), '"'.concat(c, '"'));
-};
-var notChar = function(c) {
-  return expected(sat(function(c1) {
-    return c1 !== c;
-  }), 'anything but "'.concat(c, '"'));
-};
-var many2 = function(parser) {
-  return maybe2(many12(parser));
-};
-var many12 = function(parser) {
-  return pipe(many1(parser), map9(function(nea) {
-    return nea.join("");
-  }));
-};
-var isDigit = function(c) {
-  return "0123456789".indexOf(c) !== -1;
-};
-var digit = expected(sat(isDigit), "a digit");
-var spaceRe = /^\s$/;
-var isSpace = function(c) {
-  return spaceRe.test(c);
-};
-var space2 = expected(sat(isSpace), "a whitespace");
-var isUnderscore = function(c) {
-  return c === "_";
-};
-var isLetter = function(c) {
-  return /[a-z]/.test(c.toLowerCase());
-};
-var isAlphanum = function(c) {
-  return isLetter(c) || isDigit(c) || isUnderscore(c);
-};
-var alphanum = expected(sat(isAlphanum), "a word character");
-var letter = expected(sat(isLetter), "a letter");
-var isUnicodeLetter = function(c) {
-  return c.toLowerCase() !== c.toUpperCase();
-};
-var unicodeLetter = expected(sat(isUnicodeLetter), "an unicode letter");
-var isUpper = function(c) {
-  return isLetter(c) && c === c.toUpperCase();
-};
-var upper = expected(sat(isUpper), "an upper case letter");
-var isLower = function(c) {
-  return isLetter(c) && c === c.toLowerCase();
-};
-var lower = expected(sat(isLower), "a lower case letter");
-var notDigit = expected(sat(not(isDigit)), "a non-digit");
-var notSpace = expected(sat(not(isSpace)), "a non-whitespace character");
-var notAlphanum = expected(sat(not(isAlphanum)), "a non-word character");
-var notLetter = expected(sat(not(isLetter)), "a non-letter character");
-var notUpper = expected(sat(not(isUpper)), "anything but an upper case letter");
-var notLower = expected(sat(not(isLower)), "anything but a lower case letter");
-
-// node_modules/fp-ts/es6/Monoid.js
-var concatAll5 = function(M) {
-  return concatAll2(M)(M.empty);
-};
-var monoidVoid = {
-  concat: semigroupVoid.concat,
-  empty: void 0
-};
-var monoidAll = {
-  concat: semigroupAll.concat,
-  empty: true
-};
-var monoidAny = {
-  concat: semigroupAny.concat,
-  empty: false
-};
-var monoidString = {
-  concat: semigroupString.concat,
-  empty: ""
-};
-var monoidSum = {
-  concat: semigroupSum.concat,
-  empty: 0
-};
-var monoidProduct = {
-  concat: semigroupProduct.concat,
-  empty: 1
-};
-
-// node_modules/parser-ts/es6/string.js
-var string2 = function(s) {
-  return expected(ChainRec.chainRec(s, function(acc) {
-    return pipe(charAt(0, acc), fold2(function() {
-      return of6(right3(s));
-    }, function(c) {
-      return pipe(char(c), chain4(function() {
-        return of6(left3(acc.slice(1)));
-      }));
-    }));
-  }), JSON.stringify(s));
-};
-var fold3 = concatAll5(getMonoid4(Monoid));
-var maybe3 = maybe(Monoid);
-var many3 = function(parser) {
-  return maybe3(many13(parser));
-};
-var many13 = function(parser) {
-  return pipe(many1(parser), map9(function(nea) {
-    return nea.join("");
-  }));
-};
-var charAt = function(index, s) {
-  return index >= 0 && index < s.length ? some3(s.charAt(index)) : none2;
-};
-var spaces = many2(space2);
-var spaces1 = many12(space2);
-var notSpaces = many2(notSpace);
-var notSpaces1 = many12(notSpace);
-var fromString = function(s) {
-  var n = +s;
-  return isNaN(n) || s === "" ? none2 : some3(n);
-};
-var int = expected(pipe(fold3([maybe3(char("-")), many12(digit)]), map9(function(s) {
-  return +s;
-})), "an integer");
-var float = expected(pipe(fold3([maybe3(char("-")), many2(digit), maybe3(fold3([char("."), many12(digit)]))]), chain4(function(s) {
-  return pipe(fromString(s), fold2(function() {
-    return fail();
-  }, succeed));
-})), "a float");
-var doubleQuotedString = surroundedBy(char('"'))(many3(either(string2('\\"'), function() {
-  return notChar('"');
-})));
-function run2(string3) {
-  return function(p) {
-    return p(stream(string3.split("")));
-  };
-}
-
-// src/core/template/templateParser.ts
-var import_obsidian13 = require("obsidian");
-function TemplateText(value) {
-  return { _tag: "text", value };
-}
-function TemplateVariable(value) {
-  return { _tag: "variable", value };
-}
-function FrontmatterCommand(pick = [], omit = []) {
-  return { _tag: "frontmatter-command", pick, omit };
-}
-var EofStr = pipe2(
-  eof(),
-  map9(() => "")
-);
-var open = fold3([string2("{{"), spaces]);
-var close = expected(fold3([spaces, string2("}}")]), 'closing variable tag: "}}"');
-var identifier = many13(alphanum);
-var templateIdentifier = pipe2(
-  identifier,
-  between(open, close),
-  map9(TemplateVariable)
-);
-var commandOpen = fold3([string2("{#"), spaces]);
-var commandClose = expected(fold3([spaces, string2("#}")]), 'a closing command tag: "#}"');
-var sepByComma = sepBy(fold3([char(","), spaces]), identifier);
-var commandOptionParser = (option) => pipe2(
-  fold3([string2(option), spaces]),
-  // dam prettier
-  apSecond3(sepByComma)
-);
-var frontmatterCommandParser = pipe2(
-  fold3([string2("frontmatter"), spaces]),
-  apSecond3(optional2(commandOptionParser("pick:")))
-  //P.apFirst(S.spaces),
-  // P.chain(commandOptionParser("pick:")),
-);
-var commandParser = pipe2(
-  frontmatterCommandParser,
-  between(commandOpen, commandClose),
-  map9((value) => {
-    return pipe2(
-      value,
-      O.fold(() => [], identity),
-      FrontmatterCommand
-    );
-  })
-);
-var OpenOrEof = pipe2(
-  open,
-  alt4(() => commandOpen),
-  alt4(() => EofStr)
-);
-var anythingUntilOpenOrEOF = many1Till(item(), lookAhead(OpenOrEof));
-var text2 = pipe2(
-  anythingUntilOpenOrEOF,
-  map9((value) => TemplateText(value.join("")))
-);
-var TextOrVariable = pipe2(
-  templateIdentifier,
-  alt4(() => commandParser),
-  alt4(() => text2)
-);
-var Template = pipe2(
-  many(TextOrVariable),
-  // dam prettier
-  apFirst3(eof())
-);
-function parseTemplate(template) {
-  return pipe2(
-    Template,
-    run2(template),
-    fold(
-      ({ expected: expected2 }) => left3(`Expected ${expected2.join(" or ")}`),
-      (result2) => right3(result2.value)
-    )
-  );
-}
-function templateVariables(parsedTemplate) {
-  return pipe2(
-    parsedTemplate,
-    fold(
-      () => [],
-      filterMap((token) => {
-        if (token._tag === "variable") {
-          return O.some(token.value);
-        }
-        return O.none;
-      })
-    )
-  );
-}
-function templateError(parsedTemplate) {
-  return pipe2(
-    parsedTemplate,
-    fold(
-      (error2) => error2,
-      () => void 0
-    )
-  );
-}
-function tokenToString(token) {
-  const tag = token._tag;
-  switch (tag) {
-    case "text":
-      return token.value;
-    case "variable":
-      return `{{${token.value}}}`;
-    case "frontmatter-command":
-      return `{{# frontmatter pick: ${token.pick.join(", ")}, omit: ${token.omit.join(
-        ", "
-      )} #}}`;
-    default:
-      return absurd(tag);
-  }
-}
-function matchToken(onText, onVariable, onCommand) {
-  return (token) => {
-    switch (token._tag) {
-      case "text":
-        return onText(token.value);
-      case "variable":
-        return onVariable(token.value);
-      case "frontmatter-command":
-        return onCommand(token);
-      default:
-        return absurd(token);
-    }
-  };
-}
-function parsedTemplateToString(parsedTemplate) {
-  return pipe2(
-    // prettier shut up
-    parsedTemplate,
-    foldMap3(Monoid)(tokenToString)
-  );
-}
-function asFrontmatterString(data) {
-  return ({ pick, omit }) => pipe2(
-    data,
-    filterMapWithIndex3((key, value) => {
-      if (pick.length === 0)
-        return O.some(value);
-      return pick.includes(key) ? O.some(value) : O.none;
-    }),
-    filterMapWithIndex3((key, value) => !omit.includes(key) ? O.some(value) : O.none),
-    import_obsidian13.stringifyYaml
-  );
-}
-function executeTemplate(parsedTemplate, formData) {
-  const toFrontmatter = asFrontmatterString(formData);
-  return pipe2(
-    parsedTemplate,
-    filterMap(
-      matchToken(
-        O.some,
-        (key) => O.fromNullable(formData[key]),
-        (command) => pipe2(
-          //prettier
-          command,
-          toFrontmatter,
-          O.some
-        )
-      )
-    ),
-    foldMap3(Monoid)(String)
-  );
-}
+var Tabs_default = Tabs;
 
 // src/views/components/TemplateEditor.svelte
-function add_css6(target) {
+function add_css9(target) {
   append_styles(target, "svelte-1daddci", ".fields-list.svelte-1daddci{padding-top:1rem}textarea.svelte-1daddci{font-family:var(--font-family-monospace);width:100%}");
 }
-function get_each_context3(ctx, list, i) {
+function get_each_context8(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[11] = list[i];
   return child_ctx;
 }
-function create_default_slot_13(ctx) {
+function create_default_slot_15(ctx) {
   let t;
   return {
     c() {
@@ -11455,7 +18239,7 @@ function create_default_slot_13(ctx) {
     }
   };
 }
-function create_each_block3(ctx) {
+function create_each_block8(ctx) {
   let li;
   let code;
   let t0_value = (
@@ -11510,7 +18294,7 @@ function create_each_block3(ctx) {
     }
   };
 }
-function create_if_block3(ctx) {
+function create_if_block11(ctx) {
   let div1;
   let div0;
   let t1;
@@ -11518,7 +18302,7 @@ function create_if_block3(ctx) {
   let current;
   code = new Code_default({
     props: {
-      $$slots: { default: [create_default_slot3] },
+      $$slots: { default: [create_default_slot11] },
       $$scope: { ctx }
     }
   });
@@ -11565,7 +18349,7 @@ function create_if_block3(ctx) {
     }
   };
 }
-function create_default_slot3(ctx) {
+function create_default_slot11(ctx) {
   let t;
   return {
     c() {
@@ -11593,7 +18377,7 @@ function create_default_slot3(ctx) {
     }
   };
 }
-function create_fragment8(ctx) {
+function create_fragment26(ctx) {
   let h6;
   let t0;
   let t1;
@@ -11625,7 +18409,7 @@ function create_fragment8(ctx) {
   let dispose;
   code1 = new Code_default({
     props: {
-      $$slots: { default: [create_default_slot_13] },
+      $$slots: { default: [create_default_slot_15] },
       $$scope: { ctx }
     }
   });
@@ -11635,11 +18419,11 @@ function create_fragment8(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block3(get_each_context3(ctx, each_value, i));
+    each_blocks[i] = create_each_block8(get_each_context8(ctx, each_value, i));
   }
   let if_block = (
     /*templateErrorMessage*/
-    ctx[3] && create_if_block3(ctx)
+    ctx[3] && create_if_block11(ctx)
   );
   return {
     c() {
@@ -11768,11 +18552,11 @@ function create_fragment8(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context3(ctx2, each_value, i);
+          const child_ctx = get_each_context8(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block3(child_ctx);
+            each_blocks[i] = create_each_block8(child_ctx);
             each_blocks[i].c();
             each_blocks[i].m(ul, null);
           }
@@ -11801,7 +18585,7 @@ function create_fragment8(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block3(ctx2);
+          if_block = create_if_block11(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -11851,7 +18635,7 @@ function create_fragment8(ctx) {
     }
   };
 }
-function instance8($$self, $$props, $$invalidate) {
+function instance26($$self, $$props, $$invalidate) {
   let parsedTemplate;
   let usedVariables;
   let templateErrorMessage;
@@ -11914,8 +18698,8 @@ var TemplateEditor = class extends SvelteComponent {
     init4(
       this,
       options,
-      instance8,
-      create_fragment8,
+      instance26,
+      create_fragment26,
       safe_not_equal,
       {
         templateString: 0,
@@ -11923,447 +18707,50 @@ var TemplateEditor = class extends SvelteComponent {
         fieldNames: 2,
         saveTemplate: 7
       },
-      add_css6
+      add_css9
     );
   }
 };
 var TemplateEditor_default = TemplateEditor;
 
-// src/views/components/Tabs.svelte
-function add_css7(target) {
-  append_styles(target, "svelte-1uurynp", '.tabs.svelte-1uurynp{display:flex;flex-direction:row;justify-content:flex-start;padding-top:0.15rem}.tab.svelte-1uurynp{background:none;cursor:pointer;font-size:1rem;color:var(--gray-700);border:none;outline:none;cursor:pointer;padding:1rem;border-radius:10px 10px 0 0;box-shadow:none;text-transform:capitalize;position:relative}.tab.svelte-1uurynp::after{position:absolute;right:-0.5px;width:1px;background-color:var(--tab-divider-color);content:" ";height:20px}button.svelte-1uurynp{appearance:none;border:none}.tab-outer.svelte-1uurynp{padding:1px 0px 3.5px;border-radius:var(--tab-radius-active)}.tab-outer.active.svelte-1uurynp{color:var(--tab-text-color-focused-active);background-color:var(--tab-background-active)}.tabs.svelte-1uurynp{background-color:var(--background-secondary)}.tab-outer.svelte-1uurynp:hover{background-color:var(--background-modifier-border) !important}');
-}
-function get_each_context4(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[3] = list[i];
-  return child_ctx;
-}
-function create_each_block4(ctx) {
-  let div;
-  let button;
-  let t0_value = (
-    /*tab*/
-    ctx[3] + ""
-  );
-  let t0;
-  let t1;
-  let mounted;
-  let dispose;
-  function click_handler() {
-    return (
-      /*click_handler*/
-      ctx[2](
-        /*tab*/
-        ctx[3]
-      )
-    );
-  }
-  return {
-    c() {
-      div = element("div");
-      button = element("button");
-      t0 = text(t0_value);
-      t1 = space();
-      attr(button, "class", "tab svelte-1uurynp");
-      attr(div, "class", "tab-outer svelte-1uurynp");
-      toggle_class(
-        div,
-        "active",
-        /*tab*/
-        ctx[3] === /*activeTab*/
-        ctx[0]
-      );
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      append5(div, button);
-      append5(button, t0);
-      append5(div, t1);
-      if (!mounted) {
-        dispose = listen(button, "click", click_handler);
-        mounted = true;
-      }
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      if (dirty & /*tabs*/
-      2 && t0_value !== (t0_value = /*tab*/
-      ctx[3] + ""))
-        set_data(t0, t0_value);
-      if (dirty & /*tabs, activeTab*/
-      3) {
-        toggle_class(
-          div,
-          "active",
-          /*tab*/
-          ctx[3] === /*activeTab*/
-          ctx[0]
-        );
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      mounted = false;
-      dispose();
-    }
-  };
-}
-function create_fragment9(ctx) {
-  let div;
-  let each_value = ensure_array_like(
-    /*tabs*/
-    ctx[1]
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block4(get_each_context4(ctx, each_value, i));
-  }
-  return {
-    c() {
-      div = element("div");
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      attr(div, "class", "tabs svelte-1uurynp");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(div, null);
-        }
-      }
-    },
-    p(ctx2, [dirty]) {
-      if (dirty & /*tabs, activeTab*/
-      3) {
-        each_value = ensure_array_like(
-          /*tabs*/
-          ctx2[1]
-        );
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context4(ctx2, each_value, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block4(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(div, null);
-          }
-        }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value.length;
-      }
-    },
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      destroy_each(each_blocks, detaching);
-    }
-  };
-}
-function instance9($$self, $$props, $$invalidate) {
-  let { activeTab } = $$props;
-  let { tabs } = $$props;
-  const click_handler = (tab) => {
-    $$invalidate(0, activeTab = tab);
-  };
-  $$self.$$set = ($$props2) => {
-    if ("activeTab" in $$props2)
-      $$invalidate(0, activeTab = $$props2.activeTab);
-    if ("tabs" in $$props2)
-      $$invalidate(1, tabs = $$props2.tabs);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*activeTab*/
-    1) {
-      $:
-        console.log(activeTab);
-    }
-  };
-  return [activeTab, tabs, click_handler];
-}
-var Tabs = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init4(this, options, instance9, create_fragment9, safe_not_equal, { activeTab: 0, tabs: 1 }, add_css7);
-  }
-};
-var Tabs_default = Tabs;
-
-// src/views/components/InputBuilderDocumentBlock.svelte
-function create_if_block4(ctx) {
-  let t0;
-  let div;
-  let t1;
-  return {
-    c() {
-      t0 = text("Your function body has errors:\n            ");
-      div = element("div");
-      t1 = text(
-        /*errors*/
-        ctx[1]
-      );
-      attr(div, "class", "modal-form-error-message");
-    },
-    m(target, anchor) {
-      insert(target, t0, anchor);
-      insert(target, div, anchor);
-      append5(div, t1);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*errors*/
-      2)
-        set_data(
-          t1,
-          /*errors*/
-          ctx2[1]
-        );
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t0);
-        detach(div);
-      }
-    }
-  };
-}
-function create_default_slot4(ctx) {
-  let span;
-  let t0;
-  let code;
-  let t2;
-  let pre;
-  let t4;
-  let textarea;
-  let t5;
-  let mounted;
-  let dispose;
-  let if_block = (
-    /*errors*/
-    ctx[1] && create_if_block4(ctx)
-  );
-  return {
-    c() {
-      span = element("span");
-      t0 = text("This is a document block input. It is not meant to be used as a normal\n        input, instead it is to render some instructions to the user. It is\n        expected to be a function body that returns a string. Within the\n        function body, you can access the form data using the ");
-      code = element("code");
-      code.textContent = "form";
-      t2 = text("\n        variable. For example:\n        ");
-      pre = element("pre");
-      pre.textContent = `${placeholder}`;
-      t4 = space();
-      textarea = element("textarea");
-      t5 = space();
-      if (if_block)
-        if_block.c();
-      attr(pre, "class", "language-js");
-      attr(textarea, "name", "document_block");
-      attr(textarea, "class", "form-control");
-      attr(textarea, "rows", "3");
-      attr(textarea, "placeholder", placeholder);
-      attr(span, "class", "modal-form-hint");
-    },
-    m(target, anchor) {
-      insert(target, span, anchor);
-      append5(span, t0);
-      append5(span, code);
-      append5(span, t2);
-      append5(span, pre);
-      append5(span, t4);
-      append5(span, textarea);
-      set_input_value(
-        textarea,
-        /*body*/
-        ctx[0]
-      );
-      append5(span, t5);
-      if (if_block)
-        if_block.m(span, null);
-      if (!mounted) {
-        dispose = listen(
-          textarea,
-          "input",
-          /*textarea_input_handler*/
-          ctx[4]
-        );
-        mounted = true;
-      }
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*body*/
-      1) {
-        set_input_value(
-          textarea,
-          /*body*/
-          ctx2[0]
-        );
-      }
-      if (
-        /*errors*/
-        ctx2[1]
-      ) {
-        if (if_block) {
-          if_block.p(ctx2, dirty);
-        } else {
-          if_block = create_if_block4(ctx2);
-          if_block.c();
-          if_block.m(span, null);
-        }
-      } else if (if_block) {
-        if_block.d(1);
-        if_block = null;
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(span);
-      }
-      if (if_block)
-        if_block.d();
-      mounted = false;
-      dispose();
-    }
-  };
-}
-function create_fragment10(ctx) {
-  let formrow;
-  let current;
-  formrow = new FormRow_default({
-    props: {
-      label: "Document block",
-      id: (
-        /*id*/
-        ctx[2]
-      ),
-      $$slots: { default: [create_default_slot4] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(formrow.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(formrow, target, anchor);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      const formrow_changes = {};
-      if (dirty & /*id*/
-      4)
-        formrow_changes.id = /*id*/
-        ctx2[2];
-      if (dirty & /*$$scope, errors, body*/
-      35) {
-        formrow_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      formrow.$set(formrow_changes);
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(formrow.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(formrow.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(formrow, detaching);
-    }
-  };
-}
-var placeholder = "return `Hello ${form.name}!`";
-function instance10($$self, $$props, $$invalidate) {
-  let id;
-  let errors;
-  let { body = "" } = $$props;
-  let { index } = $$props;
-  function textarea_input_handler() {
-    body = this.value;
-    $$invalidate(0, body);
-  }
-  $$self.$$set = ($$props2) => {
-    if ("body" in $$props2)
-      $$invalidate(0, body = $$props2.body);
-    if ("index" in $$props2)
-      $$invalidate(3, index = $$props2.index);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*index*/
-    8) {
-      $:
-        $$invalidate(2, id = "document_block_" + index);
-    }
-    if ($$self.$$.dirty & /*body*/
-    1) {
-      $:
-        $$invalidate(1, errors = pipe2(parseFunctionBody(body), E.fold((e) => e.message, () => "")));
-    }
-    if ($$self.$$.dirty & /*errors*/
-    2) {
-      $:
-        console.log(errors);
-    }
-  };
-  return [body, errors, id, index, textarea_input_handler];
-}
-var InputBuilderDocumentBlock = class extends SvelteComponent {
-  constructor(options) {
-    super();
-    init4(this, options, instance10, create_fragment10, safe_not_equal, { body: 0, index: 3 });
-  }
-};
-var InputBuilderDocumentBlock_default = InputBuilderDocumentBlock;
-
 // src/views/FormBuilder.svelte
-function add_css8(target) {
+function add_css10(target) {
   append_styles(target, "svelte-8lqyxl", ".wrapper.svelte-8lqyxl,.body.svelte-8lqyxl{flex:1;display:flex;flex-direction:column}.wrapper.svelte-8lqyxl{max-height:100%;min-height:100%;height:100%;overflow:hidden}.body.svelte-8lqyxl{padding-top:0.5rem;overflow-y:scroll}.header.svelte-8lqyxl{box-shadow:var(--shadow-bottom) var(--divider-color);padding:1rem}@media(min-width: 100rem){.body.svelte-8lqyxl{overflow-y:hidden}.fields.svelte-8lqyxl{flex:1;height:100%}form.svelte-8lqyxl{display:flex;flex-direction:column;height:100%;overflow:hidden}}.template.svelte-8lqyxl{padding:1rem}.fields.svelte-8lqyxl{overflow-y:auto;padding:1rem}.flex.svelte-8lqyxl{display:flex}.column.svelte-8lqyxl{flex-direction:column}.gap1.svelte-8lqyxl{gap:0.5rem}.gap2.svelte-8lqyxl{gap:1rem}fieldset.svelte-8lqyxl{border:none;padding:0}.hint.svelte-8lqyxl{color:var(--color-base-70)}.error.svelte-8lqyxl{color:var(--text-error);font-weight:bold}button.svelte-8lqyxl:disabled{opacity:0.5;cursor:forbidden}@media(min-width: 58rem){.md-row.svelte-8lqyxl{flex-direction:row}}");
 }
-function get_each_context5(ctx, list, i) {
+function get_each_context9(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[45] = list[i];
-  child_ctx[48] = list;
-  child_ctx[49] = i;
+  child_ctx[46] = list[i];
+  child_ctx[49] = list;
+  child_ctx[50] = i;
   const constants_0 = `desc_${/*index*/
-  child_ctx[49]}`;
-  child_ctx[46] = constants_0;
+  child_ctx[50]}`;
+  child_ctx[47] = constants_0;
   const constants_1 = `delete_${/*index*/
-  child_ctx[49]}`;
-  child_ctx[47] = constants_1;
+  child_ctx[50]}`;
+  child_ctx[48] = constants_1;
   return child_ctx;
 }
 function get_if_ctx(ctx) {
   const child_ctx = ctx.slice();
   const constants_0 = `min_${/*index*/
-  child_ctx[49]}`;
-  child_ctx[50] = constants_0;
+  child_ctx[50]}`;
+  child_ctx[51] = constants_0;
   const constants_1 = `max_${/*index*/
-  child_ctx[49]}`;
-  child_ctx[51] = constants_1;
+  child_ctx[50]}`;
+  child_ctx[52] = constants_1;
   return child_ctx;
 }
-function get_each_context_12(ctx, list, i) {
+function get_each_context_14(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[52] = list[i];
+  child_ctx[53] = list[i];
   return child_ctx;
 }
-function get_each_context_2(ctx, list, i) {
+function get_each_context_22(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[55] = list[i];
+  child_ctx[56] = list[i];
   return child_ctx;
 }
-function create_else_block3(ctx) {
+function create_else_block5(ctx) {
   let form;
   let fieldset0;
   let label0;
@@ -12399,27 +18786,28 @@ function create_else_block3(ctx) {
   let fieldset1;
   let h3;
   let t23;
-  let current_block_type_index;
-  let if_block1;
   let current;
   let mounted;
   let dispose;
-  let if_block0 = (
+  let if_block = (
     /*errors*/
-    ctx[7].length > 0 && create_if_block_9(ctx)
+    ctx[8].length > 0 && create_if_block_82(ctx)
   );
-  const if_block_creators = [create_if_block_12, create_else_block_1];
-  const if_blocks = [];
-  function select_block_type_1(ctx2, dirty) {
-    if (
-      /*definition*/
-      ctx2[0].fields.length > 0
-    )
-      return 0;
-    return 1;
+  let each_value = ensure_array_like(
+    /*definition*/
+    ctx[0].fields
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block9(get_each_context9(ctx, each_value, i));
   }
-  current_block_type_index = select_block_type_1(ctx, [-1, -1]);
-  if_block1 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  });
+  let each_1_else = null;
+  if (!each_value.length) {
+    each_1_else = create_else_block_12(ctx);
+  }
   return {
     c() {
       form = element("form");
@@ -12459,14 +18847,19 @@ function create_else_block3(ctx) {
       button3 = element("button");
       button3.textContent = "Cancel";
       t20 = space();
-      if (if_block0)
-        if_block0.c();
+      if (if_block)
+        if_block.c();
       t21 = space();
       fieldset1 = element("fieldset");
       h3 = element("h3");
       h3.textContent = "Fields";
       t23 = space();
-      if_block1.c();
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      if (each_1_else) {
+        each_1_else.c();
+      }
       attr(label0, "for", "name");
       attr(span0, "class", "hint svelte-8lqyxl");
       attr(input0, "type", "text");
@@ -12485,12 +18878,12 @@ function create_else_block3(ctx) {
       attr(button0, "class", "svelte-8lqyxl");
       attr(button1, "type", "button");
       button1.disabled = button1_disabled_value = !/*isValid*/
-      ctx[8];
+      ctx[9];
       attr(button1, "class", "svelte-8lqyxl");
       attr(button2, "class", "mod-cta svelte-8lqyxl");
       attr(button2, "type", "submit");
       button2.disabled = button2_disabled_value = !/*isValid*/
-      ctx[8];
+      ctx[9];
       attr(button3, "type", "button");
       attr(button3, "class", "mod-warning svelte-8lqyxl");
       attr(div, "class", "flex row gap2 svelte-8lqyxl");
@@ -12543,13 +18936,20 @@ function create_else_block3(ctx) {
       append5(div, t18);
       append5(div, button3);
       append5(fieldset0, t20);
-      if (if_block0)
-        if_block0.m(fieldset0, null);
+      if (if_block)
+        if_block.m(fieldset0, null);
       append5(form, t21);
       append5(form, fieldset1);
       append5(fieldset1, h3);
       append5(fieldset1, t23);
-      if_blocks[current_block_type_index].m(fieldset1, null);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(fieldset1, null);
+        }
+      }
+      if (each_1_else) {
+        each_1_else.m(fieldset1, null);
+      }
       current = true;
       if (!mounted) {
         dispose = [
@@ -12557,31 +18957,31 @@ function create_else_block3(ctx) {
             input0,
             "input",
             /*input0_input_handler*/
-            ctx[17]
+            ctx[18]
           ),
           listen(
             input1,
             "input",
             /*input1_input_handler*/
-            ctx[18]
+            ctx[19]
           ),
           listen(
             input2,
             "input",
             /*input2_input_handler*/
-            ctx[19]
+            ctx[20]
           ),
           listen(
             button0,
             "click",
             /*click_handler*/
-            ctx[20]
+            ctx[21]
           ),
           listen(
             button1,
             "click",
             /*handlePreview*/
-            ctx[13]
+            ctx[14]
           ),
           listen(button3, "click", function() {
             if (is_function(
@@ -12592,7 +18992,7 @@ function create_else_block3(ctx) {
           }),
           listen(form, "submit", prevent_default(
             /*handleSubmit*/
-            ctx[11]
+            ctx[12]
           ))
         ];
         mounted = true;
@@ -12628,74 +19028,96 @@ function create_else_block3(ctx) {
         );
       }
       if (!current || dirty[0] & /*isValid*/
-      256 && button1_disabled_value !== (button1_disabled_value = !/*isValid*/
-      ctx[8])) {
+      512 && button1_disabled_value !== (button1_disabled_value = !/*isValid*/
+      ctx[9])) {
         button1.disabled = button1_disabled_value;
       }
       if (!current || dirty[0] & /*isValid*/
-      256 && button2_disabled_value !== (button2_disabled_value = !/*isValid*/
-      ctx[8])) {
+      512 && button2_disabled_value !== (button2_disabled_value = !/*isValid*/
+      ctx[9])) {
         button2.disabled = button2_disabled_value;
       }
       if (
         /*errors*/
-        ctx[7].length > 0
+        ctx[8].length > 0
       ) {
-        if (if_block0) {
-          if_block0.p(ctx, dirty);
+        if (if_block) {
+          if_block.p(ctx, dirty);
         } else {
-          if_block0 = create_if_block_9(ctx);
-          if_block0.c();
-          if_block0.m(fieldset0, null);
+          if_block = create_if_block_82(ctx);
+          if_block.c();
+          if_block.m(fieldset0, null);
         }
-      } else if (if_block0) {
-        if_block0.d(1);
-        if_block0 = null;
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
       }
-      let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type_1(ctx, dirty);
-      if (current_block_type_index === previous_block_index) {
-        if_blocks[current_block_type_index].p(ctx, dirty);
-      } else {
-        group_outros();
-        transition_out(if_blocks[previous_block_index], 1, 1, () => {
-          if_blocks[previous_block_index] = null;
-        });
-        check_outros();
-        if_block1 = if_blocks[current_block_type_index];
-        if (!if_block1) {
-          if_block1 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
-          if_block1.c();
-        } else {
-          if_block1.p(ctx, dirty);
+      if (dirty[0] & /*definition, duplicateField, moveField, availableFieldsForCondition, onChange, app, activeFieldIndex*/
+      3179) {
+        each_value = ensure_array_like(
+          /*definition*/
+          ctx[0].fields
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context9(ctx, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block9(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(fieldset1, null);
+          }
         }
-        transition_in(if_block1, 1);
-        if_block1.m(fieldset1, null);
+        group_outros();
+        for (i = each_value.length; i < each_blocks.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+        if (each_value.length) {
+          if (each_1_else) {
+            each_1_else.d(1);
+            each_1_else = null;
+          }
+        } else if (!each_1_else) {
+          each_1_else = create_else_block_12(ctx);
+          each_1_else.c();
+          each_1_else.m(fieldset1, null);
+        }
       }
     },
     i(local) {
       if (current)
         return;
-      transition_in(if_block1);
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
       current = true;
     },
     o(local) {
-      transition_out(if_block1);
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
       current = false;
     },
     d(detaching) {
       if (detaching) {
         detach(form);
       }
-      if (if_block0)
-        if_block0.d();
-      if_blocks[current_block_type_index].d();
+      if (if_block)
+        if_block.d();
+      destroy_each(each_blocks, detaching);
+      if (each_1_else)
+        each_1_else.d();
       mounted = false;
       run_all(dispose);
     }
   };
 }
-function create_if_block5(ctx) {
+function create_if_block12(ctx) {
   let div;
   let templateeditor;
   let current;
@@ -12707,11 +19129,11 @@ function create_if_block5(ctx) {
       ),
       fieldNames: (
         /*fieldNames*/
-        ctx[6]
+        ctx[7]
       ),
       saveTemplate: (
         /*saveTemplate*/
-        ctx[12]
+        ctx[13]
       ),
       templateString: (
         /*definition*/
@@ -12740,9 +19162,9 @@ function create_if_block5(ctx) {
         templateeditor_changes.formName = /*definition*/
         ctx2[0].name;
       if (dirty[0] & /*fieldNames*/
-      64)
+      128)
         templateeditor_changes.fieldNames = /*fieldNames*/
-        ctx2[6];
+        ctx2[7];
       if (dirty[0] & /*definition*/
       1)
         templateeditor_changes.templateString = /*definition*/
@@ -12770,17 +19192,17 @@ function create_if_block5(ctx) {
     }
   };
 }
-function create_if_block_9(ctx) {
+function create_if_block_82(ctx) {
   let h3;
   let t2;
   let ul;
   let each_value_2 = ensure_array_like(
     /*errors*/
-    ctx[7]
+    ctx[8]
   );
   let each_blocks = [];
   for (let i = 0; i < each_value_2.length; i += 1) {
-    each_blocks[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
+    each_blocks[i] = create_each_block_22(get_each_context_22(ctx, each_value_2, i));
   }
   return {
     c() {
@@ -12806,18 +19228,18 @@ function create_if_block_9(ctx) {
     },
     p(ctx2, dirty) {
       if (dirty[0] & /*activeFieldIndex, errors*/
-      160) {
+      320) {
         each_value_2 = ensure_array_like(
           /*errors*/
-          ctx2[7]
+          ctx2[8]
         );
         let i;
         for (i = 0; i < each_value_2.length; i += 1) {
-          const child_ctx = get_each_context_2(ctx2, each_value_2, i);
+          const child_ctx = get_each_context_22(ctx2, each_value_2, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block_2(child_ctx);
+            each_blocks[i] = create_each_block_22(child_ctx);
             each_blocks[i].c();
             each_blocks[i].m(ul, null);
           }
@@ -12838,11 +19260,11 @@ function create_if_block_9(ctx) {
     }
   };
 }
-function create_if_block_10(ctx) {
+function create_if_block_92(ctx) {
   let t0;
   let t1_value = (
     /*error*/
-    ctx[55].path + ""
+    ctx[56].path + ""
   );
   let t1;
   return {
@@ -12856,8 +19278,8 @@ function create_if_block_10(ctx) {
     },
     p(ctx2, dirty) {
       if (dirty[0] & /*errors*/
-      128 && t1_value !== (t1_value = /*error*/
-      ctx2[55].path + ""))
+      256 && t1_value !== (t1_value = /*error*/
+      ctx2[56].path + ""))
         set_data(t1, t1_value);
     },
     d(detaching) {
@@ -12868,11 +19290,11 @@ function create_if_block_10(ctx) {
     }
   };
 }
-function create_each_block_2(ctx) {
+function create_each_block_22(ctx) {
   let li;
   let t0_value = (
     /*error*/
-    ctx[55].message + ""
+    ctx[56].message + ""
   );
   let t0;
   let t1;
@@ -12883,14 +19305,14 @@ function create_each_block_2(ctx) {
   let dispose;
   let if_block = (
     /*error*/
-    ctx[55].path && create_if_block_10(ctx)
+    ctx[56].path && create_if_block_92(ctx)
   );
   function click_handler_1() {
     return (
       /*click_handler_1*/
-      ctx[21](
+      ctx[22](
         /*error*/
-        ctx[55]
+        ctx[56]
       )
     );
   }
@@ -12925,17 +19347,17 @@ function create_each_block_2(ctx) {
     p(new_ctx, dirty) {
       ctx = new_ctx;
       if (dirty[0] & /*errors*/
-      128 && t0_value !== (t0_value = /*error*/
-      ctx[55].message + ""))
+      256 && t0_value !== (t0_value = /*error*/
+      ctx[56].message + ""))
         set_data(t0, t0_value);
       if (
         /*error*/
-        ctx[55].path
+        ctx[56].path
       ) {
         if (if_block) {
           if_block.p(ctx, dirty);
         } else {
-          if_block = create_if_block_10(ctx);
+          if_block = create_if_block_92(ctx);
           if_block.c();
           if_block.m(li, t2);
         }
@@ -12955,7 +19377,7 @@ function create_each_block_2(ctx) {
     }
   };
 }
-function create_else_block_1(ctx) {
+function create_else_block_12(ctx) {
   let t;
   return {
     c() {
@@ -12964,9 +19386,6 @@ function create_else_block_1(ctx) {
     m(target, anchor) {
       insert(target, t, anchor);
     },
-    p: noop,
-    i: noop,
-    o: noop,
     d(detaching) {
       if (detaching) {
         detach(t);
@@ -12974,218 +19393,35 @@ function create_else_block_1(ctx) {
     }
   };
 }
-function create_if_block_12(ctx) {
-  let each_1_anchor;
-  let current;
-  let each_value = ensure_array_like(
-    /*definition*/
-    ctx[0].fields
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block5(get_each_context5(ctx, each_value, i));
-  }
-  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
-    each_blocks[i] = null;
-  });
-  return {
-    c() {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      each_1_anchor = empty4();
-    },
-    m(target, anchor) {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(target, anchor);
-        }
-      }
-      insert(target, each_1_anchor, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*definition, duplicateField, moveField, onChange, app, activeFieldIndex*/
-      1579) {
-        each_value = ensure_array_like(
-          /*definition*/
-          ctx2[0].fields
-        );
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context5(ctx2, each_value, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-            transition_in(each_blocks[i], 1);
-          } else {
-            each_blocks[i] = create_each_block5(child_ctx);
-            each_blocks[i].c();
-            transition_in(each_blocks[i], 1);
-            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-          }
-        }
-        group_outros();
-        for (i = each_value.length; i < each_blocks.length; i += 1) {
-          out(i);
-        }
-        check_outros();
-      }
-    },
-    i(local) {
-      if (current)
-        return;
-      for (let i = 0; i < each_value.length; i += 1) {
-        transition_in(each_blocks[i]);
-      }
-      current = true;
-    },
-    o(local) {
-      each_blocks = each_blocks.filter(Boolean);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        transition_out(each_blocks[i]);
-      }
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(each_1_anchor);
-      }
-      destroy_each(each_blocks, detaching);
-    }
-  };
-}
-function create_if_block_8(ctx) {
-  let formrow;
-  let current;
-  formrow = new FormRow_default({
-    props: {
-      label: "Make required",
-      id: `required_${/*index*/
-      ctx[49]}`,
-      $$slots: { default: [create_default_slot5] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(formrow.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(formrow, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const formrow_changes = {};
-      if (dirty[0] & /*definition*/
-      1 | dirty[1] & /*$$scope*/
-      134217728) {
-        formrow_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      formrow.$set(formrow_changes);
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(formrow.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(formrow.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(formrow, detaching);
-    }
-  };
-}
-function create_default_slot5(ctx) {
-  let toggle;
-  let updating_checked;
-  let current;
-  function toggle_checked_binding(value) {
-    ctx[24](
-      value,
-      /*field*/
-      ctx[45]
-    );
-  }
-  let toggle_props = { tabindex: (
-    /*index*/
-    ctx[49]
-  ) };
-  if (
-    /*field*/
-    ctx[45].isRequired !== void 0
-  ) {
-    toggle_props.checked = /*field*/
-    ctx[45].isRequired;
-  }
-  toggle = new Toggle_default({ props: toggle_props });
-  binding_callbacks.push(() => bind3(toggle, "checked", toggle_checked_binding));
-  return {
-    c() {
-      create_component(toggle.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(toggle, target, anchor);
-      current = true;
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      const toggle_changes = {};
-      if (!updating_checked && dirty[0] & /*definition*/
-      1) {
-        updating_checked = true;
-        toggle_changes.checked = /*field*/
-        ctx[45].isRequired;
-        add_flush_callback(() => updating_checked = false);
-      }
-      toggle.$set(toggle_changes);
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(toggle.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(toggle.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(toggle, detaching);
-    }
-  };
-}
-function create_each_block_12(ctx) {
-  let option;
+function create_each_block_14(ctx) {
+  let option2;
   let t_value = (
     /*type*/
-    ctx[52][1] + ""
+    ctx[53][1] + ""
   );
   let t;
   let option_value_value;
   return {
     c() {
-      option = element("option");
+      option2 = element("option");
       t = text(t_value);
-      option.__value = option_value_value = /*type*/
-      ctx[52][0];
-      set_input_value(option, option.__value);
+      option2.__value = option_value_value = /*type*/
+      ctx[53][0];
+      set_input_value(option2, option2.__value);
     },
     m(target, anchor) {
-      insert(target, option, anchor);
-      append5(option, t);
+      insert(target, option2, anchor);
+      append5(option2, t);
     },
     p: noop,
     d(detaching) {
       if (detaching) {
-        detach(option);
+        detach(option2);
       }
     }
   };
 }
-function create_if_block_7(ctx) {
+function create_if_block_72(ctx) {
   let inputbuilderdocumentblock;
   let updating_body;
   let current;
@@ -13193,22 +19429,22 @@ function create_if_block_7(ctx) {
     ctx[39](
       value,
       /*field*/
-      ctx[45]
+      ctx[46]
     );
   }
   let inputbuilderdocumentblock_props = { index: (
     /*index*/
-    ctx[49]
+    ctx[50]
   ) };
   if (
     /*field*/
-    ctx[45].input.body !== void 0
+    ctx[46].input.body !== void 0
   ) {
     inputbuilderdocumentblock_props.body = /*field*/
-    ctx[45].input.body;
+    ctx[46].input.body;
   }
   inputbuilderdocumentblock = new InputBuilderDocumentBlock_default({ props: inputbuilderdocumentblock_props });
-  binding_callbacks.push(() => bind3(inputbuilderdocumentblock, "body", inputbuilderdocumentblock_body_binding));
+  binding_callbacks.push(() => bind4(inputbuilderdocumentblock, "body", inputbuilderdocumentblock_body_binding));
   return {
     c() {
       create_component(inputbuilderdocumentblock.$$.fragment);
@@ -13224,7 +19460,7 @@ function create_if_block_7(ctx) {
       1) {
         updating_body = true;
         inputbuilderdocumentblock_changes.body = /*field*/
-        ctx[45].input.body;
+        ctx[46].input.body;
         add_flush_callback(() => updating_body = false);
       }
       inputbuilderdocumentblock.$set(inputbuilderdocumentblock_changes);
@@ -13244,7 +19480,7 @@ function create_if_block_7(ctx) {
     }
   };
 }
-function create_if_block_6(ctx) {
+function create_if_block_63(ctx) {
   let inputbuilderdataview;
   let updating_value;
   let current;
@@ -13252,13 +19488,13 @@ function create_if_block_6(ctx) {
     ctx[38](
       value,
       /*field*/
-      ctx[45]
+      ctx[46]
     );
   }
   let inputbuilderdataview_props = {
     index: (
       /*index*/
-      ctx[49]
+      ctx[50]
     ),
     app: (
       /*app*/
@@ -13267,13 +19503,13 @@ function create_if_block_6(ctx) {
   };
   if (
     /*field*/
-    ctx[45].input.query !== void 0
+    ctx[46].input.query !== void 0
   ) {
     inputbuilderdataview_props.value = /*field*/
-    ctx[45].input.query;
+    ctx[46].input.query;
   }
   inputbuilderdataview = new inputBuilderDataview_default({ props: inputbuilderdataview_props });
-  binding_callbacks.push(() => bind3(inputbuilderdataview, "value", inputbuilderdataview_value_binding));
+  binding_callbacks.push(() => bind4(inputbuilderdataview, "value", inputbuilderdataview_value_binding));
   return {
     c() {
       create_component(inputbuilderdataview.$$.fragment);
@@ -13293,7 +19529,7 @@ function create_if_block_6(ctx) {
       1) {
         updating_value = true;
         inputbuilderdataview_changes.value = /*field*/
-        ctx[45].input.query;
+        ctx[46].input.query;
         add_flush_callback(() => updating_value = false);
       }
       inputbuilderdataview.$set(inputbuilderdataview_changes);
@@ -13313,7 +19549,7 @@ function create_if_block_6(ctx) {
     }
   };
 }
-function create_if_block_52(ctx) {
+function create_if_block_55(ctx) {
   let inputfolder;
   let updating_folder;
   let current;
@@ -13321,13 +19557,13 @@ function create_if_block_52(ctx) {
     ctx[37](
       value,
       /*field*/
-      ctx[45]
+      ctx[46]
     );
   }
   let inputfolder_props = {
     index: (
       /*index*/
-      ctx[49]
+      ctx[50]
     ),
     notifyChange: (
       /*onChange*/
@@ -13336,13 +19572,13 @@ function create_if_block_52(ctx) {
   };
   if (
     /*field*/
-    ctx[45].input.folder !== void 0
+    ctx[46].input.folder !== void 0
   ) {
     inputfolder_props.folder = /*field*/
-    ctx[45].input.folder;
+    ctx[46].input.folder;
   }
-  inputfolder = new InputFolder_default({ props: inputfolder_props });
-  binding_callbacks.push(() => bind3(inputfolder, "folder", inputfolder_folder_binding));
+  inputfolder = new InputBuilderFolder_default({ props: inputfolder_props });
+  binding_callbacks.push(() => bind4(inputfolder, "folder", inputfolder_folder_binding));
   return {
     c() {
       create_component(inputfolder.$$.fragment);
@@ -13362,7 +19598,7 @@ function create_if_block_52(ctx) {
       1) {
         updating_folder = true;
         inputfolder_changes.folder = /*field*/
-        ctx[45].input.folder;
+        ctx[46].input.folder;
         add_flush_callback(() => updating_folder = false);
       }
       inputfolder.$set(inputfolder_changes);
@@ -13382,7 +19618,7 @@ function create_if_block_52(ctx) {
     }
   };
 }
-function create_if_block_42(ctx) {
+function create_if_block_45(ctx) {
   let div0;
   let label0;
   let label0_for_value;
@@ -13402,18 +19638,18 @@ function create_if_block_42(ctx) {
     ctx[35].call(
       input0,
       /*each_value*/
-      ctx[48],
+      ctx[49],
       /*index*/
-      ctx[49]
+      ctx[50]
     );
   }
   function input1_input_handler_2() {
     ctx[36].call(
       input1,
       /*each_value*/
-      ctx[48],
+      ctx[49],
       /*index*/
-      ctx[49]
+      ctx[50]
     );
   }
   return {
@@ -13430,18 +19666,18 @@ function create_if_block_42(ctx) {
       t4 = space();
       input1 = element("input");
       attr(label0, "for", label0_for_value = /*min_id*/
-      ctx[50]);
+      ctx[51]);
       attr(input0, "type", "number");
       attr(input0, "placeholder", "0");
       attr(input0, "id", input0_id_value = /*min_id*/
-      ctx[50]);
+      ctx[51]);
       attr(div0, "class", "flex column gap1 svelte-8lqyxl");
       attr(label1, "for", label1_for_value = /*max_id*/
-      ctx[51]);
+      ctx[52]);
       attr(input1, "type", "number");
       attr(input1, "placeholder", "10");
       attr(input1, "id", input1_id_value = /*max_id*/
-      ctx[51]);
+      ctx[52]);
       attr(div1, "class", "flex column gap1 svelte-8lqyxl");
     },
     m(target, anchor) {
@@ -13452,7 +19688,7 @@ function create_if_block_42(ctx) {
       set_input_value(
         input0,
         /*field*/
-        ctx[45].input.min
+        ctx[46].input.min
       );
       insert(target, t2, anchor);
       insert(target, div1, anchor);
@@ -13462,7 +19698,7 @@ function create_if_block_42(ctx) {
       set_input_value(
         input1,
         /*field*/
-        ctx[45].input.max
+        ctx[46].input.max
       );
       if (!mounted) {
         dispose = [
@@ -13476,20 +19712,20 @@ function create_if_block_42(ctx) {
       ctx = new_ctx;
       if (dirty[0] & /*definition*/
       1 && to_number(input0.value) !== /*field*/
-      ctx[45].input.min) {
+      ctx[46].input.min) {
         set_input_value(
           input0,
           /*field*/
-          ctx[45].input.min
+          ctx[46].input.min
         );
       }
       if (dirty[0] & /*definition*/
       1 && to_number(input1.value) !== /*field*/
-      ctx[45].input.max) {
+      ctx[46].input.max) {
         set_input_value(
           input1,
           /*field*/
-          ctx[45].input.max
+          ctx[46].input.max
         );
       }
     },
@@ -13506,7 +19742,7 @@ function create_if_block_42(ctx) {
     }
   };
 }
-function create_if_block_32(ctx) {
+function create_if_block_35(ctx) {
   let inputbuilderselect;
   let updating_source;
   let updating_options;
@@ -13518,41 +19754,41 @@ function create_if_block_32(ctx) {
     ctx[30](
       value,
       /*field*/
-      ctx[45]
+      ctx[46]
     );
   }
   function inputbuilderselect_options_binding_1(value) {
     ctx[31](
       value,
       /*field*/
-      ctx[45]
+      ctx[46]
     );
   }
   function inputbuilderselect_folder_binding_1(value) {
     ctx[32](
       value,
       /*field*/
-      ctx[45]
+      ctx[46]
     );
   }
   function inputbuilderselect_query_binding(value) {
     ctx[33](
       value,
       /*field*/
-      ctx[45]
+      ctx[46]
     );
   }
   function inputbuilderselect_allowUnknownValues_binding(value) {
     ctx[34](
       value,
       /*field*/
-      ctx[45]
+      ctx[46]
     );
   }
   let inputbuilderselect_props = {
     index: (
       /*index*/
-      ctx[49]
+      ctx[50]
     ),
     notifyChange: (
       /*onChange*/
@@ -13566,45 +19802,45 @@ function create_if_block_32(ctx) {
   };
   if (
     /*field*/
-    ctx[45].input.source !== void 0
+    ctx[46].input.source !== void 0
   ) {
     inputbuilderselect_props.source = /*field*/
-    ctx[45].input.source;
+    ctx[46].input.source;
   }
   if (
     /*field*/
-    ctx[45].input.multi_select_options !== void 0
+    ctx[46].input.multi_select_options !== void 0
   ) {
     inputbuilderselect_props.options = /*field*/
-    ctx[45].input.multi_select_options;
+    ctx[46].input.multi_select_options;
   }
   if (
     /*field*/
-    ctx[45].input.folder !== void 0
+    ctx[46].input.folder !== void 0
   ) {
     inputbuilderselect_props.folder = /*field*/
-    ctx[45].input.folder;
+    ctx[46].input.folder;
   }
   if (
     /*field*/
-    ctx[45].input.query !== void 0
+    ctx[46].input.query !== void 0
   ) {
     inputbuilderselect_props.query = /*field*/
-    ctx[45].input.query;
+    ctx[46].input.query;
   }
   if (
     /*field*/
-    ctx[45].input.allowUnknownValues !== void 0
+    ctx[46].input.allowUnknownValues !== void 0
   ) {
     inputbuilderselect_props.allowUnknownValues = /*field*/
-    ctx[45].input.allowUnknownValues;
+    ctx[46].input.allowUnknownValues;
   }
   inputbuilderselect = new InputBuilderSelect_default({ props: inputbuilderselect_props });
-  binding_callbacks.push(() => bind3(inputbuilderselect, "source", inputbuilderselect_source_binding_1));
-  binding_callbacks.push(() => bind3(inputbuilderselect, "options", inputbuilderselect_options_binding_1));
-  binding_callbacks.push(() => bind3(inputbuilderselect, "folder", inputbuilderselect_folder_binding_1));
-  binding_callbacks.push(() => bind3(inputbuilderselect, "query", inputbuilderselect_query_binding));
-  binding_callbacks.push(() => bind3(inputbuilderselect, "allowUnknownValues", inputbuilderselect_allowUnknownValues_binding));
+  binding_callbacks.push(() => bind4(inputbuilderselect, "source", inputbuilderselect_source_binding_1));
+  binding_callbacks.push(() => bind4(inputbuilderselect, "options", inputbuilderselect_options_binding_1));
+  binding_callbacks.push(() => bind4(inputbuilderselect, "folder", inputbuilderselect_folder_binding_1));
+  binding_callbacks.push(() => bind4(inputbuilderselect, "query", inputbuilderselect_query_binding));
+  binding_callbacks.push(() => bind4(inputbuilderselect, "allowUnknownValues", inputbuilderselect_allowUnknownValues_binding));
   return {
     c() {
       create_component(inputbuilderselect.$$.fragment);
@@ -13628,35 +19864,35 @@ function create_if_block_32(ctx) {
       1) {
         updating_source = true;
         inputbuilderselect_changes.source = /*field*/
-        ctx[45].input.source;
+        ctx[46].input.source;
         add_flush_callback(() => updating_source = false);
       }
       if (!updating_options && dirty[0] & /*definition*/
       1) {
         updating_options = true;
         inputbuilderselect_changes.options = /*field*/
-        ctx[45].input.multi_select_options;
+        ctx[46].input.multi_select_options;
         add_flush_callback(() => updating_options = false);
       }
       if (!updating_folder && dirty[0] & /*definition*/
       1) {
         updating_folder = true;
         inputbuilderselect_changes.folder = /*field*/
-        ctx[45].input.folder;
+        ctx[46].input.folder;
         add_flush_callback(() => updating_folder = false);
       }
       if (!updating_query && dirty[0] & /*definition*/
       1) {
         updating_query = true;
         inputbuilderselect_changes.query = /*field*/
-        ctx[45].input.query;
+        ctx[46].input.query;
         add_flush_callback(() => updating_query = false);
       }
       if (!updating_allowUnknownValues && dirty[0] & /*definition*/
       1) {
         updating_allowUnknownValues = true;
         inputbuilderselect_changes.allowUnknownValues = /*field*/
-        ctx[45].input.allowUnknownValues;
+        ctx[46].input.allowUnknownValues;
         add_flush_callback(() => updating_allowUnknownValues = false);
       }
       inputbuilderselect.$set(inputbuilderselect_changes);
@@ -13676,7 +19912,7 @@ function create_if_block_32(ctx) {
     }
   };
 }
-function create_if_block_22(ctx) {
+function create_if_block_25(ctx) {
   let inputbuilderselect;
   let updating_source;
   let updating_options;
@@ -13686,27 +19922,27 @@ function create_if_block_22(ctx) {
     ctx[27](
       value,
       /*field*/
-      ctx[45]
+      ctx[46]
     );
   }
   function inputbuilderselect_options_binding(value) {
     ctx[28](
       value,
       /*field*/
-      ctx[45]
+      ctx[46]
     );
   }
   function inputbuilderselect_folder_binding(value) {
     ctx[29](
       value,
       /*field*/
-      ctx[45]
+      ctx[46]
     );
   }
   let inputbuilderselect_props = {
     index: (
       /*index*/
-      ctx[49]
+      ctx[50]
     ),
     notifyChange: (
       /*onChange*/
@@ -13721,29 +19957,29 @@ function create_if_block_22(ctx) {
   };
   if (
     /*field*/
-    ctx[45].input.source !== void 0
+    ctx[46].input.source !== void 0
   ) {
     inputbuilderselect_props.source = /*field*/
-    ctx[45].input.source;
+    ctx[46].input.source;
   }
   if (
     /*field*/
-    ctx[45].input.options !== void 0
+    ctx[46].input.options !== void 0
   ) {
     inputbuilderselect_props.options = /*field*/
-    ctx[45].input.options;
+    ctx[46].input.options;
   }
   if (
     /*field*/
-    ctx[45].input.folder !== void 0
+    ctx[46].input.folder !== void 0
   ) {
     inputbuilderselect_props.folder = /*field*/
-    ctx[45].input.folder;
+    ctx[46].input.folder;
   }
   inputbuilderselect = new InputBuilderSelect_default({ props: inputbuilderselect_props });
-  binding_callbacks.push(() => bind3(inputbuilderselect, "source", inputbuilderselect_source_binding));
-  binding_callbacks.push(() => bind3(inputbuilderselect, "options", inputbuilderselect_options_binding));
-  binding_callbacks.push(() => bind3(inputbuilderselect, "folder", inputbuilderselect_folder_binding));
+  binding_callbacks.push(() => bind4(inputbuilderselect, "source", inputbuilderselect_source_binding));
+  binding_callbacks.push(() => bind4(inputbuilderselect, "options", inputbuilderselect_options_binding));
+  binding_callbacks.push(() => bind4(inputbuilderselect, "folder", inputbuilderselect_folder_binding));
   return {
     c() {
       create_component(inputbuilderselect.$$.fragment);
@@ -13767,21 +20003,21 @@ function create_if_block_22(ctx) {
       1) {
         updating_source = true;
         inputbuilderselect_changes.source = /*field*/
-        ctx[45].input.source;
+        ctx[46].input.source;
         add_flush_callback(() => updating_source = false);
       }
       if (!updating_options && dirty[0] & /*definition*/
       1) {
         updating_options = true;
         inputbuilderselect_changes.options = /*field*/
-        ctx[45].input.options;
+        ctx[46].input.options;
         add_flush_callback(() => updating_options = false);
       }
       if (!updating_folder && dirty[0] & /*definition*/
       1) {
         updating_folder = true;
         inputbuilderselect_changes.folder = /*field*/
-        ctx[45].input.folder;
+        ctx[46].input.folder;
         add_flush_callback(() => updating_folder = false);
       }
       inputbuilderselect.$set(inputbuilderselect_changes);
@@ -13801,7 +20037,110 @@ function create_if_block_22(ctx) {
     }
   };
 }
-function create_each_block5(ctx) {
+function create_if_block_16(ctx) {
+  let formrow;
+  let current;
+  formrow = new FormRow_default({
+    props: {
+      label: "Required",
+      id: `required_${/*index*/
+      ctx[50]}`,
+      $$slots: { default: [create_default_slot12] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(formrow.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(formrow, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const formrow_changes = {};
+      if (dirty[0] & /*definition*/
+      1 | dirty[1] & /*$$scope*/
+      268435456) {
+        formrow_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      formrow.$set(formrow_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(formrow.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(formrow.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(formrow, detaching);
+    }
+  };
+}
+function create_default_slot12(ctx) {
+  let toggle;
+  let updating_checked;
+  let current;
+  function toggle_checked_binding(value) {
+    ctx[40](
+      value,
+      /*field*/
+      ctx[46]
+    );
+  }
+  let toggle_props = { tabindex: (
+    /*index*/
+    ctx[50]
+  ) };
+  if (
+    /*field*/
+    ctx[46].isRequired !== void 0
+  ) {
+    toggle_props.checked = /*field*/
+    ctx[46].isRequired;
+  }
+  toggle = new Toggle_default({ props: toggle_props });
+  binding_callbacks.push(() => bind4(toggle, "checked", toggle_checked_binding));
+  return {
+    c() {
+      create_component(toggle.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(toggle, target, anchor);
+      current = true;
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      const toggle_changes = {};
+      if (!updating_checked && dirty[0] & /*definition*/
+      1) {
+        updating_checked = true;
+        toggle_changes.checked = /*field*/
+        ctx[46].isRequired;
+        add_flush_callback(() => updating_checked = false);
+      }
+      toggle.$set(toggle_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(toggle.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(toggle.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(toggle, detaching);
+    }
+  };
+}
+function create_each_block9(ctx) {
   let div3;
   let div0;
   let label0;
@@ -13815,136 +20154,138 @@ function create_each_block5(ctx) {
   let label1_for_value;
   let t4;
   let input1;
+  let input1_placeholder_value;
   let input1_id_value;
   let t5;
-  let show_if = ["text", "email", "tel", "number", "note", "tag", "dataview", "multiselect"].includes(
-    /*field*/
-    ctx[45].input.type
-  );
-  let t6;
   let div2;
   let label2;
   let label2_for_value;
   let scrollWhenActive_action;
-  let t9;
+  let t8;
   let div6;
   let div4;
   let label3;
   let label3_for_value;
-  let t11;
+  let t10;
   let input2;
   let input2_id_value;
-  let t12;
+  let t11;
   let div5;
   let label4;
   let label4_for_value;
-  let t14;
+  let t13;
   let select;
   let select_id_value;
-  let t15;
+  let t14;
   let div7;
   let current_block_type_index;
-  let if_block1;
+  let if_block0;
+  let t15;
+  let show_if = ["text", "email", "tel", "number", "note", "tag", "dataview", "multiselect"].includes(
+    /*field*/
+    ctx[46].input.type
+  );
   let t16;
+  let fieldmeta;
+  let t17;
   let div8;
   let button0;
   let button0_disabled_value;
   let setIcon_action;
-  let t17;
+  let t18;
   let button1;
   let button1_disabled_value;
   let setIcon_action_1;
-  let t18;
+  let t19;
   let button2;
-  let t20;
+  let t21;
   let button3;
   let button3_id_value;
   let setIcon_action_2;
-  let t21;
+  let t22;
   let hr;
   let current;
   let mounted;
   let dispose;
   function input0_input_handler_1() {
-    ctx[22].call(
+    ctx[23].call(
       input0,
       /*each_value*/
-      ctx[48],
+      ctx[49],
       /*index*/
-      ctx[49]
+      ctx[50]
     );
   }
   function input1_input_handler_1() {
-    ctx[23].call(
+    ctx[24].call(
       input1,
       /*each_value*/
-      ctx[48],
+      ctx[49],
       /*index*/
-      ctx[49]
+      ctx[50]
     );
   }
-  let if_block0 = show_if && create_if_block_8(ctx);
   function input2_input_handler_1() {
     ctx[25].call(
       input2,
       /*each_value*/
-      ctx[48],
+      ctx[49],
       /*index*/
-      ctx[49]
+      ctx[50]
     );
   }
   let each_value_1 = ensure_array_like(Object.entries(InputTypeReadable));
   let each_blocks = [];
   for (let i = 0; i < each_value_1.length; i += 1) {
-    each_blocks[i] = create_each_block_12(get_each_context_12(ctx, each_value_1, i));
+    each_blocks[i] = create_each_block_14(get_each_context_14(ctx, each_value_1, i));
   }
   function select_change_handler() {
     ctx[26].call(
       select,
       /*each_value*/
-      ctx[48],
+      ctx[49],
       /*index*/
-      ctx[49]
+      ctx[50]
     );
   }
   const if_block_creators = [
-    create_if_block_22,
-    create_if_block_32,
-    create_if_block_42,
-    create_if_block_52,
-    create_if_block_6,
-    create_if_block_7
+    create_if_block_25,
+    create_if_block_35,
+    create_if_block_45,
+    create_if_block_55,
+    create_if_block_63,
+    create_if_block_72
   ];
   const if_blocks = [];
-  function select_block_type_2(ctx2, dirty) {
+  function select_block_type_1(ctx2, dirty) {
     if (
       /*field*/
-      ctx2[45].input.type === "select"
+      ctx2[46].input.type === "select"
     )
       return 0;
     if (
       /*field*/
-      ctx2[45].input.type === "multiselect"
+      ctx2[46].input.type === "multiselect"
     )
       return 1;
     if (
       /*field*/
-      ctx2[45].input.type === "slider"
+      ctx2[46].input.type === "slider"
     )
       return 2;
     if (
       /*field*/
-      ctx2[45].input.type === "note"
+      ctx2[46].input.type === "note"
     )
       return 3;
     if (
       /*field*/
-      ctx2[45].input.type === "dataview"
+      ctx2[46].input.type === "dataview"
     )
       return 4;
     if (
       /*field*/
-      ctx2[45].input.type === "document_block"
+      ctx2[46].input.type === "document_block"
     )
       return 5;
     return -1;
@@ -13954,42 +20295,59 @@ function create_each_block5(ctx) {
       return get_if_ctx(ctx2);
     return ctx2;
   }
-  if (~(current_block_type_index = select_block_type_2(ctx, [-1, -1]))) {
-    if_block1 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](select_block_ctx(ctx, current_block_type_index));
+  if (~(current_block_type_index = select_block_type_1(ctx, [-1, -1]))) {
+    if_block0 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](select_block_ctx(ctx, current_block_type_index));
   }
+  let if_block1 = show_if && create_if_block_16(ctx);
+  fieldmeta = new FieldMeta_default({
+    props: {
+      field: (
+        /*field*/
+        ctx[46]
+      ),
+      availableFieldsForCondition: (
+        /*availableFieldsForCondition*/
+        ctx[5]
+      ),
+      index: (
+        /*index*/
+        ctx[50]
+      )
+    }
+  });
   function click_handler_2() {
     return (
       /*click_handler_2*/
-      ctx[40](
+      ctx[41](
         /*index*/
-        ctx[49]
+        ctx[50]
       )
     );
   }
   function click_handler_3() {
     return (
       /*click_handler_3*/
-      ctx[41](
+      ctx[42](
         /*index*/
-        ctx[49]
+        ctx[50]
       )
     );
   }
   function click_handler_4() {
     return (
       /*click_handler_4*/
-      ctx[42](
+      ctx[43](
         /*index*/
-        ctx[49]
+        ctx[50]
       )
     );
   }
   function click_handler_5() {
     return (
       /*click_handler_5*/
-      ctx[43](
+      ctx[44](
         /*index*/
-        ctx[49]
+        ctx[50]
       )
     );
   }
@@ -14008,80 +20366,83 @@ function create_each_block5(ctx) {
       t4 = space();
       input1 = element("input");
       t5 = space();
-      if (if_block0)
-        if_block0.c();
-      t6 = space();
       div2 = element("div");
       label2 = element("label");
       label2.textContent = `delete ${/*index*/
-      ctx[49]}`;
-      t9 = space();
+      ctx[50]}`;
+      t8 = space();
       div6 = element("div");
       div4 = element("div");
       label3 = element("label");
       label3.textContent = "Description";
-      t11 = space();
+      t10 = space();
       input2 = element("input");
-      t12 = space();
+      t11 = space();
       div5 = element("div");
       label4 = element("label");
       label4.textContent = "Type";
-      t14 = space();
+      t13 = space();
       select = element("select");
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      t15 = space();
+      t14 = space();
       div7 = element("div");
+      if (if_block0)
+        if_block0.c();
+      t15 = space();
       if (if_block1)
         if_block1.c();
       t16 = space();
+      create_component(fieldmeta.$$.fragment);
+      t17 = space();
       div8 = element("div");
       button0 = element("button");
-      t17 = space();
-      button1 = element("button");
       t18 = space();
+      button1 = element("button");
+      t19 = space();
       button2 = element("button");
       button2.textContent = "Duplicate";
-      t20 = space();
-      button3 = element("button");
       t21 = space();
+      button3 = element("button");
+      t22 = space();
       hr = element("hr");
       attr(label0, "for", label0_for_value = `name_${/*index*/
-      ctx[49]}`);
+      ctx[50]}`);
       attr(input0, "type", "text");
       attr(input0, "placeholder", "Name");
       attr(input0, "id", input0_id_value = `name_${/*index*/
-      ctx[49]}`);
+      ctx[50]}`);
       attr(div0, "class", "flex column gap1 svelte-8lqyxl");
       attr(label1, "for", label1_for_value = `label_${/*index*/
-      ctx[49]}`);
+      ctx[50]}`);
       attr(input1, "type", "text");
-      attr(input1, "placeholder", "Label");
+      attr(input1, "placeholder", input1_placeholder_value = /*field*/
+      ctx[46].name);
       attr(input1, "id", input1_id_value = `label_${/*index*/
-      ctx[49]}`);
+      ctx[50]}`);
       attr(div1, "class", "flex column gap1 svelte-8lqyxl");
       attr(label2, "for", label2_for_value = /*delete_id*/
-      ctx[47]);
+      ctx[48]);
       set_style(label2, "visibility", "hidden");
       set_style(label2, "overflow", "hidden");
       set_style(label2, "white-space", "nowrap");
       attr(div2, "class", "flex column gap1 svelte-8lqyxl");
       attr(div3, "class", "flex column md-row gap2 svelte-8lqyxl");
       attr(label3, "for", label3_for_value = /*desc_id*/
-      ctx[46]);
+      ctx[47]);
       attr(input2, "type", "text");
       attr(input2, "placeholder", "Description");
       attr(input2, "id", input2_id_value = /*desc_id*/
-      ctx[46]);
+      ctx[47]);
       attr(div4, "class", "flex column gap1 svelte-8lqyxl");
       attr(label4, "for", label4_for_value = `type_${/*index*/
-      ctx[49]}`);
+      ctx[50]}`);
       attr(select, "id", select_id_value = `type_${/*index*/
-      ctx[49]}`);
+      ctx[50]}`);
       if (
         /*field*/
-        ctx[45].input.type === void 0
+        ctx[46].input.type === void 0
       )
         add_render_callback(select_change_handler);
       attr(div5, "class", "flex column gap1 svelte-8lqyxl");
@@ -14089,18 +20450,18 @@ function create_each_block5(ctx) {
       attr(div7, "class", "flex gap1 svelte-8lqyxl");
       attr(button0, "type", "button");
       button0.disabled = button0_disabled_value = /*index*/
-      ctx[49] === 0;
+      ctx[50] === 0;
       attr(button0, "class", "svelte-8lqyxl");
       attr(button1, "type", "button");
       button1.disabled = button1_disabled_value = /*index*/
-      ctx[49] === /*definition*/
+      ctx[50] === /*definition*/
       ctx[0].fields.length - 1;
       attr(button1, "class", "svelte-8lqyxl");
       attr(button2, "type", "button");
       attr(button2, "class", "svelte-8lqyxl");
       attr(button3, "type", "button");
       attr(button3, "id", button3_id_value = /*delete_id*/
-      ctx[47]);
+      ctx[48]);
       attr(button3, "class", "svelte-8lqyxl");
       attr(div8, "class", "flex gap1 svelte-8lqyxl");
     },
@@ -14113,7 +20474,7 @@ function create_each_block5(ctx) {
       set_input_value(
         input0,
         /*field*/
-        ctx[45].name
+        ctx[46].name
       );
       append5(div3, t2);
       append5(div3, div1);
@@ -14123,29 +20484,26 @@ function create_each_block5(ctx) {
       set_input_value(
         input1,
         /*field*/
-        ctx[45].label
+        ctx[46].label
       );
       append5(div3, t5);
-      if (if_block0)
-        if_block0.m(div3, null);
-      append5(div3, t6);
       append5(div3, div2);
       append5(div2, label2);
-      insert(target, t9, anchor);
+      insert(target, t8, anchor);
       insert(target, div6, anchor);
       append5(div6, div4);
       append5(div4, label3);
-      append5(div4, t11);
+      append5(div4, t10);
       append5(div4, input2);
       set_input_value(
         input2,
         /*field*/
-        ctx[45].description
+        ctx[46].description
       );
-      append5(div6, t12);
+      append5(div6, t11);
       append5(div6, div5);
       append5(div5, label4);
-      append5(div5, t14);
+      append5(div5, t13);
       append5(div5, select);
       for (let i = 0; i < each_blocks.length; i += 1) {
         if (each_blocks[i]) {
@@ -14155,24 +20513,29 @@ function create_each_block5(ctx) {
       select_option(
         select,
         /*field*/
-        ctx[45].input.type,
+        ctx[46].input.type,
         true
       );
-      insert(target, t15, anchor);
+      insert(target, t14, anchor);
       insert(target, div7, anchor);
       if (~current_block_type_index) {
         if_blocks[current_block_type_index].m(div7, null);
       }
+      insert(target, t15, anchor);
+      if (if_block1)
+        if_block1.m(target, anchor);
       insert(target, t16, anchor);
+      mount_component(fieldmeta, target, anchor);
+      insert(target, t17, anchor);
       insert(target, div8, anchor);
       append5(div8, button0);
-      append5(div8, t17);
-      append5(div8, button1);
       append5(div8, t18);
+      append5(div8, button1);
+      append5(div8, t19);
       append5(div8, button2);
-      append5(div8, t20);
+      append5(div8, t21);
       append5(div8, button3);
-      insert(target, t21, anchor);
+      insert(target, t22, anchor);
       insert(target, hr, anchor);
       current = true;
       if (!mounted) {
@@ -14183,17 +20546,17 @@ function create_each_block5(ctx) {
             null,
             div3,
             /*index*/
-            ctx[49] === /*activeFieldIndex*/
-            ctx[5]
+            ctx[50] === /*activeFieldIndex*/
+            ctx[6]
           )),
           listen(input2, "input", input2_input_handler_1),
           listen(select, "change", select_change_handler),
-          action_destroyer(setIcon_action = import_obsidian14.setIcon.call(null, button0, "arrow-up")),
+          action_destroyer(setIcon_action = import_obsidian17.setIcon.call(null, button0, "arrow-up")),
           listen(button0, "click", click_handler_2),
-          action_destroyer(setIcon_action_1 = import_obsidian14.setIcon.call(null, button1, "arrow-down")),
+          action_destroyer(setIcon_action_1 = import_obsidian17.setIcon.call(null, button1, "arrow-down")),
           listen(button1, "click", click_handler_3),
           listen(button2, "click", click_handler_4),
-          action_destroyer(setIcon_action_2 = import_obsidian14.setIcon.call(null, button3, "trash")),
+          action_destroyer(setIcon_action_2 = import_obsidian17.setIcon.call(null, button3, "trash")),
           listen(button3, "click", click_handler_5)
         ];
         mounted = true;
@@ -14203,63 +20566,42 @@ function create_each_block5(ctx) {
       ctx = new_ctx;
       if (dirty[0] & /*definition*/
       1 && input0.value !== /*field*/
-      ctx[45].name) {
+      ctx[46].name) {
         set_input_value(
           input0,
           /*field*/
-          ctx[45].name
+          ctx[46].name
         );
+      }
+      if (!current || dirty[0] & /*definition*/
+      1 && input1_placeholder_value !== (input1_placeholder_value = /*field*/
+      ctx[46].name)) {
+        attr(input1, "placeholder", input1_placeholder_value);
       }
       if (dirty[0] & /*definition*/
       1 && input1.value !== /*field*/
-      ctx[45].label) {
+      ctx[46].label) {
         set_input_value(
           input1,
           /*field*/
-          ctx[45].label
+          ctx[46].label
         );
-      }
-      if (dirty[0] & /*definition*/
-      1)
-        show_if = ["text", "email", "tel", "number", "note", "tag", "dataview", "multiselect"].includes(
-          /*field*/
-          ctx[45].input.type
-        );
-      if (show_if) {
-        if (if_block0) {
-          if_block0.p(ctx, dirty);
-          if (dirty[0] & /*definition*/
-          1) {
-            transition_in(if_block0, 1);
-          }
-        } else {
-          if_block0 = create_if_block_8(ctx);
-          if_block0.c();
-          transition_in(if_block0, 1);
-          if_block0.m(div3, t6);
-        }
-      } else if (if_block0) {
-        group_outros();
-        transition_out(if_block0, 1, 1, () => {
-          if_block0 = null;
-        });
-        check_outros();
       }
       if (scrollWhenActive_action && is_function(scrollWhenActive_action.update) && dirty[0] & /*activeFieldIndex*/
-      32)
+      64)
         scrollWhenActive_action.update.call(
           null,
           /*index*/
-          ctx[49] === /*activeFieldIndex*/
-          ctx[5]
+          ctx[50] === /*activeFieldIndex*/
+          ctx[6]
         );
       if (dirty[0] & /*definition*/
       1 && input2.value !== /*field*/
-      ctx[45].description) {
+      ctx[46].description) {
         set_input_value(
           input2,
           /*field*/
-          ctx[45].description
+          ctx[46].description
         );
       }
       if (dirty & /*Object*/
@@ -14267,11 +20609,11 @@ function create_each_block5(ctx) {
         each_value_1 = ensure_array_like(Object.entries(InputTypeReadable));
         let i;
         for (i = 0; i < each_value_1.length; i += 1) {
-          const child_ctx = get_each_context_12(ctx, each_value_1, i);
+          const child_ctx = get_each_context_14(ctx, each_value_1, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block_12(child_ctx);
+            each_blocks[i] = create_each_block_14(child_ctx);
             each_blocks[i].c();
             each_blocks[i].m(select, null);
           }
@@ -14286,17 +20628,17 @@ function create_each_block5(ctx) {
         select_option(
           select,
           /*field*/
-          ctx[45].input.type
+          ctx[46].input.type
         );
       }
       let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type_2(ctx, dirty);
+      current_block_type_index = select_block_type_1(ctx, dirty);
       if (current_block_type_index === previous_block_index) {
         if (~current_block_type_index) {
           if_blocks[current_block_type_index].p(select_block_ctx(ctx, current_block_type_index), dirty);
         }
       } else {
-        if (if_block1) {
+        if (if_block0) {
           group_outros();
           transition_out(if_blocks[previous_block_index], 1, 1, () => {
             if_blocks[previous_block_index] = null;
@@ -14304,22 +20646,58 @@ function create_each_block5(ctx) {
           check_outros();
         }
         if (~current_block_type_index) {
-          if_block1 = if_blocks[current_block_type_index];
-          if (!if_block1) {
-            if_block1 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](select_block_ctx(ctx, current_block_type_index));
-            if_block1.c();
+          if_block0 = if_blocks[current_block_type_index];
+          if (!if_block0) {
+            if_block0 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](select_block_ctx(ctx, current_block_type_index));
+            if_block0.c();
           } else {
-            if_block1.p(select_block_ctx(ctx, current_block_type_index), dirty);
+            if_block0.p(select_block_ctx(ctx, current_block_type_index), dirty);
           }
-          transition_in(if_block1, 1);
-          if_block1.m(div7, null);
+          transition_in(if_block0, 1);
+          if_block0.m(div7, null);
         } else {
-          if_block1 = null;
+          if_block0 = null;
         }
       }
+      if (dirty[0] & /*definition*/
+      1)
+        show_if = ["text", "email", "tel", "number", "note", "tag", "dataview", "multiselect"].includes(
+          /*field*/
+          ctx[46].input.type
+        );
+      if (show_if) {
+        if (if_block1) {
+          if_block1.p(ctx, dirty);
+          if (dirty[0] & /*definition*/
+          1) {
+            transition_in(if_block1, 1);
+          }
+        } else {
+          if_block1 = create_if_block_16(ctx);
+          if_block1.c();
+          transition_in(if_block1, 1);
+          if_block1.m(t16.parentNode, t16);
+        }
+      } else if (if_block1) {
+        group_outros();
+        transition_out(if_block1, 1, 1, () => {
+          if_block1 = null;
+        });
+        check_outros();
+      }
+      const fieldmeta_changes = {};
+      if (dirty[0] & /*definition*/
+      1)
+        fieldmeta_changes.field = /*field*/
+        ctx[46];
+      if (dirty[0] & /*availableFieldsForCondition*/
+      32)
+        fieldmeta_changes.availableFieldsForCondition = /*availableFieldsForCondition*/
+        ctx[5];
+      fieldmeta.$set(fieldmeta_changes);
       if (!current || dirty[0] & /*definition*/
       1 && button1_disabled_value !== (button1_disabled_value = /*index*/
-      ctx[49] === /*definition*/
+      ctx[50] === /*definition*/
       ctx[0].fields.length - 1)) {
         button1.disabled = button1_disabled_value;
       }
@@ -14329,37 +20707,42 @@ function create_each_block5(ctx) {
         return;
       transition_in(if_block0);
       transition_in(if_block1);
+      transition_in(fieldmeta.$$.fragment, local);
       current = true;
     },
     o(local) {
       transition_out(if_block0);
       transition_out(if_block1);
+      transition_out(fieldmeta.$$.fragment, local);
       current = false;
     },
     d(detaching) {
       if (detaching) {
         detach(div3);
-        detach(t9);
+        detach(t8);
         detach(div6);
-        detach(t15);
+        detach(t14);
         detach(div7);
+        detach(t15);
         detach(t16);
+        detach(t17);
         detach(div8);
-        detach(t21);
+        detach(t22);
         detach(hr);
       }
-      if (if_block0)
-        if_block0.d();
       destroy_each(each_blocks, detaching);
       if (~current_block_type_index) {
         if_blocks[current_block_type_index].d();
       }
+      if (if_block1)
+        if_block1.d(detaching);
+      destroy_component(fieldmeta, detaching);
       mounted = false;
       run_all(dispose);
     }
   };
 }
-function create_fragment11(ctx) {
+function create_fragment27(ctx) {
   let div1;
   let tabs;
   let updating_activeTab;
@@ -14369,7 +20752,7 @@ function create_fragment11(ctx) {
   let if_block;
   let current;
   function tabs_activeTab_binding(value) {
-    ctx[16](value);
+    ctx[17](value);
   }
   let tabs_props = { tabs: ["form", "template"] };
   if (
@@ -14380,8 +20763,8 @@ function create_fragment11(ctx) {
     ctx[4];
   }
   tabs = new Tabs_default({ props: tabs_props });
-  binding_callbacks.push(() => bind3(tabs, "activeTab", tabs_activeTab_binding));
-  const if_block_creators = [create_if_block5, create_else_block3];
+  binding_callbacks.push(() => bind4(tabs, "activeTab", tabs_activeTab_binding));
+  const if_block_creators = [create_if_block12, create_else_block5];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -14477,11 +20860,12 @@ function scrollWhenActive(element2, isActive) {
   update3(isActive);
   return { update: update3 };
 }
-function instance11($$self, $$props, $$invalidate) {
+function instance27($$self, $$props, $$invalidate) {
   let isValid;
   let errors;
   let activeFieldIndex;
   let fieldNames;
+  let availableFieldsForCondition;
   let { definition = {
     title: "",
     name: "",
@@ -14515,14 +20899,15 @@ function instance11($$self, $$props, $$invalidate) {
       log_error(new ModalFormError("Unexpected error, no field at that index", fieldIndex + " leads to undefined"));
       return;
     }
-    const newField = Object.assign(Object.assign({}, field), {
+    const newField = {
+      ...field,
       input: structuredClone(field.input),
       name: findFreeName(fieldIndex)
-    });
+    };
     definition.fields.splice(fieldIndex + 1, 0, newField);
     $$invalidate(0, definition);
     onChange();
-    $$invalidate(5, activeFieldIndex = fieldIndex + 1);
+    $$invalidate(6, activeFieldIndex = fieldIndex + 1);
   }
   function moveField(from, direction) {
     const to = direction === "up" ? from - 1 : from + 1;
@@ -14536,7 +20921,7 @@ function instance11($$self, $$props, $$invalidate) {
     $$invalidate(0, definition.fields[to] = tmp, definition);
     $$invalidate(0, definition);
     onChange();
-    $$invalidate(5, activeFieldIndex = to);
+    $$invalidate(6, activeFieldIndex = to);
   }
   const handleSubmit = () => {
     if (!isValidFormDefinition(definition))
@@ -14544,14 +20929,14 @@ function instance11($$self, $$props, $$invalidate) {
     onSubmit(definition);
   };
   function saveTemplate(parsedTemplate) {
-    onSubmit(Object.assign(Object.assign({}, definition), {
+    onSubmit({
+      ...definition,
       template: { parsedTemplate, createCommand: true }
-    }));
+    });
   }
   const handlePreview = () => {
     if (!isValidFormDefinition(definition))
       return;
-    console.log("preview of", definition);
     onPreview(definition);
   };
   function tabs_activeTab_binding(value) {
@@ -14584,10 +20969,10 @@ function instance11($$self, $$props, $$invalidate) {
       ],
       definition
     );
-    $$invalidate(5, activeFieldIndex = definition.fields.length - 1);
+    $$invalidate(6, activeFieldIndex = definition.fields.length - 1);
   };
   const click_handler_1 = (error2) => {
-    $$invalidate(5, activeFieldIndex = error2.index);
+    $$invalidate(6, activeFieldIndex = error2.index);
   };
   function input0_input_handler_1(each_value, index) {
     each_value[index].name = this.value;
@@ -14596,12 +20981,6 @@ function instance11($$self, $$props, $$invalidate) {
   function input1_input_handler_1(each_value, index) {
     each_value[index].label = this.value;
     $$invalidate(0, definition);
-  }
-  function toggle_checked_binding(value, field) {
-    if ($$self.$$.not_equal(field.isRequired, value)) {
-      field.isRequired = value;
-      $$invalidate(0, definition);
-    }
   }
   function input2_input_handler_1(each_value, index) {
     each_value[index].description = this.value;
@@ -14685,6 +21064,12 @@ function instance11($$self, $$props, $$invalidate) {
       $$invalidate(0, definition);
     }
   }
+  function toggle_checked_binding(value, field) {
+    if ($$self.$$.not_equal(field.isRequired, value)) {
+      field.isRequired = value;
+      $$invalidate(0, definition);
+    }
+  }
   const click_handler_2 = (index) => moveField(index, "up");
   const click_handler_3 = (index) => moveField(index, "down");
   const click_handler_4 = (index) => duplicateField(index);
@@ -14697,11 +21082,11 @@ function instance11($$self, $$props, $$invalidate) {
     if ("onChange" in $$props2)
       $$invalidate(1, onChange = $$props2.onChange);
     if ("onSubmit" in $$props2)
-      $$invalidate(14, onSubmit = $$props2.onSubmit);
+      $$invalidate(15, onSubmit = $$props2.onSubmit);
     if ("onCancel" in $$props2)
       $$invalidate(2, onCancel = $$props2.onCancel);
     if ("onPreview" in $$props2)
-      $$invalidate(15, onPreview = $$props2.onPreview);
+      $$invalidate(16, onPreview = $$props2.onPreview);
     if ("app" in $$props2)
       $$invalidate(3, app2 = $$props2.app);
   };
@@ -14709,27 +21094,33 @@ function instance11($$self, $$props, $$invalidate) {
     if ($$self.$$.dirty[0] & /*definition*/
     1) {
       $:
-        $$invalidate(8, isValid = isValidFormDefinition(definition));
+        $$invalidate(9, isValid = isValidFormDefinition(definition));
     }
     if ($$self.$$.dirty[0] & /*definition*/
     1) {
       $:
-        $$invalidate(7, errors = validateFields(definition.fields));
+        $$invalidate(8, errors = validateFields(definition.fields));
     }
     if ($$self.$$.dirty[0] & /*definition*/
     1) {
       $:
-        $$invalidate(6, fieldNames = pipe2(definition.fields, Array_exports.map((f) => f.name)));
+        $$invalidate(7, fieldNames = pipe2(definition.fields, Array_exports.map((f) => f.name)));
+    }
+    if ($$self.$$.dirty[0] & /*definition*/
+    1) {
+      $:
+        $$invalidate(5, availableFieldsForCondition = definition.fields.filter((f) => input_exports.availableConditionsForInput(f.input).length > 0));
     }
   };
   $:
-    $$invalidate(5, activeFieldIndex = 0);
+    $$invalidate(6, activeFieldIndex = 0);
   return [
     definition,
     onChange,
     onCancel,
     app2,
     currentTab,
+    availableFieldsForCondition,
     activeFieldIndex,
     fieldNames,
     errors,
@@ -14749,7 +21140,6 @@ function instance11($$self, $$props, $$invalidate) {
     click_handler_1,
     input0_input_handler_1,
     input1_input_handler_1,
-    toggle_checked_binding,
     input2_input_handler_1,
     select_change_handler,
     inputbuilderselect_source_binding,
@@ -14765,6 +21155,7 @@ function instance11($$self, $$props, $$invalidate) {
     inputfolder_folder_binding,
     inputbuilderdataview_value_binding,
     inputbuilderdocumentblock_body_binding,
+    toggle_checked_binding,
     click_handler_2,
     click_handler_3,
     click_handler_4,
@@ -14777,18 +21168,18 @@ var FormBuilder = class extends SvelteComponent {
     init4(
       this,
       options,
-      instance11,
-      create_fragment11,
+      instance27,
+      create_fragment27,
       safe_not_equal,
       {
         definition: 0,
         onChange: 1,
-        onSubmit: 14,
+        onSubmit: 15,
         onCancel: 2,
-        onPreview: 15,
+        onPreview: 16,
         app: 3
       },
-      add_css8,
+      add_css10,
       [-1, -1]
     );
   }
@@ -14854,7 +21245,7 @@ function parseState(maybeState) {
   }
   return false;
 }
-var EditFormView = class extends import_obsidian15.ItemView {
+var EditFormView = class extends import_obsidian18.ItemView {
   constructor(leaf, plugin) {
     super(leaf);
     this.leaf = leaf;
@@ -14919,11 +21310,11 @@ var EditFormView = class extends import_obsidian15.ItemView {
 };
 
 // src/views/ManageFormsView.ts
-var import_obsidian17 = require("obsidian");
+var import_obsidian20 = require("obsidian");
 
 // src/views/components/Button.svelte
-var import_obsidian16 = require("obsidian");
-function create_fragment12(ctx) {
+var import_obsidian19 = require("obsidian");
+function create_fragment28(ctx) {
   let span;
   return {
     c() {
@@ -14944,7 +21335,7 @@ function create_fragment12(ctx) {
     }
   };
 }
-function instance12($$self, $$props, $$invalidate) {
+function instance28($$self, $$props, $$invalidate) {
   let { tooltip = void 0 } = $$props;
   let { icon = void 0 } = $$props;
   let { text: text3 = void 0 } = $$props;
@@ -14957,7 +21348,7 @@ function instance12($$self, $$props, $$invalidate) {
   };
   let root;
   onMount(() => {
-    const btn = new import_obsidian16.ButtonComponent(root);
+    const btn = new import_obsidian19.ButtonComponent(root);
     if (icon)
       btn.setIcon(icon);
     if (tooltip)
@@ -14990,7 +21381,7 @@ function instance12($$self, $$props, $$invalidate) {
 var Button = class extends SvelteComponent {
   constructor(options) {
     super();
-    init4(this, options, instance12, create_fragment12, safe_not_equal, {
+    init4(this, options, instance28, create_fragment28, safe_not_equal, {
       tooltip: 1,
       icon: 2,
       text: 3,
@@ -15002,10 +21393,10 @@ var Button = class extends SvelteComponent {
 var Button_default = Button;
 
 // src/views/components/KeyValue.svelte
-function add_css9(target) {
+function add_css11(target) {
   append_styles(target, "svelte-1i8bb6o", "div.svelte-1i8bb6o{display:flex;flex-direction:row;align-items:flex-start;gap:var(--mf-spacing)}.key.svelte-1i8bb6o{color:var(--text-faint)}");
 }
-function create_fragment13(ctx) {
+function create_fragment29(ctx) {
   let div;
   let span;
   let t0;
@@ -15100,7 +21491,7 @@ function create_fragment13(ctx) {
     }
   };
 }
-function instance13($$self, $$props, $$invalidate) {
+function instance29($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { key } = $$props;
   $$self.$$set = ($$props2) => {
@@ -15114,26 +21505,26 @@ function instance13($$self, $$props, $$invalidate) {
 var KeyValue = class extends SvelteComponent {
   constructor(options) {
     super();
-    init4(this, options, instance13, create_fragment13, safe_not_equal, { key: 0 }, add_css9);
+    init4(this, options, instance29, create_fragment29, safe_not_equal, { key: 0 }, add_css11);
   }
 };
 var KeyValue_default = KeyValue;
 
 // src/views/ManageForms.svelte
-function add_css10(target) {
+function add_css12(target) {
   append_styles(target, "svelte-1gkuvrl", ".form-row.svelte-1gkuvrl.svelte-1gkuvrl{display:flex;flex-direction:column;gap:8px}.form-row-buttons.svelte-1gkuvrl.svelte-1gkuvrl{display:flex;gap:8px}.form-name.svelte-1gkuvrl.svelte-1gkuvrl{margin-bottom:0}.header.svelte-1gkuvrl.svelte-1gkuvrl{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start}h5.svelte-1gkuvrl.svelte-1gkuvrl{margin-bottom:0}.flex-row.svelte-1gkuvrl.svelte-1gkuvrl{display:flex;flex-direction:row;gap:8px}pre.svelte-1gkuvrl.svelte-1gkuvrl{white-space:pre-wrap}.invalid-field-json.svelte-1gkuvrl.svelte-1gkuvrl{background-color:var(--background-secondary);padding:0 8px;margin:0}.invalid-field-json.svelte-1gkuvrl code.svelte-1gkuvrl{display:flex}");
 }
-function get_each_context6(ctx, list, i) {
+function get_each_context10(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[21] = list[i];
   return child_ctx;
 }
-function get_each_context_13(ctx, list, i) {
+function get_each_context_15(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[24] = list[i];
   return child_ctx;
 }
-function get_each_context_22(ctx, list, i) {
+function get_each_context_23(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[24] = list[i];
   return child_ctx;
@@ -15159,7 +21550,7 @@ function get_each_context_6(ctx, list, i) {
   child_ctx[38] = list[i][1];
   return child_ctx;
 }
-function create_if_block_23(ctx) {
+function create_if_block_26(ctx) {
   let h5;
   let t0;
   let t1_value = (
@@ -15204,7 +21595,7 @@ function create_if_block_23(ctx) {
     }
   };
 }
-function create_if_block_13(ctx) {
+function create_if_block_17(ctx) {
   let keyvalue;
   let current;
   keyvalue = new KeyValue_default({
@@ -15305,7 +21696,7 @@ function create_each_block_6(ctx) {
   let current;
   let if_block = (
     /*key*/
-    ctx[37] !== "name" && create_if_block_13(ctx)
+    ctx[37] !== "name" && create_if_block_17(ctx)
   );
   return {
     c() {
@@ -15331,7 +21722,7 @@ function create_each_block_6(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block_13(ctx2);
+          if_block = create_if_block_17(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -15396,7 +21787,7 @@ function create_each_block_5(ctx) {
     }
   };
 }
-function create_default_slot_22(ctx) {
+function create_default_slot_23(ctx) {
   let span;
   let each_value_5 = ensure_array_like(
     /*form*/
@@ -15495,7 +21886,7 @@ function create_each_block_4(ctx) {
   keyvalue = new KeyValue_default({
     props: {
       key: "Field names",
-      $$slots: { default: [create_default_slot_22] },
+      $$slots: { default: [create_default_slot_23] },
       $$scope: { ctx }
     }
   });
@@ -15730,7 +22121,7 @@ function create_each_block_4(ctx) {
     }
   };
 }
-function create_if_block6(ctx) {
+function create_if_block13(ctx) {
   let h3;
   let t1;
   let div;
@@ -15741,7 +22132,7 @@ function create_if_block6(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block6(get_each_context6(ctx, each_value, i));
+    each_blocks[i] = create_each_block10(get_each_context10(ctx, each_value, i));
   }
   const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
@@ -15777,12 +22168,12 @@ function create_if_block6(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context6(ctx2, each_value, i);
+          const child_ctx = get_each_context10(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block6(child_ctx);
+            each_blocks[i] = create_each_block10(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(div, null);
@@ -15849,7 +22240,7 @@ function create_each_block_3(ctx) {
     }
   };
 }
-function create_default_slot_14(ctx) {
+function create_default_slot_16(ctx) {
   let each_1_anchor;
   let each_value_3 = ensure_array_like(
     /*error*/
@@ -15906,7 +22297,7 @@ function create_default_slot_14(ctx) {
     }
   };
 }
-function create_each_block_22(ctx) {
+function create_each_block_23(ctx) {
   let div;
   let pre;
   let code;
@@ -15930,7 +22321,7 @@ function create_each_block_22(ctx) {
         /*error*/
         ctx[24].path
       ),
-      $$slots: { default: [create_default_slot_14] },
+      $$slots: { default: [create_default_slot_16] },
       $$scope: { ctx }
     }
   });
@@ -16002,7 +22393,7 @@ function create_each_block_22(ctx) {
     }
   };
 }
-function create_default_slot6(ctx) {
+function create_default_slot13(ctx) {
   let span;
   let t0_value = (
     /*error*/
@@ -16034,13 +22425,13 @@ function create_default_slot6(ctx) {
     }
   };
 }
-function create_each_block_13(ctx) {
+function create_each_block_15(ctx) {
   let keyvalue;
   let current;
   keyvalue = new KeyValue_default({
     props: {
       key: "field",
-      $$slots: { default: [create_default_slot6] },
+      $$slots: { default: [create_default_slot13] },
       $$scope: { ctx }
     }
   });
@@ -16076,7 +22467,7 @@ function create_each_block_13(ctx) {
     }
   };
 }
-function create_each_block6(ctx) {
+function create_each_block10(ctx) {
   let div;
   let h4;
   let t0_value = (
@@ -16094,7 +22485,7 @@ function create_each_block6(ctx) {
   ));
   let each_blocks_1 = [];
   for (let i = 0; i < each_value_2.length; i += 1) {
-    each_blocks_1[i] = create_each_block_22(get_each_context_22(ctx, each_value_2, i));
+    each_blocks_1[i] = create_each_block_23(get_each_context_23(ctx, each_value_2, i));
   }
   const out = (i) => transition_out(each_blocks_1[i], 1, 1, () => {
     each_blocks_1[i] = null;
@@ -16105,7 +22496,7 @@ function create_each_block6(ctx) {
   ));
   let each_blocks = [];
   for (let i = 0; i < each_value_1.length; i += 1) {
-    each_blocks[i] = create_each_block_13(get_each_context_13(ctx, each_value_1, i));
+    each_blocks[i] = create_each_block_15(get_each_context_15(ctx, each_value_1, i));
   }
   const out_1 = (i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
@@ -16159,12 +22550,12 @@ function create_each_block6(ctx) {
         ));
         let i;
         for (i = 0; i < each_value_2.length; i += 1) {
-          const child_ctx = get_each_context_22(ctx2, each_value_2, i);
+          const child_ctx = get_each_context_23(ctx2, each_value_2, i);
           if (each_blocks_1[i]) {
             each_blocks_1[i].p(child_ctx, dirty);
             transition_in(each_blocks_1[i], 1);
           } else {
-            each_blocks_1[i] = create_each_block_22(child_ctx);
+            each_blocks_1[i] = create_each_block_23(child_ctx);
             each_blocks_1[i].c();
             transition_in(each_blocks_1[i], 1);
             each_blocks_1[i].m(div, t2);
@@ -16184,12 +22575,12 @@ function create_each_block6(ctx) {
         ));
         let i;
         for (i = 0; i < each_value_1.length; i += 1) {
-          const child_ctx = get_each_context_13(ctx2, each_value_1, i);
+          const child_ctx = get_each_context_15(ctx2, each_value_1, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block_13(child_ctx);
+            each_blocks[i] = create_each_block_15(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(div, t3);
@@ -16233,7 +22624,7 @@ function create_each_block6(ctx) {
     }
   };
 }
-function create_fragment14(ctx) {
+function create_fragment30(ctx) {
   let div1;
   let h1;
   let t1;
@@ -16268,7 +22659,7 @@ function create_fragment14(ctx) {
   });
   let if_block0 = (
     /*$invalidForms*/
-    ctx[4].length && create_if_block_23(ctx)
+    ctx[4].length && create_if_block_26(ctx)
   );
   let each_value_4 = ensure_array_like(
     /*$forms*/
@@ -16283,7 +22674,7 @@ function create_fragment14(ctx) {
   });
   let if_block1 = (
     /*$invalidForms*/
-    ctx[4].length && create_if_block6(ctx)
+    ctx[4].length && create_if_block13(ctx)
   );
   return {
     c() {
@@ -16353,7 +22744,7 @@ function create_fragment14(ctx) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_23(ctx2);
+          if_block0 = create_if_block_26(ctx2);
           if_block0.c();
           if_block0.m(div1, null);
         }
@@ -16397,7 +22788,7 @@ function create_fragment14(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block6(ctx2);
+          if_block1 = create_if_block13(ctx2);
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(div2, null);
@@ -16447,7 +22838,7 @@ function create_fragment14(ctx) {
     }
   };
 }
-function instance14($$self, $$props, $$invalidate) {
+function instance30($$self, $$props, $$invalidate) {
   let $invalidForms, $$unsubscribe_invalidForms = noop, $$subscribe_invalidForms = () => ($$unsubscribe_invalidForms(), $$unsubscribe_invalidForms = subscribe(invalidForms, ($$value) => $$invalidate(4, $invalidForms = $$value)), invalidForms);
   let $forms, $$unsubscribe_forms = noop, $$subscribe_forms = () => ($$unsubscribe_forms(), $$unsubscribe_forms = subscribe(forms, ($$value) => $$invalidate(5, $forms = $$value)), forms);
   $$self.$$.on_destroy.push(() => $$unsubscribe_invalidForms());
@@ -16541,8 +22932,8 @@ var ManageForms = class extends SvelteComponent {
     init4(
       this,
       options,
-      instance14,
-      create_fragment14,
+      instance30,
+      create_fragment30,
       safe_not_equal,
       {
         createNewForm: 0,
@@ -16555,7 +22946,7 @@ var ManageForms = class extends SvelteComponent {
         forms: 2,
         invalidForms: 3
       },
-      add_css10,
+      add_css12,
       [-1, -1]
     );
   }
@@ -16564,7 +22955,7 @@ var ManageForms_default = ManageForms;
 
 // src/views/ManageFormsView.ts
 var MANAGE_FORMS_VIEW = "modal-form-manage-forms-view";
-var ManageFormsView = class extends import_obsidian17.ItemView {
+var ManageFormsView = class extends import_obsidian20.ItemView {
   constructor(leaf, plugin) {
     super(leaf);
     this.leaf = leaf;
@@ -16599,7 +22990,7 @@ var ManageFormsView = class extends import_obsidian17.ItemView {
         },
         copyFormToClipboard: async (form) => {
           await navigator.clipboard.writeText(JSON.stringify(form, null, 2));
-          new import_obsidian17.Notice("Form has been copied to the clipboard");
+          new import_obsidian20.Notice("Form has been copied to the clipboard");
         },
         openImportFormModal: () => {
           this.plugin.openImportFormModal();
@@ -16616,8 +23007,8 @@ var ManageFormsView = class extends import_obsidian17.ItemView {
 };
 
 // src/suggesters/FormPickerModal.ts
-var import_obsidian18 = require("obsidian");
-var FormPickerModal = class extends import_obsidian18.FuzzySuggestModal {
+var import_obsidian21 = require("obsidian");
+var FormPickerModal = class extends import_obsidian21.FuzzySuggestModal {
   constructor(app2, forms, onSelected) {
     super(app2);
     this.forms = forms;
@@ -16636,11 +23027,11 @@ var FormPickerModal = class extends import_obsidian18.FuzzySuggestModal {
 };
 
 // src/suggesters/NewNoteModal.ts
-var import_obsidian20 = require("obsidian");
+var import_obsidian23 = require("obsidian");
 
 // src/suggesters/suggestGeneric.ts
-var import_obsidian19 = require("obsidian");
-var GenericSuggest = class extends import_obsidian19.AbstractInputSuggest {
+var import_obsidian22 = require("obsidian");
+var GenericSuggest = class extends import_obsidian22.AbstractInputSuggest {
   constructor(app2, inputEl, content, strategy) {
     super(app2, inputEl);
     this.inputEl = inputEl;
@@ -16679,7 +23070,7 @@ var formSuggester = (app2, input, forms, onChange) => new GenericSuggest(
     }
   }
 );
-var NewNoteModal = class extends import_obsidian20.Modal {
+var NewNoteModal = class extends import_obsidian23.Modal {
   constructor(app2, forms, onSelected) {
     super(app2);
     this.forms = forms;
@@ -16691,23 +23082,23 @@ var NewNoteModal = class extends import_obsidian20.Modal {
     let noteName = "";
     const { contentEl } = this;
     contentEl.createEl("h1", { text: "New Note from form" });
-    new import_obsidian20.Setting(contentEl).addSearch((element2) => {
+    new import_obsidian23.Setting(contentEl).addSearch((element2) => {
       formSuggester(this.app, element2.inputEl, this.forms, (value) => {
         form = value;
       });
     }).setDesc("Pick a form");
-    new import_obsidian20.Setting(contentEl).addSearch((element2) => {
+    new import_obsidian23.Setting(contentEl).addSearch((element2) => {
       new FolderSuggest(element2.inputEl, this.app);
       element2.onChange((value) => {
         destinationFolder = value;
       });
     }).setName("Destination folder");
-    new import_obsidian20.Setting(contentEl).addText((element2) => {
+    new import_obsidian23.Setting(contentEl).addText((element2) => {
       element2.onChange((value) => {
         noteName = value;
       });
     }).setName("Note name");
-    new import_obsidian20.Setting(contentEl).addButton((element2) => {
+    new import_obsidian23.Setting(contentEl).addButton((element2) => {
       element2.setButtonText("Create new note");
       element2.onClick(() => {
         if (!form || !destinationFolder.trim() || !noteName.trim()) {
@@ -16730,18 +23121,18 @@ var NewNoteModal = class extends import_obsidian20.Modal {
 };
 
 // src/views/FormImportView.ts
-var import_obsidian21 = require("obsidian");
+var import_obsidian24 = require("obsidian");
 
 // src/views/FormImport.svelte
-function add_css11(target) {
+function add_css13(target) {
   append_styles(target, "svelte-it9buy", ".vertical.svelte-it9buy{display:flex;flex-direction:column;height:100%;gap:1rem}.full-height.svelte-it9buy{height:100%;flex:1}.horizontal.svelte-it9buy{display:flex;flex-direction:row;height:100%;gap:0.5rem}button.svelte-it9buy:disabled{opacity:0.5;cursor:not-allowed}.mainView.svelte-it9buy{padding:0.8rem;min-height:50vh}p.svelte-it9buy{margin:0}textarea.svelte-it9buy{font-family:monospace;flex-grow:1;flex-shrink:0;flex-basis:50%}");
 }
-function get_each_context7(ctx, list, i) {
+function get_each_context11(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[8] = list[i];
   return child_ctx;
 }
-function create_if_block7(ctx) {
+function create_if_block14(ctx) {
   let div1;
   let p;
   let t1;
@@ -16753,7 +23144,7 @@ function create_if_block7(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block7(get_each_context7(ctx, each_value, i));
+    each_blocks[i] = create_each_block11(get_each_context11(ctx, each_value, i));
   }
   return {
     c() {
@@ -16790,11 +23181,11 @@ function create_if_block7(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context7(ctx2, each_value, i);
+          const child_ctx = get_each_context11(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block7(child_ctx);
+            each_blocks[i] = create_each_block11(child_ctx);
             each_blocks[i].c();
             each_blocks[i].m(ul, null);
           }
@@ -16813,7 +23204,7 @@ function create_if_block7(ctx) {
     }
   };
 }
-function create_each_block7(ctx) {
+function create_each_block11(ctx) {
   let li;
   let t_value = (
     /*error*/
@@ -16842,7 +23233,7 @@ function create_each_block7(ctx) {
     }
   };
 }
-function create_fragment15(ctx) {
+function create_fragment31(ctx) {
   let div3;
   let h1;
   let t1;
@@ -16865,7 +23256,7 @@ function create_fragment15(ctx) {
   let dispose;
   let if_block = (
     /*ui*/
-    ctx[1].errors.length > 0 && create_if_block7(ctx)
+    ctx[1].errors.length > 0 && create_if_block14(ctx)
   );
   return {
     c() {
@@ -16958,7 +23349,7 @@ function create_fragment15(ctx) {
         if (if_block) {
           if_block.p(ctx, dirty);
         } else {
-          if_block = create_if_block7(ctx);
+          if_block = create_if_block14(ctx);
           if_block.c();
           if_block.m(div1, t5);
         }
@@ -16989,7 +23380,7 @@ function create_fragment15(ctx) {
     }
   };
 }
-function instance15($$self, $$props, $$invalidate) {
+function instance31($$self, $$props, $$invalidate) {
   let ui;
   let $state;
   let { model } = $$props;
@@ -17026,7 +23417,7 @@ function instance15($$self, $$props, $$invalidate) {
 var FormImport = class extends SvelteComponent {
   constructor(options) {
     super();
-    init4(this, options, instance15, create_fragment15, safe_not_equal, { model: 4 }, add_css11);
+    init4(this, options, instance31, create_fragment31, safe_not_equal, { model: 4 }, add_css13);
   }
 };
 var FormImport_default = FormImport;
@@ -17047,29 +23438,29 @@ function matchState(state, matchers) {
       (form) => pipe2(
         form,
         // prettier, shut up
-        O.match(matchers.empty, matchers.ok)
+        Option_exports.match(matchers.empty, matchers.ok)
       )
     )
   );
 }
-function noop2() {
+function noop3() {
 }
 function makeFormInputModel({ createForm }) {
-  const state = writable(of4(O.none));
+  const state = writable(of4(Option_exports.none));
   const setErrors = (errors) => state.set(left3(errors));
-  const resetState = () => state.set(of4(O.none));
+  const resetState = () => state.set(of4(Option_exports.none));
   return {
     state,
     uiState(state2) {
       return matchState(state2, {
-        empty: () => ({ canSubmit: false, errors: [], onSubmit: noop2, buttonHint: "" }),
+        empty: () => ({ canSubmit: false, errors: [], onSubmit: noop3, buttonHint: "" }),
         ok: (form) => ({
           canSubmit: true,
           errors: [],
           onSubmit: () => createForm(form),
           buttonHint: "\u2705"
         }),
-        error: (errors) => ({ canSubmit: false, errors, onSubmit: noop2, buttonHint: "\u274C" })
+        error: (errors) => ({ canSubmit: false, errors, onSubmit: noop3, buttonHint: "\u274C" })
       });
     },
     validate: (value) => {
@@ -17095,7 +23486,7 @@ function makeFormInputModel({ createForm }) {
               setErrors(form.toArrayOfStrings());
               return;
             }
-            state.set(of4(O.some(form)));
+            state.set(of4(Option_exports.some(form)));
             console.log(form);
           }
         )
@@ -17105,7 +23496,7 @@ function makeFormInputModel({ createForm }) {
 }
 
 // src/views/FormImportView.ts
-var FormImportModal = class extends import_obsidian21.Modal {
+var FormImportModal = class extends import_obsidian24.Modal {
   constructor(app2, deps) {
     super(app2);
     this.deps = deps;
@@ -17123,13 +23514,13 @@ var FormImportModal = class extends import_obsidian21.Modal {
 };
 
 // src/views/TemplateBuilderModal.ts
-var import_obsidian23 = require("obsidian");
+var import_obsidian26 = require("obsidian");
 
 // src/views/components/Label.svelte
-function add_css12(target) {
+function add_css14(target) {
   append_styles(target, "svelte-176ht1g", ".field-group.svelte-176ht1g{display:flex;flex-direction:column;gap:0.5rem}.inline.svelte-176ht1g{flex-direction:row;align-items:center;gap:1rem}");
 }
-function create_fragment16(ctx) {
+function create_fragment32(ctx) {
   let label_1;
   let span;
   let t0;
@@ -17235,7 +23626,7 @@ function create_fragment16(ctx) {
     }
   };
 }
-function instance16($$self, $$props, $$invalidate) {
+function instance32($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { label } = $$props;
   let { inline = false } = $$props;
@@ -17252,31 +23643,31 @@ function instance16($$self, $$props, $$invalidate) {
 var Label = class extends SvelteComponent {
   constructor(options) {
     super();
-    init4(this, options, instance16, create_fragment16, safe_not_equal, { label: 0, inline: 1 }, add_css12);
+    init4(this, options, instance32, create_fragment32, safe_not_equal, { label: 0, inline: 1 }, add_css14);
   }
 };
 var Label_default = Label;
 
 // src/views/components/TemplateBuilder.svelte
-function add_css13(target) {
+function add_css15(target) {
   append_styles(target, "svelte-1qlzwkg", ".code.svelte-1qlzwkg{font-family:var(--font-family-monospace);background-color:var(--background-secondary);color:var(--text-muted)}");
 }
-function get_each_context8(ctx, list, i) {
+function get_each_context12(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[19] = list[i];
   return child_ctx;
 }
-function get_each_context_14(ctx, list, i) {
+function get_each_context_16(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[19] = list[i];
   return child_ctx;
 }
-function get_each_context_23(ctx, list, i) {
+function get_each_context_24(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[19] = list[i];
   return child_ctx;
 }
-function create_each_block_23(ctx) {
+function create_each_block_24(ctx) {
   let div;
   let label;
   let input;
@@ -17349,7 +23740,7 @@ function create_each_block_23(ctx) {
     }
   };
 }
-function create_if_block8(ctx) {
+function create_if_block15(ctx) {
   let div;
   let label;
   let input;
@@ -17419,12 +23810,12 @@ function create_if_block8(ctx) {
     }
   };
 }
-function create_each_block_14(key_1, ctx) {
+function create_each_block_16(key_1, ctx) {
   let first2;
   let if_block_anchor;
   let if_block = (
     /*field*/
-    ctx[19].omit === false && create_if_block8(ctx)
+    ctx[19].omit === false && create_if_block15(ctx)
   );
   return {
     key: key_1,
@@ -17451,7 +23842,7 @@ function create_each_block_14(key_1, ctx) {
         if (if_block) {
           if_block.p(ctx, dirty);
         } else {
-          if_block = create_if_block8(ctx);
+          if_block = create_if_block15(ctx);
           if_block.c();
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
         }
@@ -17470,7 +23861,7 @@ function create_each_block_14(key_1, ctx) {
     }
   };
 }
-function create_each_block8(ctx) {
+function create_each_block12(ctx) {
   let button;
   let t0_value = (
     /*field*/
@@ -17521,7 +23912,7 @@ function create_each_block8(ctx) {
     }
   };
 }
-function create_default_slot_23(ctx) {
+function create_default_slot_24(ctx) {
   let input;
   let input_checked_value;
   let mounted;
@@ -17561,7 +23952,7 @@ function create_default_slot_23(ctx) {
     }
   };
 }
-function create_default_slot_15(ctx) {
+function create_default_slot_17(ctx) {
   let input;
   let input_value_value;
   let mounted;
@@ -17601,7 +23992,7 @@ function create_default_slot_15(ctx) {
     }
   };
 }
-function create_default_slot7(ctx) {
+function create_default_slot14(ctx) {
   let t;
   return {
     c() {
@@ -17629,7 +24020,7 @@ function create_default_slot7(ctx) {
     }
   };
 }
-function create_fragment17(ctx) {
+function create_fragment33(ctx) {
   let div9;
   let h2;
   let t0;
@@ -17692,7 +24083,7 @@ function create_fragment17(ctx) {
   );
   let each_blocks_2 = [];
   for (let i = 0; i < each_value_2.length; i += 1) {
-    each_blocks_2[i] = create_each_block_23(get_each_context_23(ctx, each_value_2, i));
+    each_blocks_2[i] = create_each_block_24(get_each_context_24(ctx, each_value_2, i));
   }
   let each_value_1 = ensure_array_like(
     /*$fields*/
@@ -17703,9 +24094,9 @@ function create_fragment17(ctx) {
     ctx2[19].name
   );
   for (let i = 0; i < each_value_1.length; i += 1) {
-    let child_ctx = get_each_context_14(ctx, each_value_1, i);
+    let child_ctx = get_each_context_16(ctx, each_value_1, i);
     let key = get_key(child_ctx);
-    each1_lookup.set(key, each_blocks_1[i] = create_each_block_14(key, child_ctx));
+    each1_lookup.set(key, each_blocks_1[i] = create_each_block_16(key, child_ctx));
   }
   let each_value = ensure_array_like(
     /*$fields*/
@@ -17713,13 +24104,13 @@ function create_fragment17(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block8(get_each_context8(ctx, each_value, i));
+    each_blocks[i] = create_each_block12(get_each_context12(ctx, each_value, i));
   }
   label1 = new Label_default({
     props: {
       label: "Include frontmatter fences",
       inline: true,
-      $$slots: { default: [create_default_slot_23] },
+      $$slots: { default: [create_default_slot_24] },
       $$scope: { ctx }
     }
   });
@@ -17728,14 +24119,14 @@ function create_fragment17(ctx) {
       label: "Result variable name",
       id: `result_variable_name`,
       inline: true,
-      $$slots: { default: [create_default_slot_15] },
+      $$slots: { default: [create_default_slot_17] },
       $$scope: { ctx }
     }
   });
   code_1 = new Code_default({
     props: {
       allowWrap: true,
-      $$slots: { default: [create_default_slot7] },
+      $$slots: { default: [create_default_slot14] },
       $$scope: { ctx }
     }
   });
@@ -17810,13 +24201,13 @@ function create_fragment17(ctx) {
       attr(div0, "class", "flex gap-1 flex-col");
       attr(input, "type", "checkbox");
       attr(div1, "class", "flex flex-col gap-1");
-      attr(div2, "class", "flex gap-2");
+      attr(div2, "class", "flex gap-2 flex-wrap");
       set_style(p0, "margin", "0");
       set_style(p0, "padding", "0");
       attr(span, "class", "code svelte-1qlzwkg");
       set_style(p1, "margin", "0");
       set_style(p1, "padding", "0");
-      attr(div4, "class", "flex gap-1");
+      attr(div4, "class", "flex gap-1 flex-wrap");
       attr(textarea, "class", "w-full");
       attr(textarea, "rows", "10");
       attr(div5, "class", "flex flex-col gap-2");
@@ -17932,11 +24323,11 @@ function create_fragment17(ctx) {
         );
         let i;
         for (i = 0; i < each_value_2.length; i += 1) {
-          const child_ctx = get_each_context_23(ctx2, each_value_2, i);
+          const child_ctx = get_each_context_24(ctx2, each_value_2, i);
           if (each_blocks_2[i]) {
             each_blocks_2[i].p(child_ctx, dirty);
           } else {
-            each_blocks_2[i] = create_each_block_23(child_ctx);
+            each_blocks_2[i] = create_each_block_24(child_ctx);
             each_blocks_2[i].c();
             each_blocks_2[i].m(div0, null);
           }
@@ -17952,7 +24343,7 @@ function create_fragment17(ctx) {
           /*$fields*/
           ctx2[6]
         );
-        each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx2, each_value_1, each1_lookup, div1, destroy_block, create_each_block_14, t8, get_each_context_14);
+        each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx2, each_value_1, each1_lookup, div1, destroy_block, create_each_block_16, t8, get_each_context_16);
       }
       if (dirty & /*$bodyTemplate, $fields*/
       192) {
@@ -17962,11 +24353,11 @@ function create_fragment17(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context8(ctx2, each_value, i);
+          const child_ctx = get_each_context12(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block8(child_ctx);
+            each_blocks[i] = create_each_block12(child_ctx);
             each_blocks[i].c();
             each_blocks[i].m(div4, null);
           }
@@ -18034,7 +24425,7 @@ function create_fragment17(ctx) {
     }
   };
 }
-function instance17($$self, $$props, $$invalidate) {
+function instance33($$self, $$props, $$invalidate) {
   let fields;
   let code;
   let options;
@@ -18115,17 +24506,17 @@ function instance17($$self, $$props, $$invalidate) {
 var TemplateBuilder = class extends SvelteComponent {
   constructor(options) {
     super();
-    init4(this, options, instance17, create_fragment17, safe_not_equal, { model: 0, copyToClipboard: 1 }, add_css13);
+    init4(this, options, instance33, create_fragment33, safe_not_equal, { model: 0, copyToClipboard: 1 }, add_css15);
   }
 };
 var TemplateBuilder_default = TemplateBuilder;
 
 // src/views/copyToClipboard.ts
-var import_obsidian22 = require("obsidian");
+var import_obsidian25 = require("obsidian");
 function copyToClipboard(text3) {
   navigator.clipboard.writeText(text3).then(
     () => {
-      new import_obsidian22.Notice("Template has been copied to the clipboard");
+      new import_obsidian25.Notice("Template has been copied to the clipboard");
     },
     (err) => {
       console.error("Could not copy text: ", err);
@@ -18134,7 +24525,7 @@ function copyToClipboard(text3) {
 }
 
 // src/views/TemplateBuilderModal.ts
-var TemplateBuilderModal = class extends import_obsidian23.Modal {
+var TemplateBuilderModal = class extends import_obsidian26.Modal {
   constructor(app2, deps) {
     super(app2);
     this.deps = deps;
@@ -18152,7 +24543,7 @@ var TemplateBuilderModal = class extends import_obsidian23.Modal {
 };
 
 // src/views/TemplateBuilderView.ts
-var import_obsidian24 = require("obsidian");
+var import_obsidian27 = require("obsidian");
 
 // src/core/templater/builder.ts
 function getFunctionBody(fn) {
@@ -18196,7 +24587,6 @@ function compileFrontmatter(fields, resultName) {
 function compileOpenForm(formName, resultName, fieldsToOmit, usesGlobal = false) {
   const omitOptions = fieldsToOmit.length > 0 ? `, ${JSON.stringify({ omit: fieldsToOmit }, null, 8)}` : "";
   const args = `"${formName}"${omitOptions}`;
-  console.log({ args });
   if (usesGlobal) {
     return [`const ${resultName} = await MF.openForm(${args});`];
   }
@@ -18225,10 +24615,10 @@ function compileTemplaterTemplate(formName) {
         bodyTemplate,
         options
       )
-    ].join("\n");
+    ].filter(Boolean).join("\n");
   };
 }
-var makeModel = (formDefinition) => {
+var makeModel2 = (formDefinition) => {
   const fields = writable(
     formDefinition.fields.reduce((acc, { name }) => [...acc, Field2(name)], [])
   );
@@ -18279,7 +24669,7 @@ var makeModel = (formDefinition) => {
 
 // src/views/TemplateBuilderView.ts
 var TEMPLATE_BUILDER_VIEW = "modal-form-template-builder-view";
-var TemplateBuilderView = class extends import_obsidian24.ItemView {
+var TemplateBuilderView = class extends import_obsidian27.ItemView {
   constructor(leaf, plugin) {
     super(leaf);
     this.leaf = leaf;
@@ -18304,7 +24694,7 @@ var TemplateBuilderView = class extends import_obsidian24.ItemView {
     contentEl.empty();
     this._component = new TemplateBuilder_default({
       target: contentEl,
-      props: { model: makeModel(this.model), copyToClipboard }
+      props: { model: makeModel2(this.model), copyToClipboard }
     });
   }
   getState() {
@@ -18339,7 +24729,7 @@ function notifyMigrationErrors(errors) {
             ${errors.map((e) => e.name).join("\n")}`
   );
 }
-var ModalFormPlugin = class extends import_obsidian25.Plugin {
+var ModalFormPlugin = class extends import_obsidian28.Plugin {
   constructor() {
     super(...arguments);
     this.unsubscribeSettingsStore = () => {
@@ -18382,7 +24772,7 @@ var ModalFormPlugin = class extends import_obsidian25.Plugin {
     openOnModal = false
   }) {
     if (openOnModal) {
-      new TemplateBuilderModal(this.app, makeModel(formDefinition)).open();
+      new TemplateBuilderModal(this.app, makeModel2(formDefinition)).open();
     } else {
       this.activateView(TEMPLATE_BUILDER_VIEW, formDefinition);
     }
@@ -18399,7 +24789,7 @@ var ModalFormPlugin = class extends import_obsidian25.Plugin {
     let leaf = workspace.getLeavesOfType(viewType)[0];
     if (leaf) {
       console.info("found leaf, no reason to create a new one");
-    } else if (import_obsidian25.Platform.isMobile || ((_a = this.settings) == null ? void 0 : _a.editorPosition) === "mainView") {
+    } else if (import_obsidian28.Platform.isMobile || ((_a = this.settings) == null ? void 0 : _a.editorPosition) === "mainView") {
       leaf = this.app.workspace.getLeaf("tab");
     } else if (((_b = this.settings) == null ? void 0 : _b.editorPosition) === "right") {
       leaf = this.app.workspace.getRightLeaf(false);
@@ -18470,7 +24860,7 @@ var ModalFormPlugin = class extends import_obsidian25.Plugin {
   get validFormDefinitions() {
     return pipe2(
       this.settings.formDefinitions,
-      Array_exports.filterMap((form) => form instanceof MigrationError ? O.none : O.some(form))
+      Array_exports.filterMap((form) => form instanceof MigrationError ? Option_exports.none : Option_exports.some(form))
     );
   }
   async onload() {
@@ -18514,6 +24904,35 @@ var ModalFormPlugin = class extends import_obsidian25.Plugin {
       }
     });
     this.addCommand({
+      id: "insert-form-template",
+      name: "Insert form template",
+      editorCallback: (editor, ctx) => {
+        const formsWithTemplates = this.getFormsWithTemplates();
+        if (formsWithTemplates.length === 0) {
+          notifyWarning("No forms with templates found")(
+            `Make sure you have at least one form with a template`
+          );
+          return;
+        }
+        if (formsWithTemplates.length === 1) {
+          const form = formsWithTemplates[0];
+          this.api.openForm(form).then((result2) => {
+            editor.replaceSelection(
+              executeTemplate(form.template.parsedTemplate, result2.getData())
+            );
+          });
+          return;
+        }
+        new FormPickerModal(this.app, formsWithTemplates, (form) => {
+          this.api.openForm(form).then((result2) => {
+            editor.replaceSelection(
+              executeTemplate(form.template.parsedTemplate, result2.getData())
+            );
+          });
+        }).open();
+      }
+    });
+    this.addCommand({
       id: "edit-form",
       name: "Edit form",
       callback: async () => {
@@ -18548,24 +24967,27 @@ var ModalFormPlugin = class extends import_obsidian25.Plugin {
     }
     return destinationPath;
   }
+  getFormsWithTemplates() {
+    return pipe2(
+      this.settings.formDefinitions,
+      Array_exports.filterMap((form) => {
+        if (form instanceof MigrationError) {
+          return Option_exports.none;
+        }
+        if (form.template !== void 0) {
+          return Option_exports.some(form);
+        }
+        return Option_exports.none;
+      })
+    );
+  }
   /**
    * Checks if there are forms with templates, and presents a prompt
    * to select a form, then opens the forms, and creates a new note
    * with the template and the form values
    */
   createNoteFromForm() {
-    const formsWithTemplates = pipe2(
-      this.settings.formDefinitions,
-      Array_exports.filterMap((form) => {
-        if (form instanceof MigrationError) {
-          return O.none;
-        }
-        if (form.template !== void 0) {
-          return O.some(form);
-        }
-        return O.none;
-      })
-    );
+    const formsWithTemplates = this.getFormsWithTemplates();
     const onFormSelected = async (form, noteName, destinationFolder) => {
       const formData = await this.api.openForm(form);
       const newNoteFullPath = this.getUniqueNoteName(noteName, destinationFolder);

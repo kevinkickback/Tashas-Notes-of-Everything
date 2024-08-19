@@ -115,17 +115,19 @@ white-space: pre-wrap;
   color: var(--text-normal);
   background-color: var(--background-modifier-hover); }
 
-/* Remove default bullet point */
+/* Remove default bullet point
 .listMe li {
-  list-style-type: none;
-}
+  list-style-type: none !important;
+  list-style-position: inside !important;
+  margin-left: -1em !important; 
+} */
 
 /* add custom bullet point */
 .listMe li::before {
-  margin-left: -20px;
+  margin-left: -15px;
   position: relative;
   content: "\2022";
-  left: -8px;
+  left: -80px;
   color: inherit;
   font-size: 1.3em;
 }
