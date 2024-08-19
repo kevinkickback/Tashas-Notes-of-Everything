@@ -75,7 +75,7 @@ locations:
  - <% location ? `"[[${location}]]"` : '' %>
 tags:
  - <% type ? `location/${toCamelCase(type)}` : '' %>
-headerLink: "[[<% name %>#<% name %>]]"
+headerLink: "[[{<% name %>#<% name %>]]"
 ---
 
 ![[banner.jpg|banner]]
