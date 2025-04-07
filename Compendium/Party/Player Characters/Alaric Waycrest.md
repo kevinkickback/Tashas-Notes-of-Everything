@@ -26,7 +26,7 @@ ___
 
 > [!quote|no-t]
 > Alaric Wayrest is a rugged half-orc fighter hailing from [[Baldurs Gate#Baldurs Gate|Baldur's Gate]], known for his unwavering loyalty and formidable combat skills. As a member of the adventuring party [[LASTSTAND#LASTSTAND]], he stands as a stalwart defender against the forces of darkness. Alaric shares a deep bond with his childhood friend [[Moira Belkas#Moira Belkas]], their connection forged through shared trials and triumphs. 
- 
+
 #### marker
 > [!column|flex 3]
 >> [!info]- STORYLINES:

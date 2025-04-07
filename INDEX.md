@@ -3,7 +3,7 @@ cssClasses: index
 ---
 ![[compendium.jpg|banner]]
 ###### <span class="head">Campaign Journal</span> 
- 
+
 ```dataviewjs
 // Set path and class
 const vault = this.app.vault.adapter.getResourcePath("").split("?")[0];
