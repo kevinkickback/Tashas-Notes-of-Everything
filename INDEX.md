@@ -21,9 +21,9 @@ views:
       - file.name
       - formula.Details
     image: note.cover
-    imageAspectRatio: 1
+    imageAspectRatio: 1.15
     imageFit: ""
-    cardSize: 270
+    cardSize: 300
 
 ```
 

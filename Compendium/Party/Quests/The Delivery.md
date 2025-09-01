@@ -12,7 +12,8 @@ ___
 
 > [!quote|no-t]
 >![[quest.png|right wm-sm]]Tinkera asks [[LASTSTAND]] to deliver a package to a secluded cottage on the outskirts of Baldur's Gate. She explains that the recipient, an old friend of hers, is expecting the delivery urgently. 
->> [!column|flex 3]
+
+> [!column|flex 3]
 >> [!note]- HISTORY
 >> ```base
 >> properties:

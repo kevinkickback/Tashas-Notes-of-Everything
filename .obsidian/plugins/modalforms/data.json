@@ -732,16 +732,6 @@
             "type": "textarea",
             "hidden": false
           }
-        },
-        {
-          "name": "confirm",
-          "label": "I accept",
-          "description": "Please make a backup of your vault before proceeding",
-          "isRequired": true,
-          "input": {
-            "type": "toggle",
-            "hidden": false
-          }
         }
       ],
       "version": "1",

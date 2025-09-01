@@ -58,20 +58,6 @@ ___
 >![[quest.png|right wm-sm]]Quest description here...
 
 > [!column|flex 3]
-> > [!hint]- NPC's
-> > ```base
-> > properties:
-> >   file.name:
-> >     displayName: Name
-> > views:
-> >   - type: table
-> >     name: Name
-> >     filters:
-> >       and:
-> >         - file.inFolder("Compendium/NPC's")
-> >         - file.hasLink(this.file)
-> > ```
->
 >> [!note]- HISTORY
 > > ```base
 > > properties:
