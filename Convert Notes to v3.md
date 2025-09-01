@@ -11,7 +11,7 @@ However, I understand that not everyone has the time or patience for a full manu
 
 ---
 
-### What This Tool Does
+### What This Does
 
 Attempts to convert notes created with earlier versions of Tasha’s templates to the new V3 format using regular expressions. It assumes the default V2 layout, so customizations may not be recognized or converted correctly.
 
@@ -21,6 +21,14 @@ Attempts to convert notes created with earlier versions of Tasha’s templates t
 - ✅ Replace `dataview` code blocks with the appropriate `bases` code blocks
 
 ---
+
+### How To Use
+
+- **Step 1 (optional):** Delete the example files that came with this vault (the entire `Compendium` and `Session Notes` folders)
+- **Step 2:** Move / copy your `Compendium` and `Session Notes` folders from your previous Tasha's vault into this one.
+- **Step 3:** Click the `MIGRATE NOTES` button below
+---
+
 After running the tool you will be notified when the process has finished. Once completed feel free to delete this note, the `migrate.md` file in Assets/Templates, and the `migrate` button from Settings > Metabind > Edit Templates.
 
 If you accept the risks and are ready to proceed, click the button below to begin the conversion.
