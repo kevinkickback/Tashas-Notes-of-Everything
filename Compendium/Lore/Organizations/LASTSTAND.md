@@ -4,7 +4,6 @@ locations:
 -
 tags:
 - 
-headerLink: "[[LASTSTAND#LASTSTAND]]"
 ---
 
 ###### LASTSTAND
@@ -12,18 +11,33 @@ headerLink: "[[LASTSTAND#LASTSTAND]]"
 ___
 
 > [!quote|no-t]
->![[laststand.jpg|right wm-tl]]Last Stand, stylized as **LASTSTAND**, is an adventuring group comprised of party members [[Kingston Yashkar#Kingston Yashkar|Kingston]], [[Moira Belkas#Moira Belkas|Moira]], [[Alaric Waycrest#Alaric Waycrest|Alaric]], and [[Tilda Rosesong#Tilda Rosesong|Tilda]].
+>![[laststand.jpg|right wm-tl]]Last Stand, stylized as **LASTSTAND**, is an adventuring group comprised of party members [[Kingston Yashkar|Kingston]], [[Moira Belkas|Moira]], [[Alaric Waycrest|Alaric]], and [[Tilda Rosesong|Tilda]].
 
-#### marker
 > [!column|flex 3]
->> [!info]- STORYLINES:
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Compendium/Party/Quests"
->>WHERE target = "groupQuest"
->>SORT file.ctime DESC
+>> [!hint]- NPC's
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Name
+>>     filters:
+>>       and:
+>>         - file.inFolder("Compendium/NPC's")
+>>         - file.hasLink(this.file)
+>> ```
 >
->>[!note]- HISTORY
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[LASTSTAND]]
+>> [!note]- HISTORY
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Session Notes
+>>     filters:
+>>       and:
+>>         - file.inFolder("Session Notes")
+>>         - file.hasLink(this.file)
+>> ```

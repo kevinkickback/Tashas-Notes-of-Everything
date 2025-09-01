@@ -4,7 +4,6 @@ tags:
 - pantheon/faerûnian
 - domain/life
 - domain/light
-headerLink: "[[Lathander#Lathander]]"
 ---
 
 ###### Lathander
@@ -21,15 +20,33 @@ ___
 > | :FasBuildingColumns: Pantheon | Faerûnian |
 
 > [!quote|no-t]
->Lathander (pronounced: lah-THÆN-der) is a Faerûnian greater god with a vast portfolio including birth, renewal, spring and youth, athletics, self-perfection, vitality and creativity. The Morninglord is symbolized by the rising sun, which represents the potential of a new day. Lathander was also the central figure in the [[Dawn Cataclysm#Dawn Cataclysm]], an ill-fated attempt  to reshape the Faerûnian pantheon in his own image and the cause of "death" for [[Tyche#Tyche]], his lover at the time.
-#### marker
+>Lathander (pronounced: lah-THÆN-der) is a Faerûnian greater god with a vast portfolio including birth, renewal, spring and youth, athletics, self-perfection, vitality and creativity. The Morninglord is symbolized by the rising sun, which represents the potential of a new day. Lathander was also the central figure in the [[Dawn Cataclysm]], an ill-fated attempt  to reshape the Faerûnian pantheon in his own image and the cause of "death" for [[Tyche]], his lover at the time.
+
 > [!column|flex 3]
->> [!hint]-  NPC's
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Compendium/NPC's" AND [[Lathander]] 
+>> [!hint]- NPC's
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Name
+>>     filters:
+>>       and:
+>>         - file.inFolder("Compendium/NPC's")
+>>         - file.hasLink(this.file)
+>> ```
 >
->>[!note]- HISTORY
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[Lathander]]
+>> [!note]- HISTORY
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Session Notes
+>>     filters:
+>>       and:
+>>         - file.inFolder("Session Notes")
+>>         - file.hasLink(this.file)
+>> ```

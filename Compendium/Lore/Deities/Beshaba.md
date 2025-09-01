@@ -4,7 +4,6 @@ tags:
 - pantheon/faerûnian
 - domain/luck
 - domain/trickery
-headerLink: "[[Beshaba#Beshaba]]"
 ---
 
 ###### Beshaba
@@ -21,17 +20,33 @@ ___
 > | :FasBuildingColumns: Pantheon | Faerûnian |
 
 > [!quote|no-t]
->Beshaba (pronounced: be-SHAH-ba) is the chaotic evil intermediate deity of accidents, bad luck, misfortune, and random mischief. Lady Doom is the equally acknowledged counterpart of [[Tymora#Tymora]], Lady Luck, and demands worship to keep her misfortunes at bay. Most fear her presence, but few would risk not invoking her name and inviting her to any event, lest she take offense and wreak havoc upon all involved.
+>Beshaba (pronounced: be-SHAH-ba) is the chaotic evil intermediate deity of accidents, bad luck, misfortune, and random mischief. Lady Doom is the equally acknowledged counterpart of [[Tymora]], Lady Luck, and demands worship to keep her misfortunes at bay. Most fear her presence, but few would risk not invoking her name and inviting her to any event, lest she take offense and wreak havoc upon all involved.
 
-#### marker
 > [!column|flex 3]
->> [!hint]-  NPC's
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Compendium/NPC's"
->>WHERE contains(file.outlinks, this.file.link) OR contains(file.outlinks, [[Black Fingers]])
+>> [!hint]- NPC's
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Name
+>>     filters:
+>>       and:
+>>         - file.inFolder("Compendium/NPC's")
+>>         - file.hasLink(this.file)
+>> ```
 >
->>[!note]- HISTORY
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[Beshaba]]
+>> [!note]- HISTORY
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Session Notes
+>>     filters:
+>>       and:
+>>         - file.inFolder("Session Notes")
+>>         - file.hasLink(this.file)
+>> ```

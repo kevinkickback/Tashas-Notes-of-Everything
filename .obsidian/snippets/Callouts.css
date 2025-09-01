@@ -623,7 +623,7 @@ https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Snippets/S%20-%20Callouts
 }
 
 .callout.callout[data-callout~="infobox"] {
-	--callout-color: var(--note, var(--background-primary));
+
 	--callout-padding: 0;
 	--callout-content-padding: 5px;
 	--callout-margin: 0 0 0 5px;
@@ -639,6 +639,9 @@ https://github.com/SlRvb/Obsidian--ITS-Theme/blob/main/Snippets/S%20-%20Callouts
 	width: auto;
 	float: right;
 	border-radius: var(--radius-s);
+}
+.callout.callout[data-callout~="infobox"] table td {
+	border-color: var(--background-secondary) !important;
 }
 .callout.callout[data-callout~="infobox"] > .callout-title {
 	justify-content: center;
@@ -2861,4 +2864,85 @@ body {
 		var(--callout-background-alpha)
 	);
 	border-color: var(--color-grey-tint);
+}
+
+
+
+.index .callout[data-callout] .bases-view {
+	overflow-y: hidden;
+}
+
+.index .bases-embed {
+	padding-bottom: 1em;
+}
+
+.index .bases-cards-property {
+	overflow: visible;
+}
+
+.index .bases-cards-item .bases-rendered-value {
+    text-align: center;
+	white-space: normal;
+	word-wrap: break-word;
+}
+
+.index .bases-cards-item {
+	padding-bottom: 0.8em;
+	overflow-y: visible;
+	contain: none;
+}
+
+.index .callout[data-callout] .bases-cards-item {
+	padding-bottom: unset;
+}
+
+.bases-cards-property[data-property="formula.Details"] {
+    border-top: 2px solid; /* border width and fallback color */
+    border-image: linear-gradient(to right, transparent, white, transparent) 1;
+	padding-top: 0.2em; 
+}
+
+.index .callout[data-callout]:has(.bases-view[data-view-type="table"]) hr {
+  display: none;
+}
+
+.index .bases-cards-item .bases-rendered-value svg {
+    color: var(--interactive-accent);
+}
+
+.index .bases-cards-property[data-property="file.name"] .bases-rendered-value {
+	font-size: 1em;
+}
+
+.index .callout .bases-cards-property[data-property="file.name"] {
+	font-size: 0.75em;
+}
+
+.index .callout .bases-cards-line {
+	line-height: unset;
+}
+
+.index .bases-cards-label {
+	display: none;
+}
+
+.index .callout[data-callout] .bases-cards-property {
+    position: unset;
+}
+
+.index .bases-cards-property[data-property="formula.RaceCard"] .bases-rendered-value,
+.index .bases-cards-property[data-property="formula.Date"] .bases-rendered-value,
+.index .bases-cards-property[data-property="formula.Type"] .bases-rendered-value,
+.index .bases-cards-property[data-property="formula.StatusCard"] .bases-rendered-value {
+    color: var(--interactive-accent);
+    font-size: .75em;
+    padding: unset;
+}
+
+.index .callout[data-callout] .metadata-input-longtext {
+	text-align: left;
+}
+
+.index .callout[data-callout] hr {
+    padding-bottom: 0.5em;
 }

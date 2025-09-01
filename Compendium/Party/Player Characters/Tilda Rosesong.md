@@ -1,9 +1,8 @@
 ---
-type: PC
+type: pc
 tags:
 - race/tiefling
 - class/sorcerer
-headerLink: "[[Tilda Rosesong#Tilda Rosesong]]"
 level: "3"
 race: "Tiefling"
 class: "Sorcerer"
@@ -24,18 +23,35 @@ ___
 > |  :FasUserGroup: Race |  `=this.race`|
 
 > [!quote|no-t]
-> Tilda Rosesong, a fiery tiefling sorcerer hailing from [[Waterdeep#Waterdeep]], channels the arcane forces with unmatched intensity and finesse within the adventuring party [[LASTSTAND#LASTSTAND]]. Her mysterious origins and powerful magic make her both a valuable ally and a formidable adversary.
+> Tilda Rosesong, a fiery tiefling sorcerer hailing from [[Waterdeep]], channels the arcane forces with unmatched intensity and finesse within the adventuring party [[LASTSTAND]]. Her mysterious origins and powerful magic make her both a valuable ally and a formidable adversary.
 
-#### marker
 > [!column|flex 3]
->> [!info]- STORYLINES:
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Compendium/Party/Quests" AND [[Tilda Rosesong]]
->>SORT file.ctime DESC
+>> [!important]- STORYLINES:
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Name
+>>     filters:
+>>       and:
+>>         - file.inFolder("Compendium/Party/Quests")
+>>         - file.hasLink(this.file)
+>>     order:
+>>       - file.name
+>> ```
 >
->>[!note]- HISTORY
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[Tilda Rosesong]]
->>SORT file.ctime DESC
+>> [!note]- HISTORY
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Session Notes
+>>     filters:
+>>       and:
+>>         - file.inFolder("Session Notes")
+>>         - file.hasLink(this.file)
+>> ```

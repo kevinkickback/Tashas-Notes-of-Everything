@@ -44,8 +44,9 @@ body {
 	box-shadow: 0 0 0 0 !important;
 	margin-top: 10px !important;
 }
-.popover.hover-popover .callout.callout[data-callout~="quote"] .callout-title {
-	display: none !important;
+/* disable callouts popover */
+.popover.hover-popover .callout.callout[data-callout~="column"] * {
+  display: none !important;
 }
 
 /* style title inside popover */

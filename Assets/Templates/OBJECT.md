@@ -53,7 +53,6 @@ _%>
 type: object
 tags:
  - <% type ? "object/" + toCamelCase(type) : '' %>
-headerLink: "[[<% name %>#<% name %>]]"
 ---
 
 ###### <% name %>
@@ -64,15 +63,31 @@ ___
 >![[embed.jpg|right wm-sm]]Description of the  <% type ? type.toLowerCase() : 'object' %>, <% name %>.
 <span class="clearfix"></span>
 
-#### marker
-#### marker
 > [!column|flex 3]
->>[!hint]- NPC's
->>```dataview
->>LIST WITHOUT ID headerLink
->FROM "Compendium/NPC's" AND [[<% name %>]]
+> > [!hint]- NPC's
+> > ```base
+> > properties:
+> >   file.name:
+> >     displayName: Name
+> > views:
+> >   - type: table
+> >     name: Name
+> >     filters:
+> >       and:
+> >         - file.inFolder("Compendium/NPC's")
+> >         - file.hasLink(this.file)
+> > ```
 >
->>[!note]- HISTORY
->>```dataview
->LIST WITHOUT ID headerLink
->FROM "Session Notes" AND [[<% name %>]]
+>> [!note]- HISTORY
+> > ```base
+> > properties:
+> >   file.name:
+> >     displayName: Name
+> > views:
+> >   - type: table
+> >     name: Session Notes
+> >     filters:
+> >       and:
+> >         - file.inFolder("Session Notes")
+> >         - file.hasLink(this.file)
+> > ```

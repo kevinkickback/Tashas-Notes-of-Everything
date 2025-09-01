@@ -8,8 +8,6 @@
     "shortName": "Su"
   },
   "syncInterval": 200,
-  "minSyncInterval": 50,
-  "maxSyncInterval": 1000,
   "enableJs": false,
   "viewFieldDisplayNullAsEmpty": false,
   "enableSyntaxHighlighting": true,
@@ -272,9 +270,39 @@
         }
       ],
       "icon": ""
+    },
+    {
+      "label": "MIGRATE NOTES",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "migrate",
+      "style": "default",
+      "actions": [
+        {
+          "type": "runTemplaterFile",
+          "templateFile": "Assets/Templates/MIGRATE.md"
+        }
+      ]
+    },
+    {
+      "label": "MIGRATE NOTES",
+      "hidden": true,
+      "class": "callButton",
+      "tooltip": "",
+      "id": "migrate1",
+      "style": "default",
+      "actions": [
+        {
+          "type": "runTemplaterFile",
+          "templateFile": "Assets/Templates/MIGRATE 1.md"
+        }
+      ]
     }
   ],
   "excludedFolders": [
     "templates"
-  ]
+  ],
+  "minSyncInterval": 50,
+  "maxSyncInterval": 1000
 }

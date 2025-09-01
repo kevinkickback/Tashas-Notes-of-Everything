@@ -76,7 +76,6 @@ if (result.status === 'ok') {
 type: pc
 tags:
 <% tags ? tags : ' - ' %>
-headerLink: "[[<% name %>#<% name %>]]"
 level: "<% level ? level : '' %>"
 race: "<% race ? race : '' %>"
 class: "<% pClass ? pClass : '' %>"
@@ -100,16 +99,31 @@ ___
 > [!quote|no-t]
 > Character description here
  
-#### marker
 > [!column|flex 3]
 >> [!info]- STORYLINES:
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Compendium/Party/Quests" AND [[<% name %>]]
->>SORT file.ctime DESC
+> > ```base
+> > properties:
+> >   file.name:
+> >     displayName: Name
+> > views:
+> >   - type: table
+> >     name: Name
+> >     filters:
+> >       and:
+> >         - file.inFolder("Compendium/Party/Quests")
+> >         - file.hasLink(this.file)
+> > ```
 >
->>[!note]- HISTORY
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[<% name %>]]
->>SORT file.ctime DESC
+>> [!note]- HISTORY
+> > ```base
+> > properties:
+> >   file.name:
+> >     displayName: Name
+> > views:
+> >   - type: table
+> >     name: Session Notes
+> >     filters:
+> >       and:
+> >         - file.inFolder("Session Notes")
+> >         - file.hasLink(this.file)
+> > ```

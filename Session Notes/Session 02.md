@@ -7,7 +7,7 @@ tags:
   - rest/long
   - rest/short
   - puzzle
-headerLink: "[[Session 02 (2024-02-17)#Peaks and Perils|Session 02 (2024-02-17)]]"
+date: 2024-02-17
 ---
 
 ![[session.png|banner]]
@@ -16,7 +16,7 @@ headerLink: "[[Session 02 (2024-02-17)#Peaks and Perils|Session 02 (2024-02-17)]
 ___
 
 > [!quote|no-t] SUMMARY
->As the morning sun breaks through the rocky peaks, [[LASTSTAND#LASTSTAND]] ventures deeper into the rugged mountainside, their spirits lifted by the encounter with [[Tymora#Tymora|Tymora's]] sanctuary. Their journey takes them through winding paths and treacherous terrain, following the directions provided by Tinkera Drenn to locate the cottage outside [[Waterdeep#Waterdeep]].
+>As the morning sun breaks through the rocky peaks, [[LASTSTAND]] ventures deeper into the rugged mountainside, their spirits lifted by the encounter with [[Tymora|Tymora's]] sanctuary. Their journey takes them through winding paths and treacherous terrain, following the directions provided by Tinkera Drenn to locate the cottage outside [[Waterdeep]].
 >
 >As they traverse the rugged landscape, they encounter a group of bandits lying in wait among the rocky outcrops. With weapons drawn, the party braces for combat as the bandits emerge, intent on plundering travelers along the mountain trails. The skirmish is fierce, with boulders and arrows flying amidst the echoing clash of swords. LASTSTAND fights valiantly, their skills honed through countless battles allowing them to overcome the bandits' ambush. With their foes defeated, the party takes a moment to catch their breath and tend to their wounds before pressing onward.
 >
@@ -26,7 +26,7 @@ ___
 >
 >Resting beneath the watchful gaze of the mountains, LASTSTAND reflects on the day's adventures, grateful for the challenges overcome and the camaraderie shared. With the promise of a new day ahead, they drift off to sleep, knowing that whatever challenges await them, they will face them together.
 
-#### marker
+
 > [!column|flex 3]
 >> [!info|felx] NPC'S:
 >> - Bandits (combat)

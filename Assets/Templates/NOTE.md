@@ -31,7 +31,7 @@ const date = result.Date.value;
 const title = result.Title.value;
 const location = result.Location.value ? result.Location.value.map(value => `- "[[${value}]]"`).join("\n") : '';
 const number = nextNumber();
-const name = `Session ${number} (${date})`;
+const name = `Session ${number}`;
 const tags = result.Tags.value ? result.Tags.value.map(value =>
   value.startsWith('#') ? `- ${value.slice(1)}` : `- ${toCamelCase(value)}`
 ).join("\n") : '';
@@ -58,12 +58,12 @@ locations:
 <% location ? location : ' - '%>
 tags:
 <% tags ? tags : ' - '%>
-headerLink: "[[<% name %>#<% title %>|<% name %>]]"
+date: "<% date %>"
 ---
 
 ![[session.png|banner]]
 ###### <% title %>
-<span class="sub2">:FasSun: DAY 00 &nbsp; | &nbsp; :FasTags: `= this.file.etags`</span>
+<span class="sub2">:FasSun: DAY 00&nbsp; | &nbsp; :FasTags: `= this.file.etags`</span>
 ___
 
 > [!quote|no-t] SUMMARY

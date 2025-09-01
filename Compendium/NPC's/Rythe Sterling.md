@@ -6,10 +6,9 @@ tags:
 - race/human
 - affinity/hostile
 - job/scribe
-headerLink: "[[Rythe Sterling#Rythe Sterling]]"
 ---
 ###### Rythe Sterling
-<span class="sub2">:FasMapLocationDot: [[Waterdeep#Waterdeep|Waterdeep]] &nbsp; | &nbsp; :FasHeartPulse: Hostile</span>
+<span class="sub2">:FasMapLocationDot: [[Waterdeep|Waterdeep]] &nbsp; | &nbsp; :FasHeartPulse: Hostile</span>
 ___
 
 > [!infobox|no-t right]
@@ -25,14 +24,33 @@ ___
 > [!quote|no-t]
 >Rythe, a pale and bald human wizard from Waterdeep, maintains an unassuming presence in the city. Though lacking in overt magical prowess, he quietly navigates the streets, his true allegiance hidden as a member of the [[Black Fingers]]. Behind his unremarkable facade lies a secretive figure, weaving subtle threads of influence within the shadows of Waterdeep's intricate web of intrigue.
 
-#### marker
 > [!column|flex 3]
 >> [!important]- QUESTS:
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Compendium/Party/Quests" AND [[Rythe Sterling]]
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Name
+>>     filters:
+>>       and:
+>>         - file.inFolder("Compendium/Party/Quests")
+>>         - file.hasLink(this.file)
+>>     order:
+>>       - file.name
+>> ```
 >
->>[!note]- HISTORY
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[Rythe Sterling]]
+>> [!note]- HISTORY
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Session Notes
+>>     filters:
+>>       and:
+>>         - file.inFolder("Session Notes")
+>>         - file.hasLink(this.file)
+>> ```

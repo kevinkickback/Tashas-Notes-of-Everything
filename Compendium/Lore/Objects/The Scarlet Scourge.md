@@ -2,7 +2,6 @@
 type: object
 tags:
 - artifact
-headerLink: "[[The Scarlet Scourge#The Scarlet Scourge]]"
 ---
 
 ###### The Scarlet Scourge
@@ -10,18 +9,34 @@ headerLink: "[[The Scarlet Scourge#The Scarlet Scourge]]"
 ___
 
 > [!quote|no-t]
->![[scarletScourge.png|right ws-med]]This whip is made from the severed vertebrae of a slain victims. Said to be created by [[Beshaba#Beshaba]] herself, this weapon has been handed down through generations to elite members of [[Black Fingers#The Black Fingers]].
+>![[scarletScourge.png|right ws-med]]This whip is made from the severed vertebrae of a slain victims. Said to be created by [[Beshaba]] herself, this weapon has been handed down through generations to elite members of [[Black Fingers]].
 <span class="clearfix"></span>
 
-#### marker
-#### marker
 > [!column|flex 3]
->>[!hint]- NPC's
->>```dataview
->>LIST WITHOUT ID headerLink
->FROM "Compendium/NPC's" AND [[The Scarlet Scourge]]
+>> [!hint]- NPC's
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Name
+>>     filters:
+>>       and:
+>>         - file.inFolder("Compendium/NPC's")
+>>         - file.hasLink(this.file)
+>> ```
 >
->>[!note]- HISTORY
->>```dataview
->LIST WITHOUT ID headerLink
->FROM "Session Notes" AND [[The Scarlet Scourge]]
+>> [!note]- HISTORY
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Session Notes
+>>     filters:
+>>       and:
+>>         - file.inFolder("Session Notes")
+>>         - file.hasLink(this.file)
+>> ```

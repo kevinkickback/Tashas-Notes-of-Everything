@@ -1,9 +1,8 @@
 ---
-type: PC
+type: pc
 tags:
 - race/human
 - class/ranger
-headerLink: "[[Moira Belkas#Moira Belkas]]"
 level: "3"
 race: "Human"
 class: "Ranger"
@@ -24,18 +23,35 @@ ___
 > |  :FasUserGroup: Race |  `=this.race`|
 
 > [!quote|no-t]
-> Moira Belkas, a resourceful ranger hailing from [[Baldurs Gate#Baldurs Gate|Baldur's Gate]], embodies the harmony of nature and skillful marksmanship within the adventuring party [[LASTSTAND#LASTSTAND]]. As a childhood friend of [[Alaric Waycrest#Alaric Waycrest]], their bond endures through every trial they face together.
+> Moira Belkas, a resourceful ranger hailing from [[Baldurs Gate|Baldur's Gate]], embodies the harmony of nature and skillful marksmanship within the adventuring party [[LASTSTAND]]. As a childhood friend of [[Alaric Waycrest]], their bond endures through every trial they face together.
 
-#### marker
 > [!column|flex 3]
->> [!info]- STORYLINES:
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Compendium/Party/Quests" AND [[Moira Belkas]]
->>SORT file.ctime DESC
+>> [!important]- STORYLINES:
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Name
+>>     filters:
+>>       and:
+>>         - file.inFolder("Compendium/Party/Quests")
+>>         - file.hasLink(this.file)
+>>     order:
+>>       - file.name
+>> ```
 >
->>[!note]- HISTORY
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[Moira Belkas]]
->>SORT file.ctime DESC
+>> [!note]- HISTORY
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Session Notes
+>>     filters:
+>>       and:
+>>         - file.inFolder("Session Notes")
+>>         - file.hasLink(this.file)
+>> ```

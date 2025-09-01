@@ -16,7 +16,7 @@ Happy adventuring, and may your rolls always be natural 20s! 🎲✨
 
 
 ## Downloads:
-* Pre-Setup Vault: [Download Now](https://github.com/kevinkickback/Tashas-Notes-of-Everything/releases/download/v2.4.1/TashasNotesofEverything.v2.4.1.rar)
+* Pre-Setup Vault: [Download Now](https://github.com/kevinkickback/Tashas-Notes-of-Everything/releases/latest)
 
 
 ## Install:
@@ -32,12 +32,9 @@ This project uses a mulitple community plugins & snippets. Below is list of ever
 
 <details><summary>Show Community Plugins</summary>
 
-- [x] Dataview
 - [x] Folder Notes
-- [x] Link Headers Directly
 - [x] Meta Bind
 - [x] Modal Forms
-- [x] Sortable
 - [x] Style Settings
 - [x] Templater
 </details>

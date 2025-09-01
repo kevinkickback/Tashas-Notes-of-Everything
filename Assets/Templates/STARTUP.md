@@ -1,23 +1,4 @@
 <%*
-
-// ###########################################################
-//                  NPC TOGGLE FOR LOCATION VIEW
-// ###########################################################
-
-parent.window.addEventListener('change', ({ target }) => {
-    if (target.id === 'npc' && target.type === 'checkbox') {
-        const [directView, childView] = document.querySelectorAll('.npcDirect, .npcChild');
-        const [directLabel, childLabel] = document.querySelectorAll('.directLabel, .childLabel');
-
-        directView.style.display = target.checked ? 'none' : 'block';
-        childView.style.display = target.checked ? 'block' : 'none';
-
-        directLabel.classList.toggle('active', !target.checked);
-        childLabel.classList.toggle('active', target.checked);
-    }
-});
-console.log('NPC Toggle: event listener attached');
-
 // ###########################################################
 //              FIX BROKEN ICON CODES ON STARTUP
 // ###########################################################

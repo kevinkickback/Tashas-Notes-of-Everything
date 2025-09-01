@@ -2,7 +2,6 @@
 type: event
 tags:
 - event/religious
-headerLink: "[[Dawn Cataclysm#Dawn Cataclysm]]"
 ---
 
 ###### Dawn Cataclysm
@@ -10,17 +9,34 @@ headerLink: "[[Dawn Cataclysm#Dawn Cataclysm]]"
 ___
 
 > [!quote|no-t]
->![[dawncataclysm.jpg|right wm-sm]]The Dawn Cataclysm was an attempt by the god [[Lathander#Lathander]] to reshape the pantheon of deities more in his own image. It is unknown when this event occurred but it ultimately failed, resulting in the destruction of several deities (e.g. [[Tyche#Tyche]] splitting into [[Tymora#Tymora]] and [[Beshaba#Beshaba]]).
+>![[dawncataclysm.jpg|right wm-sm]]The Dawn Cataclysm was an attempt by the god [[Lathander]] to reshape the pantheon of deities more in his own image. It is unknown when this event occurred but it ultimately failed, resulting in the destruction of several deities (e.g. [[Tyche]] splitting into [[Tymora]] and [[Beshaba]]).
 <span class="clearfix"></span>
 
-#### marker
 > [!column|flex 3]
->>[!hint]- NPC's
->>```dataview
->>LIST WITHOUT ID headerLink
->FROM "Compendium/NPC's" AND [[Dawn Cataclysm]]
+>> [!hint]- NPC's
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Name
+>>     filters:
+>>       and:
+>>         - file.inFolder("Compendium/NPC's")
+>>         - file.hasLink(this.file)
+>> ```
 >
->>[!note]- HISTORY
->>```dataview
->LIST WITHOUT ID headerLink
->FROM "Session Notes" AND [[Dawn Cataclysm]]
+>> [!note]- HISTORY
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Session Notes
+>>     filters:
+>>       and:
+>>         - file.inFolder("Session Notes")
+>>         - file.hasLink(this.file)
+>> ```

@@ -49,19 +49,39 @@ locations:
  - <% location ? `"[[${location}]]"` : ''  %>
 tags:
  - <% status ? `quest/${status.toLowerCase()}` : '' %>
-headerLink: "[[<% name %>#<% name %>]]"
 ---
 ###### <% name %>
-<span class="sub2"><% sub ? sub : '' %></span>
+<span class="sub2">:FasCircleExclamation: Quest<% status ? ` &nbsp; | &nbsp; :FasListCheck: ${status}` : '' %><% npc ? ` &nbsp; | &nbsp; :FasUser: [[${npc}]]` : '' %></span>
 ___
 
 > [!quote|no-t]
 >![[quest.png|right wm-sm]]Quest description here...
 
-#### marker
 > [!column|flex 3]
->>[!note]- HISTORY
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[<% name %>]]
-
+> > [!hint]- NPC's
+> > ```base
+> > properties:
+> >   file.name:
+> >     displayName: Name
+> > views:
+> >   - type: table
+> >     name: Name
+> >     filters:
+> >       and:
+> >         - file.inFolder("Compendium/NPC's")
+> >         - file.hasLink(this.file)
+> > ```
+>
+>> [!note]- HISTORY
+> > ```base
+> > properties:
+> >   file.name:
+> >     displayName: Name
+> > views:
+> >   - type: table
+> >     name: Session Notes
+> >     filters:
+> >       and:
+> >         - file.inFolder("Session Notes")
+> >         - file.hasLink(this.file)
+> > ```

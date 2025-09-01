@@ -30,7 +30,6 @@ locations:
  - <% location ? `"[[${location}]]"` : '' %>
 tags:
  - 
-headerLink: "[[<% name %>#<% name %>]]"
 ---
 
 ###### <% name %>
@@ -40,14 +39,31 @@ ___
 > [!quote|no-t]
 >![[embed.jpg|right wm-sm]]Profile of <% name %>, the <% alignment ? alignment.toLowerCase() : 'unknown' %> aligned organization.
 
-#### marker
 > [!column|flex 3]
->>[!hint]- NPC's
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Compendium/NPC's" AND [[<% name %>]]
+> > [!hint]- NPC's
+> > ```base
+> > properties:
+> >   file.name:
+> >     displayName: Name
+> > views:
+> >   - type: table
+> >     name: Name
+> >     filters:
+> >       and:
+> >         - file.inFolder("Compendium/NPC's")
+> >         - file.hasLink(this.file)
+> > ```
 >
->>[!note]- HISTORY
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[<% name %>]]
+>> [!note]- HISTORY
+> > ```base
+> > properties:
+> >   file.name:
+> >     displayName: Name
+> > views:
+> >   - type: table
+> >     name: Session Notes
+> >     filters:
+> >       and:
+> >         - file.inFolder("Session Notes")
+> >         - file.hasLink(this.file)
+> > ```

@@ -71,7 +71,8 @@
       ],
       "version": "1",
       "template": {
-        "createCommand": true,
+        "createInsertCommand": false,
+        "createNoteCommand": false,
         "parsedTemplate": []
       }
     },
@@ -712,7 +713,41 @@
       ],
       "version": "1",
       "template": {
-        "createCommand": true,
+        "createInsertCommand": false,
+        "createNoteCommand": false,
+        "parsedTemplate": []
+      }
+    },
+    {
+      "title": "Note Migration Tool 🔧",
+      "name": "VaultMigration",
+      "customClassname": "",
+      "fields": [
+        {
+          "name": "info",
+          "label": "Files that will be updated:",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "textarea",
+            "hidden": false
+          }
+        },
+        {
+          "name": "confirm",
+          "label": "I accept",
+          "description": "Please make a backup of your vault before proceeding",
+          "isRequired": true,
+          "input": {
+            "type": "toggle",
+            "hidden": false
+          }
+        }
+      ],
+      "version": "1",
+      "template": {
+        "createInsertCommand": false,
+        "createNoteCommand": false,
         "parsedTemplate": []
       }
     }

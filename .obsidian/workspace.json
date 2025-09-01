@@ -1,0 +1,213 @@
+{
+  "main": {
+    "id": "c530face6c21a68a",
+    "type": "split",
+    "children": [
+      {
+        "id": "dccbfdd4834940cf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5049a688396fa1e1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "INDEX.md",
+                "mode": "preview",
+                "source": true,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "INDEX"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a0f9c0e9714a9650",
+    "type": "split",
+    "children": [
+      {
+        "id": "b0963ff0c5da124c",
+        "type": "tabs",
+        "dimension": 24.759080800593033,
+        "children": [
+          {
+            "id": "a58c95d8f0002a0b",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "Assets/Images/header.png"
+              },
+              "icon": "lucide-image",
+              "title": "header"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ec977c9092a10bf2",
+        "type": "tabs",
+        "dimension": 75.24091919940697,
+        "children": [
+          {
+            "id": "e493bc2564fcbecb",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 346.5
+  },
+  "right": {
+    "id": "cbcc3a597fb0833b",
+    "type": "split",
+    "children": [
+      {
+        "id": "36fb3699cc5e9295",
+        "type": "tabs",
+        "dimension": 23.77873563218391,
+        "children": [
+          {
+            "id": "34783b92fcf002b0",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      },
+      {
+        "id": "1f6fc3dcaa6b4b26",
+        "type": "tabs",
+        "dimension": 76.22126436781609,
+        "children": [
+          {
+            "id": "37992ec5383e3e3d",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": true,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "5313bc1a958e6408",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "f0a8a458c094cb80",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "INDEX.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for INDEX"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 344.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "bases:Create new base": false,
+      "graph:Open graph view": false,
+      "command-palette:Open command palette": false,
+      "templater-obsidian:Templater": false,
+      "modalforms:Edit forms": false
+    }
+  },
+  "active": "37992ec5383e3e3d",
+  "lastOpenFiles": [
+    "change log.md",
+    "Session Notes/Session 01.md",
+    "Compendium/Party/Player Characters/Alaric Waycrest.md",
+    "Compendium/Party/Player Characters/Kingston Yashkar.md",
+    "Compendium/Party/Player Characters/Moira Belkas.md",
+    "Compendium/Party/Player Characters/Tilda Rosesong.md",
+    "Convert Notes to v3.md",
+    "Compendium/Party/Player Characters/Tilda Rosesong 1.md",
+    "Assets/Templates/MIGRATE.md",
+    "Compendium/NPC's/Tinkera Drenn.md",
+    "Compendium/NPC's/Rythe Sterling.md",
+    "Compendium/NPC's/Paloma Beltre.md",
+    "Compendium/NPC's/Eleidin Verlice.md",
+    "Compendium/Lore/Organizations/LASTSTAND.md",
+    "Compendium/Lore/Organizations/Fellows of Free Fate.md",
+    "Compendium/Lore/Organizations/Black Fingers.md",
+    "Compendium/Lore/Events/Dawn Cataclysm.md",
+    "Compendium/Lore/Objects/The Scarlet Scourge.md",
+    "Compendium/Lore/Deities/Lathander.md",
+    "Compendium/Lore/Deities/Tymora.md",
+    "Compendium/Lore/Deities/Tyche.md",
+    "Assets/Templates/GOD.md",
+    "Compendium/Lore/Deities/Beshaba.md",
+    "INDEX.md",
+    "README.md",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/Western Heartlands/Sword Coast/Waterdeep/City of the Dead.md",
+    "Session Notes",
+    "Compendium/Party/Quests",
+    "Compendium/Party/Player Characters",
+    "Compendium/Party",
+    "Compendium/NPC's",
+    "Compendium/Lore/Organizations",
+    "Compendium/Lore/Objects",
+    "Compendium/Lore/Events",
+    "Compendium/Lore/Deities",
+    "Compendium/Lore",
+    "Assets/Images/header.png",
+    "Assets/Images/Location/baldursGate.webp",
+    "Assets/Images/Location/sorcSundries.jpg",
+    "Assets/Images/Location/westernHeartlands.jpg",
+    "Assets/Images/Location/lordsAlliance.jpg"
+  ]
+}

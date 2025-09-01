@@ -4,7 +4,6 @@ locations:
 -
 tags:
 - 
-headerLink: "[[Fellows of Free Fate#Fellows of Free Fate]]"
 ---
 
 ###### Fellows of Free Fate
@@ -12,16 +11,33 @@ headerLink: "[[Fellows of Free Fate#Fellows of Free Fate]]"
 ___
 
 > [!quote|no-t]
->![[triff.jpg|right wm-tl]]The Fellows of Free Fate, known locally as the Triffs, is a sect of [[Tymora#Tymora|Tymoran]] clergy who dedicate themselves to fight against the actions of [[Beshaba#Beshaba|Beshaban]] followers, specifically the [[Black Fingers#The Black Fingers|Black Fingers]].
+>![[triff.jpg|right wm-tl]]The Fellows of Free Fate, known locally as the Triffs, is a sect of [[Tymora|Tymoran]] clergy who dedicate themselves to fight against the actions of [[Beshaba|Beshaban]] followers, specifically the [[Black Fingers|Black Fingers]].
 
-#### marker
 > [!column|flex 3]
->>[!hint]- NPC's
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Compendium/NPC's" AND [[Fellows of Free Fate]]
+>> [!hint]- NPC's
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Name
+>>     filters:
+>>       and:
+>>         - file.inFolder("Compendium/NPC's")
+>>         - file.hasLink(this.file)
+>> ```
 >
->>[!note]- HISTORY
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[Fellows of Free Fate]]
+>> [!note]- HISTORY
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Session Notes
+>>     filters:
+>>       and:
+>>         - file.inFolder("Session Notes")
+>>         - file.hasLink(this.file)
+>> ```

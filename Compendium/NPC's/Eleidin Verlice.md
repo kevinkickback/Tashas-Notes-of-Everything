@@ -6,10 +6,9 @@ tags:
 - race/fairy
 - affinity/unknown
 - job/rebellionLeader
-headerLink: "[[Eleidin Verlice#Eleidin Verlice]]"
 ---
 ###### Eleidin Verlice
-<span class="sub2">:FasMapLocationDot: [[Feywild#Feywild]] &nbsp; | &nbsp; :FasHeartPulse: Unknown </span>
+<span class="sub2">:FasMapLocationDot: [[Feywild]] &nbsp; | &nbsp; :FasHeartPulse: Unknown </span>
 ___
 
 > [!infobox|no-t right]
@@ -25,14 +24,33 @@ ___
 > [!quote|no-t]
 >Eleidin Verlice commands attention with his luminous wings and piercing gaze. As the leader of a burgeoning rebellion, he exudes an aura of determination and resilience. His every movement resonates with an air of authority, drawing followers to his cause like moths to a flame. Beneath his serene exterior lies a fierce determination to challenge the status quo and pave the way for a new era of freedom in the enchanted realms.
 
-#### marker
 > [!column|flex 3]
 >> [!important]- QUESTS:
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Compendium/Party/Quests" AND [[Eleidin Verlice]]
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Name
+>>     filters:
+>>       and:
+>>         - file.inFolder("Compendium/Party/Quests")
+>>         - file.hasLink(this.file)
+>>     order:
+>>       - file.name
+>> ```
 >
->>[!note]- HISTORY
->>```dataview
->>LIST WITHOUT ID headerLink
->>FROM "Session Notes" AND [[Eleidin Verlice]]
+>> [!note]- HISTORY
+>> ```base
+>> properties:
+>>   file.name:
+>>     displayName: Name
+>> views:
+>>   - type: table
+>>     name: Session Notes
+>>     filters:
+>>       and:
+>>         - file.inFolder("Session Notes")
+>>         - file.hasLink(this.file)
+>> ```
