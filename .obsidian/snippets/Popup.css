@@ -31,6 +31,11 @@ body {
 	display: none !important;
 }
 
+/* disable banner images in popover */
+.popover.hover-popover .el-p:has(img) {
+	display: none;
+}
+
 /* disable embeded images in popover */
 .popover.hover-popover .internal-embed.media-embed.image-embed.is-loaded {
 	display: none;
@@ -47,19 +52,4 @@ body {
 /* disable callouts popover */
 .popover.hover-popover .callout.callout[data-callout~="column"] * {
   display: none !important;
-}
-
-/* style title inside popover */
-.popover.hover-popover .inline-title {
-	padding-left: 5px;
-	margin-bottom: 0px;
-	border-radius: 4px;
-	background-image: linear-gradient(
-		var(--interactive-accent-base),
-		rgba(255, 0, 0, 0)
-	);
-}
-
-markdown-preview-pusher {
-	margin-bottom: -8px;
 }

@@ -22,4 +22,38 @@ if (iconize) {
     };
     event.on("allIconsLoaded", rerender);
 }
-_%>
+
+// ###########################################################
+//       DISPLAY NEW ICONS IN EXPLORER EVEN WHEN HIDDEN
+// ###########################################################
+
+if (iconize) {
+    const explorerRoot = document.querySelector(".nav-files-container");
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                for (const node of mutation.addedNodes) {
+                    if (!(node instanceof HTMLElement)) continue;
+
+                    // Check if the node itself or its descendants have `data-path`
+                    const elements = node.matches?.("[data-path]") 
+                        ? [node] 
+                        : Array.from(node.querySelectorAll("[data-path]"));
+
+                    for (const el of elements) {
+                        const path = el.getAttribute("data-path");
+                        if (!path) continue;
+
+                        const iconName = iconize.getIconNameFromPath(path);
+                        if (iconName) {
+                            // Use Iconize’s internal DOM logic to apply the icon
+                            iconize.api.util.dom.createIconNode(iconize, path, iconName);
+                        }
+                    }
+                }
+            }
+        });
+
+        // Observe only the file explorer container
+        observer.observe(explorerRoot, { childList: true, subtree: true });
+    }
+%>

@@ -56,10 +56,22 @@ const path = getPath(location);
 
 if (result.status === 'ok') {
 
-    // Rename, move, & open new file; Fire toast notification
-    await tp.file.move(`Compendium/Atlas/${location ? `${path}/` : ''}${name}/${name}`);
-    await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
-    new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New locale <span style="text-decoration: underline;">${name}</span> added`;
+  // Rename file & open in new tab
+  const newPath = `Compendium/Atlas/${location ? `${path}/` : ''}${name}/${name}`;
+  await tp.file.move(newPath);
+  await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+
+  // Save & display file-explorer icons
+  const iconize = app.plugins.plugins["obsidian-icon-folder"];
+  const folderPath = newPath.replace(/\/[^/]+$/, "");
+  const notePath = `${newPath}.md`;
+  iconize.addFolderIcon(folderPath, icon.replace(/:/g, ''));
+  iconize.addFolderIcon(notePath, icon.replace(/:/g, ''));
+  iconize.api.util.dom.createIconNode(iconize, folderPath, icon.replace(/:/g, ''));
+  iconize.api.util.dom.createIconNode(iconize, notePath, icon.replace(/:/g, ''));
+
+  // Fire cancel toast notification
+  new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New locale <span style="text-decoration: underline;">${name}</span> added`;
 
 } else {
 
@@ -123,7 +135,7 @@ ___
 > >     displayName: Name
 > > views:
 > >   - type: table
-> >     name: Provinces
+> >     name: Landmarks
 > >     filters:
 > >       and:
 > >         - file.inFolder("Compendium/Atlas")

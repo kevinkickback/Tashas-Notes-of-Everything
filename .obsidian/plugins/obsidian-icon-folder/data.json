@@ -6,9 +6,19 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
-      "FasPersonRays"
+      "FasShield",
+      "FasTree",
+      "FasLandmark",
+      "FasChessRook",
+      "FasFlag",
+      "FasGlobe",
+      "FasCircleHalfStroke",
+      "FasWater",
+      "FasEarthAmericas",
+      "RiGlobalLine",
+      "LiBeer"
     ],
-    "recentlyUsedIconsSize": 1,
+    "recentlyUsedIconsSize": 12,
     "rules": [],
     "extraMargin": {
       "top": 0,
@@ -17,7 +27,7 @@
       "left": 0
     },
     "iconInTabsEnabled": false,
-    "iconInTitleEnabled": true,
+    "iconInTitleEnabled": false,
     "iconInFrontmatterEnabled": false,
     "iconInFrontmatterFieldName": "icon",
     "iconColorInFrontmatterFieldName": "iconColor",
@@ -25,7 +35,7 @@
     "iconsInNotesEnabled": true,
     "iconsInLinksEnabled": false,
     "iconIdentifier": ":",
-    "debugMode": true,
+    "debugMode": false,
     "iconInTitlePosition": "above",
     "lucideIconPackType": "native",
     "useInternalPlugins": false
@@ -54,5 +64,10 @@
   "Compendium/Lore/Events": "FasCalendar",
   "Compendium/Lore/Objects": "FasWandMagicSparkles",
   "Compendium/Lore/Organizations": "LiNetwork",
-  "Compendium/Lore/Deities": "FasPersonRays"
+  "Compendium/Lore/Deities": "FasPersonRays",
+  "Compendium/Atlas/We in there": "FasCircleHalfStroke",
+  "Compendium/Atlas/We in there/We in there.md": "FasCircleHalfStroke",
+  "Compendium/Atlas/what": "FasCircleHalfStroke",
+  "Compendium/Atlas/what/what.md": "FasCircleHalfStroke",
+  "Compendium/Atlas/TEST REALM 2": "RiGlobalLine"
 }

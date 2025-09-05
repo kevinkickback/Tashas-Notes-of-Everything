@@ -7,9 +7,8 @@
 function getIcon(type) {
 	const iconMappings = {
 		Continent: ':FasEarthAmericas:',
-		Ocean: ":FasWater:",
+		Ocean: ':FasWater:',
 	};
-
 	return iconMappings[type] || ':fas_question:';
 }
 
@@ -20,7 +19,6 @@ function getPath(location) {
 		.where(p => p.type === 'realm' && p.file.name === location)
 		.map(obj => obj.file.path.split('/').slice(2, -1).join('/'))
 		.find(Boolean);
-
 	return match || '';
 }
 
@@ -37,17 +35,28 @@ const icon = getIcon(type);
 const path = getPath(location);
 
 if (result.status === 'ok') {
+  // Rename file & open in new tab
+  const newPath = `Compendium/Atlas/${location ? `${path}/` : ''}${name}/${name}`;
+  await tp.file.move(newPath);
+  await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
 
-    // Rename file & open in new tab; Fire toast notification
-    await tp.file.move(`Compendium/Atlas/${location ? `${path}/` : ''}${name}/${name}`);
-    await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
-    new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New ${type ? type.toLowerCase() : 'location'} <span style="text-decoration: underline;">${name}</span> added`;
+  // Save & display file-explorer icons
+  const iconize = app.plugins.plugins["obsidian-icon-folder"];
+  const folderPath = newPath.replace(/\/[^/]+$/, "");
+  const notePath = `${newPath}.md`;
+  iconize.addFolderIcon(folderPath, icon.replace(/:/g, ''));
+  iconize.addFolderIcon(notePath, icon.replace(/:/g, ''));
+  iconize.api.util.dom.createIconNode(iconize, folderPath, icon.replace(/:/g, ''));
+  iconize.api.util.dom.createIconNode(iconize, notePath, icon.replace(/:/g, ''));
+
+  // Fire success toast notification
+  new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New realm <span style="text-decoration: underline;">${name}</span> added`;
 
 } else {
 
-    // Fire toast notification & exit templater
-    new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Location has not been added`;
-    return;
+  // Fire cancel toast notification
+  new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Realm has not been added`;
+  return;
 }
 _%>
 
@@ -105,7 +114,7 @@ ___
 > >     displayName: Name
 > > views:
 > >   - type: table
-> >     name: Provinces
+> >     name: Territories
 > >     filters:
 > >       and:
 > >         - file.inFolder("Compendium/Atlas")

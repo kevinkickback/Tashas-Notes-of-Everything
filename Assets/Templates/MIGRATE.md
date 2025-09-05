@@ -106,138 +106,11 @@ const loreType = [
 
 // Define migration rules for all types
 const migrationText = {
-  landmark: [
-    { find: /^headerLink:\s*".*"\s*\n?/m, replace: "" },
-    { find: /\[\[([^\]\|#]+)(#[^\]\|]+)?(\|[^\]]+)?\]\]/g, replace: "[[$1$3]]" },
-    {
-      find: /#### marker[\s\S]+?>>\s*\[!note\]- HISTORY[\s\S]+?SORT file\.ctime DESC[\s\S]*?/g,
-      replace: `> [!column|flex 3]
->> [!hint]- NPC's
->> \`\`\`base
->> properties:
->>   file.name:
->>     displayName: Name
->> views:
->>   - type: table
->>     name: Name
->>     filters:
->>       and:
->>         - file.inFolder("Compendium/NPC's")
->>         - file.hasLink(this.file)
->> \`\`\`
->
->> [!note]- HISTORY
->> \`\`\`base
->> properties:
->>   file.name:
->>     displayName: Name
->> views:
->>   - type: table
->>     name: Session Notes
->>     filters:
->>       and:
->>         - file.inFolder("Session Notes")
->>         - file.hasLink(this.file)
->> \`\`\``
-    }
-  ],
-  npc: [
-    { find: /^headerLink:\s*".*"\s*\n?/m, replace: "" },
-    { find: /\[\[([^\]\|#]+)(#[^\]\|]+)?(\|[^\]]+)?\]\]/g, replace: "[[$1$3]]" },
-    {
-      find: /#### marker[\s\S]+?>>\s*\[!note\]- HISTORY[\s\S]+?FROM "Session Notes" AND \[\[.*?\]\][\s\S]*?/g,
-      replace: `> [!column|flex 3]
->> [!important]- QUESTS:
->> \`\`\`base
->> properties:
->>   file.name:
->>     displayName: Name
->> views:
->>   - type: table
->>     name: Name
->>     filters:
->>       and:
->>         - file.inFolder("Compendium/Party/Quests")
->>         - file.hasLink(this.file)
->>     order:
->>       - file.name
->> \`\`\`
->
->> [!note]- HISTORY
->> \`\`\`base
->> properties:
->>   file.name:
->>     displayName: Name
->> views:
->>   - type: table
->>     name: Session Notes
->>     filters:
->>       and:
->>         - file.inFolder("Session Notes")
->>         - file.hasLink(this.file)
->> \`\`\``
-    }
-  ],
-  pc: [
-    { find: /^headerLink:\s*".*"\s*\n?/m, replace: "" },
-    { find: /\[\[([^\]\|#]+)(#[^\]\|]+)?(\|[^\]]+)?\]\]/g, replace: "[[$1$3]]" },
-    {
-      find: /#### marker[\s\S]+?>>\s*\[!note\]- HISTORY[\s\S]+?SORT file\.ctime DESC[\s\S]*?/g,
-      replace: `> [!column|flex 3]
->> [!important]- STORYLINES:
->> \`\`\`base
->> properties:
->>   file.name:
->>     displayName: Name
->> views:
->>   - type: table
->>     name: Name
->>     filters:
->>       and:
->>         - file.inFolder("Compendium/Party/Quests")
->>         - file.hasLink(this.file)
->>     order:
->>       - file.name
->> \`\`\`
->
->> [!note]- HISTORY
->> \`\`\`base
->> properties:
->>   file.name:
->>     displayName: Name
->> views:
->>   - type: table
->>     name: Session Notes
->>     filters:
->>       and:
->>         - file.inFolder("Session Notes")
->>         - file.hasLink(this.file)
->> \`\`\``
-    }
-  ],
-  quest: [
-    { find: /^headerLink:\s*".*"\s*\n?/m, replace: "" },
-    { find: /\[\[([^\]\|#]+)(#[^\]\|]+)?(\|[^\]]+)?\]\]/g, replace: "[[$1$3]]" },
-    {
-      find: /#### marker[\s\S]+?>>\s*\[!note\]- HISTORY[\s\S]+?FROM "Session Notes" AND \[\[.*?\]\][\s\S]*?/g,
-      replace: `> [!column|flex 3]
->> [!note]- HISTORY
->> \`\`\`base
->> properties:
->>   file.name:
->>     displayName: Name
->> views:
->>   - type: table
->>     name: Session Notes
->>     filters:
->>       and:
->>         - file.inFolder("Session Notes")
->>         - file.hasLink(this.file)
->> \`\`\``
-    }
-  ],
+  landmark: locationType,
+  npc: loreType,
+  pc: locationType,
+  quest: loreType,
   notes: [
-    // For notes type, the date-handling logic is done below, so only apply these:
     { find: /^headerLink:\s*".*"\s*\n?/m, replace: "" },
     { find: /####\s*marker/g, replace: "" },
     { find: /\[\[([^\]\|#]+)(#[^\]\|]+)?(\|[^\]]+)?\]\]/g, replace: "[[$1$3]]" },
@@ -269,7 +142,7 @@ function parseFrontmatter(content) {
   if (!match) return null;
   const yaml = match[1];
   try {
-    return app.plugins.plugins["metaedit"]?.yaml.parse(yaml) || YAML.parse(yaml);
+    return YAML.parse(yaml);
   } catch {
     return null;
   }
@@ -278,7 +151,7 @@ function parseFrontmatter(content) {
 // Serialize frontmatter object back to YAML string
 function serializeFrontmatter(obj) {
   try {
-    return app.plugins.plugins["metaedit"]?.yaml.stringify(obj) || YAML.stringify(obj);
+    return YAML.stringify(obj);
   } catch {
     return null;
   }
@@ -309,11 +182,10 @@ for (const file of files) {
 
   const content = await vault.read(file);
   let updated = content;
-  let matchedRules = []; // always initialized
+  let matchedRules = [];
 
   // Get type of note (case-insensitive)
   const type = getType(content)?.toLowerCase();
-
 
   // Apply type-specific migration rules
   if (type && migrationText[type]) {
@@ -333,7 +205,6 @@ for (const file of files) {
       const newName = fileName.replace(dateSuffixRegex, ""); // strip the date suffix
       const newPath = file.parent.path + "/" + newName + ".md";
 
-      // Extract YAML frontmatter manually
       const fmMatch = updated.match(/^---\n([\s\S]*?)\n---/);
       if (!fmMatch) {
         matchedRules.push("⚠️ No frontmatter block found in " + fileName);
@@ -341,11 +212,9 @@ for (const file of files) {
         let yamlBlock = fmMatch[1];
 
         if (/^date:/m.test(yamlBlock)) {
-          // Update existing date
           yamlBlock = yamlBlock.replace(/^date:.*/m, `date: ${extractedDate}`);
           matchedRules.push(`Updated frontmatter date to ${extractedDate}`);
         } else {
-          // Add new date at the bottom of the block
           yamlBlock = yamlBlock + `\ndate: ${extractedDate}`;
           matchedRules.push(`Added frontmatter date at bottom: ${extractedDate}`);
         }
@@ -354,15 +223,10 @@ for (const file of files) {
         updated = updated.replace(/^---\n([\s\S]*?)\n---/, newYaml);
       }
 
-      candidates.push({
-        file,
-        newContent: updated,
-        newPath
-      });
+      candidates.push({ file, newContent: updated, newPath });
       continue;
     }
   }
-
 
   // Track files with changes
   if (updated !== content) {

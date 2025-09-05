@@ -3,22 +3,32 @@
 //                        Main Code Section
 // ###########################################################
 
-// Call modal form & declare variables
 const result = await MF.openForm('PLANE');
 const name = result.Name.value;
 
 if (result.status === 'ok') {
+  // Rename file & open in new tab
+  const newPath = `Compendium/Atlas/${name}/${name}`;
+  await tp.file.move(newPath);
+  await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
 
-    // Rename file & open in new tab; Fire toast notification
-    await tp.file.move(`Compendium/Atlas/${name}/${name}`);
-    await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
-    new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New plane <span style="text-decoration: underline;">${name}</span> added`;
+  // Save & display file-explorer icons
+  const iconize = app.plugins.plugins["obsidian-icon-folder"];
+  const folderPath = newPath.replace(/\/[^/]+$/, "");
+  const notePath = `${newPath}.md`;
+  iconize.addFolderIcon(folderPath, "FasCircleHalfStroke");
+  iconize.addFolderIcon(notePath, "FasCircleHalfStroke");
+  iconize.api.util.dom.createIconNode(iconize, folderPath, "FasCircleHalfStroke");
+  iconize.api.util.dom.createIconNode(iconize, notePath, "FasCircleHalfStroke");
+
+  //Fire success toast notification
+  new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New plane <span style="text-decoration: underline;">${name}</span> added`;
 
 } else {
 
-    // Fire toast notification & exit templater
-    new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Plane has not been added`;
-    return;
+  // Fire cancel toast notification & exit templater
+  new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Plane has not been added`;
+  return;
 }
 _%>
 
@@ -73,7 +83,7 @@ ___
 > >     displayName: Name
 > > views:
 > >   - type: table
-> >     name: Provinces
+> >     name: Realms
 > >     filters:
 > >       and:
 > >         - file.inFolder("Compendium/Atlas")
