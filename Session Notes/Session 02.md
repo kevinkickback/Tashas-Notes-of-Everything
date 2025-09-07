@@ -7,7 +7,7 @@ tags:
   - rest/long
   - rest/short
   - puzzle
-date: 2024-02-17
+date: 2025-02-17
 ---
 
 ![[session.png|banner]]

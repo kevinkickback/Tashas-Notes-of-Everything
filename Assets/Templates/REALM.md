@@ -45,7 +45,7 @@ if (result.status === 'ok') {
 
 } else {
 
-  // Fire cancel toast notification & exit
+  // Fire cancel toast notification
   new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Realm has not been added`;
   return;
 }

@@ -64,12 +64,12 @@ if (result.status === 'ok') {
   iconize.api.util.dom.createIconNode(iconize, folderPath, icon.replace(/:/g, ''));
   iconize.api.util.dom.createIconNode(iconize, notePath, icon.replace(/:/g, ''));
 
-  // Fire cancel toast notification
+  // Fire success toast notification
   new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New territory <span style="text-decoration: underline;">${name}</span> added`;
 
 } else {
 
-  // Fire toast notification & exit
+  // Fire cancel toast notification
   new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Territory has not been added`;
   return;
 }

@@ -23,7 +23,7 @@ ___
 > |  :FasUserGroup: Race |  `=this.race`|
 
 > [!quote|no-t]
-> Tilda Rosesong, a fiery tiefling sorcerer hailing from [[Waterdeep]], channels the arcane forces with unmatched intensity and finesse within the adventuring party [[LASTSTAND]]. Her mysterious origins and powerful magic make her both a valuable ally and a formidable adversary.
+> Tilda Rosesong, a fiery tiefling sorcerer hailing from [[Waterdeep]], channels the arcane forces with unmatched intensity and finesse within the adventuring party [[LASTSTAND]]. Her mysterious origins and powerful magic make her both a valuable ally and a formidable adversary. She is also the wielder of [[Deck of Many Things|The Deck of Many Things]]
 
 > [!column|flex 3]
 >> [!important]- STORYLINES:

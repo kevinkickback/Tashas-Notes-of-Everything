@@ -11,14 +11,22 @@ const location = result.Location.value;
 
 if (result.status === 'ok') {
 
-    // Rename file & open in new tab; Fire toast notification
+    // Rename file & open in new tab
     await tp.file.rename(name);
     await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+
+    // Save & display file-explorer icons
+    const iconize = app.plugins.plugins["obsidian-icon-folder"];
+    const notePath = `Compendium/Lore/Organizations/${name}.md`;
+    iconize.addFolderIcon(notePath, "LiVenetianMask");
+    iconize.api.util.dom.createIconNode(iconize, notePath, "LiVenetianMask");
+
+    // Fire success toast notification
     new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New organization <span style="text-decoration: underline;">${name}</span> added`;
 
 } else {
 
-    // Fire toast notification & exit templater
+   // Fire cancel toast notification
     new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Organization has not been added`;
     return;
 }

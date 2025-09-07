@@ -39,14 +39,22 @@ const tags = formatTags(affinity, job, race);
 
 if (result.status === 'ok') {
 
-    // Rename file & open in new tab; Fire toast notification
+    // Rename file & open in new tab
     await tp.file.rename(name);
     await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+
+    // Save & display file-explorer icons
+    const iconize = app.plugins.plugins["obsidian-icon-folder"];
+    const notePath = `Compendium/NPC's/${name}.md`;
+    iconize.addFolderIcon(notePath, "RiContactsFill");
+    iconize.api.util.dom.createIconNode(iconize, notePath, "RiContactsFill");
+
+    // Fire success toast notification
     new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New NPC <span style="text-decoration: underline;">${name}</span> added`;
 
 } else {
 
-    // Fire toast notification & exit templater
+    // Fire cancel toast notification
     new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>NPC has not been added`;
     return;
 }

@@ -26,7 +26,7 @@ if (result.status === 'ok') {
 
 } else {
 
-  // Fire cancel toast notification & exit templater
+  // Fire cancel toast notification
   new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Plane has not been added`;
   return;
 }

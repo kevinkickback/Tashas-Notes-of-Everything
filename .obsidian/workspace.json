@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e6508e93fc8d9f99",
+            "id": "bcee654b9fe06502",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -21,8 +21,39 @@
               "icon": "lucide-file",
               "title": "INDEX"
             }
+          },
+          {
+            "id": "1881c019fbc3bdef",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "INDEX.md",
+                "mode": "preview",
+                "source": true,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "INDEX"
+            }
+          },
+          {
+            "id": "d51c41553a715e21",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Assets/Templates/CONTINENT.md",
+                "mode": "preview",
+                "source": true,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "CONTINENT"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -159,44 +190,46 @@
       "modalforms:Edit forms": false
     }
   },
-  "active": "e6508e93fc8d9f99",
+  "active": "1881c019fbc3bdef",
   "lastOpenFiles": [
-    "Assets/Templates/MIGRATE.md",
-    "INDEX.md",
-    "Compendium/NPC's/Eleidin Verlice.md",
-    "Session Notes/Session 01.md",
-    "Compendium/Party/Player Characters/Alaric Waycrest.md",
-    "Assets/Templates/TERRITORY.md",
-    "Assets/Templates/LANDMARK.md",
+    "changelog.md",
     "Convert Notes to v3.md",
-    "Session Notes/Session 02.md",
-    "README.md",
-    "Compendium/Atlas/TEST PLANE 1/TEST PLANE 1.md",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 5/TEST PROV 6/TEST LOCALE 7/TEST LAND 8/TEST LAND 8.md",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 5/TEST PROV 6/TEST LOCALE 7/TEST LOCALE 7.md",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 5/TEST PROV 6/TEST PROV 6.md",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 5/TEST TERR 5.md",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST CONT 3.md",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST REALM 2.md",
+    "Compendium/Party/Quests/Take Five.md",
+    "INDEX.md",
+    "Compendium/Party/Player Characters/Tilda Rosesong.md",
+    "Compendium/Party/Player Characters/Moira Belkas.md",
+    "Compendium/Party/Player Characters/Kingston Yashkar.md",
+    "Compendium/Party/Player Characters/Alaric Waycrest.md",
+    "Compendium/Lore/Objects/Deck of Many Things.md",
+    "Compendium/Lore/Events/Fey Day.md",
+    "Assets/Templates/TERRITORY.md",
+    "Assets/Templates/STARTUP.md",
+    "Assets/Templates/REALM.md",
+    "Assets/Templates/QUEST.md",
+    "Assets/Templates/PROVINCE.md",
+    "Assets/Templates/PLAYER.md",
+    "Assets/Templates/PLANE.md",
+    "Assets/Templates/ORGANIZATION.md",
+    "Assets/Templates/OBJECT.md",
+    "Assets/Templates/NPC.md",
+    "Assets/Templates/NOTE.md",
+    "Assets/Templates/MIGRATE.md",
+    "Assets/Templates/LOCALE.md",
+    "Assets/Templates/LANDMARK.md",
+    "Assets/Templates/GOD.md",
+    "Assets/Templates/EVENT.md",
+    "Assets/Images/Lore/Deck_of_many_things.jpg",
+    "Assets/Images/Lore/FeyDay.jpg",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/Western Heartlands/Sword Coast/Waterdeep/bar",
     "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 5/TEST PROV 6/TEST LOCALE 7/TEST LAND 8",
     "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 5/TEST PROV 6/TEST LOCALE 7",
     "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 5/TEST PROV 6",
     "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 5",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 4/TEST TERR 4.md",
     "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 4",
     "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3",
     "Compendium/Atlas/TEST PLANE 1/TEST REALM 2",
-    "Compendium/Atlas/Material Plane/Material Plane.md",
     "Compendium/Atlas/TEST PLANE 1",
-    "Assets/Templates/PLANE.md",
-    "Assets/Templates/PROVINCE.md",
-    "Assets/Templates/LOCALE.md",
-    "Assets/Templates/REALM.md",
-    "Assets/Templates/CONTINENT.md",
-    "Assets/Templates/STARTUP.md",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/we did lmao/we did lmao.md",
     "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/we did lmao",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/we dont",
     "Assets/Images/header.png",
     "Assets/Images/Location/baldursGate.webp",
     "Assets/Images/Location/sorcSundries.jpg",

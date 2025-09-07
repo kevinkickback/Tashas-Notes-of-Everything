@@ -27,14 +27,22 @@ const tags = domains ? domains.map(value => `- domain/${toCamelCase(value)}`).jo
 
 if (result.status === 'ok') {
 
-    // Rename file & open in new tab; Fire toast notification
+    // Rename file & open in new tab
     await tp.file.rename(name);
     await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+
+    // Save & display file-explorer icons
+    const iconize = app.plugins.plugins["obsidian-icon-folder"];
+    const notePath = `Compendium/Lore/Deities/${name}.md`;
+    iconize.addFolderIcon(notePath, "RiCrossFill");
+    iconize.api.util.dom.createIconNode(iconize, notePath, "RiCrossFill");
+
+    // Fire success toast notification
     new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New deity <span style="text-decoration: underline;">${name}</span> added`;
 
 } else {
 
-    // Fire toast notification & exit templater
+    // Fire cancel toast notification
     new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Deity has not been added`;
     return;
 }
