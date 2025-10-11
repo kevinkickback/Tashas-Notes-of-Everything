@@ -49,7 +49,7 @@ ___
 >>     displayName: Name
 >> views:
 >>   - type: table
->>     name: Provinces
+>>     name: Landmarks
 >>     filters:
 >>       and:
 >>         - file.inFolder("Compendium/Atlas")

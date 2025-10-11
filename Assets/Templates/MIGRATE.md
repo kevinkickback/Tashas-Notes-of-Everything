@@ -45,7 +45,7 @@ const locationType = [
 >>     displayName: Name
 >> views:
 >>   - type: table
->>     name: Provinces
+>>     name: Locations
 >>     filters:
 >>       and:
 >>         - file.inFolder("Compendium/Atlas")

@@ -23,7 +23,7 @@ views:
     image: note.cover
     imageAspectRatio: 1.15
     imageFit: ""
-    cardSize: 300
+    cardSize: 310
 
 ```
 

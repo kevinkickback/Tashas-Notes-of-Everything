@@ -47,7 +47,7 @@ ___
 >>     displayName: Name
 >> views:
 >>   - type: table
->>     name: Provinces
+>>     name: Realms
 >>     filters:
 >>       and:
 >>         - file.inFolder("Compendium/Atlas")
