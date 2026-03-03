@@ -1,51 +1,36 @@
 <%*
-// ###########################################################
-//                        Helper Functions
-// ###########################################################
+const { toCamelCase, moveAndOpenFile } = tp.user.utils;
 
-// Convert string to camelCase
-function toCamelCase(str) {
-  return str
-    .replace(/(?:^\w|[A-Z]|\b\w|\s+|[-_])/g, (match, index) =>
-      index === 0 ? match.toLowerCase() : match.toUpperCase()
-    )
-    .replace(/[\s-_]+/g, '');
+// Open modal form for deity creation
+const result = await MF.openForm('GOD');
+
+// Cancel if form was closed without submission
+if (result.status !== 'ok') {
+    new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Deity has not been added`;
+    return;
 }
 
-// ###########################################################
-//                        Main Code Section
-// ###########################################################
-
-// Call modal form & declare variables
-const result = await MF.openForm('GOD');
+// Declare & normalize variables
 const alignment = result.Alignment.value;
 const name = result.Name.value;
 const gender = result.Gender.value;
 const domains = result.Domains.value;
 const pantheon = result.Pantheon.value;
+const portrait = result.Portrait.value;
 const tags = domains ? domains.map(value => `- domain/${toCamelCase(value)}`).join("\n") : '-';
 
-if (result.status === 'ok') {
+// Rename & open note in new tab
+await moveAndOpenFile(tp, name);
 
-    // Rename file & open in new tab
-    await tp.file.rename(name);
-    await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
+// Apply icon to note
+const iconize = app.plugins.plugins["obsidian-icon-folder"];
+const icon = "RiCrossFill"
+const notePath = `Compendium/Lore/Deities/${name}.md`;
+iconize.addFolderIcon(notePath, icon);
+iconize.api.util.dom.createIconNode(iconize, notePath, icon);
 
-    // Save & display file-explorer icons
-    const iconize = app.plugins.plugins["obsidian-icon-folder"];
-    const notePath = `Compendium/Lore/Deities/${name}.md`;
-    iconize.addFolderIcon(notePath, "RiCrossFill");
-    iconize.api.util.dom.createIconNode(iconize, notePath, "RiCrossFill");
-
-    // Fire success toast notification
-    new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New deity <span style="text-decoration: underline;">${name}</span> added`;
-
-} else {
-
-    // Fire cancel toast notification
-    new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Deity has not been added`;
-    return;
-}
+// Show success notification
+new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New deity <span style="text-decoration: underline;">${name}</span> added`;
 _%>
 
 ---
@@ -59,13 +44,13 @@ tags:
 ___
 
 > [!infobox|no-t right]
-> ![[portrait.jpg]]
+> <% portrait ? `![[${portrait}]]` : '![[portrait.jpg]]' %> 
 > ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
-> | :FasBoltLightning: Domains | <% domains ? domains.join(', ') : '' %> |
+> | :FasBoltLightning: Domains | <% domains ? domains.join('<br>') : '' %> |
 > | :FasVenusMars: Gender | <% gender ? gender : '' %> |
-> | :FasBuildingColumns: Pantheon | <% pantheon ? pantheon : '' %> |
+> | :FasBuildingColumns: Pantheon | <% pantheon ? pantheon.join('<br>') : '' %> |
 
 > [!quote|no-t]
 >Profile of <% name %>, the <% alignment ? alignment.toLowerCase() : '' %> <% gender ? gender.toLowerCase() : '' %> deity.

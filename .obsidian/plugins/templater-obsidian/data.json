@@ -11,7 +11,7 @@
   "auto_jump_to_cursor": false,
   "enable_system_commands": false,
   "shell_path": "",
-  "user_scripts_folder": "",
+  "user_scripts_folder": "Assets/Templates",
   "enable_folder_templates": true,
   "folder_templates": [
     {
@@ -34,5 +34,6 @@
   "startup_templates": [
     "Assets/Templates/STARTUP.md"
   ],
+  "intellisense_render": 1,
   "enable_ribbon_icon": false
 }

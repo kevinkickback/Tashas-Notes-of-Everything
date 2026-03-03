@@ -6,18 +6,18 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
-      "RiContactsFill",
       "RiSwordFill",
-      "FasMoon",
-      "Artificer",
-      "FasExclamation",
       "LiVenetianMask",
-      "FasPeopleGroup",
       "FasWandMagicSparkles",
-      "RiSunFoggyFill",
-      "FasCross",
-      "FasGhost",
-      "RiShoppingCartFill"
+      "LiNoteBookPen",
+      "RiCrossFill",
+      "FasBullhorn",
+      "FasCampground",
+      "FasHammer",
+      "FasQuestion",
+      "FasTowerObservation",
+      "FasSun",
+      "FasMound"
     ],
     "recentlyUsedIconsSize": 12,
     "rules": [],
@@ -100,5 +100,9 @@
   "Compendium/NPC's/Eleidin Verlice.md": "RiContactsFill",
   "Compendium/NPC's/Paloma Beltre.md": "RiContactsFill",
   "Compendium/NPC's/Rythe Sterling.md": "RiContactsFill",
-  "Compendium/NPC's/Tinkera Drenn.md": "RiContactsFill"
+  "Compendium/NPC's/Tinkera Drenn.md": "RiContactsFill",
+  "Compendium/Atlas//asdfadsf": "FasMound",
+  "Compendium/Atlas//asdfadsf/asdfadsf.md": "FasMound",
+  "Compendium/Atlas//qweqweqwe": "FasSun",
+  "Compendium/Atlas//qweqweqwe/qweqweqwe.md": "FasSun"
 }

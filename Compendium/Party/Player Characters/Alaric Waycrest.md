@@ -1,13 +1,18 @@
 ---
 type: pc
-tags:
-- race/halfOrc
-- class/fighter
-level: "3"
+level: "4"
 race: "Half-Orc"
-class: "Fighter"
-subClass: "Battle Master"
-cover: "/Assets/Images/Party/alaric.png"
+class:
+- "Fighter"
+- "Rogue"
+subClass:
+  - "Battle Master"
+  - "Swashbuckler"
+cover: /Assets/Images/Party/alaric.png
+tags:
+  - race/halfOrc
+  - class/fighter
+  - class/rogue
 ---
 
 ###### Alaric Waycrest
@@ -19,8 +24,8 @@ ___
 > | Type | Stat |
 > | ---- | ---- |
 > | :FasCrown: Level   | `=this.level` |
-> | :RiSwordFill: Class |  `=this.class`|
-> | :FasUserShield: Archetype |  `=this.subClass`|
+> | :RiSwordFill: Class | `=join(this.class, "<br>")`|
+> | :FasFireFlameCurved: Archetype |  `=join(this.subClass, "<br>")`|
 > |  :FasUserGroup: Race |  `=this.race`|
 
 > [!quote|no-t]

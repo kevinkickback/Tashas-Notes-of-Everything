@@ -1,5 +1,5 @@
 /*
-    Prism Theme for Obsidian.md (Version: 3.6.0)
+    Prism Theme for Obsidian.md (Version: 3.8.0)
     > A Comprehensive, Highly-Customisable and Elegant Light/Dark Theme for Obsidian.md
 
     Source: https://github.com/damiankorcz/Obsidian-Prism
@@ -18,7 +18,7 @@
     Theme Code is distributed under the MIT License.
     See https://github.com/damiankorcz/Obsidian-Prism/blob/main/LICENSE for more information.
 
-    Copyright (c) 2021-2024 Damian Korcz <https://github.com/damiankorcz>
+    Copyright (c) 2021-2026 Damian Korcz <https://github.com/damiankorcz>
 */
 .theme-light,
 .theme-light.pt-color-scheme-custom-lt,
@@ -63,7 +63,8 @@
   --background-secondary-alt-hsl: 0, 0%, 69%;
   --shadow-color-hsl: 0, 0%, 0%;
   --shadow-s: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px 0;
-  --shadow-l: hsla(var(--shadow-color-hsl), 3%) 0 1px 2px, hsla(var(--shadow-color-hsl), 3%) 0 2px 4px, hsla(var(--shadow-color-hsl), 3%) 0 4px 8px, hsla(var(--shadow-color-hsl), 3%) 0 6px 12px;
+  --shadow-l: hsla(var(--shadow-color-hsl), 3%) 0 1px 2px, hsla(var(--shadow-color-hsl), 3%) 0 2px 4px,
+  	hsla(var(--shadow-color-hsl), 3%) 0 4px 8px, hsla(var(--shadow-color-hsl), 3%) 0 6px 12px;
 }
 
 .theme-dark,
@@ -109,7 +110,8 @@
   --background-secondary-alt-hsl: 0, 0%, 8%;
   --shadow-color-hsl: 0, 0%, 0%;
   --shadow-s: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px 0;
-  --shadow-l: hsla(var(--shadow-color-hsl), 5%) 0 1px 2px, hsla(var(--shadow-color-hsl), 5%) 0 2px 4px, hsla(var(--shadow-color-hsl), 5%) 0 4px 8px, hsla(var(--shadow-color-hsl), 5%) 0 6px 12px;
+  --shadow-l: hsla(var(--shadow-color-hsl), 5%) 0 1px 2px, hsla(var(--shadow-color-hsl), 5%) 0 2px 4px,
+  	hsla(var(--shadow-color-hsl), 5%) 0 4px 8px, hsla(var(--shadow-color-hsl), 5%) 0 6px 12px;
 }
 
 .theme-light.pt-color-scheme-latte-lt {
@@ -153,7 +155,8 @@
   --background-secondary-alt-hsl: 28, 42%, 66%;
   --shadow-color-hsl: 28, 42%, 7%;
   --shadow-s: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px 0;
-  --shadow-l: hsla(var(--shadow-color-hsl), 4%) 0 1px 2px, hsla(var(--shadow-color-hsl), 4%) 0 2px 4px, hsla(var(--shadow-color-hsl), 4%) 0 4px 8px, hsla(var(--shadow-color-hsl), 4%) 0 6px 12px;
+  --shadow-l: hsla(var(--shadow-color-hsl), 4%) 0 1px 2px, hsla(var(--shadow-color-hsl), 4%) 0 2px 4px,
+  	hsla(var(--shadow-color-hsl), 4%) 0 4px 8px, hsla(var(--shadow-color-hsl), 4%) 0 6px 12px;
 }
 
 .theme-dark.pt-color-scheme-mocha-dt {
@@ -197,7 +200,8 @@
   --background-secondary-alt-hsl: 25, 40%, 8%;
   --shadow-color-hsl: 25, 40%, 7%;
   --shadow-s: hsla(var(--shadow-color-hsl), 50%) 0 1px 2px 0;
-  --shadow-l: hsla(var(--shadow-color-hsl), 50%) 0 1px 2px, hsla(var(--shadow-color-hsl), 50%) 0 2px 4px, hsla(var(--shadow-color-hsl), 50%) 0 4px 8px, hsla(var(--shadow-color-hsl), 50%) 0 6px 12px;
+  --shadow-l: hsla(var(--shadow-color-hsl), 50%) 0 1px 2px, hsla(var(--shadow-color-hsl), 50%) 0 2px 4px,
+  	hsla(var(--shadow-color-hsl), 50%) 0 4px 8px, hsla(var(--shadow-color-hsl), 50%) 0 6px 12px;
 }
 
 .theme-light.pt-color-scheme-periwinkle-lt {
@@ -241,7 +245,8 @@
   --background-secondary-alt-hsl: 221, 55%, 72%;
   --shadow-color-hsl: 221, 55%, 7%;
   --shadow-s: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px 0;
-  --shadow-l: hsla(var(--shadow-color-hsl), 4%) 0 1px 2px, hsla(var(--shadow-color-hsl), 4%) 0 2px 4px, hsla(var(--shadow-color-hsl), 4%) 0 4px 8px, hsla(var(--shadow-color-hsl), 4%) 0 6px 12px;
+  --shadow-l: hsla(var(--shadow-color-hsl), 4%) 0 1px 2px, hsla(var(--shadow-color-hsl), 4%) 0 2px 4px,
+  	hsla(var(--shadow-color-hsl), 4%) 0 4px 8px, hsla(var(--shadow-color-hsl), 4%) 0 6px 12px;
 }
 
 .theme-dark.pt-color-scheme-indigo-dt {
@@ -285,7 +290,8 @@
   --background-secondary-alt-hsl: 225, 40%, 9%;
   --shadow-color-hsl: 225, 40%, 7%;
   --shadow-s: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px 0;
-  --shadow-l: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px, hsla(var(--shadow-color-hsl), 10%) 0 2px 4px, hsla(var(--shadow-color-hsl), 10%) 0 4px 8px, hsla(var(--shadow-color-hsl), 10%) 0 6px 12px;
+  --shadow-l: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px, hsla(var(--shadow-color-hsl), 10%) 0 2px 4px,
+  	hsla(var(--shadow-color-hsl), 10%) 0 4px 8px, hsla(var(--shadow-color-hsl), 10%) 0 6px 12px;
 }
 
 .theme-light.pt-color-scheme-pistachio-lt {
@@ -329,7 +335,8 @@
   --background-secondary-alt-hsl: 101, 35%, 62%;
   --shadow-color-hsl: 101, 35%, 7%;
   --shadow-s: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px 0;
-  --shadow-l: hsla(var(--shadow-color-hsl), 4%) 0 1px 2px, hsla(var(--shadow-color-hsl), 4%) 0 2px 4px, hsla(var(--shadow-color-hsl), 4%) 0 4px 8px, hsla(var(--shadow-color-hsl), 4%) 0 6px 12px;
+  --shadow-l: hsla(var(--shadow-color-hsl), 4%) 0 1px 2px, hsla(var(--shadow-color-hsl), 4%) 0 2px 4px,
+  	hsla(var(--shadow-color-hsl), 4%) 0 4px 8px, hsla(var(--shadow-color-hsl), 4%) 0 6px 12px;
 }
 
 .theme-dark.pt-color-scheme-pine-dt {
@@ -373,7 +380,8 @@
   --background-secondary-alt-hsl: 123, 39%, 6%;
   --shadow-color-hsl: 123, 39%, 7%;
   --shadow-s: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px 0;
-  --shadow-l: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px, hsla(var(--shadow-color-hsl), 10%) 0 2px 4px, hsla(var(--shadow-color-hsl), 10%) 0 4px 8px, hsla(var(--shadow-color-hsl), 10%) 0 6px 12px;
+  --shadow-l: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px, hsla(var(--shadow-color-hsl), 10%) 0 2px 4px,
+  	hsla(var(--shadow-color-hsl), 10%) 0 4px 8px, hsla(var(--shadow-color-hsl), 10%) 0 6px 12px;
 }
 
 .theme-light.pt-color-scheme-peach-lt {
@@ -417,7 +425,8 @@
   --background-secondary-alt-hsl: 3, 55%, 74%;
   --shadow-color-hsl: 3, 55%, 7%;
   --shadow-s: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px 0;
-  --shadow-l: hsla(var(--shadow-color-hsl), 4%) 0 1px 2px, hsla(var(--shadow-color-hsl), 4%) 0 2px 4px, hsla(var(--shadow-color-hsl), 4%) 0 4px 8px, hsla(var(--shadow-color-hsl), 4%) 0 6px 12px;
+  --shadow-l: hsla(var(--shadow-color-hsl), 4%) 0 1px 2px, hsla(var(--shadow-color-hsl), 4%) 0 2px 4px,
+  	hsla(var(--shadow-color-hsl), 4%) 0 4px 8px, hsla(var(--shadow-color-hsl), 4%) 0 6px 12px;
 }
 
 .theme-dark.pt-color-scheme-cherry-dt {
@@ -461,7 +470,8 @@
   --background-secondary-alt-hsl: 2, 48%, 8%;
   --shadow-color-hsl: 2, 48%, 7%;
   --shadow-s: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px 0;
-  --shadow-l: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px, hsla(var(--shadow-color-hsl), 10%) 0 2px 4px, hsla(var(--shadow-color-hsl), 10%) 0 4px 8px, hsla(var(--shadow-color-hsl), 10%) 0 6px 12px;
+  --shadow-l: hsla(var(--shadow-color-hsl), 10%) 0 1px 2px, hsla(var(--shadow-color-hsl), 10%) 0 2px 4px,
+  	hsla(var(--shadow-color-hsl), 10%) 0 4px 8px, hsla(var(--shadow-color-hsl), 10%) 0 6px 12px;
 }
 
 /* Source Sans - Distributed under the SIL Open Font Licence 1.1 - https://github.com/adobe-fonts/source-sans/blob/release/LICENSE.md */
@@ -502,6 +512,7 @@ body {
   --window-border: 1px solid var(--window-border-color);
   --fade-away-opacity: 0.25;
   --fade-away-delay: 850ms;
+  --nav-header-padding-bottom: 40px;
   --custom-vault-banner-icon-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px'%0Awidth='40' height='40'%0AviewBox='0 0 40 40'%0Astyle=' fill:%23000000;'%3E%3Cpath fill='%23dbb065' d='M1.5 35.5L1.5 4.5 11.793 4.5 14.793 7.5 35.5 7.5 35.5 35.5z'%3E%3C/path%3E%3Cpath fill='%23967a44' d='M11.586,5l2.707,2.707L14.586,8H15h20v27H2V5H11.586 M12,4H1v32h35V7H15L12,4L12,4z'%3E%3C/path%3E%3Cg%3E%3Cpath fill='%23f5ce85' d='M1.599 35.5L5.417 14.5 16.151 14.5 19.151 12.5 39.41 12.5 35.577 35.5z'%3E%3C/path%3E%3Cpath fill='%23967a44' d='M38.82,13l-3.667,22H2.198l3.636-20H16h0.303l0.252-0.168L19.303,13H38.82 M40,12H19l-3,2H5L1,36 h35L40,12L40,12z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
   --mark-highlight-base: var(--color-yellow-base);
   --font-interface-theme: "Source Sans 3";
@@ -534,6 +545,17 @@ body {
   --text-error: var(--color-red-text);
   --text-accent: var(--interactive-accent-text);
   --text-on-accent-inverted: var(--text-normal);
+  --list-indent: 2em;
+  /* Source mode */
+  --list-indent-source: 0.75em;
+  --indentation-guide-source-indent: 0.85em;
+  --checkbox-margin-inline-start: var(--indentation-guide-editing-indent);
+  /* Live Preview */
+  --list-indent-editing: 0.75em;
+  --indentation-guide-editing-indent: 0.85em;
+  --list-bullet-end-padding: 3rem;
+  /* Reading mode */
+  --indentation-guide-reading-indent: -0.55em;
   --icon-color-focused: var(--interactive-accent-text);
   --background-modifier-error: var(--color-red-text);
   --background-modifier-border: var(--window-border-color);
@@ -552,13 +574,13 @@ body {
   --header-height: 41px;
   --input-height: 32px;
   --input-radius: var(--radius-s);
-  --toggle-thumb-height: 18px;
-  --toggle-thumb-width: 18px;
-  --toggle-border-width: 1px;
+  --toggle-thumb-height: 20px;
+  --toggle-thumb-width: 20px;
   --toggle-width: 42px;
-  --toggle-s-thumb-height: 14px;
-  --toggle-s-thumb-width: 14px;
-  --toggle-s-border-width: 4px;
+  --toggle-s-thumb-height: 18px;
+  --toggle-s-thumb-width: 18px;
+  --toggle-s-width: 44px;
+  --toggle-s-border-width: 1px;
   --divider-color-hover: var(--interactive-accent-tint);
   --file-header-font-size: var(--font-ui-medium);
   --vault-name-font-size: var(--font-ui-medium);
@@ -579,8 +601,9 @@ body {
   --embed-border-top: 1px solid var(--window-border-color);
   --embed-border-bottom: 1px solid var(--window-border-color);
   --embed-border-end: 1px solid var(--window-border-color);
-  --embed-padding: unset;
+  --embed-padding: var(--size-4-2) var(--size-4-4);
   --code-comment: var(--color-grey-text);
+  --code-border-width: 1px;
   --graph-controls-width: 150px;
   --pdf-shadow: unset;
   --pdf-thumbnail-shadow: unset;
@@ -590,8 +613,12 @@ body {
   --embed-max-height: 800px;
   --metadata-label-background-active: var(--background-secondary);
   --metadata-input-background-active: var(--background-secondary);
-  --status-bar-background-color-lt: #EBECEF;
-  --status-bar-background-color-dt: #2B2B2B;
+  --background-modifier-border-focus: var(--interactive-accent-tint);
+  --setting-items-radius: unset;
+  --setting-items-padding: var(--size-4-2);
+  --tab-radius-active: var(--radius-m);
+  --status-bar-background-color-lt: #ebecef;
+  --status-bar-background-color-dt: #2b2b2b;
 }
 body:is(.theme-light, .theme-dark) {
   --color-grey-base: hsl(var(--color-grey-base-hsl));
@@ -677,10 +704,18 @@ body.theme-light {
   --text-bold-color-lt: var(--text-normal);
   --text-italic-color-lt: var(--text-normal);
   --text-italic-bold-color-lt: var(--text-normal);
+  --strikethrough-text-color-lt: var(--text-muted);
+  --strikethrough-line-color-lt: var(--text-muted);
+  --underline-text-color-lt: var(--text-normal);
+  --underline-line-color-lt: var(--text-normal);
   --link-internal-color-lt: var(--interactive-accent-text-hsl);
   --link-external-color-lt: var(--interactive-accent-text-hsl);
   --bold-color: var(--text-bold-color-lt);
   --italic-color: var(--text-italic-color-lt);
+  --strikethrough-text-color: var(--strikethrough-text-color-lt);
+  --strikethrough-line-color: var(--strikethrough-line-color-lt);
+  --underline-text-color: var(--underline-text-color-lt);
+  --underline-line-color: var(--underline-line-color-lt);
   --link-color: hsl(var(--link-internal-color-lt));
   --link-color-hover: hsla(var(--link-internal-color-lt), 60%);
   --link-external-color: hsl(var(--link-external-color-lt));
@@ -705,6 +740,10 @@ body.theme-light {
   --graph-node-tag: var(--graph-tag-color-lt);
   --graph-node-attachment: var(--graph-attachment-color-lt);
   --graph-node-unresolved: var(--graph-unresolved-color-lt);
+  --bases-table-header-background: var(--background-primary);
+  --bases-table-cell-background-disabled: var(--background-primary-alt);
+  --bases-table-cell-background-active: var(--background-primary);
+  --setting-items-background: var(--background-primary);
   --graph-line-color-lt: var(--background-secondary-alt);
   --graph-fill-color-lt: var(--color-grey-tint);
   --graph-fill-focused-color-lt: var(--interactive-accent-tint);
@@ -855,10 +894,18 @@ body.theme-dark {
   --text-bold-color-dt: var(--text-normal);
   --text-italic-color-dt: var(--text-normal);
   --text-italic-bold-color-dt: var(--text-normal);
+  --strikethrough-text-color-dt: var(--text-muted);
+  --strikethrough-line-color-dt: var(--text-muted);
+  --underline-text-color-dt: var(--text-normal);
+  --underline-line-color-dt: var(--text-normal);
   --link-internal-color-dt: var(--interactive-accent-text-hsl);
   --link-external-color-dt: var(--interactive-accent-text-hsl);
   --bold-color: var(--text-bold-color-dt);
   --italic-color: var(--text-italic-color-dt);
+  --strikethrough-text-color: var(--strikethrough-text-color-dt);
+  --strikethrough-line-color: var(--strikethrough-line-color-dt);
+  --underline-text-color: var(--underline-text-color-dt);
+  --underline-line-color: var(--underline-line-color-dt);
   --link-color: hsl(var(--link-internal-color-dt));
   --link-color-hover: hsla(var(--link-internal-color-dt), 60%);
   --link-external-color: hsl(var(--link-external-color-dt));
@@ -896,6 +943,10 @@ body.theme-dark {
   --h4-text-color-dt: var(--text-normal);
   --h5-text-color-dt: var(--text-normal);
   --h6-text-color-dt: var(--text-normal);
+  --bases-table-header-background: var(--background-secondary-alt);
+  --bases-table-cell-background-disabled: var(--background-secondary);
+  --bases-table-cell-background-active: var(--background-secondary-alt);
+  --setting-items-background: var(--background-secondary-alt);
 }
 body.theme-dark.pt-color-scheme-style-border-dt {
   --background-secondary: var(--background-secondary-alt);
@@ -1030,7 +1081,7 @@ body.pt-titlebar-hide-text .titlebar .titlebar-text {
 
 .mod-windows .titlebar-button.mod-close:hover {
   color: hsl(0, 100%, 100%);
-  background-color: #C42B1C;
+  background-color: #c42b1c;
 }
 
 .is-hidden-frameless:not(.is-fullscreen) .titlebar-button-container.mod-right {
@@ -1097,13 +1148,9 @@ body.pt-titlebar-hide-text .titlebar .titlebar-text {
 .workspace-tab-header {
   padding: 0 var(--size-4-2);
   border: var(--accent-border-width) solid transparent;
-  border-radius: var(--radius-m);
 }
 .workspace-tab-header .workspace-tab-header-inner-close-button:hover svg {
   color: var(--interactive-accent-hover);
-}
-.workspace-tab-header.is-active {
-  border-radius: var(--radius-m);
 }
 .workspace-tab-header.is-active:hover .workspace-tab-header-inner-icon svg {
   color: var(--interactive-accent-hover);
@@ -1113,6 +1160,16 @@ body.pt-titlebar-hide-text .titlebar .titlebar-text {
 }
 .workspace-tab-header::before, .workspace-tab-header::after {
   display: none;
+}
+
+.mod-left-split .workspace-tab-header-container .workspace-tab-header,
+.mod-right-split .workspace-tab-header-container .workspace-tab-header {
+  border-radius: var(--radius-m);
+}
+.mod-left-split .workspace-tab-header-container .workspace-tab-header-container-inner,
+.mod-right-split .workspace-tab-header-container .workspace-tab-header-container-inner {
+  padding: unset;
+  margin: 4px;
 }
 
 .mod-root .workspace-tab-header-status-icon,
@@ -1182,10 +1239,6 @@ body.pt-titlebar-hide-text .titlebar .titlebar-text {
   border-left: var(--window-border);
 }
 
-.workspace-tab-header-spacer {
-  display: none;
-}
-
 .mod-root .workspace-tab-header-container-inner {
   margin-left: var(--size-4-1);
 }
@@ -1213,8 +1266,18 @@ body.pt-titlebar-hide-text .titlebar .titlebar-text {
 .pt-tab-label-left-sidebar-center .workspace-split.mod-left-split .workspace-tab-header-container {
   justify-content: center;
 }
+.pt-tab-label-left-sidebar-center .workspace-split.mod-left-split .workspace-tab-header-container .workspace-tab-header-spacer {
+  display: none;
+}
+.pt-tab-label-left-sidebar-center .workspace-split.mod-left-split .workspace-tab-header-container .workspace-tab-header-container-inner {
+  margin-left: auto;
+  margin-right: auto;
+}
 .pt-tab-label-left-sidebar-right .workspace-split.mod-left-split .workspace-tab-header-container {
   justify-content: flex-end;
+}
+.pt-tab-label-left-sidebar-right .workspace-split.mod-left-split .workspace-tab-header-container .workspace-tab-header-spacer {
+  display: none;
 }
 
 .pt-tab-label-right-sidebar-left .workspace-split.mod-right-split .workspace-tab-header-container {
@@ -1223,8 +1286,18 @@ body.pt-titlebar-hide-text .titlebar .titlebar-text {
 .pt-tab-label-right-sidebar-center .workspace-split.mod-right-split .workspace-tab-header-container {
   justify-content: center;
 }
+.pt-tab-label-right-sidebar-center .workspace-split.mod-right-split .workspace-tab-header-container .workspace-tab-header-spacer {
+  display: none;
+}
+.pt-tab-label-right-sidebar-center .workspace-split.mod-right-split .workspace-tab-header-container .workspace-tab-header-container-inner {
+  margin-left: auto;
+  margin-right: auto;
+}
 .pt-tab-label-right-sidebar-right .workspace-split.mod-right-split .workspace-tab-header-container {
   justify-content: flex-end;
+}
+.pt-tab-label-right-sidebar-right .workspace-split.mod-right-split .workspace-tab-header-container .workspace-tab-header-spacer {
+  display: none;
 }
 
 .nav-header {
@@ -1232,6 +1305,7 @@ body.pt-titlebar-hide-text .titlebar .titlebar-text {
   height: var(--header-height);
   background-color: var(--background-secondary);
   border-bottom: var(--window-border);
+  flex-direction: column-reverse;
 }
 .workspace-drawer .nav-header {
   order: unset;
@@ -1253,38 +1327,66 @@ body.pt-titlebar-hide-text .titlebar .titlebar-text {
   border-radius: var(--radius-m);
 }
 
-:is(.pt-nav-header-left-sidebar-align-left .workspace-split.mod-left-split, .pt-nav-header-right-sidebar-align-left .workspace-split.mod-right-split, .pt-nav-header-left-sidebar-align-left .workspace-drawer.mod-left, .pt-nav-header-right-sidebar-align-left .workspace-drawer.mod-right) .workspace-leaf-content .nav-header {
-  justify-content: flex-start;
+:is(.pt-nav-header-left-sidebar-align-left .workspace-split.mod-left-split,
+.pt-nav-header-right-sidebar-align-left .workspace-split.mod-right-split,
+.pt-nav-header-left-sidebar-align-left .workspace-drawer.mod-left,
+.pt-nav-header-right-sidebar-align-left .workspace-drawer.mod-right) .workspace-leaf-content .nav-header {
+  place-items: flex-start;
 }
-:is(.pt-nav-header-left-sidebar-align-left .workspace-split.mod-left-split, .pt-nav-header-right-sidebar-align-left .workspace-split.mod-right-split, .pt-nav-header-left-sidebar-align-left .workspace-drawer.mod-left, .pt-nav-header-right-sidebar-align-left .workspace-drawer.mod-right) .workspace-leaf-content[data-type=dangling-links] .nav-header,
-:is(.pt-nav-header-left-sidebar-align-left .workspace-split.mod-left-split, .pt-nav-header-right-sidebar-align-left .workspace-split.mod-right-split, .pt-nav-header-left-sidebar-align-left .workspace-drawer.mod-left, .pt-nav-header-right-sidebar-align-left .workspace-drawer.mod-right) .workspace-leaf-content[data-type=dictionary-view] .nav-buttons-container {
+:is(.pt-nav-header-left-sidebar-align-left .workspace-split.mod-left-split,
+.pt-nav-header-right-sidebar-align-left .workspace-split.mod-right-split,
+.pt-nav-header-left-sidebar-align-left .workspace-drawer.mod-left,
+.pt-nav-header-right-sidebar-align-left .workspace-drawer.mod-right) .workspace-leaf-content[data-type=dangling-links] .nav-header,
+:is(.pt-nav-header-left-sidebar-align-left .workspace-split.mod-left-split,
+.pt-nav-header-right-sidebar-align-left .workspace-split.mod-right-split,
+.pt-nav-header-left-sidebar-align-left .workspace-drawer.mod-left,
+.pt-nav-header-right-sidebar-align-left .workspace-drawer.mod-right) .workspace-leaf-content[data-type=dictionary-view] .nav-buttons-container {
   right: calc(var(--size-2-3) + var(--scroll-bar-size));
   left: var(--size-2-3);
   margin-right: auto;
 }
 
-:is(.pt-nav-header-left-sidebar-align-center .workspace-split.mod-left-split, .pt-nav-header-right-sidebar-align-center .workspace-split.mod-right-split, .pt-nav-header-left-sidebar-align-center .workspace-drawer.mod-left, .pt-nav-header-right-sidebar-align-center .workspace-drawer.mod-right) .workspace-leaf-content .nav-header {
-  justify-content: center;
+:is(.pt-nav-header-left-sidebar-align-center .workspace-split.mod-left-split,
+.pt-nav-header-right-sidebar-align-center .workspace-split.mod-right-split,
+.pt-nav-header-left-sidebar-align-center .workspace-drawer.mod-left,
+.pt-nav-header-right-sidebar-align-center .workspace-drawer.mod-right) .workspace-leaf-content .nav-header {
+  place-items: center;
 }
-:is(.pt-nav-header-left-sidebar-align-center .workspace-split.mod-left-split, .pt-nav-header-right-sidebar-align-center .workspace-split.mod-right-split, .pt-nav-header-left-sidebar-align-center .workspace-drawer.mod-left, .pt-nav-header-right-sidebar-align-center .workspace-drawer.mod-right) .workspace-leaf-content[data-type=dangling-links] .nav-header,
-:is(.pt-nav-header-left-sidebar-align-center .workspace-split.mod-left-split, .pt-nav-header-right-sidebar-align-center .workspace-split.mod-right-split, .pt-nav-header-left-sidebar-align-center .workspace-drawer.mod-left, .pt-nav-header-right-sidebar-align-center .workspace-drawer.mod-right) .workspace-leaf-content[data-type=dictionary-view] .nav-buttons-container {
+:is(.pt-nav-header-left-sidebar-align-center .workspace-split.mod-left-split,
+.pt-nav-header-right-sidebar-align-center .workspace-split.mod-right-split,
+.pt-nav-header-left-sidebar-align-center .workspace-drawer.mod-left,
+.pt-nav-header-right-sidebar-align-center .workspace-drawer.mod-right) .workspace-leaf-content[data-type=dangling-links] .nav-header,
+:is(.pt-nav-header-left-sidebar-align-center .workspace-split.mod-left-split,
+.pt-nav-header-right-sidebar-align-center .workspace-split.mod-right-split,
+.pt-nav-header-left-sidebar-align-center .workspace-drawer.mod-left,
+.pt-nav-header-right-sidebar-align-center .workspace-drawer.mod-right) .workspace-leaf-content[data-type=dictionary-view] .nav-buttons-container {
   right: calc(var(--size-2-3) + var(--scroll-bar-size));
   left: var(--size-2-3);
   margin-right: auto;
   margin-left: auto;
 }
 
-:is(.pt-nav-header-left-sidebar-align-right .workspace-split.mod-left-split, .pt-nav-header-right-sidebar-align-right .workspace-split.mod-right-split, .pt-nav-header-left-sidebar-align-right .workspace-drawer.mod-left, .pt-nav-header-right-sidebar-align-right .workspace-drawer.mod-right) .workspace-leaf-content .nav-header {
-  justify-content: flex-end;
+:is(.pt-nav-header-left-sidebar-align-right .workspace-split.mod-left-split,
+.pt-nav-header-right-sidebar-align-right .workspace-split.mod-right-split,
+.pt-nav-header-left-sidebar-align-right .workspace-drawer.mod-left,
+.pt-nav-header-right-sidebar-align-right .workspace-drawer.mod-right) .workspace-leaf-content .nav-header {
+  place-items: flex-end;
 }
-:is(.pt-nav-header-left-sidebar-align-right .workspace-split.mod-left-split, .pt-nav-header-right-sidebar-align-right .workspace-split.mod-right-split, .pt-nav-header-left-sidebar-align-right .workspace-drawer.mod-left, .pt-nav-header-right-sidebar-align-right .workspace-drawer.mod-right) .workspace-leaf-content[data-type=dangling-links] .nav-header,
-:is(.pt-nav-header-left-sidebar-align-right .workspace-split.mod-left-split, .pt-nav-header-right-sidebar-align-right .workspace-split.mod-right-split, .pt-nav-header-left-sidebar-align-right .workspace-drawer.mod-left, .pt-nav-header-right-sidebar-align-right .workspace-drawer.mod-right) .workspace-leaf-content[data-type=dictionary-view] .nav-buttons-container {
+:is(.pt-nav-header-left-sidebar-align-right .workspace-split.mod-left-split,
+.pt-nav-header-right-sidebar-align-right .workspace-split.mod-right-split,
+.pt-nav-header-left-sidebar-align-right .workspace-drawer.mod-left,
+.pt-nav-header-right-sidebar-align-right .workspace-drawer.mod-right) .workspace-leaf-content[data-type=dangling-links] .nav-header,
+:is(.pt-nav-header-left-sidebar-align-right .workspace-split.mod-left-split,
+.pt-nav-header-right-sidebar-align-right .workspace-split.mod-right-split,
+.pt-nav-header-left-sidebar-align-right .workspace-drawer.mod-left,
+.pt-nav-header-right-sidebar-align-right .workspace-drawer.mod-right) .workspace-leaf-content[data-type=dictionary-view] .nav-buttons-container {
   right: calc(var(--size-2-3) + var(--scroll-bar-size));
   left: var(--size-2-3);
   margin-left: auto;
 }
 
-:is(.pt-nav-header-left-sidebar-position-bottom .workspace-drawer.mod-left, .pt-nav-header-right-sidebar-position-bottom .workspace-drawer.mod-right) {
+:is(.pt-nav-header-left-sidebar-position-bottom .workspace-drawer.mod-left,
+.pt-nav-header-right-sidebar-position-bottom .workspace-drawer.mod-right) {
   order: unset;
 }
 
@@ -1336,28 +1438,66 @@ body.pt-titlebar-hide-text .titlebar .titlebar-text {
   z-index: var(--layer-popover);
   min-height: unset;
 }
-.pt-nav-header-left-sidebar-position-bottom .workspace-drawer.mod-left :is(.nav-files-container, .workspace-leaf-content[data-type=tag] .tag-container, .workspace-leaf-content[data-type=backlink] .backlink-pane, .workspace-leaf-content[data-type=starred] .item-list, .workspace-leaf-content[data-type=dictionary-view] .contents, .workspace-leaf-content[data-type=dangling-links] .view-content .container, .workspace-leaf-content[data-type=bookmarks] .view-content > div, .workspace-leaf-content[data-type=all-properties] .view-content, .workspace-leaf-content[data-type=properties] .view-content, .workspace-leaf-content[data-type=outline] .view-content),
-.pt-nav-header-left-sidebar-position-bottom .workspace-split.mod-left-split :is(.nav-files-container, .workspace-leaf-content[data-type=tag] .tag-container, .workspace-leaf-content[data-type=backlink] .backlink-pane, .workspace-leaf-content[data-type=starred] .item-list, .workspace-leaf-content[data-type=dictionary-view] .contents, .workspace-leaf-content[data-type=dangling-links] .view-content .container, .workspace-leaf-content[data-type=bookmarks] .view-content > div, .workspace-leaf-content[data-type=all-properties] .view-content, .workspace-leaf-content[data-type=properties] .view-content, .workspace-leaf-content[data-type=outline] .view-content),
-.pt-nav-header-right-sidebar-position-bottom .workspace-drawer.mod-right :is(.nav-files-container, .workspace-leaf-content[data-type=tag] .tag-container, .workspace-leaf-content[data-type=backlink] .backlink-pane, .workspace-leaf-content[data-type=starred] .item-list, .workspace-leaf-content[data-type=dictionary-view] .contents, .workspace-leaf-content[data-type=dangling-links] .view-content .container, .workspace-leaf-content[data-type=bookmarks] .view-content > div, .workspace-leaf-content[data-type=all-properties] .view-content, .workspace-leaf-content[data-type=properties] .view-content, .workspace-leaf-content[data-type=outline] .view-content),
-.pt-nav-header-right-sidebar-position-bottom .workspace-split.mod-right-split :is(.nav-files-container, .workspace-leaf-content[data-type=tag] .tag-container, .workspace-leaf-content[data-type=backlink] .backlink-pane, .workspace-leaf-content[data-type=starred] .item-list, .workspace-leaf-content[data-type=dictionary-view] .contents, .workspace-leaf-content[data-type=dangling-links] .view-content .container, .workspace-leaf-content[data-type=bookmarks] .view-content > div, .workspace-leaf-content[data-type=all-properties] .view-content, .workspace-leaf-content[data-type=properties] .view-content, .workspace-leaf-content[data-type=outline] .view-content) {
-  padding-bottom: calc(38px + 2 * var(--scroll-bar-size));
+.pt-nav-header-left-sidebar-position-bottom .workspace-drawer.mod-left :is(.nav-files-container,
+.workspace-leaf-content[data-type=tag] .tag-container,
+.workspace-leaf-content[data-type=backlink] .backlink-pane,
+.workspace-leaf-content[data-type=starred] .item-list,
+.workspace-leaf-content[data-type=dictionary-view] .contents,
+.workspace-leaf-content[data-type=dangling-links] .view-content .container,
+.workspace-leaf-content[data-type=bookmarks] .view-content > div,
+.workspace-leaf-content[data-type=all-properties] .view-content,
+.workspace-leaf-content[data-type=properties] .view-content,
+.workspace-leaf-content[data-type=outline] .view-content),
+.pt-nav-header-left-sidebar-position-bottom .workspace-split.mod-left-split :is(.nav-files-container,
+.workspace-leaf-content[data-type=tag] .tag-container,
+.workspace-leaf-content[data-type=backlink] .backlink-pane,
+.workspace-leaf-content[data-type=starred] .item-list,
+.workspace-leaf-content[data-type=dictionary-view] .contents,
+.workspace-leaf-content[data-type=dangling-links] .view-content .container,
+.workspace-leaf-content[data-type=bookmarks] .view-content > div,
+.workspace-leaf-content[data-type=all-properties] .view-content,
+.workspace-leaf-content[data-type=properties] .view-content,
+.workspace-leaf-content[data-type=outline] .view-content),
+.pt-nav-header-right-sidebar-position-bottom .workspace-drawer.mod-right :is(.nav-files-container,
+.workspace-leaf-content[data-type=tag] .tag-container,
+.workspace-leaf-content[data-type=backlink] .backlink-pane,
+.workspace-leaf-content[data-type=starred] .item-list,
+.workspace-leaf-content[data-type=dictionary-view] .contents,
+.workspace-leaf-content[data-type=dangling-links] .view-content .container,
+.workspace-leaf-content[data-type=bookmarks] .view-content > div,
+.workspace-leaf-content[data-type=all-properties] .view-content,
+.workspace-leaf-content[data-type=properties] .view-content,
+.workspace-leaf-content[data-type=outline] .view-content),
+.pt-nav-header-right-sidebar-position-bottom .workspace-split.mod-right-split :is(.nav-files-container,
+.workspace-leaf-content[data-type=tag] .tag-container,
+.workspace-leaf-content[data-type=backlink] .backlink-pane,
+.workspace-leaf-content[data-type=starred] .item-list,
+.workspace-leaf-content[data-type=dictionary-view] .contents,
+.workspace-leaf-content[data-type=dangling-links] .view-content .container,
+.workspace-leaf-content[data-type=bookmarks] .view-content > div,
+.workspace-leaf-content[data-type=all-properties] .view-content,
+.workspace-leaf-content[data-type=properties] .view-content,
+.workspace-leaf-content[data-type=outline] .view-content) {
+  padding-bottom: calc(var(--nav-header-padding-bottom) + 2 * var(--scroll-bar-size));
 }
 
 .pt-nav-header-left-sidebar-position-bottom.is-mobile .workspace-drawer.mod-left .nav-buttons-container,
 .pt-nav-header-right-sidebar-position-bottom.is-mobile .workspace-drawer.mod-right .nav-buttons-container,
 .pt-nav-header-left-sidebar-position-bottom.is-mobile .workspace-drawer.mod-left .workspace-leaf-content[data-type=dangling-links] .nav-header,
 .pt-nav-header-right-sidebar-position-bottom.is-mobile .workspace-drawer.mod-right .workspace-leaf-content[data-type=dangling-links] .nav-header {
-  padding: var(--size-4-2);
+  padding: var(--size-4-1);
 }
 
 body.is-mobile {
-  --toggle-thumb-height: 20px;
-  --toggle-thumb-width: 20px;
+  --toggle-thumb-height: 22px;
+  --toggle-thumb-width: 22px;
   --toggle-border-width: 1px;
-  --toggle-width: 40px;
-  --toggle-s-thumb-height: 14px;
-  --toggle-s-thumb-width: 14px;
-  --toggle-s-border-width: 4px;
+  --toggle-width: 44px;
+  --toggle-height: 24px;
+  --toggle-s-thumb-height: 18px;
+  --toggle-s-thumb-width: 18px;
+  --toggle-s-width: 44px;
+  --toggle-s-border-width: 1px;
   --toggle-radius: var(--size-4-1);
   --toggle-thumb-radius: 3px;
   --slider-thumb-radius: var(--size-4-1);
@@ -1365,10 +1505,15 @@ body.is-mobile {
   --slider-thumb-y: -7px;
   --input-border-width: 1px;
   --nav-item-color: var(--text-muted);
+  --nav-item-radius: var(--radius-m);
   --font-ui-large: calc(var(--font-text-size) * 1.1);
   --prompt-max-height: 80vh;
   --ribbon-width: 48px;
+  --input-radius: var(--radius-m);
   --file-margins: var(--size-4-4) var(--size-4-5) calc(var(--size-4-4) + 50px) var(--size-4-5);
+  --nav-header-padding-bottom: 58px;
+  --modal-header-height: 102px;
+  --setting-items-radius: unset;
 }
 body.is-mobile :is(.horizontal-tab-content, .vertical-tab-content) {
   padding: var(--size-4-4);
@@ -1376,12 +1521,29 @@ body.is-mobile :is(.horizontal-tab-content, .vertical-tab-content) {
 body.is-mobile input[type=color] {
   height: fit-content;
 }
+body.is-mobile .empty-state-action {
+  color: var(--text-normal);
+  background-color: var(--color-grey-base);
+  border: var(--accent-border-width) solid;
+  border-color: var(--color-grey-tint);
+  border-radius: var(--radius-s);
+}
+body.is-mobile.theme-light, body.is-mobile.theme-dark {
+  --setting-items-background: unset;
+}
+body.is-mobile.theme-light .workspace-split.mod-root, body.is-mobile.theme-dark .workspace-split.mod-root {
+  background-color: var(--background-secondary);
+}
+body.is-mobile.theme-light {
+  --settings-background: var(--background-primary);
+}
 body.is-mobile.theme-light .workspace-leaf-content,
 body.is-mobile.theme-light .workspace-drawer-tab-options {
   background-color: var(--background-primary);
 }
 body.is-mobile.theme-dark {
   --background-modifier-form-field: var(--background-secondary-alt);
+  --modal-background: var(--background-secondary-alt);
 }
 body.is-mobile.theme-dark .workspace-leaf-content,
 body.is-mobile.theme-dark .workspace-drawer-tab-option,
@@ -1395,6 +1557,30 @@ body.is-mobile.theme-dark .modal.mod-settings .vertical-tab-content {
 body.is-mobile.theme-dark .prompt,
 body.is-mobile.theme-dark .prompt input.prompt-input {
   background-color: var(--background-secondary-alt);
+}
+body.is-mobile.is-phone {
+  --menu-padding: var(--size-4-2) var(--size-4-2);
+}
+body.is-mobile.is-phone .menu-scroll {
+  border-top: var(--window-border);
+  background-color: unset;
+  padding-bottom: var(--size-4-2) !important;
+}
+body.is-mobile.is-phone .menu-grabber {
+  margin: var(--size-4-2) auto var(--size-4-2);
+}
+body.is-mobile.is-phone .menu-separator {
+  border-top: var(--window-border);
+}
+body.is-mobile.is-phone .menu .suggestion-group .suggestion-item:not(.is-label),
+body.is-mobile.is-phone .menu-item:not(.is-label) {
+  background-color: unset;
+}
+body.is-mobile.is-phone .menu-group .menu-item:not(:last-child) {
+  border-bottom: unset;
+}
+body.is-mobile.is-phone .nav-header {
+  flex-wrap: wrap;
 }
 body.is-mobile.is-phone.theme-light .vertical-tab-header {
   background-color: var(--background-primary);
@@ -1410,7 +1596,7 @@ body.is-mobile.is-phone .modal.mod-settings .vertical-tab-content-container::bef
   display: none;
 }
 body.is-mobile.is-phone .modal.mod-settings .vertical-tab-content {
-  padding: var(--size-4-3) var(--size-4-3) calc(var(--safe-area-inset-bottom) + var(--size-4-4)) var(--size-4-3);
+  padding: calc(var(--modal-header-height) + var(--size-4-2)) var(--size-4-3) calc(var(--safe-area-inset-bottom) + var(--size-4-2)) var(--size-4-3);
 }
 body.is-mobile.is-phone .modal.mod-settings .vertical-tab-nav-item {
   height: 42px;
@@ -1427,9 +1613,16 @@ body.is-mobile.is-phone .vertical-tab-content {
 }
 body.is-mobile.is-phone .prompt {
   --prompt-bottom: var(--size-4-2);
-  margin-right: var(--size-4-2);
-  margin-left: var(--size-4-2);
+  margin-right: var(--size-4-4);
+  margin-left: var(--size-4-4);
+  margin-bottom: calc(var(--safe-area-inset-bottom) + var(--prompt-top) + var(--size-4-2));
   border-radius: var(--radius-m);
+  width: calc(97% - var(--safe-area-inset-left) - var(--safe-area-inset-right));
+  left: unset;
+  right: unset;
+  padding-bottom: unset;
+  max-height: unset;
+  height: calc(100vh - var(--safe-area-inset-bottom) - var(--prompt-top) - var(--size-4-2));
 }
 body.is-mobile.is-phone .community-modal-controls {
   background-color: var(--background-secondary);
@@ -1438,12 +1631,9 @@ body.is-mobile.is-phone .setting-item-control input {
   width: calc(100% - var(--size-4-2));
   margin: var(--size-4-1);
 }
-body.is-mobile.is-phone .modal.mod-sidebar-layout .modal-title {
-  border-bottom: var(--window-border);
-}
 body.is-mobile.is-phone .community-modal-search-results {
   gap: var(--size-4-2);
-  padding: var(--size-4-2);
+  padding: var(--size-4-2) var(--size-4-2) calc(var(--safe-area-inset-bottom) + var(--size-4-2)) var(--size-4-2);
 }
 body.is-mobile.is-phone .community-item {
   border-width: var(--border-width);
@@ -1470,8 +1660,77 @@ body.is-mobile.is-phone .pickr {
 body.is-mobile.is-phone .modal.mod-sidebar-layout .search-input-container {
   height: unset;
 }
-body.is-mobile.is-phone .search-input-container:before {
-  top: calc((var(--input-height) - var(--search-icon-size) + var(--size-4-2)) / 2);
+body.is-mobile.is-phone .settings-search-container .search-input-container::before {
+  top: calc((var(--input-height) - var(--search-icon-size)) / 2);
+}
+body.is-mobile.is-phone .workspace-leaf-content[data-type=style-settings] .search-input-container:before {
+  top: calc((var(--input-height) - var(--search-icon-size)) / 2);
+}
+body.is-mobile.is-phone .workspace-drawer-tab-options {
+  border-top: var(--window-border);
+  border-bottom: var(--window-border);
+  background: unset;
+  margin: unset;
+  border-radius: unset;
+}
+body.is-mobile.is-phone .nav-buttons-container:after {
+  display: none;
+}
+body.is-mobile.is-phone .menu-group .menu-item:not(.is-label):after {
+  display: none;
+}
+body.is-mobile.is-phone .modal.mod-settings .vertical-tab-header-group {
+  padding: unset;
+}
+body.is-mobile.is-phone .modal-close-button,
+body.is-mobile.is-phone .modal-setting-back-button,
+body.is-mobile.is-phone .mod-settings,
+body.is-mobile.is-phone .mod-pin {
+  border: unset;
+  background: unset;
+}
+body.is-mobile.is-phone .modal.mod-settings .modal-close-button,
+body.is-mobile.is-phone .modal .modal-close-button {
+  top: calc(var(--safe-area-inset-top) - 3px);
+  inset-inline-end: var(--size-4-3);
+}
+body.is-mobile.is-phone .modal.mod-sidebar-layout .modal-content .vertical-tab-header {
+  padding-top: var(--modal-header-height);
+}
+body.is-mobile.is-phone .prompt-input[type=text] {
+  border-radius: var(--radius-m);
+}
+body.is-mobile.is-phone .view-header .view-actions {
+  border-radius: var(--radius-m);
+}
+body.is-mobile .workspace-drawer-tab-options .workspace-tab-header.tappable {
+  border-radius: var(--radius-m);
+}
+body.is-mobile .workspace-drawer-tab-options .workspace-tab-header-inner {
+  border-radius: var(--radius-m);
+}
+body.is-mobile .workspace-drawer-tab-options:not(.has-swipe) .workspace-tab-header.is-active .workspace-tab-header-inner {
+  background-color: unset;
+}
+body.is-mobile .workspace-drawer-tab-options .workspace-tab-header.mobile-tap .workspace-tab-header-inner {
+  --icon-color: var(--highlight-text-normal);
+  background-color: var(--interactive-accent-base);
+  color: var(--highlight-text-normal);
+}
+body.is-mobile .workspace-drawer-tab-options-list {
+  box-shadow: unset;
+  border-radius: unset;
+  border-top: var(--window-border);
+  overflow-y: unset;
+}
+body.is-mobile.theme-light .workspace-drawer-tab-options-list {
+  background-color: var(--background-primary);
+}
+body.is-mobile.theme-dark .workspace-drawer-tab-options-list {
+  background-color: var(--background-secondary-alt);
+}
+body.is-mobile .workspace-drawer-tab-select .workspace-tab-header-inner {
+  background-color: unset;
 }
 body.is-mobile.is-tablet .modal.mod-sidebar-layout .modal-setting-back-button {
   display: none;
@@ -1500,8 +1759,22 @@ body.is-mobile .workspace-drawer-active-tab-header .workspace-drawer-active-tab-
 }
 body.is-mobile .workspace-drawer {
   background-color: var(--background-secondary);
-  border-radius: var(--radius-m);
+  border-radius: unset;
   padding-top: unset;
+  margin-top: var(--safe-area-inset-top);
+  border-top: var(--window-border);
+  border-bottom: var(--window-border);
+  margin-bottom: var(--safe-area-inset-bottom);
+}
+body.is-mobile .workspace-drawer.mod-left {
+  border-right: var(--window-border);
+  border-bottom-right-radius: var(--radius-m);
+  border-top-right-radius: var(--radius-m);
+}
+body.is-mobile .workspace-drawer.mod-right {
+  border-left: var(--window-border);
+  border-bottom-left-radius: var(--radius-m);
+  border-top-left-radius: var(--radius-m);
 }
 body.is-mobile .workspace-drawer.is-pinned {
   border-radius: unset;
@@ -1514,10 +1787,6 @@ body.is-mobile .workspace-drawer .nav-buttons-container {
   overflow: visible;
   flex-wrap: wrap;
 }
-body.is-mobile .workspace-drawer:not(.is-pinned) {
-  margin: calc(var(--safe-area-inset-top) + var(--size-4-2)) var(--size-4-2) calc(var(--safe-area-inset-bottom) + var(--size-4-2));
-  border: var(--window-border);
-}
 body.is-mobile .workspace-drawer.is-pinned .workspace-drawer-header {
   padding-top: var(--size-4-2);
 }
@@ -1526,7 +1795,18 @@ body.is-mobile .workspace-drawer .side-dock-settings {
 }
 body.is-mobile .nav-buttons-container {
   --icon-color: var(--text-muted);
-  gap: var(--size-4-4);
+  gap: var(--size-4-2);
+}
+body.is-mobile .workspace-drawer .nav-buttons-container {
+  left: unset;
+  right: unset;
+}
+body.is-mobile .workspace-drawer .nav-buttons-container .nav-action-button {
+  height: var(--touch-size-s);
+  width: var(--touch-size-s);
+}
+body.is-mobile .workspace-drawer .nav-buttons-container .nav-action-button:not(.is-active) {
+  background-color: unset;
 }
 body.is-mobile .workspace-drawer-ribbon {
   background-color: var(--background-secondary);
@@ -1535,8 +1815,8 @@ body.is-mobile .workspace-drawer-ribbon {
 body.is-mobile .workspace-drawer-header {
   padding: var(--size-4-2) var(--size-4-4);
   background-color: var(--background-secondary);
-  border-bottom: var(--window-border);
   align-items: center;
+  margin-bottom: unset;
 }
 body.is-mobile .workspace-drawer-active-tab-header {
   padding: var(--size-4-3) var(--size-4-5);
@@ -1544,6 +1824,9 @@ body.is-mobile .workspace-drawer-active-tab-header {
   border-radius: unset;
   background-color: unset;
   border-bottom: var(--window-border);
+}
+body.is-mobile .workspace-drawer-active-tab-container {
+  background-color: var(--background-secondary);
 }
 body.is-mobile .workspace-drawer-header-icon,
 body.is-mobile .workspace-drawer-active-tab-back-icon,
@@ -1553,22 +1836,34 @@ body.is-mobile .workspace-drawer-active-tab-icon:last-child {
 body.is-mobile .mod-right .workspace-drawer-header-name {
   margin-top: var(--size-4-2);
 }
-body.is-mobile .mod-right .workspace-drawer-header {
-  padding: var(--size-4-1) var(--size-4-5);
-}
 body.is-mobile .workspace-drawer-header-info {
   margin: var(--size-4-1) 0;
 }
 body.is-mobile .suggestion-container,
 body.is-mobile .menu {
-  background-color: var(--background-secondary-blur);
-  -webkit-backdrop-filter: blur(var(--blur-intensity));
-  backdrop-filter: blur(var(--blur-intensity));
   border: var(--window-border);
   border-radius: var(--radius-m);
+  padding: unset;
+  margin: 0 var(--size-4-2);
+  bottom: calc(var(--safe-area-inset-bottom) + var(--size-4-2));
+}
+.theme-light body.is-mobile .suggestion-container,
+.theme-light body.is-mobile .menu {
+  background-color: var(--background-primary);
+}
+.theme-dark body.is-mobile .suggestion-container,
+.theme-dark body.is-mobile .menu {
+  background-color: var(--background-secondary-alt);
+}
+body.is-mobile div.workspace-leaf-content[data-type=style-settings] .view-content > .setting-item .setting-item-info,
+body.is-mobile .modal.mod-settings .setting-item-info:has(.search-input-container) {
+  width: 100%;
 }
 body.is-mobile .modal {
-  border: var(--window-border);
+  border-radius: unset;
+}
+body.is-mobile .modal.mod-settings {
+  border: unset;
 }
 body.is-mobile .modal.mod-settings .vertical-tab-nav-item {
   border-bottom: var(--accent-border-width) solid transparent;
@@ -1576,9 +1871,6 @@ body.is-mobile .modal.mod-settings .vertical-tab-nav-item {
 }
 body.is-mobile .modal.mod-settings .vertical-tab-header-group-items {
   border-radius: unset;
-}
-body.is-mobile .modal.mod-sidebar-layout .modal-title {
-  background-color: var(--background-secondary);
 }
 body.is-mobile .modal.mod-community-modal .setting-item:not(.mod-toggle) {
   max-width: var(--modal-community-sidebar-width);
@@ -1611,11 +1903,45 @@ body.is-mobile .view-header-title-container {
 body.is-mobile .metadata-properties-heading {
   padding: var(--size-4-2);
 }
+body.is-mobile .metadata-content {
+  transform: unset;
+  width: unset;
+  background-color: unset;
+  border-radius: unset;
+}
+body.is-mobile .tree-item-self {
+  align-items: center;
+}
+body.is-mobile .mod-raised,
+body.is-mobile .view-header-left {
+  padding: unset;
+  background: var(--background-secondary);
+  border-bottom: var(--window-border);
+  box-shadow: unset;
+  backdrop-filter: unset;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--window-border-color);
+}
+body.is-mobile .suggestion-item {
+  border-radius: var(--radius-m);
+}
+body.is-mobile .prompt-input-container .search-input-clear-button {
+  inset-inline-end: var(--size-4-2);
+}
+body.is-mobile .pull-down-action {
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--background-secondary-alt) 90%, transparent) 40%, transparent 100%);
+}
 
 .mobile-toolbar {
-  padding: var(--size-4-1);
-  background-color: var(--background-secondary);
-  border-top: var(--window-border);
+  box-shadow: unset;
+}
+
+.mobile-toolbar-spacer {
+  display: none;
+}
+
+.mobile-toolbar-options-container {
+  width: calc(100% - var(--size-4-8));
 }
 
 .AT-multirow .mobile-toolbar {
@@ -1639,6 +1965,14 @@ body.is-mobile .metadata-properties-heading {
 
 .mobile-navbar-actions {
   --icon-color: var(--text-muted);
+}
+
+.workspace-drawer-inner {
+  padding-top: unset;
+}
+
+.checkbox-container.is-enabled:after {
+  transform: translate3d(calc(var(--toggle-s-width) - var(--toggle-s-thumb-width) - var(--toggle-s-border-width) - var(--size-4-1)), 0, 0);
 }
 
 .modal.mod-settings .vertical-tab-header {
@@ -1668,6 +2002,43 @@ body.is-mobile .metadata-properties-heading {
   border-bottom: var(--window-border);
 }
 
+.is-phone .modal-title {
+  max-width: unset;
+}
+
+.is-phone .modal-header {
+  padding-top: var(--safe-area-inset-top);
+  padding-bottom: var(--size-4-2);
+  background-color: var(--background-secondary);
+  border-bottom: var(--window-border);
+  align-items: center;
+}
+.is-phone .modal-header::after {
+  display: none;
+}
+
+.is-phone .modal-container.mod-confirmation .modal {
+  border: var(--window-border);
+  border-radius: var(--radius-m);
+  padding: unset;
+  margin: 0 var(--size-4-2);
+  bottom: calc(var(--safe-area-inset-bottom) + var(--size-4-2));
+}
+.is-phone .modal-container.mod-confirmation .modal .modal-header {
+  padding-top: var(--size-4-2);
+  height: unset;
+}
+.is-phone .modal-container.mod-confirmation .modal .modal-button-container {
+  margin-bottom: unset;
+}
+
+.is-phone .modal.mod-lg,
+.is-phone .modal.mod-sidebar-layout {
+  --modal-radius: unset;
+  margin-top: unset;
+  max-height: unset;
+}
+
 .is-phone .modal.mod-settings .modal-title::after,
 .modal.mod-settings .vertical-tab-header::after {
   position: absolute;
@@ -1684,9 +2055,14 @@ body.is-mobile .metadata-properties-heading {
   font-size: 14px;
   font-weight: 600;
   color: var(--interactive-accent-text);
-  content: "Prism 3.6.0";
+  content: "Prism 3.8.0";
   border: 1px solid var(--window-border-color);
   border-radius: var(--radius-s);
+}
+
+.is-phone .modal.mod-settings .modal-title::after {
+  top: calc(var(--safe-area-inset-top) + var(--size-4-2));
+  left: 68px;
 }
 
 .theme-light.is-phone .modal.mod-settings .modal-title::after,
@@ -1697,11 +2073,6 @@ body.is-mobile .metadata-properties-heading {
 .theme-dark.is-phone .modal.mod-settings .modal-title::after,
 .theme-dark .modal.mod-settings .vertical-tab-header::after {
   background-color: var(--background-secondary-alt);
-}
-
-.is-phone .modal.mod-settings .modal-title::after {
-  top: 9px;
-  left: 50px;
 }
 
 .vertical-tab-content {
@@ -1742,7 +2113,7 @@ body.is-mobile .metadata-properties-heading {
 }
 
 :is(.horizontal-tab-content, .vertical-tab-content) {
-  padding: var(--size-4-8);
+  padding: var(--size-4-4) var(--size-4-6);
 }
 
 .theme-light :is(.horizontal-tab-content, .vertical-tab-content, .vertical-tab-header) {
@@ -1750,6 +2121,23 @@ body.is-mobile .metadata-properties-heading {
 }
 .theme-dark :is(.horizontal-tab-content, .vertical-tab-content, .vertical-tab-header) {
   background-color: var(--background-secondary-alt);
+}
+
+.vertical-tab-content .setting-item ~ :is(h1, h2, h3, h4, .setting-item-heading) {
+  margin-top: var(--size-4-2);
+}
+
+.setting-group .setting-item {
+  border-top: unset;
+  padding: var(--size-4-3) 0;
+}
+
+.setting-group + .setting-group {
+  margin-top: var(--size-4-4);
+}
+
+body:not(.is-phone) .vertical-tab-header-group-items {
+  gap: 3px;
 }
 
 .installed-plugins-container {
@@ -1771,6 +2159,10 @@ body.is-mobile .metadata-properties-heading {
 @media (hover: hover) {
   .horizontal-tab-nav-item:hover,
   .vertical-tab-nav-item:hover {
+    color: var(--icon-color-focused);
+  }
+  .horizontal-tab-nav-item:hover .vertical-tab-nav-item-icon,
+  .vertical-tab-nav-item:hover .vertical-tab-nav-item-icon {
     color: var(--icon-color-focused);
   }
 }
@@ -1797,6 +2189,13 @@ img.community-theme-lightbox {
 .modal.mod-community-theme {
   max-width: var(--modal-max-width);
   max-height: var(--modal-max-height);
+}
+
+.modal-sidebar {
+  padding: unset;
+}
+.theme-dark .modal-sidebar {
+  --background-modifier-form-field: var(--background-secondary-alt);
 }
 
 .community-modal-sidebar {
@@ -1872,6 +2271,7 @@ img.community-theme-lightbox {
 
 .community-modal-controls {
   background-color: var(--background-secondary);
+  padding: var(--size-4-3) 0 0 0;
 }
 body:not(.is-phone) .community-modal-controls .setting-item:first-child {
   padding-left: unset;
@@ -1893,6 +2293,7 @@ body:not(.is-phone) .community-modal-controls .setting-item:first-child {
 .setting-item.setting-item-heading {
   margin-bottom: var(--size-4-1);
   border-bottom: 1px solid var(--window-border-color);
+  padding-bottom: var(--size-4-1);
 }
 .setting-item + div > .setting-item-heading,
 .setting-item + .setting-item-heading {
@@ -1932,6 +2333,10 @@ body:not(.native-scrollbars, .is-phone) .modal-close-button {
   border: 1px solid var(--window-border-color);
   box-shadow: unset;
 }
+.modal .checkbox-container::after {
+  height: calc(var(--toggle-thumb-height) - var(--size-4-1));
+  width: calc(var(--toggle-thumb-width) - var(--size-4-1));
+}
 .checkbox-container:hover {
   border-color: var(--interactive-accent-tint);
 }
@@ -1945,7 +2350,6 @@ body:not(.native-scrollbars, .is-phone) .modal-close-button {
 }
 .checkbox-container.is-enabled::after {
   border-color: var(--interactive-accent-tint);
-  transform: translate3d(calc(var(--toggle-width) - var(--toggle-thumb-width) - var(--toggle-border-width) - 4px), 0, 0);
 }
 .checkbox-container.mod-small {
   height: 20px;
@@ -2036,6 +2440,10 @@ select.dropdown option[value*=grey] {
   left: var(--size-4-3);
 }
 
+.vertical-tab-nav-item[data-setting-id=obsidian-task-progress-bar] .vertical-tab-nav-item-icon {
+  display: none;
+}
+
 body:not(.native-scrollbars) .kanban-plugin__scroll-container::-webkit-scrollbar,
 body:not(.native-scrollbars) .prompt-results::-webkit-scrollbar,
 body:not(.native-scrollbars) ::-webkit-scrollbar {
@@ -2045,12 +2453,16 @@ body:not(.native-scrollbars) ::-webkit-scrollbar {
   padding: unset;
   margin: unset;
   /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
-  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
 }
 body:not(.native-scrollbars) .kanban-plugin__scroll-container::-webkit-scrollbar:vertical,
 body:not(.native-scrollbars) .prompt-results::-webkit-scrollbar:vertical,
 body:not(.native-scrollbars) ::-webkit-scrollbar:vertical {
   border-inline-start: var(--window-border);
+}
+body:not(.native-scrollbars) .kanban-plugin__scroll-container::-webkit-scrollbar,
+body:not(.native-scrollbars) .prompt-results::-webkit-scrollbar,
+body:not(.native-scrollbars) ::-webkit-scrollbar {
+  /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
 }
 body:not(.native-scrollbars) .kanban-plugin__scroll-container::-webkit-scrollbar:horizontal,
 body:not(.native-scrollbars) .prompt-results::-webkit-scrollbar:horizontal,
@@ -2173,15 +2585,21 @@ body:not(.is-frameless, .is-hidden-frameless) .workspace-split.mod-right-split >
   border-left: var(--window-border);
 }
 
-:is(.is-focused .workspace-leaf.mod-active .view-header, .view-header) {
+.is-focused .workspace-leaf.mod-active .view-header,
+.view-header {
   width: 100%;
-  padding: 0 var(--size-4-2);
+  padding: 0 var(--size-4-4) 0 var(--size-4-2);
   background: var(--background-secondary);
 }
 
 .workspace-tabs .view-header {
-  margin: unset;
   border-bottom: var(--window-border);
+  margin: unset;
+}
+.is-phone .workspace-tabs .view-header {
+  margin: var(--safe-area-inset-top) auto 0;
+  background: unset;
+  border-bottom: unset;
 }
 
 .view-header-title-container {
@@ -2204,11 +2622,14 @@ body:not(.is-frameless, .is-hidden-frameless) .workspace-split.mod-right-split >
   color: var(--highlight-text-normal);
 }
 
-:is(.workspace-ribbon.mod-left, .workspace-split.mod-left-split, .workspace-split.mod-right-split, .workspace-split.mod-vertical.mod-root) .sidebar-toggle-button {
+:is(.workspace-ribbon.mod-left,
+.workspace-split.mod-left-split,
+.workspace-split.mod-right-split,
+.workspace-split.mod-vertical.mod-root) .sidebar-toggle-button {
   width: fit-content;
   height: calc(var(--header-height) - 9px);
-  padding: 2px;
-  margin: 4px;
+  padding: var(--size-2-1);
+  margin: var(--size-4-1);
   border: 2px solid transparent;
   border-radius: var(--radius-m);
 }
@@ -2223,6 +2644,28 @@ body:not(.is-frameless, .is-hidden-frameless) .workspace-split.mod-right-split >
 
 .workspace-ribbon {
   border-right: var(--window-border);
+}
+
+.workspace-drawer .workspace-leaf-content::after {
+  display: none;
+}
+.workspace-drawer .workspace-leaf-content .nav-header ~ div:last-child {
+  padding-top: unset;
+}
+
+.empty-state-title,
+.empty-state-action-list {
+  margin: unset;
+}
+
+.empty-state-action {
+  padding: var(--size-4-1) var(--size-4-2);
+}
+
+.empty-state-container .empty-state-action-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-2);
 }
 
 .mod-macos.is-hidden-frameless:not(.is-popout-window) .sidebar-toggle-button.mod-right {
@@ -2298,11 +2741,6 @@ body.is-mobile.is-tablet .menu {
   width: fit-content;
 }
 
-body.is-mobile.theme-dark .menu,
-.is-tablet.theme-dark .suggestion-container {
-  background-color: var(--background-secondary-alt);
-}
-
 div.notice-container div.notice {
   font-weight: 600;
   color: var(--text-normal);
@@ -2370,7 +2808,7 @@ div.notice-container div.notice {
   justify-content: center;
 }
 
-.workspace .mod-root .workspace-tabs.mod-stacked .workspace-tab-container .workspace-tab-header.is-active,
+.workspace-tab-header-container .workspace-tab-header.is-active,
 .workspace-tab-header.is-active,
 .nav-action-button.is-active,
 .vertical-tab-nav-item.is-active,
@@ -2379,7 +2817,8 @@ div.notice-container div.notice {
 .suggestion-hotkey,
 .workspace-leaf div.workspace-leaf-content[data-type=file-tree-view] div.oz-nav-file.is-active,
 .workspace-drawer.is-pinned .workspace-drawer-header-icon.mod-pin,
-.pdf-outline-view .tree-item-self.mod-active {
+.pdf-outline-view .tree-item-self.mod-active,
+.text-icon-button.is-active {
   color: var(--highlight-text-normal);
   border: var(--accent-border-width) solid;
   box-shadow: unset;
@@ -2403,7 +2842,19 @@ button.mod-cta {
   color: var(--highlight-text-normal);
 }
 
-:is(.pcr-button, button.mod-cta, button.mod-warning, .modal button:not(.mod-cta):not(.mod-warning), .graph-control-content button, .setting-hotkey, .flair.mod-pop, .community-item .flair, button.copy-code-button, .modal-setting-nav-bar .clickable-icon, .document-search-button, .side-dock-ribbon-action.is-active[aria-label="Start/stop recording"]),
+:is(.pcr-button,
+button.mod-cta,
+button.mod-warning,
+.modal button:not(.mod-cta):not(.mod-warning),
+.graph-control-content button,
+.setting-hotkey,
+.flair.mod-pop,
+.community-item .flair,
+button.copy-code-button,
+.modal-setting-nav-bar .clickable-icon,
+.document-search-button,
+.side-dock-ribbon-action.is-active[aria-label="Start/stop recording"],
+.empty-state-action),
 .clickable-icon[aria-label="Search settings"],
 .pdf-toolbar-button,
 .input-right-decorator.clickable-icon {
@@ -2415,21 +2866,33 @@ button.mod-cta {
   padding: var(--size-2-1) var(--size-2-2);
 }
 
-:is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active),
+:is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active),
 .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active {
   color: var(--highlight-text-normal);
   border: var(--accent-border-width) solid;
   border-radius: var(--radius-m);
 }
-:is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active) svg.svg-icon,
+:is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active) svg.svg-icon,
 .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active svg.svg-icon {
   color: var(--highlight-text-normal);
 }
-:is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active) .clickable-icon:hover,
+:is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active) .clickable-icon:hover,
 .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active .clickable-icon:hover {
   background-color: unset;
 }
-:is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active):hover svg.svg-icon,
+:is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active):hover svg.svg-icon,
 .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active:hover svg.svg-icon {
   color: var(--interactive-accent-hover);
 }
@@ -2450,7 +2913,8 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) .workspace-drawer.is-pinned .workspace-drawer-header-icon.mod-pin,
 :is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) .canvas-help .setting-hotkey,
 :is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) .clickable-icon[aria-label="Search settings"].is-active,
-:is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) .pdf-outline-view .tree-item-self.mod-active {
+:is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) .pdf-outline-view .tree-item-self.mod-active,
+:is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) .text-icon-button.is-active {
   background-color: transparent;
   border-color: transparent;
 }
@@ -2490,13 +2954,25 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) :is(button.mod-warning, .side-dock-ribbon-action.is-active[aria-label="Start/stop recording"]):hover {
   color: var(--color-red-tint);
 }
-:is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) :is(.pcr-button, .modal button:not(.mod-cta):not(.mod-warning), .graph-control-content button, .modal-setting-nav-bar .clickable-icon, .document-search-button, .pdf-toolbar-button) {
+:is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) :is(.pcr-button,
+.modal button:not(.mod-cta):not(.mod-warning),
+.graph-control-content button,
+.modal-setting-nav-bar .clickable-icon,
+.document-search-button,
+.pdf-toolbar-button,
+.empty-state-action) {
   color: var(--color-grey-text);
   background-color: transparent;
   border-color: var(--window-border-color);
   border-width: 1px;
 }
-:is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) :is(.pcr-button, .modal button:not(.mod-cta):not(.mod-warning), .graph-control-content button, .modal-setting-nav-bar .clickable-icon, .document-search-button, .pdf-toolbar-button):hover {
+:is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) :is(.pcr-button,
+.modal button:not(.mod-cta):not(.mod-warning),
+.graph-control-content button,
+.modal-setting-nav-bar .clickable-icon,
+.document-search-button,
+.pdf-toolbar-button,
+.empty-state-action):hover {
   color: var(--color-grey-tint);
 }
 :is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) .setting-command-hotkeys .setting-hotkey {
@@ -2524,12 +3000,18 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) button.copy-code-button:hover {
   color: var(--interactive-accent-hover);
 }
-:is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active),
+:is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active),
 :is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active {
   background-color: transparent;
   border-color: transparent;
 }
-:is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active):hover,
+:is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active):hover,
 :is(.theme-dark.pt-accent-style-minimal-dt, .theme-light.pt-accent-style-minimal-lt) .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active:hover {
   color: var(--interactive-accent-hover);
 }
@@ -2555,7 +3037,8 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) .workspace-drawer.is-pinned .workspace-drawer-header-icon.mod-pin,
 :is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) .canvas-help .setting-hotkey,
 :is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) .clickable-icon[aria-label="Search settings"].is-active,
-:is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) .pdf-outline-view .tree-item-self.mod-active {
+:is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) .pdf-outline-view .tree-item-self.mod-active,
+:is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) .text-icon-button.is-active {
   background-color: var(--background-primary);
   border-color: var(--window-border-color);
 }
@@ -2595,12 +3078,24 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) :is(button.mod-warning, .side-dock-ribbon-action.is-active[aria-label="Start/stop recording"]):hover {
   color: var(--color-red-tint);
 }
-:is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) :is(.pcr-button, .modal button:not(.mod-cta):not(.mod-warning), .graph-control-content button, .modal-setting-nav-bar .clickable-icon, .document-search-button, .pdf-toolbar-button) {
+:is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) :is(.pcr-button,
+.modal button:not(.mod-cta):not(.mod-warning),
+.graph-control-content button,
+.modal-setting-nav-bar .clickable-icon,
+.document-search-button,
+.pdf-toolbar-button,
+.empty-state-action) {
   color: var(--color-grey-text);
   background-color: var(--background-primary);
   border-color: var(--window-border-color);
 }
-:is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) :is(.pcr-button, .modal button:not(.mod-cta):not(.mod-warning), .graph-control-content button, .modal-setting-nav-bar .clickable-icon, .document-search-button, .pdf-toolbar-button):hover {
+:is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) :is(.pcr-button,
+.modal button:not(.mod-cta):not(.mod-warning),
+.graph-control-content button,
+.modal-setting-nav-bar .clickable-icon,
+.document-search-button,
+.pdf-toolbar-button,
+.empty-state-action):hover {
   color: var(--color-grey-tint);
 }
 :is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) .setting-command-hotkeys .setting-hotkey {
@@ -2625,12 +3120,18 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) button.copy-code-button:hover {
   color: var(--interactive-accent-hover);
 }
-:is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active),
+:is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active),
 :is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active {
   background-color: var(--background-primary);
   border-color: var(--window-border-color);
 }
-:is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active):hover,
+:is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active):hover,
 :is(.theme-dark.pt-accent-style-plain-dt, .theme-light.pt-accent-style-plain-lt) .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active:hover {
   color: var(--interactive-accent-hover);
 }
@@ -2653,7 +3154,8 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) .workspace-drawer.is-pinned .workspace-drawer-header-icon.mod-pin,
 :is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) .canvas-help .setting-hotkey,
 :is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) .clickable-icon[aria-label="Search settings"].is-active,
-:is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) .pdf-outline-view .tree-item-self.mod-active {
+:is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) .pdf-outline-view .tree-item-self.mod-active,
+:is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) .text-icon-button.is-active {
   background-color: var(--background-primary);
   border-color: var(--interactive-accent-tint);
 }
@@ -2694,12 +3196,24 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) :is(button.mod-warning, .side-dock-ribbon-action.is-active[aria-label="Start/stop recording"]):hover {
   color: var(--color-red-tint);
 }
-:is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) :is(.pcr-button, .modal button:not(.mod-cta):not(.mod-warning), .graph-control-content button, .modal-setting-nav-bar .clickable-icon, .document-search-button, .pdf-toolbar-button) {
+:is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) :is(.pcr-button,
+.modal button:not(.mod-cta):not(.mod-warning),
+.graph-control-content button,
+.modal-setting-nav-bar .clickable-icon,
+.document-search-button,
+.pdf-toolbar-button,
+.empty-state-action) {
   color: var(--text-normal);
   background-color: var(--background-primary);
   border-color: var(--color-grey-tint);
 }
-:is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) :is(.pcr-button, .modal button:not(.mod-cta):not(.mod-warning), .graph-control-content button, .modal-setting-nav-bar .clickable-icon, .document-search-button, .pdf-toolbar-button):hover {
+:is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) :is(.pcr-button,
+.modal button:not(.mod-cta):not(.mod-warning),
+.graph-control-content button,
+.modal-setting-nav-bar .clickable-icon,
+.document-search-button,
+.pdf-toolbar-button,
+.empty-state-action):hover {
   color: var(--color-grey-tint);
 }
 :is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) .setting-command-hotkeys .setting-hotkey {
@@ -2725,16 +3239,25 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) button.copy-code-button:hover {
   color: var(--color-grey-tint);
 }
-:is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active),
+:is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active),
 :is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active {
   background-color: var(--background-primary);
   border-color: var(--interactive-accent-tint);
 }
-:is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active) .clickable-icon:hover,
+:is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active) .clickable-icon:hover,
 :is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active .clickable-icon:hover {
   background-color: unset;
 }
-:is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active):hover,
+:is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active):hover,
 :is(.theme-dark.pt-accent-style-border-dt, .theme-light.pt-accent-style-border-lt) .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active:hover {
   color: var(--interactive-accent-hover);
 }
@@ -2758,7 +3281,8 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) .workspace-drawer.is-pinned .workspace-drawer-header-icon.mod-pin,
 :is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) .canvas-help .setting-hotkey,
 :is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) .clickable-icon[aria-label="Search settings"].is-active,
-:is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) .pdf-outline-view .tree-item-self.mod-active {
+:is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) .pdf-outline-view .tree-item-self.mod-active,
+:is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) .text-icon-button.is-active {
   background-color: var(--interactive-accent-base);
   border-color: transparent;
 }
@@ -2799,12 +3323,24 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) :is(button.mod-warning, .side-dock-ribbon-action.is-active[aria-label="Start/stop recording"]):hover {
   color: var(--color-red-tint);
 }
-:is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) :is(.pcr-button, .modal button:not(.mod-cta):not(.mod-warning), .graph-control-content button, .modal-setting-nav-bar .clickable-icon, .document-search-button, .pdf-toolbar-button) {
+:is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) :is(.pcr-button,
+.modal button:not(.mod-cta):not(.mod-warning),
+.graph-control-content button,
+.modal-setting-nav-bar .clickable-icon,
+.document-search-button,
+.pdf-toolbar-button,
+.empty-state-action) {
   color: var(--text-normal);
   background-color: var(--color-grey-base);
   border-color: var(--color-grey-base);
 }
-:is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) :is(.pcr-button, .modal button:not(.mod-cta):not(.mod-warning), .graph-control-content button, .modal-setting-nav-bar .clickable-icon, .document-search-button, .pdf-toolbar-button):hover {
+:is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) :is(.pcr-button,
+.modal button:not(.mod-cta):not(.mod-warning),
+.graph-control-content button,
+.modal-setting-nav-bar .clickable-icon,
+.document-search-button,
+.pdf-toolbar-button,
+.empty-state-action):hover {
   color: var(--color-grey-tint);
 }
 :is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) .setting-command-hotkeys .setting-hotkey {
@@ -2833,12 +3369,18 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) button.copy-code-button:hover {
   color: var(--color-grey-tint);
 }
-:is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active),
+:is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active),
 :is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active {
   background-color: var(--interactive-accent-base);
   border-color: transparent;
 }
-:is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active):hover,
+:is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active):hover,
 :is(.theme-dark.pt-accent-style-filled-dt, .theme-light.pt-accent-style-filled-lt) .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active:hover {
   color: var(--interactive-accent-hover);
 }
@@ -2862,9 +3404,26 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .canvas-help .setting-hotkey,
 :is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .clickable-icon[aria-label="Search settings"].is-active,
 :is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .pdf-outline-view .tree-item-self.mod-active,
-:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .input-right-decorator.clickable-icon.is-active {
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .input-right-decorator.clickable-icon.is-active,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .text-icon-button.is-active {
   background-color: var(--interactive-accent-base);
   border-color: var(--interactive-accent-tint);
+}
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .workspace .mod-root .workspace-tabs.mod-stacked .workspace-tab-container .workspace-tab-header.is-active .vertical-tab-nav-item-icon,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .workspace-tab-header.is-active .vertical-tab-nav-item-icon,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .nav-action-button.is-active .vertical-tab-nav-item-icon,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .vertical-tab-nav-item.is-active .vertical-tab-nav-item-icon,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .nav-file-title.is-active .vertical-tab-nav-item-icon,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .tree-item-self.is-active .vertical-tab-nav-item-icon,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .suggestion-hotkey .vertical-tab-nav-item-icon,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .workspace-leaf div.workspace-leaf-content[data-type=file-tree-view] div.oz-nav-file.is-active .vertical-tab-nav-item-icon,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .workspace-drawer.is-pinned .workspace-drawer-header-icon.mod-pin .vertical-tab-nav-item-icon,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .canvas-help .setting-hotkey .vertical-tab-nav-item-icon,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .clickable-icon[aria-label="Search settings"].is-active .vertical-tab-nav-item-icon,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .pdf-outline-view .tree-item-self.mod-active .vertical-tab-nav-item-icon,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .input-right-decorator.clickable-icon.is-active .vertical-tab-nav-item-icon,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .text-icon-button.is-active .vertical-tab-nav-item-icon {
+  color: var(--highlight-text-normal);
 }
 :is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt):not(.is-phone) .vertical-tab-nav-item.is-active,
 :is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt):not(.is-phone) .horizontal-tab-nav-item.is-active {
@@ -2904,12 +3463,24 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) :is(button.mod-warning, .side-dock-ribbon-action.is-active[aria-label="Start/stop recording"]):hover {
   color: var(--color-red-tint);
 }
-:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) :is(.pcr-button, .modal button:not(.mod-cta):not(.mod-warning), .graph-control-content button, .modal-setting-nav-bar .clickable-icon, .document-search-button, .pdf-toolbar-button) {
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) :is(.pcr-button,
+.modal button:not(.mod-cta):not(.mod-warning),
+.graph-control-content button,
+.modal-setting-nav-bar .clickable-icon,
+.document-search-button,
+.pdf-toolbar-button,
+.empty-state-action) {
   color: var(--text-normal);
   background-color: var(--color-grey-base);
   border-color: var(--color-grey-tint);
 }
-:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) :is(.pcr-button, .modal button:not(.mod-cta):not(.mod-warning), .graph-control-content button, .modal-setting-nav-bar .clickable-icon, .document-search-button, .pdf-toolbar-button):hover {
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) :is(.pcr-button,
+.modal button:not(.mod-cta):not(.mod-warning),
+.graph-control-content button,
+.modal-setting-nav-bar .clickable-icon,
+.document-search-button,
+.pdf-toolbar-button,
+.empty-state-action):hover {
   color: var(--color-grey-tint);
 }
 :is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .setting-command-hotkeys .setting-hotkey {
@@ -2938,20 +3509,28 @@ button.mod-cta {
 :is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) button.copy-code-button:hover {
   color: var(--color-grey-tint);
 }
-:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active),
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active),
 :is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active {
   background-color: var(--interactive-accent-base);
   border-color: var(--interactive-accent-tint);
 }
-:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right, .workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left, .popover-action.is-active, .mod-pin-popover.is-active):hover,
+:is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) :is(.workspace.is-right-sidedock-open .sidebar-toggle-button.mod-right,
+.workspace.is-left-sidedock-open .sidebar-toggle-button.mod-left,
+.popover-action.is-active,
+.mod-pin-popover.is-active):hover,
 :is(.theme-dark.pt-accent-style-borderandfilled-dt, .theme-light.pt-accent-style-borderandfilled-lt) .pdf-toolbar-left .clickable-icon[aria-label="Toggle sidebar"].is-active:hover {
   color: var(--interactive-accent-hover);
 }
 
-:is(.theme-dark.pt-accent-style-borderandfilled-dt.is-mobile, .theme-light.pt-accent-style-borderandfilled-lt.is-mobile) .modal.mod-settings .vertical-tab-nav-item {
+:is(.theme-dark.pt-accent-style-borderandfilled-dt.is-mobile,
+.theme-light.pt-accent-style-borderandfilled-lt.is-mobile) .modal.mod-settings .vertical-tab-nav-item {
   border-color: transparent;
 }
-:is(.theme-dark.pt-accent-style-borderandfilled-dt.is-mobile, .theme-light.pt-accent-style-borderandfilled-lt.is-mobile) .modal.mod-settings .vertical-tab-nav-item.is-active {
+:is(.theme-dark.pt-accent-style-borderandfilled-dt.is-mobile,
+.theme-light.pt-accent-style-borderandfilled-lt.is-mobile) .modal.mod-settings .vertical-tab-nav-item.is-active {
   background-color: var(--interactive-accent-base);
   border-color: var(--interactive-accent-tint);
 }
@@ -2985,11 +3564,45 @@ button.mod-cta {
 .cm-s-obsidian span.cm-formatting-highlight.cm-strikethrough,
 .cm-s-obsidian span.cm-highlight.cm-strikethrough,
 del {
-  color: var(--text-muted);
+  text-decoration-thickness: 2px;
+}
+.theme-light .cm-strikethrough,
+.theme-light .cm-s-obsidian span.cm-formatting-highlight.cm-strikethrough,
+.theme-light .cm-s-obsidian span.cm-highlight.cm-strikethrough,
+.theme-light del {
+  color: var(--strikethrough-text-color-lt);
+  text-decoration-color: var(--strikethrough-line-color-lt);
+}
+.theme-dark .cm-strikethrough,
+.theme-dark .cm-s-obsidian span.cm-formatting-highlight.cm-strikethrough,
+.theme-dark .cm-s-obsidian span.cm-highlight.cm-strikethrough,
+.theme-dark del {
+  color: var(--strikethrough-text-color-dt);
+  text-decoration-color: var(--strikethrough-line-color-dt);
+}
+
+u {
+  text-decoration-thickness: 2px;
+}
+.theme-light u {
+  color: var(--underline-text-color-lt);
+  text-decoration-color: var(--underline-line-color-lt);
+}
+.theme-dark u {
+  color: var(--underline-text-color-dt);
+  text-decoration-color: var(--underline-line-color-dt);
 }
 
 hr {
   margin: 1.5em 0;
+}
+
+.markdown-source-view.mod-cm6 .cm-embed-block:hover .edit-block-button {
+  background-color: var(--background-secondary);
+}
+.markdown-source-view.mod-cm6 .edit-block-button {
+  top: 9px;
+  inset-inline-end: var(--size-4-2);
 }
 
 .cm-inline-code:not(.cm-formatting-code),
@@ -2999,9 +3612,17 @@ hr {
   border-radius: var(--radius-s);
 }
 
+.cm-s-obsidian .cm-inline-code.cm-formatting {
+  border: unset;
+}
+
 .cm-s-obsidian .cm-formatting-code.cm-inline-code {
   font-family: var(--font-text);
   font-size: var(--font-text-size);
+}
+
+.cm-s-obsidian .cm-inline-code:not(.cm-formatting) {
+  padding: 0 var(--size-4-1);
 }
 
 .cm-s-obsidian span.cm-formatting-highlight.cm-inline-code,
@@ -3109,7 +3730,8 @@ a.tag:hover {
   background-color: var(--background-secondary);
 }
 .markdown-source-view.mod-cm6 .code-block-flair {
-  padding: 0 var(--size-4-2);
+  padding: var(--size-4-1) var(--size-4-2);
+  display: flex;
 }
 
 :is(.theme-light.pt-highlight-text-color-lt, .theme-dark.pt-highlight-text-color-dt) span.cm-link {
@@ -3188,20 +3810,6 @@ a.tag:hover {
 
 .view-content .collapse-indicator:not(.is-collapsed) svg.svg-icon {
   color: var(--interactive-accent-text);
-}
-
-body {
-  --list-indent: 2.2em;
-  /* Source mode */
-  --list-indent-source: 0.75em;
-  --indentation-guide-source-indent: 0.85em;
-  --checkbox-margin-inline-start: var(--indentation-guide-editing-indent);
-  /* Live Preview */
-  --list-indent-editing: 0.75em;
-  --indentation-guide-editing-indent: 0.85em;
-  --list-bullet-end-padding: 3rem;
-  /* Reading mode */
-  --indentation-guide-reading-indent: -0.55em;
 }
 
 /* --- */
@@ -3961,9 +4569,9 @@ input.prompt-input:hover, input.prompt-input:focus, input.prompt-input:focus-vis
 .suggestion-item.mod-complex .suggestion-content {
   overflow: visible;
 }
-
-.suggestion-item.is-selected {
+.suggestion-item.is-selected, .suggestion-item.mobile-tap {
   color: var(--highlight-text-normal);
+  background-color: var(--interactive-accent-base);
 }
 
 .suggestion-prefix {
@@ -3985,10 +4593,18 @@ input.prompt-input:hover, input.prompt-input:focus, input.prompt-input:focus-vis
   padding-right: var(--size-4-1);
   padding-bottom: unset;
   padding-left: var(--size-4-1);
-  margin-left: var(--size-4-1);
 }
 .workspace-leaf-content[data-type=file-explorer] .nav-folder.mod-root > .nav-folder-children {
   padding: var(--size-4-1);
+}
+.workspace-leaf-content[data-type=file-explorer] .tree-item-children.nav-folder-children .tree-item.nav-folder {
+  margin-left: 3px;
+}
+.workspace-leaf-content[data-type=file-explorer] .tree-item-children.nav-folder-children .tree-item.nav-file {
+  margin-left: -17px;
+}
+.workspace-leaf-content[data-type=file-explorer] .tree-item.nav-file {
+  margin-left: -20px;
 }
 
 .tree-item-children:empty {
@@ -4244,6 +4860,9 @@ body:not(.is-grabbing) .nav-folder-title.is-being-dragged,
   background-color: var(--background-secondary);
   border-bottom: var(--window-border);
 }
+.search-results-info .dropdown {
+  background-color: var(--dropdown-background);
+}
 
 .search-result-file-matched-text {
   padding: 0 4px;
@@ -4365,6 +4984,7 @@ body:not(.is-grabbing) .nav-folder-title.is-being-dragged,
   top: 0;
   z-index: var(--layer-cover);
   justify-content: center;
+  align-items: center;
   height: unset;
   margin: var(--size-4-2) 0;
   background-color: unset;
@@ -4489,32 +5109,87 @@ body.theme-dark {
   --canvas-highlight-color: var(--color-purple-text-hsl);
 }
 
-.canvas-node:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6), .canvas-node:not(.is-themed) {
+.canvas-node:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6), .canvas-node:not(.is-themed) {
   --shadow-border-themed-inset: inset 0 0 0 1px hsl(var(--canvas-color));
   --shadow-border-themed: 0 0 0 2px hsl(var(--canvas-color));
 }
-.canvas-node:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6) .canvas-node-placeholder::after, .canvas-node:not(.is-themed) .canvas-node-placeholder::after {
+.canvas-node:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6) .canvas-node-placeholder::after, .canvas-node:not(.is-themed) .canvas-node-placeholder::after {
   background-color: hsla(var(--canvas-color), 20%);
 }
-.canvas-node:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6) .canvas-node-container, .canvas-node:not(.is-themed) .canvas-node-container {
+.canvas-node:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6) .canvas-node-container, .canvas-node:not(.is-themed) .canvas-node-container {
   border: 4px solid hsl(var(--canvas-color));
 }
-.theme-light .canvas-node:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6):not(.canvas-node-group) .canvas-node-container, .theme-light .canvas-node:not(.is-themed):not(.canvas-node-group) .canvas-node-container {
+.theme-light .canvas-node:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6):not(.canvas-node-group) .canvas-node-container, .theme-light .canvas-node:not(.is-themed):not(.canvas-node-group) .canvas-node-container {
   background-color: var(--background-primary);
 }
-.theme-dark .canvas-node:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6):not(.canvas-node-group) .canvas-node-container, .theme-dark .canvas-node:not(.is-themed):not(.canvas-node-group) .canvas-node-container {
+.theme-dark .canvas-node:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6):not(.canvas-node-group) .canvas-node-container, .theme-dark .canvas-node:not(.is-themed):not(.canvas-node-group) .canvas-node-container {
   background-color: var(--background-secondary-alt);
 }
-.canvas-node:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6) .canvas-node-content, .canvas-node:not(.is-themed) .canvas-node-content {
+.canvas-node:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6) .canvas-node-content, .canvas-node:not(.is-themed) .canvas-node-content {
   background-color: hsla(var(--canvas-background-color), 20%);
 }
-.canvas-node:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6).canvas-node-group.is-themed .canvas-group-label:not([contenteditable=true]) {
+.canvas-node:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6).canvas-node-group.is-themed .canvas-group-label:not([contenteditable=true]) {
   background-color: hsl(var(--canvas-highlight-color));
 }
-.canvas-node:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6).canvas-node-group.is-themed .canvas-group-label:not([contenteditable=true]).mod-foreground-light, .canvas-node:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6).canvas-node-group.is-themed .canvas-group-label:not([contenteditable=true]).mod-foreground-dark {
+.canvas-node:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6).canvas-node-group.is-themed .canvas-group-label:not([contenteditable=true]).mod-foreground-light, .canvas-node:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6).canvas-node-group.is-themed .canvas-group-label:not([contenteditable=true]).mod-foreground-dark {
   color: var(--background-primary);
 }
-.canvas-node:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6).is-selected.is-themed .canvas-node-container, .canvas-node:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6).is-focused.is-themed .canvas-node-container {
+.canvas-node:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6).is-selected.is-themed .canvas-node-container, .canvas-node:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6).is-focused.is-themed .canvas-node-container {
   border-color: hsl(var(--canvas-highlight-color));
 }
 .canvas-node:not(.is-themed).canvas-node-group .canvas-group-label:not([contenteditable=true]) {
@@ -4525,14 +5200,34 @@ body.theme-dark {
   border-color: hsl(var(--canvas-highlight-color));
 }
 
-.canvas-color-picker-item:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6), .canvas-color-picker-item:first-child {
+.canvas-color-picker-item:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6), .canvas-color-picker-item:first-child {
   background-color: hsl(var(--canvas-color));
 }
-.canvas-color-picker-item:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6):hover, .canvas-color-picker-item:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6).is-active, .canvas-color-picker-item:first-child:hover, .canvas-color-picker-item:first-child.is-active {
+.canvas-color-picker-item:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6):hover, .canvas-color-picker-item:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6).is-active, .canvas-color-picker-item:first-child:hover, .canvas-color-picker-item:first-child.is-active {
   box-shadow: 0 0 0 2px hsl(var(--canvas-color));
 }
 
-.canvas-minimap rect:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6), .canvas-minimap rect:not(.is-themed) {
+.canvas-minimap rect:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6), .canvas-minimap rect:not(.is-themed) {
   fill: hsl(var(--canvas-color));
   stroke: hsl(var(--canvas-color));
 }
@@ -4544,10 +5239,20 @@ body.theme-dark {
   color: var(--text-normal);
 }
 
-.canvas-edges g:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6) path.canvas-display-path, .canvas-edges g:not(.is-themed) path.canvas-display-path {
+.canvas-edges g:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6) path.canvas-display-path, .canvas-edges g:not(.is-themed) path.canvas-display-path {
   stroke: hsl(var(--canvas-highlight-color));
 }
-.canvas-edges g:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6) polygon.canvas-path-end, .canvas-edges g:not(.is-themed) polygon.canvas-path-end {
+.canvas-edges g:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6) polygon.canvas-path-end, .canvas-edges g:not(.is-themed) polygon.canvas-path-end {
   fill: hsl(var(--canvas-highlight-color));
   stroke: hsl(var(--canvas-highlight-color));
 }
@@ -4557,7 +5262,12 @@ body.theme-dark {
   stroke: hsla(var(--canvas-highlight-color), 10%);
 }
 
-.canvas-minimap path:is(.mod-canvas-color-1, .mod-canvas-color-2, .mod-canvas-color-3, .mod-canvas-color-4, .mod-canvas-color-5, .mod-canvas-color-6), .canvas-minimap path:not(.is-themed) {
+.canvas-minimap path:is(.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6), .canvas-minimap path:not(.is-themed) {
   stroke: hsl(var(--canvas-highlight-color));
 }
 
@@ -4650,8 +5360,8 @@ body:not(.is-grabbing) .workspace-leaf-content[data-type=bookmarks] .tree-item-s
   padding: 5px;
   content: "";
   background: transparent;
-  -webkit-mask: linear-gradient(#FFF 0 0) content-box, linear-gradient(#FFF 0 0);
-  mask: linear-gradient(#FFF 0 0) content-box, linear-gradient(#FFF 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
@@ -4702,10 +5412,32 @@ body:not(.is-grabbing) .workspace-leaf-content[data-type=bookmarks] .tree-item-s
   opacity: 0.4;
 }
 
-.pt-pdf-dark-theme.theme-dark .pdf-viewer .canvasWrapper,
+.pt-pdf-dark-theme.theme-dark .pdfViewer .canvasWrapper,
 .pt-pdf-dark-theme.theme-dark .pdf-sidebar-container img.thumbnailImage {
   filter: invert(1) hue-rotate(180deg) saturate(100%);
   mix-blend-mode: screen;
+}
+
+.pdf-container .pdfViewer .canvasWrapper {
+  box-shadow: unset;
+}
+
+.theme-light .bases-tbody {
+  background-color: var(--background-primary);
+}
+.theme-dark .bases-tbody {
+  background-color: var(--background-secondary-alt);
+}
+
+.bases-header {
+  background-color: var(--background-secondary);
+}
+
+.theme-dark .bases-query-container .filter-group {
+  background-color: var(--background-secondary-alt);
+}
+.theme-light .bases-query-container .filter-group {
+  background-color: var(--background-primary);
 }
 
 .pt-custom-vault-banner .workspace-drawer-vault-name {
@@ -4727,7 +5459,7 @@ body:not(.is-grabbing) .workspace-leaf-content[data-type=bookmarks] .tree-item-s
   display: block;
   width: 32px;
   height: 48px;
-  margin-right: var(--size-4-4);
+  margin: 0 var(--size-4-2);
   content: "";
   background-image: var(--custom-vault-banner-icon-url);
   background-repeat: no-repeat;
@@ -5046,12 +5778,441 @@ body.pt-focused-mode.is-popout-window.pt-focused-style-main-and-popout-only .mob
   background-color: var(--rainbow-text-color);
 }
 
-div.workspace-leaf-content[data-type=style-settings] div.view-content {
-  padding: var(--file-margins);
-  padding-bottom: calc(48px + var(--scroll-bar-size));
+/*
+    Custom version of the Alternative Checkboxes Reference Set for the Prism theme (Based on version: 1.0.0).
+
+    Initiative Repository: https://github.com/damiankorcz/Alternative-Checkboxes-Reference-Set
+
+    The icon set used for this Reference Set is Lucide (same icon set as used in the Obsidian UI). Lucide icons are
+    distributed under the ISC License: https://lucide.dev/license
+*/
+body.enable-alternative-checkboxes {
+  /* - [/] Incomplete */
 }
-body:not(.is-phone) div.workspace-leaf-content[data-type=style-settings] .view-content .style-settings-container .setting-item:not(.setting-item-heading) {
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task="/"],
+body.enable-alternative-checkboxes ul > li[data-task="/"] {
+  /* Icon used: https://lucide.dev/icons/square-dashed */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXNxdWFyZS1kYXNoZWQiPjxwYXRoIGQ9Ik01IDNhMiAyIDAgMCAwLTIgMiIvPjxwYXRoIGQ9Ik0xOSAzYTIgMiAwIDAgMSAyIDIiLz48cGF0aCBkPSJNMjEgMTlhMiAyIDAgMCAxLTIgMiIvPjxwYXRoIGQ9Ik01IDIxYTIgMiAwIDAgMS0yLTIiLz48cGF0aCBkPSJNOSAzaDEiLz48cGF0aCBkPSJNOSAyMWgxIi8+PHBhdGggZD0iTTE0IDNoMSIvPjxwYXRoIGQ9Ik0xNCAyMWgxIi8+PHBhdGggZD0iTTMgOXYxIi8+PHBhdGggZD0iTTIxIDl2MSIvPjxwYXRoIGQ9Ik0zIDE0djEiLz48cGF0aCBkPSJNMjEgMTR2MSIvPjwvc3ZnPg==");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task="/"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task="/"] {
+  --icon-mask-color: var(--color-grey-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task="/"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task="/"] {
+  --line-text-color: var(--color-grey-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task="/"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task="/"] {
+  --line-background: var(--color-grey-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [-] Cancelled */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task="-"],
+body.enable-alternative-checkboxes ul > li[data-task="-"] {
+  /* Icon used: https://lucide.dev/icons/ban */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1iYW4iPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEwIi8+PHBhdGggZD0ibTQuOSA0LjkgMTQuMiAxNC4yIi8+PC9zdmc+");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task="-"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task="-"] {
+  --icon-mask-color: var(--color-red-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task="-"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task="-"] {
+  --line-text-color: var(--color-red-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task="-"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task="-"] {
+  --line-background: var(--color-red-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [>] Forwarded */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task=">"],
+body.enable-alternative-checkboxes ul > li[data-task=">"] {
+  /* Icon used: https://lucide.dev/icons/send-horizontal */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1zZW5kLWhvcml6b250YWwiPjxwYXRoIGQ9Ik0zLjcxNCAzLjA0OGEuNDk4LjQ5OCAwIDAgMC0uNjgzLjYyN2wyLjg0MyA3LjYyN2EyIDIgMCAwIDEgMCAxLjM5NmwtMi44NDIgNy42MjdhLjQ5OC40OTggMCAwIDAgLjY4Mi42MjdsMTgtOC41YS41LjUgMCAwIDAgMC0uOTA0eiIvPjxwYXRoIGQ9Ik02IDEyaDE2Ii8+PC9zdmc+");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task=">"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task=">"] {
+  --icon-mask-color: var(--color-blue-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task=">"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task=">"] {
+  --line-text-color: var(--color-blue-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task=">"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task=">"] {
+  --line-background: var(--color-blue-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [<] Scheduling */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task="<"],
+body.enable-alternative-checkboxes ul > li[data-task="<"] {
+  /* Icon used: https://lucide.dev/icons/calendar */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYWxlbmRhciI+PHBhdGggZD0iTTggMnY0Ii8+PHBhdGggZD0iTTE2IDJ2NCIvPjxyZWN0IHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgeD0iMyIgeT0iNCIgcng9IjIiLz48cGF0aCBkPSJNMyAxMGgxOCIvPjwvc3ZnPg==");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task="<"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task="<"] {
+  --icon-mask-color: var(--color-green-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task="<"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task="<"] {
+  --line-text-color: var(--color-green-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task="<"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task="<"] {
+  --line-background: var(--color-green-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [?] Question */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task="?"],
+body.enable-alternative-checkboxes ul > li[data-task="?"] {
+  /* Icon used: https://lucide.dev/icons/circle-help */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jaXJjbGUtaGVscCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48cGF0aCBkPSJNOS4wOSA5YTMgMyAwIDAgMSA1LjgzIDFjMCAyLTMgMy0zIDMiLz48cGF0aCBkPSJNMTIgMTdoLjAxIi8+PC9zdmc+");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task="?"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task="?"] {
+  --icon-mask-color: var(--color-yellow-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task="?"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task="?"] {
+  --line-text-color: var(--color-yellow-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task="?"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task="?"] {
+  --line-background: var(--color-yellow-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [!] Important */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task="!"],
+body.enable-alternative-checkboxes ul > li[data-task="!"] {
+  /* Icon used: https://lucide.dev/icons/triangle-alert */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS10cmlhbmdsZS1hbGVydCI+PHBhdGggZD0ibTIxLjczIDE4LTgtMTRhMiAyIDAgMCAwLTMuNDggMGwtOCAxNEEyIDIgMCAwIDAgNCAyMWgxNmEyIDIgMCAwIDAgMS43My0zIi8+PHBhdGggZD0iTTEyIDl2NCIvPjxwYXRoIGQ9Ik0xMiAxN2guMDEiLz48L3N2Zz4=");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task="!"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task="!"] {
+  --icon-mask-color: var(--color-orange-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task="!"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task="!"] {
+  --line-text-color: var(--color-orange-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task="!"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task="!"] {
+  --line-background: var(--color-orange-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [*] Star */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task="*"],
+body.enable-alternative-checkboxes ul > li[data-task="*"] {
+  /* Icon used: https://lucide.dev/icons/star */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1zdGFyIj48cG9seWdvbiBwb2ludHM9IjEyIDIgMTUuMDkgOC4yNiAyMiA5LjI3IDE3IDE0LjE0IDE4LjE4IDIxLjAyIDEyIDE3Ljc3IDUuODIgMjEuMDIgNyAxNC4xNCAyIDkuMjcgOC45MSA4LjI2IDEyIDIiLz48L3N2Zz4=");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task="*"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task="*"] {
+  --icon-mask-color: var(--color-yellow-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task="*"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task="*"] {
+  --line-text-color: var(--color-yellow-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task="*"], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task="*"] {
+  --line-background: var(--color-yellow-base);
+}
+body.enable-alternative-checkboxes {
+  /* - ["] Quote */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task='"'],
+body.enable-alternative-checkboxes ul > li[data-task='"'] {
+  /* Icon used: https://lucide.dev/icons/quote */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1xdW90ZSI+PHBhdGggZD0iTTE2IDNhMiAyIDAgMCAwLTIgMnY2YTIgMiAwIDAgMCAyIDIgMSAxIDAgMCAxIDEgMXYxYTIgMiAwIDAgMS0yIDIgMSAxIDAgMCAwLTEgMXYyYTEgMSAwIDAgMCAxIDEgNiA2IDAgMCAwIDYtNlY1YTIgMiAwIDAgMC0yLTJ6Ii8+PHBhdGggZD0iTTUgM2EyIDIgMCAwIDAtMiAydjZhMiAyIDAgMCAwIDIgMiAxIDEgMCAwIDEgMSAxdjFhMiAyIDAgMCAxLTIgMiAxIDEgMCAwIDAtMSAxdjJhMSAxIDAgMCAwIDEgMSA2IDYgMCAwIDAgNi02VjVhMiAyIDAgMCAwLTItMnoiLz48L3N2Zz4=");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task='"'], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task='"'] {
+  --icon-mask-color: var(--color-grey-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task='"'], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task='"'] {
+  --line-text-color: var(--color-grey-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task='"'], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task='"'] {
+  --line-background: var(--color-grey-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [l] Location */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task=l],
+body.enable-alternative-checkboxes ul > li[data-task=l] {
+  /* Icon used: https://lucide.dev/icons/map-pin */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1tYXAtcGluIj48cGF0aCBkPSJNMjAgMTBjMCA0Ljk5My01LjUzOSAxMC4xOTMtNy4zOTkgMTEuNzk5YTEgMSAwIDAgMS0xLjIwMiAwQzkuNTM5IDIwLjE5MyA0IDE0Ljk5MyA0IDEwYTggOCAwIDAgMSAxNiAwIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMCIgcj0iMyIvPjwvc3ZnPg==");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task=l], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task=l] {
+  --icon-mask-color: var(--color-red-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task=l], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task=l] {
+  --line-text-color: var(--color-red-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task=l], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task=l] {
+  --line-background: var(--color-red-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [b] Bookmark */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task=b],
+body.enable-alternative-checkboxes ul > li[data-task=b] {
+  /* Icon used: https://lucide.dev/icons/bookmark */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1ib29rbWFyayI+PHBhdGggZD0ibTE5IDIxLTctNC03IDRWNWEyIDIgMCAwIDEgMi0yaDEwYTIgMiAwIDAgMSAyIDJ2MTZ6Ii8+PC9zdmc+");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task=b], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task=b] {
+  --icon-mask-color: var(--color-mint-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task=b], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task=b] {
+  --line-text-color: var(--color-mint-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task=b], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task=b] {
+  --line-background: var(--color-mint-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [i] Information */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task=i],
+body.enable-alternative-checkboxes ul > li[data-task=i] {
+  /* Icon used: https://lucide.dev/icons/info */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1pbmZvIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIvPjxwYXRoIGQ9Ik0xMiAxNnYtNCIvPjxwYXRoIGQ9Ik0xMiA4aC4wMSIvPjwvc3ZnPg==");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task=i], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task=i] {
+  --icon-mask-color: var(--color-blue-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task=i], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task=i] {
+  --line-text-color: var(--color-blue-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task=i], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task=i] {
+  --line-background: var(--color-blue-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [S] Savings */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task=S],
+body.enable-alternative-checkboxes ul > li[data-task=S] {
+  /* Icon used: https://lucide.dev/icons/dollar-sign */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWRvbGxhci1zaWduIj48bGluZSB4MT0iMTIiIHgyPSIxMiIgeTE9IjIiIHkyPSIyMiIvPjxwYXRoIGQ9Ik0xNyA1SDkuNWEzLjUgMy41IDAgMCAwIDAgN2g1YTMuNSAzLjUgMCAwIDEgMCA3SDYiLz48L3N2Zz4=");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task=S], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task=S] {
+  --icon-mask-color: var(--color-green-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task=S], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task=S] {
+  --line-text-color: var(--color-green-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task=S], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task=S] {
+  --line-background: var(--color-green-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [I] Idea */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task=I],
+body.enable-alternative-checkboxes ul > li[data-task=I] {
+  /* Icon used: https://lucide.dev/icons/lightbulb */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1saWdodGJ1bGIiPjxwYXRoIGQ9Ik0xNSAxNGMuMi0xIC43LTEuNyAxLjUtMi41IDEtLjkgMS41LTIuMiAxLjUtMy41QTYgNiAwIDAgMCA2IDhjMCAxIC4yIDIuMiAxLjUgMy41LjcuNyAxLjMgMS41IDEuNSAyLjUiLz48cGF0aCBkPSJNOSAxOGg2Ii8+PHBhdGggZD0iTTEwIDIyaDQiLz48L3N2Zz4=");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task=I], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task=I] {
+  --icon-mask-color: var(--color-yellow-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task=I], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task=I] {
+  --line-text-color: var(--color-yellow-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task=I], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task=I] {
+  --line-background: var(--color-yellow-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [p] Pros */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task=p],
+body.enable-alternative-checkboxes ul > li[data-task=p] {
+  /* Icon used: https://lucide.dev/icons/thumbs-up */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS10aHVtYnMtdXAiPjxwYXRoIGQ9Ik03IDEwdjEyIi8+PHBhdGggZD0iTTE1IDUuODggMTQgMTBoNS44M2EyIDIgMCAwIDEgMS45MiAyLjU2bC0yLjMzIDhBMiAyIDAgMCAxIDE3LjUgMjJINGEyIDIgMCAwIDEtMi0ydi04YTIgMiAwIDAgMSAyLTJoMi43NmEyIDIgMCAwIDAgMS43OS0xLjExTDEyIDJhMy4xMyAzLjEzIDAgMCAxIDMgMy44OFoiLz48L3N2Zz4=");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task=p], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task=p] {
+  --icon-mask-color: var(--color-green-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task=p], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task=p] {
+  --line-text-color: var(--color-green-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task=p], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task=p] {
+  --line-background: var(--color-green-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [c] Cons */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task=c],
+body.enable-alternative-checkboxes ul > li[data-task=c] {
+  /* Icon used: https://lucide.dev/icons/thumbs-down */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS10aHVtYnMtZG93biI+PHBhdGggZD0iTTE3IDE0VjIiLz48cGF0aCBkPSJNOSAxOC4xMiAxMCAxNEg0LjE3YTIgMiAwIDAgMS0xLjkyLTIuNTZsMi4zMy04QTIgMiAwIDAgMSA2LjUgMkgyMGEyIDIgMCAwIDEgMiAydjhhMiAyIDAgMCAxLTIgMmgtMi43NmEyIDIgMCAwIDAtMS43OSAxLjExTDEyIDIyYTMuMTMgMy4xMyAwIDAgMS0zLTMuODhaIi8+PC9zdmc+");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task=c], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task=c] {
+  --icon-mask-color: var(--color-red-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task=c], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task=c] {
+  --line-text-color: var(--color-red-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task=c], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task=c] {
+  --line-background: var(--color-red-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [f] Fire */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task=f],
+body.enable-alternative-checkboxes ul > li[data-task=f] {
+  /* Icon used: https://lucide.dev/icons/flame */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1mbGFtZSI+PHBhdGggZD0iTTguNSAxNC41QTIuNSAyLjUgMCAwIDAgMTEgMTJjMC0xLjM4LS41LTItMS0zLTEuMDcyLTIuMTQzLS4yMjQtNC4wNTQgMi02IC41IDIuNSAyIDQuOSA0IDYuNSAyIDEuNiAzIDMuNSAzIDUuNWE3IDcgMCAxIDEtMTQgMGMwLTEuMTUzLjQzMy0yLjI5NCAxLTNhMi41IDIuNSAwIDAgMCAyLjUgMi41eiIvPjwvc3ZnPg==");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task=f], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task=f] {
+  --icon-mask-color: var(--color-orange-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task=f], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task=f] {
+  --line-text-color: var(--color-orange-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task=f], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task=f] {
+  --line-background: var(--color-orange-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [k] Key */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task=k],
+body.enable-alternative-checkboxes ul > li[data-task=k] {
+  /* Icon used: https://lucide.dev/icons/key-round */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1rZXktcm91bmQiPjxwYXRoIGQ9Ik0yLjU4NiAxNy40MTRBMiAyIDAgMCAwIDIgMTguODI4VjIxYTEgMSAwIDAgMCAxIDFoM2ExIDEgMCAwIDAgMS0xdi0xYTEgMSAwIDAgMSAxLTFoMWExIDEgMCAwIDAgMS0xdi0xYTEgMSAwIDAgMSAxLTFoLjE3MmEyIDIgMCAwIDAgMS40MTQtLjU4NmwuODE0LS44MTRhNi41IDYuNSAwIDEgMC00LTR6Ii8+PGNpcmNsZSBjeD0iMTYuNSIgY3k9IjcuNSIgcj0iLjUiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvc3ZnPg==");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task=k], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task=k] {
+  --icon-mask-color: var(--color-cyan-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task=k], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task=k] {
+  --line-text-color: var(--color-cyan-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task=k], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task=k] {
+  --line-background: var(--color-cyan-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [w] Win */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task=w],
+body.enable-alternative-checkboxes ul > li[data-task=w] {
+  /* Icon used: https://lucide.dev/icons/trophy */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS10cm9waHkiPjxwYXRoIGQ9Ik02IDlINC41YTIuNSAyLjUgMCAwIDEgMC01SDYiLz48cGF0aCBkPSJNMTggOWgxLjVhMi41IDIuNSAwIDAgMCAwLTVIMTgiLz48cGF0aCBkPSJNNCAyMmgxNiIvPjxwYXRoIGQ9Ik0xMCAxNC42NlYxN2MwIC41NS0uNDcuOTgtLjk3IDEuMjFDNy44NSAxOC43NSA3IDIwLjI0IDcgMjIiLz48cGF0aCBkPSJNMTQgMTQuNjZWMTdjMCAuNTUuNDcuOTguOTcgMS4yMUMxNi4xNSAxOC43NSAxNyAyMC4yNCAxNyAyMiIvPjxwYXRoIGQ9Ik0xOCAySDZ2N2E2IDYgMCAwIDAgMTIgMFYyWiIvPjwvc3ZnPg==");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task=w], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task=w] {
+  --icon-mask-color: var(--color-yellow-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task=w], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task=w] {
+  --line-text-color: var(--color-yellow-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task=w], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task=w] {
+  --line-background: var(--color-yellow-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [u] Up */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task=u],
+body.enable-alternative-checkboxes ul > li[data-task=u] {
+  /* Icon used: https://lucide.dev/icons/trending-up */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS10cmVuZGluZy11cCI+PHBvbHlsaW5lIHBvaW50cz0iMjIgNyAxMy41IDE1LjUgOC41IDEwLjUgMiAxNyIvPjxwb2x5bGluZSBwb2ludHM9IjE2IDcgMjIgNyAyMiAxMyIvPjwvc3ZnPg==");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task=u], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task=u] {
+  --icon-mask-color: var(--color-green-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task=u], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task=u] {
+  --line-text-color: var(--color-green-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task=u], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task=u] {
+  --line-background: var(--color-green-base);
+}
+body.enable-alternative-checkboxes {
+  /* - [d] Down */
+}
+body.enable-alternative-checkboxes div.HyperMD-task-line[data-task=d],
+body.enable-alternative-checkboxes ul > li[data-task=d] {
+  /* Icon used: https://lucide.dev/icons/trending-down */
+  --icon-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS10cmVuZGluZy1kb3duIj48cG9seWxpbmUgcG9pbnRzPSIyMiAxNyAxMy41IDguNSA4LjUgMTMuNSAyIDciLz48cG9seWxpbmUgcG9pbnRzPSIxNiAxNyAyMiAxNyAyMiAxMSIvPjwvc3ZnPg==");
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon div.HyperMD-task-line[data-task=d], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-icon ul > li[data-task=d] {
+  --icon-mask-color: var(--color-red-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text div.HyperMD-task-line[data-task=d], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-text ul > li[data-task=d] {
+  --line-text-color: var(--color-red-text);
+}
+body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background div.HyperMD-task-line[data-task=d], body.enable-alternative-checkboxes.pt-alternative-checkboxes-color-background ul > li[data-task=d] {
+  --line-background: var(--color-red-base);
+}
+body.enable-alternative-checkboxes {
+  /* ----------------------------------------------------------------------- */
+}
+body.enable-alternative-checkboxes .HyperMD-task-line:not([data-task=x], [data-task=X], [data-task=" "]),
+body.enable-alternative-checkboxes li:not([data-task=x], [data-task=X], [data-task=" "]) {
+  --icon-mask-image: unset;
+  --icon-mask-color: var(--text-normal);
+  --icon-content: "";
+  --icon-content-font: var(--font-monospace);
+  --icon-content-weight: var(--font-bold);
+  --icon-content-color: var(--text-normal);
+  --icon-background: transparent;
+  --icon-background-hover: transparent;
+  --icon-border: unset;
+  --icon-border-radius: unset;
+  --line-text-color: inherit;
+  --line-background: unset;
+  --line-border: unset;
+  --line-border-radius: unset;
+}
+body.enable-alternative-checkboxes .HyperMD-task-line:not([data-task=x], [data-task=X], [data-task=" "]),
+body.enable-alternative-checkboxes li:not([data-task=x], [data-task=X], [data-task=" "]).is-checked {
+  color: var(--line-text-color);
+  background: var(--line-background);
+  border: var(--line-border);
+  border-radius: var(--line-border-radius);
+}
+body.enable-alternative-checkboxes {
+  /* Swapping margin for padding to allow background color to apply in Reading view the same
+     as in Live Preview */
+}
+body.enable-alternative-checkboxes .task-list-item.is-checked {
+  margin-inline-start: unset;
+  padding-inline-start: 3ch;
+}
+body.enable-alternative-checkboxes .markdown-reading-view li .task-list-item-checkbox {
+  margin-inline-start: calc(var(--checkbox-size) * -1.5 + var(--size-4-2));
+}
+body.enable-alternative-checkboxes div.is-live-preview label > input[type=checkbox]:not([data-task=x], [data-task=X], [data-task=" "]):checked,
+body.enable-alternative-checkboxes li:not([data-task=x], [data-task=X], [data-task=" "]) > input[type=checkbox]:checked,
+body.enable-alternative-checkboxes li:not([data-task=x], [data-task=X], [data-task=" "]) > p > input[type=checkbox]:checked {
+  --checkbox-marker-color: transparent;
+  border: var(--icon-border);
+  border-radius: var(--icon-border-radius);
+  background: var(--icon-background);
+}
+body.enable-alternative-checkboxes div.is-live-preview label > input[type=checkbox]:not([data-task=x], [data-task=X], [data-task=" "]):checked:hover,
+body.enable-alternative-checkboxes li:not([data-task=x], [data-task=X], [data-task=" "]) > input[type=checkbox]:checked:hover,
+body.enable-alternative-checkboxes li:not([data-task=x], [data-task=X], [data-task=" "]) > p > input[type=checkbox]:checked:hover {
+  background: var(--icon-background-hover);
+}
+body.enable-alternative-checkboxes div.is-live-preview label > input[type=checkbox]:not([data-task=x], [data-task=X], [data-task=" "]):checked::after,
+body.enable-alternative-checkboxes li:not([data-task=x], [data-task=X], [data-task=" "]) > input[type=checkbox]:checked::after,
+body.enable-alternative-checkboxes li:not([data-task=x], [data-task=X], [data-task=" "]) > p > input[type=checkbox]:checked::after {
+  background-color: var(--icon-mask-color);
+  -webkit-mask-image: var(--icon-mask-image);
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+  color: var(--icon-content-color);
+  background-image: var(--icon-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  content: var(--icon-content);
+  text-align: center;
+  font-weight: var(--icon-content-weight);
+  font-family: var(--icon-content-font);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Allows icons to remain scaled correctly within the checkbox when using a border */
+  width: -webkit-fill-available;
+  width: fill-available; /* Fallback for Safari */
+  height: -webkit-fill-available;
+  height: fill-available; /* Fallback for Safari */
+}
+
+div.workspace-leaf-content[data-type=style-settings] div.view-content {
+  padding: var(--size-4-2) var(--size-4-2) var(--size-4-6) var(--size-4-2);
+}
+div.workspace-leaf-content[data-type=style-settings] .view-content .style-settings-container .setting-item:not(.setting-item-heading) .setting-item-control {
+  width: -webkit-fill-available;
+  width: fill-available;
+}
+div.workspace-leaf-content[data-type=style-settings] .view-content .style-settings-container .setting-item:not(.setting-item-heading):has(.setting-item-control .checkbox-container, .setting-item-control .pickr) {
   flex-direction: row;
+  width: inherit;
 }
 
 .setting-item.setting-item-heading.style-settings-heading {
@@ -5160,7 +6321,7 @@ body:not(.is-phone) div.workspace-leaf-content[data-type=style-settings] .view-c
 
 .setting-item.style-settings-heading[data-id=theme-info] {
   padding-top: var(--size-4-4);
-  border-top: 2px solid var(--window-border-color);
+  border-top: 1px solid var(--window-border-color);
 }
 .setting-item.style-settings-heading[data-id=theme-info] .setting-item-name::before {
   content: "📖";
@@ -5168,6 +6329,10 @@ body:not(.is-phone) div.workspace-leaf-content[data-type=style-settings] .view-c
 
 .style-settings-heading[data-id=support] .setting-item-name::before {
   content: "❤️";
+}
+
+.view-content .style-settings-container .setting-item:not(.setting-item-heading) .setting-item-control {
+  padding-top: unset;
 }
 
 .setting-item.style-settings-info-text[data-id=theme-info-buttons],
@@ -5304,7 +6469,9 @@ button.kanban-plugin__new-item-button:hover {
   background-color: var(--background-secondary-alt);
 }
 
-:is(.kanban-plugin__lane-grip, div.kanban-plugin__lane-title-count, .kanban-plugin__lane button.kanban-plugin__lane-settings-button) {
+:is(.kanban-plugin__lane-grip,
+div.kanban-plugin__lane-title-count,
+.kanban-plugin__lane button.kanban-plugin__lane-settings-button) {
   margin: unset;
 }
 
@@ -5501,6 +6668,18 @@ div#cMenuModalBar.cMenuGlassAesthetic {
 }
 .theme-dark .workspace-leaf-content[data-type=recent-files] .nav-folder.mod-root {
   background-color: var(--background-secondary-alt);
+}
+.workspace-leaf-content[data-type=recent-files] .nav-file-tag {
+  margin-inline-start: auto;
+}
+.workspace-leaf-content[data-type=recent-files] .nav-file-tag:empty::before {
+  content: "md";
+}
+.workspace-leaf-content[data-type=recent-files] .tree-item-spacer {
+  display: none;
+}
+.workspace-leaf-content[data-type=recent-files] .recent-files-file-delete {
+  margin-left: var(--size-4-1);
 }
 
 .workspace-leaf-content[data-type=dangling-links] .view-content {
@@ -6491,7 +7670,7 @@ body:not(.is-frameless):not(.qe-hide-breadcrumbs) .status-bar {
 }
 .is-mobile.is-phone .settings-search-container .settings-search-input {
   padding: unset;
-  margin: var(--size-4-1) 0;
+  margin: var(--size-4-2) 0;
 }
 .settings-search-container .search-input-container::before {
   top: calc((var(--input-height) - var(--search-icon-size)) / 2);
@@ -6499,11 +7678,6 @@ body:not(.is-frameless):not(.qe-hide-breadcrumbs) .status-bar {
 }
 .settings-search-container .vertical-tab-nav-item {
   border: unset;
-}
-
-body.is-mobile.is-phone .search-input-container::before {
-  top: calc((var(--input-height) - var(--search-icon-size)) / 2);
-  left: var(--size-4-3);
 }
 
 .workspace-leaf-content[data-type=dataloom] .view-content {
@@ -8987,6 +10161,7 @@ settings:
     -
         id: text-italic-color-lt
         title: Italic Text Color Preset
+        description: "Used for: *Italic Text* or _Italic Text_."
         type: variable-select
         allowEmpty: false
         default: var(--text-normal)
@@ -9041,6 +10216,7 @@ settings:
     -
         id: text-bold-color-lt
         title: Bold Text Color Preset
+        description: "Used for: **Bold Text** or __Bold Text__."
         type: variable-select
         allowEmpty: false
         default: var(--text-normal)
@@ -9095,6 +10271,7 @@ settings:
     -
         id: text-italic-bold-color-lt
         title: Italic and Bold Text Color Preset
+        description: "Used for: ***Italic and Bold Text*** or ___Italic and Bold Text___."
         type: variable-select
         allowEmpty: false
         default: var(--text-normal)
@@ -9147,8 +10324,227 @@ settings:
         opacity: false
         default: '#2B2B2B'
     -
+        id: strikethrough-text-color-lt
+        title: Strikethrough Text Color Preset
+        description: "Used for: ~~Strikethrough Text~~ or ~~Strikethrough Text~~."
+        type: variable-select
+        allowEmpty: false
+        default: var(--color-grey-text)
+        options:
+            -
+                label: Default
+                value: var(--color-grey-text)
+            -
+                label: Accent Color
+                value: var(--interactive-accent-text)
+            -
+                label: Custom
+                value: var(--strikethrough-text-custom-color-lt)
+            -
+                label: Red
+                value: var(--color-red-text)
+            -
+                label: Orange
+                value: var(--color-orange-text)
+            -
+                label: Yellow
+                value: var(--color-yellow-text)
+            -
+                label: Green
+                value: var(--color-green-text)
+            -
+                label: Mint
+                value: var(--color-mint-text)
+            -
+                label: Cyan
+                value: var(--color-cyan-text)
+            -
+                label: Blue
+                value: var(--color-blue-text)
+            -
+                label: Purple
+                value: var(--color-purple-text)
+            -
+                label: Pink
+                value: var(--color-pink-text)
+            -
+                label: Grey
+                value: var(--color-grey-text)
+    -
+        id: strikethrough-text-custom-color-lt
+        title: Strikethrough Text Custom Color
+        description: Make sure you selected 'Custom' in Light Theme Strikethrough Text Color Preset for this to work.
+        type: variable-color
+        format: hsl
+        opacity: false
+        default: '#2B2B2B'
+    -
+        id: strikethrough-line-color-lt
+        title: Strikethrough Line Color Preset
+        type: variable-select
+        allowEmpty: false
+        default: var(--color-grey-text)
+        options:
+            -
+                label: Default
+                value: var(--color-grey-text)
+            -
+                label: Accent Color
+                value: var(--interactive-accent-text)
+            -
+                label: Custom
+                value: var(--strikethrough-line-custom-color-lt)
+            -
+                label: Red
+                value: var(--color-red-text)
+            -
+                label: Orange
+                value: var(--color-orange-text)
+            -
+                label: Yellow
+                value: var(--color-yellow-text)
+            -
+                label: Green
+                value: var(--color-green-text)
+            -
+                label: Mint
+                value: var(--color-mint-text)
+            -
+                label: Cyan
+                value: var(--color-cyan-text)
+            -
+                label: Blue
+                value: var(--color-blue-text)
+            -
+                label: Purple
+                value: var(--color-purple-text)
+            -
+                label: Pink
+                value: var(--color-pink-text)
+            -
+                label: Grey
+                value: var(--color-grey-text)
+    -
+        id: strikethrough-line-custom-color-lt
+        title: Strikethrough Line Custom Color
+        description: Make sure you selected 'Custom' in Light Theme Strikethrough Line Color Preset for this to work.
+        type: variable-color
+        format: hsl
+        opacity: false
+        default: '#2B2B2B'
+    -
+        id: underline-text-color-lt
+        title: Underline Text Color Preset
+        description: "Used for: <u>Underline Text</u>."
+        type: variable-select
+        allowEmpty: false
+        default: var(--text-muted)
+        options:
+            -
+                label: Default
+                value: var(--text-muted)
+            -
+                label: Accent Color
+                value: var(--interactive-accent-text)
+            -
+                label: Custom
+                value: var(--underline-text-custom-color-lt)
+            -
+                label: Red
+                value: var(--color-red-text)
+            -
+                label: Orange
+                value: var(--color-orange-text)
+            -
+                label: Yellow
+                value: var(--color-yellow-text)
+            -
+                label: Green
+                value: var(--color-green-text)
+            -
+                label: Mint
+                value: var(--color-mint-text)
+            -
+                label: Cyan
+                value: var(--color-cyan-text)
+            -
+                label: Blue
+                value: var(--color-blue-text)
+            -
+                label: Purple
+                value: var(--color-purple-text)
+            -
+                label: Pink
+                value: var(--color-pink-text)
+            -
+                label: Grey
+                value: var(--color-grey-text)
+    -
+        id: underline-text-custom-color-lt
+        title: Underline Text Custom Color
+        description: Make sure you selected 'Custom' in Light Theme Underline Text Color Preset for this to work.
+        type: variable-color
+        format: hsl
+        opacity: false
+        default: '#2B2B2B'
+    -
+        id: underline-line-color-lt
+        title: Underline Line Color Preset
+        type: variable-select
+        allowEmpty: false
+        default: var(--text-muted)
+        options:
+            -
+                label: Default
+                value: var(--text-muted)
+            -
+                label: Accent Color
+                value: var(--interactive-accent-text)
+            -
+                label: Custom
+                value: var(--underline-line-custom-color-lt)
+            -
+                label: Red
+                value: var(--color-red-text)
+            -
+                label: Orange
+                value: var(--color-orange-text)
+            -
+                label: Yellow
+                value: var(--color-yellow-text)
+            -
+                label: Green
+                value: var(--color-green-text)
+            -
+                label: Mint
+                value: var(--color-mint-text)
+            -
+                label: Cyan
+                value: var(--color-cyan-text)
+            -
+                label: Blue
+                value: var(--color-blue-text)
+            -
+                label: Purple
+                value: var(--color-purple-text)
+            -
+                label: Pink
+                value: var(--color-pink-text)
+            -
+                label: Grey
+                value: var(--color-grey-text)
+    -
+        id: underline-line-custom-color-lt
+        title: Underline Line Custom Color
+        description: Make sure you selected 'Custom' in Light Theme Underline Line Color Preset for this to work.
+        type: variable-color
+        format: hsl
+        opacity: false
+        default: '#2B2B2B'
+    -
         id: link-internal-color-lt
         title: Internal Link Color Preset
+        description: "Used for: [[Internal Link]] or [Internal Link](Internal%20Link.md)."
         type: variable-select
         allowEmpty: false
         default: var(--interactive-accent-text-hsl)
@@ -9200,6 +10596,7 @@ settings:
     -
         id: link-external-color-lt
         title: External Link Color Preset
+        description: "Used for: [Obsidian Website](https://obsidian.md) or [Note in another vault](obsidian://open?vault=MainVault&file=Note.md)."
         type: variable-select
         allowEmpty: false
         default: var(--interactive-accent-text-hsl)
@@ -9257,6 +10654,7 @@ settings:
     -
         id: text-italic-color-dt
         title: Italic Text Color Preset
+        description: "Used for: *Italic Text* or _Italic Text_."
         type: variable-select
         allowEmpty: false
         default: var(--text-normal)
@@ -9311,6 +10709,7 @@ settings:
     -
         id: text-bold-color-dt
         title: Bold Text Color Preset
+        description: "Used for: **Bold Text** or __Bold Text__."
         type: variable-select
         allowEmpty: false
         default: var(--text-normal)
@@ -9365,6 +10764,7 @@ settings:
     -
         id: text-italic-bold-color-dt
         title: Italic and Bold Text Color Preset
+        description: "Used for: ***Italic and Bold Text*** or ___Italic and Bold Text___."
         type: variable-select
         allowEmpty: false
         default: var(--text-normal)
@@ -9417,8 +10817,227 @@ settings:
         opacity: false
         default: '#2B2B2B'
     -
+        id: strikethrough-text-color-dt
+        title: Strikethrough Text Color Preset
+        description: "Used for: ~~Strikethrough Text~~ or ~~Strikethrough Text~~."
+        type: variable-select
+        allowEmpty: false
+        default: var(--color-grey-text)
+        options:
+            -
+                label: Default
+                value: var(--color-grey-text)
+            -
+                label: Accent Color
+                value: var(--interactive-accent-text)
+            -
+                label: Custom
+                value: var(--strikethrough-text-custom-color-dt)
+            -
+                label: Red
+                value: var(--color-red-text)
+            -
+                label: Orange
+                value: var(--color-orange-text)
+            -
+                label: Yellow
+                value: var(--color-yellow-text)
+            -
+                label: Green
+                value: var(--color-green-text)
+            -
+                label: Mint
+                value: var(--color-mint-text)
+            -
+                label: Cyan
+                value: var(--color-cyan-text)
+            -
+                label: Blue
+                value: var(--color-blue-text)
+            -
+                label: Purple
+                value: var(--color-purple-text)
+            -
+                label: Pink
+                value: var(--color-pink-text)
+            -
+                label: Grey
+                value: var(--color-grey-text)
+    -
+        id: strikethrough-text-custom-color-dt
+        title: Strikethrough Text Custom Color
+        description: Make sure you selected 'Custom' in Dark Theme Strikethrough Text Color Preset for this to work.
+        type: variable-color
+        format: hsl
+        opacity: false
+        default: '#2B2B2B'
+    -
+        id: strikethrough-line-color-dt
+        title: Strikethrough Line Color Preset
+        type: variable-select
+        allowEmpty: false
+        default: var(--color-grey-text)
+        options:
+            -
+                label: Default
+                value: var(--color-grey-text)
+            -
+                label: Accent Color
+                value: var(--interactive-accent-text)
+            -
+                label: Custom
+                value: var(--strikethrough-line-custom-color-dt)
+            -
+                label: Red
+                value: var(--color-red-text)
+            -
+                label: Orange
+                value: var(--color-orange-text)
+            -
+                label: Yellow
+                value: var(--color-yellow-text)
+            -
+                label: Green
+                value: var(--color-green-text)
+            -
+                label: Mint
+                value: var(--color-mint-text)
+            -
+                label: Cyan
+                value: var(--color-cyan-text)
+            -
+                label: Blue
+                value: var(--color-blue-text)
+            -
+                label: Purple
+                value: var(--color-purple-text)
+            -
+                label: Pink
+                value: var(--color-pink-text)
+            -
+                label: Grey
+                value: var(--color-grey-text)
+    -
+        id: strikethrough-line-custom-color-dt
+        title: Strikethrough Line Custom Color
+        description: Make sure you selected 'Custom' in Dark Theme Strikethrough Line Color Preset for this to work.
+        type: variable-color
+        format: hsl
+        opacity: false
+        default: '#2B2B2B'
+    -
+        id: underline-text-color-dt
+        title: Underline Text Color Preset
+        description: "Used for: <u>Underline Text</u>."
+        type: variable-select
+        allowEmpty: false
+        default: var(--text-muted)
+        options:
+            -
+                label: Default
+                value: var(--text-muted)
+            -
+                label: Accent Color
+                value: var(--interactive-accent-text)
+            -
+                label: Custom
+                value: var(--underline-text-custom-color-dt)
+            -
+                label: Red
+                value: var(--color-red-text)
+            -
+                label: Orange
+                value: var(--color-orange-text)
+            -
+                label: Yellow
+                value: var(--color-yellow-text)
+            -
+                label: Green
+                value: var(--color-green-text)
+            -
+                label: Mint
+                value: var(--color-mint-text)
+            -
+                label: Cyan
+                value: var(--color-cyan-text)
+            -
+                label: Blue
+                value: var(--color-blue-text)
+            -
+                label: Purple
+                value: var(--color-purple-text)
+            -
+                label: Pink
+                value: var(--color-pink-text)
+            -
+                label: Grey
+                value: var(--color-grey-text)
+    -
+        id: underline-text-custom-color-dt
+        title: Underline Text Custom Color
+        description: Make sure you selected 'Custom' in Dark Theme Underline Text Color Preset for this to work.
+        type: variable-color
+        format: hsl
+        opacity: false
+        default: '#2B2B2B'
+    -
+        id: underline-line-color-dt
+        title: Underline Line Color Preset
+        type: variable-select
+        allowEmpty: false
+        default: var(--text-muted)
+        options:
+            -
+                label: Default
+                value: var(--text-muted)
+            -
+                label: Accent Color
+                value: var(--interactive-accent-text)
+            -
+                label: Custom
+                value: var(--underline-line-custom-color-dt)
+            -
+                label: Red
+                value: var(--color-red-text)
+            -
+                label: Orange
+                value: var(--color-orange-text)
+            -
+                label: Yellow
+                value: var(--color-yellow-text)
+            -
+                label: Green
+                value: var(--color-green-text)
+            -
+                label: Mint
+                value: var(--color-mint-text)
+            -
+                label: Cyan
+                value: var(--color-cyan-text)
+            -
+                label: Blue
+                value: var(--color-blue-text)
+            -
+                label: Purple
+                value: var(--color-purple-text)
+            -
+                label: Pink
+                value: var(--color-pink-text)
+            -
+                label: Grey
+                value: var(--color-grey-text)
+    -
+        id: underline-line-custom-color-dt
+        title: Underline Line Custom Color
+        description: Make sure you selected 'Custom' in Dark Theme Underline Line Color Preset for this to work.
+        type: variable-color
+        format: hsl
+        opacity: false
+        default: '#2B2B2B'
+    -
         id: link-internal-color-dt
         title: Internal Link Color Preset
+        description: "Used for: [[Internal Link]] or [Internal Link](Internal%20Link.md)."
         type: variable-select
         allowEmpty: false
         default: var(--interactive-accent-text-hsl)
@@ -9470,6 +11089,7 @@ settings:
     -
         id: link-external-color-dt
         title: External Link Color Preset
+        description: "Used for: [Obsidian Website](https://obsidian.md) or [Note in another vault](obsidian://open?vault=MainVault&file=Note.md)."
         type: variable-select
         allowEmpty: false
         default: var(--interactive-accent-text-hsl)
@@ -10079,7 +11699,7 @@ settings:
     -
         id: feature-toggles
         title: Feature Toggles
-        description: Disable / hide certain aspects of the theme.
+        description: Toggle / hide certain aspects of the theme.
         type: heading
         level: 1
         collapsed: true
@@ -10096,18 +11716,6 @@ settings:
         default: false
         type: class-toggle
     -
-        id: pt-disable-callout-styling
-        title: Disable Prism Callout Styling
-        description: This option removes the custom Callout Styling introduced with Prism and reverts to a completely default look. This should be used if you prefer the default callout styling or have CSS Snippets that use it's customisation options.
-        default: false
-        type: class-toggle
-    -
-        id: pt-disable-mark-highlight-styling
-        title: Disable Mark Highlight Styling
-        description: This option removes the Prism Mark Highlight Styling (reverts to default look). This will be handy for those that already use a different <mark> tag based highlighting system. 
-        default: false
-        type: class-toggle
-    -
         id: pt-collapsed-pinned-tab
         title: Collapsed Pinned Tabs
         description: This option removes the title from pinned tabs and adds back the default file icon for the markdown files. Helps reduce the horizontal space wasted by pinned tabs. You can still see the title when you hover over the icon. NOTE - This option requires Installer Version 1.1.9+ due to use of CSS `has()`. Also, might not work on certain Mobile clients.
@@ -10119,6 +11727,47 @@ settings:
         description: This option adds styling to the PDF pages by blending in with the colour scheme in Dark mode; making it more eye friendly. This isn't a perfect solution. Note that some images might look inverted and colours be a different shade compared to the original file.
         default: false
         type: class-toggle
+    -
+        id: pt-disable-callout-styling
+        title: Disable Prism Callout Styling
+        description: This option removes the custom Callout Styling introduced with Prism and reverts to a completely default look. This should be used if you prefer the default callout styling or have CSS Snippets that use it's customisation options.
+        default: false
+        type: class-toggle
+    -
+        id: pt-disable-mark-highlight-styling
+        title: Disable Prism Mark Highlight Styling
+        description: This option removes the Prism Mark Highlight Styling (reverts to default look). This will be handy for those that already use a different <mark> tag based highlighting system. 
+        default: false
+        type: class-toggle
+    -
+    -
+        id: alternative-checkboxes-settings
+        title: Prism Alternative Checkboxes
+        description: Options for enabling and customising the Alternative Checkboxes feature.
+        type: heading
+        level: 2
+        collapsed: true
+    -
+        id: enable-alternative-checkboxes
+        title: Enable Prism Alternative Checkboxes
+        description: Disable this if you are using your own implementation via a CSS Snippet.
+        default: false
+        type: class-toggle
+    -
+        id: pt-alternative-checkboxes-color-icon
+        title: Enable Color Icons
+        type: class-toggle
+        default: false
+    -
+        id: pt-alternative-checkboxes-color-text
+        title: Enable Color Text
+        type: class-toggle
+        default: false
+    -
+        id: pt-alternative-checkboxes-color-background
+        title: Enable Color Backgrounds
+        type: class-toggle
+        default: false
     -
         id: theme-info
         title: Theme Info

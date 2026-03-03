@@ -1,112 +1,72 @@
 <%*
-// ###########################################################
-//                       Helper Functions
-// ###########################################################
+const { toCamelCase, moveAndOpenFile, yamlList } = tp.user.utils;
 
-// Convert string to camelCase
-function toCamelCase(str) {
-  return str
-    .replace(/(?:^\w|[A-Z]|\b\w|\s+|[-_])/g, (match, index) =>
-      index === 0 ? match.toLowerCase() : match.toUpperCase()
-    )
-    .replace(/[\s-_]+/g, '');
-}
-
-// Format tags
-function formatTags(pclass, race) {
-  return [
-    pClass && ` - class/${toCamelCase(pClass)}`,
-    race && ` - race/${toCamelCase(race)}`
-  ]
-  .filter(tag => tag)
-  .join('\n');
-}
-
-// Return icon based on class
-function getIcon(pClass) {
-  const iconMappings = {
-    Artificer: ':RiToolsFill: Specialist',
-    Barbarian: ':FasCity: Primal Path',
-    Bard: ':FasGuitar: College',
-    Cleric: ':FasPersonPraying: Divine Domain',
-    Druid: ':FasMoon: Circle',
-    Fighter: ':FasUserShield: Archetype',
-    Monk: ':FasHandFist: Tradition',
-    Paladin: ':FasFireFlameCurved: Oath',
-    Ranger: ':FasBullseye: Conclave',
-    Rogue: ':RiSwordFill: Archetype',
-    Sorcerer: ':FasHandSparkles: Origin',
-    Warlock: ':FasBurst: Patron',
-    Wizard: ':FasWandMagicSparkles: Tradition'
-  };
-
-  return iconMappings[pClass] || ':FasCircleQuestion: Sub Class';
-}
-
-// ###########################################################
-//                         Main Code
-// ###########################################################
-
-// Call modal form & declare variables
+// Open modal form for player character creation
 const result = await MF.openForm('PC');
-const quote = result.Quote.value;
-const level = result.Level.value;
-const pClass = result.pClass.value;
-const subClass = result.subClass.value;
-const subType = getIcon(pClass);
-const name = result.Name.value;
-const race = result.Race.value;
-const tags = formatTags(pClass, race);
 
-if (result.status === 'ok') {
-
-    // Rename file & open in new tab
-    await tp.file.rename(name);
-    await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
-
-    // Save & display file-explorer icons
-    const iconize = app.plugins.plugins["obsidian-icon-folder"];
-    const notePath = `Compendium/Party/Player Characters/${name}.md`;
-    iconize.addFolderIcon(notePath, "RiSwordFill");
-    iconize.api.util.dom.createIconNode(iconize, notePath, "RiSwordFill");
-
-    // Fire success toast notification
-    new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New player character <span style="text-decoration: underline;">${name}</span> added`;
-
-} else {
-
-    // Fire cancel toast notification
-    new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Player character has not been added`;
+// Cancel if form was closed without submission
+if (result.status !== 'ok') {
+  new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Player character has not been added`;
     return;
 }
+
+// Declare & normalize variables
+const name = result.Name.value;
+const level = result.Level;
+const race = result.Race;
+const portrait = result.Portrait.value || "/Assets/Images/Portrait.jpg";
+const quote = result.Quote;
+const pClass = result.pClass.value?.length ? result.pClass.value : [];
+const subClass = result.pClass.value?.length ? result.subClass.value : [];
+const tags = [
+  ...pClass.map(v => ` - class/${toCamelCase(v)}`),
+  ...subClass.map(v => ` - subclass/${toCamelCase(v)}`),
+  race ? ` - race/${toCamelCase(race)}` : null
+].filter(Boolean).join("\n") || " -";
+
+// Apply icon to note
+const iconize = app.plugins.plugins["obsidian-icon-folder"];
+const icon = "RiSwordFill";
+const notePath = `Compendium/Party/Player Characters/${name}.md`;
+iconize.addFolderIcon(notePath, icon);
+iconize.api.util.dom.createIconNode(iconize, notePath, icon);
+
+// Rename & open note in new tab
+await moveAndOpenFile(tp, name);
+
+// Show success notification
+new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New player character <span style="text-decoration: underline;">${name}</span> added`;
 -%>
 ---
 type: pc
+level: "<% level %>"
+race: "<% race %>"
+class:
+<% pClass.length ? yamlList(pClass) : ' - ""' %>
+subClass:
+<% subClass.length ? yamlList(subClass) : ' - ""'  %>
+cover: "<% portrait %>"
 tags:
-<% tags ? tags : ' - ' %>
-level: "<% level ? level : '' %>"
-race: "<% race ? race : '' %>"
-class: "<% pClass ? pClass : '' %>"
-subClass: "<% subClass ? subClass : '' %>"
-cover: "/Assets/Images/Portrait.jpg"
+<% tags %>
 ---
 
 ###### <% name %>
-:FasPerson: Player Character &nbsp; | &nbsp; :FasQuoteLeft: <% quote ? quote : 'Quote or tagline here' %> :FasQuoteRight:
+:FasPerson: Player Character &nbsp; | &nbsp; :FasQuoteLeft: <% quote %> :FasQuoteRight:
 ___
+
 > [!infobox|no-t right]
-> ![[portrait.jpg]]
+> ![[<% portrait %>]]
 > ###### Details:
 > | Type | Stat |
 > | ---- | ---- |
-> | :FasCrown: Level   | `=this.level` |
-> | :RiSwordFill: Class |  `=this.class`|
-> | <% subType %> |  `=this.subClass`|
-> |  :FasUserGroup: Race |  `=this.race`|
+> | :FasCrown: Level |  `=this.level` |
+>| :RiSwordFill: Class |`=join(this.class, "<br>")`|
+> | :FasFireFlameCurved: Archetype |  `=join(this.subClass, "<br>")`|
+> | :FasUserGroup: Race |  `=this.race` |
 
 > [!quote|no-t]
 > Character description here
- 
+
 > [!column|flex 3]
 >> [!info]- STORYLINES:
 > > ```base

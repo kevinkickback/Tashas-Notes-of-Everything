@@ -7224,6 +7224,7 @@ function create_if_block(ctx) {
     c() {
       input = element("input");
       attr(input, "type", "number");
+      attr(input, "step", "any");
     },
     m(target, anchor) {
       insert(target, input, anchor);
@@ -15365,13 +15366,31 @@ function makeFormEngine({
 }) {
   const formStore = writable({ fields: {}, status: "draft" });
   function setFormField({ name, input }) {
+    const isNumericField = (input == null ? void 0 : input.type) === "number" || (input == null ? void 0 : input.type) === "slider";
+    function coerceValue(value) {
+      if (isNumericField && typeof value === "string" && value !== "") {
+        const num = Number(value);
+        if (!isNaN(num))
+          return num;
+      }
+      return value;
+    }
     function initField(errors2 = [], rules) {
+      const defaultValue = defaultValues[name];
       formStore.update((form) => {
         return {
           ...form,
           fields: {
             ...form.fields,
-            [name]: { value: fromNullable2(defaultValues[name]), name, errors: errors2, rules }
+            [name]: {
+              value: pipe2(
+                fromNullable2(defaultValue),
+                map4(coerceValue)
+              ),
+              name,
+              errors: errors2,
+              rules
+            }
           }
         };
       });
@@ -15387,7 +15406,7 @@ function makeFormEngine({
           ...form,
           fields: {
             ...form.fields,
-            [name]: { ...field, value: some3(value), errors: [] }
+            [name]: { ...field, value: some3(coerceValue(value)), errors: [] }
           }
         };
       });
@@ -15906,11 +15925,12 @@ function duplicateForm(formName, forms) {
 var FormBuilder = class {
   constructor({ name, fields, title, version }, reporter) {
     this.reporter = reporter;
-    this.addField = ({ name, label, description }, input) => {
+    this.addField = ({ name, label, description, required }, input) => {
       const textField = {
         name,
         label,
         description: description || "",
+        isRequired: required,
         input
       };
       return new FormBuilder(
@@ -15921,53 +15941,57 @@ var FormBuilder = class {
         this.reporter
       );
     };
-    this.addTextField = ({ name, label, description, hidden }) => this.addField({ name, label, description }, { type: "text", hidden: Boolean(hidden) });
+    this.addTextField = ({ name, label, description, required, hidden }) => this.addField({ name, label, description, required }, { type: "text", hidden: Boolean(hidden) });
     this.text = this.addTextField;
-    this.addNumberField = ({ name, label, description, hidden }) => this.addField({ name, label, description }, { type: "number", hidden: Boolean(hidden) });
-    this.addDateField = ({ name, label, description, hidden }) => this.addField({ name, label, description }, { type: "date", hidden: Boolean(hidden) });
-    this.addTimeField = ({ name, label, description, hidden }) => this.addField({ name, label, description }, { type: "time", hidden: Boolean(hidden) });
-    this.addDateTimeField = ({ name, label, description, hidden }) => this.addField({ name, label, description }, { type: "datetime", hidden: Boolean(hidden) });
-    this.addTextareaField = ({ name, label, description, hidden }) => this.addField({ name, label, description }, { type: "textarea", hidden: Boolean(hidden) });
-    this.addToggleField = ({ name, label, description, hidden }) => this.addField({ name, label, description }, { type: "toggle", hidden: Boolean(hidden) });
-    this.addEmailField = ({ name, label, description, hidden }) => this.addField({ name, label, description }, { type: "email", hidden: Boolean(hidden) });
-    this.addTelField = ({ name, label, description, hidden }) => this.addField({ name, label, description }, { type: "tel", hidden: Boolean(hidden) });
-    this.addNoteField = ({ name, label, description, folder }) => this.addField({ name, label, description }, { type: "note", folder });
+    this.addNumberField = ({ name, label, description, required, hidden }) => this.addField({ name, label, description, required }, { type: "number", hidden: Boolean(hidden) });
+    this.addDateField = ({ name, label, description, required, hidden }) => this.addField({ name, label, description, required }, { type: "date", hidden: Boolean(hidden) });
+    this.addTimeField = ({ name, label, description, required, hidden }) => this.addField({ name, label, description, required }, { type: "time", hidden: Boolean(hidden) });
+    this.addDateTimeField = ({ name, label, description, required, hidden }) => this.addField({ name, label, description, required }, { type: "datetime", hidden: Boolean(hidden) });
+    this.addTextareaField = ({ name, label, description, required, hidden }) => this.addField({ name, label, description, required }, { type: "textarea", hidden: Boolean(hidden) });
+    this.addToggleField = ({ name, label, description, required, hidden }) => this.addField({ name, label, description, required }, { type: "toggle", hidden: Boolean(hidden) });
+    this.addEmailField = ({ name, label, description, required, hidden }) => this.addField({ name, label, description, required }, { type: "email", hidden: Boolean(hidden) });
+    this.addTelField = ({ name, label, description, required, hidden }) => this.addField({ name, label, description, required }, { type: "tel", hidden: Boolean(hidden) });
+    this.addNoteField = ({ name, label, description, required, folder }) => this.addField({ name, label, description, required }, { type: "note", folder });
     this.addFolderField = ({
       name,
       label,
       description,
+      required,
       parentFolder
-    }) => this.addField({ name, label, description }, { type: "folder", parentFolder });
+    }) => this.addField({ name, label, description, required }, { type: "folder", parentFolder });
     this.addSliderField = ({
       name,
       label,
       description,
+      required,
       min: min3,
       max: max3
-    }) => this.addField({ name, label, description }, { type: "slider", min: min3 != null ? min3 : 0, max: max3 });
-    this.addTagField = ({ name, label, description, hidden }) => this.addField({ name, label, description }, { type: "tag", hidden: Boolean(hidden) });
+    }) => this.addField({ name, label, description, required }, { type: "slider", min: min3 != null ? min3 : 0, max: max3 });
+    this.addTagField = ({ name, label, description, required, hidden }) => this.addField({ name, label, description, required }, { type: "tag", hidden: Boolean(hidden) });
     this.addSelectField = ({
       name,
       label,
       description,
+      required,
       options
     }) => this.addField(
-      { name, label, description },
+      { name, label, description, required },
       {
         type: "select",
         source: "fixed",
         options: options.map((o) => typeof o === "string" ? { value: o, label: o } : o)
       }
     );
-    this.addDataviewField = ({ name, label, description, query }) => this.addField({ name, label, description }, { type: "dataview", query });
+    this.addDataviewField = ({ name, label, description, required, query }) => this.addField({ name, label, description, required }, { type: "dataview", query });
     this.addMultiselectField = ({
       name,
       label,
       description,
+      required,
       allowUnknownValues,
       options
     }) => this.addField(
-      { name, label, description },
+      { name, label, description, required },
       {
         type: "multiselect",
         source: "fixed",
@@ -15975,25 +15999,27 @@ var FormBuilder = class {
         allowUnknownValues: Boolean(allowUnknownValues)
       }
     );
-    this.addDocumentBlockField = ({ name, label, description, body }) => this.addField({ name, label, description }, { type: "document_block", body });
-    this.addMarkdownBlockField = ({ name, label, description, body }) => this.addField({ name, label, description }, { type: "markdown_block", body });
+    this.addDocumentBlockField = ({ name, label, description, required, body }) => this.addField({ name, label, description, required }, { type: "document_block", body });
+    this.addMarkdownBlockField = ({ name, label, description, required, body }) => this.addField({ name, label, description, required }, { type: "markdown_block", body });
     this.addImageField = ({
       name,
       label,
       description,
+      required,
       filenameTemplate,
       saveLocation
     }) => this.addField(
-      { name, label, description },
+      { name, label, description, required },
       { type: "image", filenameTemplate, saveLocation }
     );
     this.addFileField = ({
       name,
       label,
       description,
+      required,
       folder,
       allowedExtensions
-    }) => this.addField({ name, label, description }, { type: "file", folder, allowedExtensions });
+    }) => this.addField({ name, label, description, required }, { type: "file", folder, allowedExtensions });
     this.number = this.addNumberField;
     this.date = this.addDateField;
     this.time = this.addTimeField;
@@ -23033,7 +23059,7 @@ var TemplateEditor_default = TemplateEditor;
 
 // src/views/FormBuilder.svelte
 function add_css16(target) {
-  append_styles(target, "svelte-o83u0b", ".wrapper.svelte-o83u0b,.body.svelte-o83u0b{flex:1;display:flex;flex-direction:column}.wrapper.svelte-o83u0b{max-height:100%;min-height:100%;height:100%;overflow:hidden}.is-mobile .body,.body.svelte-o83u0b{padding-top:0.5rem;overflow-y:scroll}.header.svelte-o83u0b{box-shadow:var(--shadow-bottom) var(--divider-color);padding:1rem}@media(min-width: 100rem){.body.svelte-o83u0b{overflow-y:hidden}.fields.svelte-o83u0b{flex:1;height:100%}form.svelte-o83u0b{display:flex;flex-direction:column;height:100%;overflow:hidden}}.template.svelte-o83u0b{padding:1rem}.fields.svelte-o83u0b{overflow-y:auto;padding:1rem}.flex.svelte-o83u0b{display:flex}.column.svelte-o83u0b{flex-direction:column}.gap1.svelte-o83u0b{gap:0.5rem}.gap2.svelte-o83u0b{gap:1rem}fieldset.svelte-o83u0b{border:none;padding:0}.hint.svelte-o83u0b{color:var(--color-base-70)}.error.svelte-o83u0b{color:var(--text-error);font-weight:bold}button.svelte-o83u0b:disabled{opacity:0.5;cursor:forbidden}@media(min-width: 58rem){.md-row.svelte-o83u0b{flex-direction:row}}");
+  append_styles(target, "svelte-1alubwb", ".wrapper.svelte-1alubwb,.body.svelte-1alubwb{flex:1;display:flex;flex-direction:column}.wrapper.svelte-1alubwb{max-height:100%;min-height:100%;height:100%;overflow:hidden}.is-mobile .body,.body.svelte-1alubwb{padding-top:0.5rem;overflow-y:auto;display:flex;flex-direction:column;flex:1}.header.svelte-1alubwb{box-shadow:var(--shadow-bottom) var(--divider-color);padding:1rem}form.svelte-1alubwb{display:flex;flex-direction:column;flex:1}.template.svelte-1alubwb{padding:1rem}.fields.svelte-1alubwb{overflow-y:auto;padding:1rem}.flex.svelte-1alubwb{display:flex}.column.svelte-1alubwb{flex-direction:column}.gap1.svelte-1alubwb{gap:0.5rem}.gap2.svelte-1alubwb{gap:1rem}fieldset.svelte-1alubwb{border:none;padding:0}.hint.svelte-1alubwb{color:var(--color-base-70)}.error.svelte-1alubwb{color:var(--text-error);font-weight:bold}button.svelte-1alubwb:disabled{opacity:0.5;cursor:forbidden}.sticky-buttons.svelte-1alubwb{position:sticky;bottom:0;background:var(--background-primary);padding:1rem;margin:0;box-shadow:var(--shadow-top) var(--divider-color);z-index:10;border-radius:0}@media(min-width: 58rem){.md-row.svelte-1alubwb{flex-direction:row}}");
 }
 function get_each_context9(ctx, list, i) {
   const child_ctx = ctx.slice();
@@ -23087,23 +23113,23 @@ function create_else_block7(ctx) {
   let span2;
   let input2;
   let t12;
-  let div;
-  let button0;
-  let t14;
-  let button1;
-  let t15;
-  let button1_disabled_value;
-  let t16;
-  let button2;
-  let t17;
-  let button2_disabled_value;
-  let t18;
-  let button3;
-  let t20;
-  let t21;
+  let t13;
   let fieldset1;
   let h3;
-  let t23;
+  let t15;
+  let t16;
+  let div;
+  let button0;
+  let t18;
+  let button1;
+  let t19;
+  let button1_disabled_value;
+  let t20;
+  let button2;
+  let t21;
+  let button2_disabled_value;
+  let t22;
+  let button3;
   let current;
   let mounted;
   let dispose;
@@ -23152,62 +23178,62 @@ function create_else_block7(ctx) {
       span2.textContent = "In case you want to add a class name to the modal form to customize it";
       input2 = element("input");
       t12 = space();
-      div = element("div");
-      button0 = element("button");
-      button0.textContent = "Add more fields";
-      t14 = space();
-      button1 = element("button");
-      t15 = text("Preview");
-      t16 = space();
-      button2 = element("button");
-      t17 = text("Save and close");
-      t18 = space();
-      button3 = element("button");
-      button3.textContent = "Cancel";
-      t20 = space();
       if (if_block)
         if_block.c();
-      t21 = space();
+      t13 = space();
       fieldset1 = element("fieldset");
       h3 = element("h3");
       h3.textContent = "Fields";
-      t23 = space();
+      t15 = space();
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
       if (each_1_else) {
         each_1_else.c();
       }
+      t16 = space();
+      div = element("div");
+      button0 = element("button");
+      button0.textContent = "Add more fields";
+      t18 = space();
+      button1 = element("button");
+      t19 = text("Preview");
+      t20 = space();
+      button2 = element("button");
+      t21 = text("Save and close");
+      t22 = space();
+      button3 = element("button");
+      button3.textContent = "Cancel";
       attr(label0, "for", "name");
-      attr(span0, "class", "hint svelte-o83u0b");
+      attr(span0, "class", "hint svelte-1alubwb");
       attr(input0, "type", "text");
       attr(input0, "placeholder", "Name");
       attr(input0, "id", "name");
       attr(label1, "for", "title");
-      attr(span1, "class", "hint svelte-o83u0b");
+      attr(span1, "class", "hint svelte-1alubwb");
       attr(input1, "type", "text");
       attr(input1, "placeholder", "Title");
       attr(input1, "id", "title");
       attr(label2, "for", "customClassname");
-      attr(span2, "class", "hint svelte-o83u0b");
+      attr(span2, "class", "hint svelte-1alubwb");
       attr(input2, "type", "text");
       attr(input2, "id", "customClassname");
+      attr(fieldset0, "class", "flex column gap2 header svelte-1alubwb");
+      attr(fieldset1, "class", "flex column gap2 fields svelte-1alubwb");
       attr(button0, "type", "button");
-      attr(button0, "class", "svelte-o83u0b");
+      attr(button0, "class", "svelte-1alubwb");
       attr(button1, "type", "button");
       button1.disabled = button1_disabled_value = !/*isValid*/
       ctx[9];
-      attr(button1, "class", "svelte-o83u0b");
-      attr(button2, "class", "mod-cta svelte-o83u0b");
+      attr(button1, "class", "svelte-1alubwb");
+      attr(button2, "class", "mod-cta svelte-1alubwb");
       attr(button2, "type", "submit");
       button2.disabled = button2_disabled_value = !/*isValid*/
       ctx[9];
       attr(button3, "type", "button");
-      attr(button3, "class", "mod-warning svelte-o83u0b");
-      attr(div, "class", "flex row gap2 svelte-o83u0b");
-      attr(fieldset0, "class", "flex column gap2 header svelte-o83u0b");
-      attr(fieldset1, "class", "flex column gap2 fields svelte-o83u0b");
-      attr(form, "class", "svelte-o83u0b");
+      attr(button3, "class", "mod-warning svelte-1alubwb");
+      attr(div, "class", "flex row gap2 sticky-buttons svelte-1alubwb");
+      attr(form, "class", "svelte-1alubwb");
     },
     m(target, anchor) {
       insert(target, form, anchor);
@@ -23243,23 +23269,12 @@ function create_else_block7(ctx) {
         ctx[0].customClassname
       );
       append5(fieldset0, t12);
-      append5(fieldset0, div);
-      append5(div, button0);
-      append5(div, t14);
-      append5(div, button1);
-      append5(button1, t15);
-      append5(div, t16);
-      append5(div, button2);
-      append5(button2, t17);
-      append5(div, t18);
-      append5(div, button3);
-      append5(fieldset0, t20);
       if (if_block)
         if_block.m(fieldset0, null);
-      append5(form, t21);
+      append5(form, t13);
       append5(form, fieldset1);
       append5(fieldset1, h3);
-      append5(fieldset1, t23);
+      append5(fieldset1, t15);
       for (let i = 0; i < each_blocks.length; i += 1) {
         if (each_blocks[i]) {
           each_blocks[i].m(fieldset1, null);
@@ -23268,6 +23283,17 @@ function create_else_block7(ctx) {
       if (each_1_else) {
         each_1_else.m(fieldset1, null);
       }
+      append5(form, t16);
+      append5(form, div);
+      append5(div, button0);
+      append5(div, t18);
+      append5(div, button1);
+      append5(button1, t19);
+      append5(div, t20);
+      append5(div, button2);
+      append5(button2, t21);
+      append5(div, t22);
+      append5(div, button3);
       current = true;
       if (!mounted) {
         dispose = [
@@ -23292,8 +23318,8 @@ function create_else_block7(ctx) {
           listen(
             button0,
             "click",
-            /*click_handler*/
-            ctx[21]
+            /*click_handler_5*/
+            ctx[50]
           ),
           listen(
             button1,
@@ -23345,16 +23371,6 @@ function create_else_block7(ctx) {
           ctx[0].customClassname
         );
       }
-      if (!current || dirty[0] & /*isValid*/
-      512 && button1_disabled_value !== (button1_disabled_value = !/*isValid*/
-      ctx[9])) {
-        button1.disabled = button1_disabled_value;
-      }
-      if (!current || dirty[0] & /*isValid*/
-      512 && button2_disabled_value !== (button2_disabled_value = !/*isValid*/
-      ctx[9])) {
-        button2.disabled = button2_disabled_value;
-      }
       if (
         /*errors*/
         ctx[8].length > 0
@@ -23404,6 +23420,16 @@ function create_else_block7(ctx) {
           each_1_else.c();
           each_1_else.m(fieldset1, null);
         }
+      }
+      if (!current || dirty[0] & /*isValid*/
+      512 && button1_disabled_value !== (button1_disabled_value = !/*isValid*/
+      ctx[9])) {
+        button1.disabled = button1_disabled_value;
+      }
+      if (!current || dirty[0] & /*isValid*/
+      512 && button2_disabled_value !== (button2_disabled_value = !/*isValid*/
+      ctx[9])) {
+        button2.disabled = button2_disabled_value;
       }
     },
     i(local) {
@@ -23477,7 +23503,7 @@ function create_if_block15(ctx) {
     c() {
       div = element("div");
       create_component(templateeditor.$$.fragment);
-      attr(div, "class", "template svelte-o83u0b");
+      attr(div, "class", "template svelte-1alubwb");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -23535,6 +23561,7 @@ function create_if_block15(ctx) {
   };
 }
 function create_if_block_133(ctx) {
+  let div;
   let h3;
   let t2;
   let ul;
@@ -23548,8 +23575,9 @@ function create_if_block_133(ctx) {
   }
   return {
     c() {
+      div = element("div");
       h3 = element("h3");
-      h3.innerHTML = `<span class="error svelte-o83u0b">Form is invalid</span>, check the following:`;
+      h3.innerHTML = `<span class="error svelte-1alubwb">Form is invalid</span>, check the following:`;
       t2 = space();
       ul = element("ul");
       for (let i = 0; i < each_blocks.length; i += 1) {
@@ -23557,11 +23585,13 @@ function create_if_block_133(ctx) {
       }
       set_style(h3, "margin", "0");
       set_style(ul, "margin", "0");
+      attr(div, "class", "errors-container");
     },
     m(target, anchor) {
-      insert(target, h3, anchor);
-      insert(target, t2, anchor);
-      insert(target, ul, anchor);
+      insert(target, div, anchor);
+      append5(div, h3);
+      append5(div, t2);
+      append5(div, ul);
       for (let i = 0; i < each_blocks.length; i += 1) {
         if (each_blocks[i]) {
           each_blocks[i].m(ul, null);
@@ -23594,9 +23624,7 @@ function create_if_block_133(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(h3);
-        detach(t2);
-        detach(ul);
+        detach(div);
       }
       destroy_each(each_blocks, detaching);
     }
@@ -23649,10 +23677,10 @@ function create_each_block_22(ctx) {
     /*error*/
     ctx[62].path && create_if_block_143(ctx)
   );
-  function click_handler_1() {
+  function click_handler() {
     return (
-      /*click_handler_1*/
-      ctx[22](
+      /*click_handler*/
+      ctx[21](
         /*error*/
         ctx[62]
       )
@@ -23670,7 +23698,7 @@ function create_each_block_22(ctx) {
       button.textContent = "Go to problem";
       t4 = space();
       attr(button, "type", "button");
-      attr(button, "class", "svelte-o83u0b");
+      attr(button, "class", "svelte-1alubwb");
     },
     m(target, anchor) {
       insert(target, li, anchor);
@@ -23682,7 +23710,7 @@ function create_each_block_22(ctx) {
       append5(li, button);
       append5(li, t4);
       if (!mounted) {
-        dispose = listen(button, "click", click_handler_1);
+        dispose = listen(button, "click", click_handler);
         mounted = true;
       }
     },
@@ -23785,7 +23813,7 @@ function create_default_slot_18(ctx) {
   let updating_checked;
   let current;
   function toggle_checked_binding(value) {
-    ctx[25](
+    ctx[24](
       value,
       /*field*/
       ctx[52]
@@ -23913,14 +23941,14 @@ function create_if_block_102(ctx) {
   let updating_allowedExtensions;
   let current;
   function inputbuilderfile_folder_binding(value) {
-    ctx[44](
+    ctx[43](
       value,
       /*field*/
       ctx[52]
     );
   }
   function inputbuilderfile_allowedExtensions_binding(value) {
-    ctx[45](
+    ctx[44](
       value,
       /*field*/
       ctx[52]
@@ -24013,14 +24041,14 @@ function create_if_block_92(ctx) {
   let updating_filenameTemplate;
   let current;
   function inputbuilderimage_saveLocation_binding(value) {
-    ctx[42](
+    ctx[41](
       value,
       /*field*/
       ctx[52]
     );
   }
   function inputbuilderimage_filenameTemplate_binding(value) {
-    ctx[43](
+    ctx[42](
       value,
       /*field*/
       ctx[52]
@@ -24112,7 +24140,7 @@ function create_if_block_82(ctx) {
   let updating_body;
   let current;
   function inputbuilderdocumentblock_body_binding(value) {
-    ctx[41](
+    ctx[40](
       value,
       /*field*/
       ctx[52]
@@ -24181,7 +24209,7 @@ function create_if_block_72(ctx) {
   let updating_value;
   let current;
   function inputbuilderdataview_value_binding(value) {
-    ctx[40](
+    ctx[39](
       value,
       /*field*/
       ctx[52]
@@ -24250,7 +24278,7 @@ function create_if_block_63(ctx) {
   let updating_folder;
   let current;
   function inputfolder_folder_binding_1(value) {
-    ctx[39](
+    ctx[38](
       value,
       /*field*/
       ctx[52]
@@ -24327,7 +24355,7 @@ function create_if_block_55(ctx) {
   let updating_folder;
   let current;
   function inputfolder_folder_binding(value) {
-    ctx[38](
+    ctx[37](
       value,
       /*field*/
       ctx[52]
@@ -24416,7 +24444,7 @@ function create_if_block_45(ctx) {
   let mounted;
   let dispose;
   function input0_input_handler_2() {
-    ctx[36].call(
+    ctx[35].call(
       input0,
       /*each_value*/
       ctx[55],
@@ -24425,7 +24453,7 @@ function create_if_block_45(ctx) {
     );
   }
   function input1_input_handler_2() {
-    ctx[37].call(
+    ctx[36].call(
       input1,
       /*each_value*/
       ctx[55],
@@ -24452,14 +24480,14 @@ function create_if_block_45(ctx) {
       attr(input0, "placeholder", "0");
       attr(input0, "id", input0_id_value = /*min_id*/
       ctx[57]);
-      attr(div0, "class", "flex column gap1 svelte-o83u0b");
+      attr(div0, "class", "flex column gap1 svelte-1alubwb");
       attr(label1, "for", label1_for_value = /*max_id*/
       ctx[58]);
       attr(input1, "type", "number");
       attr(input1, "placeholder", "10");
       attr(input1, "id", input1_id_value = /*max_id*/
       ctx[58]);
-      attr(div1, "class", "flex column gap1 svelte-o83u0b");
+      attr(div1, "class", "flex column gap1 svelte-1alubwb");
     },
     m(target, anchor) {
       insert(target, div0, anchor);
@@ -24532,35 +24560,35 @@ function create_if_block_35(ctx) {
   let updating_allowUnknownValues;
   let current;
   function inputbuilderselect_source_binding_1(value) {
-    ctx[31](
+    ctx[30](
       value,
       /*field*/
       ctx[52]
     );
   }
   function inputbuilderselect_options_binding_1(value) {
-    ctx[32](
+    ctx[31](
       value,
       /*field*/
       ctx[52]
     );
   }
   function inputbuilderselect_folder_binding_1(value) {
-    ctx[33](
+    ctx[32](
       value,
       /*field*/
       ctx[52]
     );
   }
   function inputbuilderselect_query_binding(value) {
-    ctx[34](
+    ctx[33](
       value,
       /*field*/
       ctx[52]
     );
   }
   function inputbuilderselect_allowUnknownValues_binding(value) {
-    ctx[35](
+    ctx[34](
       value,
       /*field*/
       ctx[52]
@@ -24700,21 +24728,21 @@ function create_if_block_25(ctx) {
   let updating_folder;
   let current;
   function inputbuilderselect_source_binding(value) {
-    ctx[28](
+    ctx[27](
       value,
       /*field*/
       ctx[52]
     );
   }
   function inputbuilderselect_options_binding(value) {
-    ctx[29](
+    ctx[28](
       value,
       /*field*/
       ctx[52]
     );
   }
   function inputbuilderselect_folder_binding(value) {
-    ctx[30](
+    ctx[29](
       value,
       /*field*/
       ctx[52]
@@ -24867,7 +24895,7 @@ function create_default_slot14(ctx) {
   let updating_checked;
   let current;
   function toggle_checked_binding_1(value) {
-    ctx[46](
+    ctx[45](
       value,
       /*field*/
       ctx[52]
@@ -25004,7 +25032,7 @@ function create_each_block9(ctx) {
   let mounted;
   let dispose;
   function input0_input_handler_1() {
-    ctx[23].call(
+    ctx[22].call(
       input0,
       /*each_value*/
       ctx[55],
@@ -25013,7 +25041,7 @@ function create_each_block9(ctx) {
     );
   }
   function input1_input_handler_1() {
-    ctx[24].call(
+    ctx[23].call(
       input1,
       /*each_value*/
       ctx[55],
@@ -25023,7 +25051,7 @@ function create_each_block9(ctx) {
   }
   let if_block0 = show_if_1 && create_if_block_123(ctx);
   function input2_input_handler_1() {
-    ctx[26].call(
+    ctx[25].call(
       input2,
       /*each_value*/
       ctx[55],
@@ -25037,7 +25065,7 @@ function create_each_block9(ctx) {
     each_blocks[i] = create_each_block_14(get_each_context_14(ctx, each_value_1, i));
   }
   function select_change_handler() {
-    ctx[27].call(
+    ctx[26].call(
       select,
       /*each_value*/
       ctx[55],
@@ -25146,6 +25174,15 @@ function create_each_block9(ctx) {
       )
     }
   });
+  function click_handler_1() {
+    return (
+      /*click_handler_1*/
+      ctx[46](
+        /*index*/
+        ctx[56]
+      )
+    );
+  }
   function click_handler_2() {
     return (
       /*click_handler_2*/
@@ -25168,15 +25205,6 @@ function create_each_block9(ctx) {
     return (
       /*click_handler_4*/
       ctx[49](
-        /*index*/
-        ctx[56]
-      )
-    );
-  }
-  function click_handler_5() {
-    return (
-      /*click_handler_5*/
-      ctx[50](
         /*index*/
         ctx[56]
       )
@@ -25246,7 +25274,7 @@ function create_each_block9(ctx) {
       attr(input0, "placeholder", "Name");
       attr(input0, "id", input0_id_value = `name_${/*index*/
       ctx[56]}`);
-      attr(div0, "class", "flex column gap1 svelte-o83u0b");
+      attr(div0, "class", "flex column gap1 svelte-1alubwb");
       attr(label1, "for", label1_for_value = `label_${/*index*/
       ctx[56]}`);
       attr(input1, "type", "text");
@@ -25254,21 +25282,21 @@ function create_each_block9(ctx) {
       ctx[52].name);
       attr(input1, "id", input1_id_value = `label_${/*index*/
       ctx[56]}`);
-      attr(div1, "class", "flex column gap1 svelte-o83u0b");
+      attr(div1, "class", "flex column gap1 svelte-1alubwb");
       attr(label2, "for", label2_for_value = /*delete_id*/
       ctx[54]);
       set_style(label2, "visibility", "hidden");
       set_style(label2, "overflow", "hidden");
       set_style(label2, "white-space", "nowrap");
-      attr(div2, "class", "flex column gap1 svelte-o83u0b");
-      attr(div3, "class", "flex column md-row gap2 svelte-o83u0b");
+      attr(div2, "class", "flex column gap1 svelte-1alubwb");
+      attr(div3, "class", "flex column md-row gap2 svelte-1alubwb");
       attr(label3, "for", label3_for_value = /*desc_id*/
       ctx[53]);
       attr(input2, "type", "text");
       attr(input2, "placeholder", "Description");
       attr(input2, "id", input2_id_value = /*desc_id*/
       ctx[53]);
-      attr(div4, "class", "flex column gap1 svelte-o83u0b");
+      attr(div4, "class", "flex column gap1 svelte-1alubwb");
       attr(label4, "for", label4_for_value = `type_${/*index*/
       ctx[56]}`);
       attr(select, "id", select_id_value = `type_${/*index*/
@@ -25278,25 +25306,25 @@ function create_each_block9(ctx) {
         ctx[52].input.type === void 0
       )
         add_render_callback(select_change_handler);
-      attr(div5, "class", "flex column gap1 svelte-o83u0b");
-      attr(div6, "class", "flex column md-row gap2 svelte-o83u0b");
-      attr(div7, "class", "flex gap1 svelte-o83u0b");
+      attr(div5, "class", "flex column gap1 svelte-1alubwb");
+      attr(div6, "class", "flex column md-row gap2 svelte-1alubwb");
+      attr(div7, "class", "flex gap1 svelte-1alubwb");
       attr(button0, "type", "button");
       button0.disabled = button0_disabled_value = /*index*/
       ctx[56] === 0;
-      attr(button0, "class", "svelte-o83u0b");
+      attr(button0, "class", "svelte-1alubwb");
       attr(button1, "type", "button");
       button1.disabled = button1_disabled_value = /*index*/
       ctx[56] === /*definition*/
       ctx[0].fields.length - 1;
-      attr(button1, "class", "svelte-o83u0b");
+      attr(button1, "class", "svelte-1alubwb");
       attr(button2, "type", "button");
-      attr(button2, "class", "svelte-o83u0b");
+      attr(button2, "class", "svelte-1alubwb");
       attr(button3, "type", "button");
       attr(button3, "id", button3_id_value = /*delete_id*/
       ctx[54]);
-      attr(button3, "class", "svelte-o83u0b");
-      attr(div8, "class", "flex gap1 svelte-o83u0b");
+      attr(button3, "class", "svelte-1alubwb");
+      attr(div8, "class", "flex gap1 svelte-1alubwb");
     },
     m(target, anchor) {
       insert(target, div3, anchor);
@@ -25386,12 +25414,12 @@ function create_each_block9(ctx) {
           listen(input2, "input", input2_input_handler_1),
           listen(select, "change", select_change_handler),
           action_destroyer(setIcon_action = import_obsidian22.setIcon.call(null, button0, "arrow-up")),
-          listen(button0, "click", click_handler_2),
+          listen(button0, "click", click_handler_1),
           action_destroyer(setIcon_action_1 = import_obsidian22.setIcon.call(null, button1, "arrow-down")),
-          listen(button1, "click", click_handler_3),
-          listen(button2, "click", click_handler_4),
+          listen(button1, "click", click_handler_2),
+          listen(button2, "click", click_handler_3),
           action_destroyer(setIcon_action_2 = import_obsidian22.setIcon.call(null, button3, "trash")),
-          listen(button3, "click", click_handler_5)
+          listen(button3, "click", click_handler_4)
         ];
         mounted = true;
       }
@@ -25647,8 +25675,8 @@ function create_fragment33(ctx) {
       t = space();
       div0 = element("div");
       if_block.c();
-      attr(div0, "class", "body svelte-o83u0b");
-      attr(div1, "class", "wrapper modal-form svelte-o83u0b");
+      attr(div0, "class", "body svelte-1alubwb");
+      attr(div1, "class", "wrapper modal-form svelte-1alubwb");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -25823,27 +25851,7 @@ function instance33($$self, $$props, $$invalidate) {
     definition.customClassname = this.value;
     $$invalidate(0, definition);
   }
-  const click_handler = () => {
-    $$invalidate(
-      0,
-      definition.fields = [
-        ...definition.fields,
-        {
-          name: "",
-          label: "",
-          description: "",
-          input: {
-            type: "text",
-            allowUnknownValues: false,
-            hidden: false
-          }
-        }
-      ],
-      definition
-    );
-    $$invalidate(6, activeFieldIndex = definition.fields.length - 1);
-  };
-  const click_handler_1 = (error2) => {
+  const click_handler = (error2) => {
     $$invalidate(6, activeFieldIndex = error2.index);
   };
   function input0_input_handler_1(each_value, index) {
@@ -25978,11 +25986,31 @@ function instance33($$self, $$props, $$invalidate) {
       $$invalidate(0, definition);
     }
   }
-  const click_handler_2 = (index) => moveField(index, "up");
-  const click_handler_3 = (index) => moveField(index, "down");
-  const click_handler_4 = (index) => duplicateField(index);
-  const click_handler_5 = (index) => {
+  const click_handler_1 = (index) => moveField(index, "up");
+  const click_handler_2 = (index) => moveField(index, "down");
+  const click_handler_3 = (index) => duplicateField(index);
+  const click_handler_4 = (index) => {
     $$invalidate(0, definition.fields = definition.fields.filter((_, i) => i !== index), definition);
+  };
+  const click_handler_5 = () => {
+    $$invalidate(
+      0,
+      definition.fields = [
+        ...definition.fields,
+        {
+          name: "",
+          label: "",
+          description: "",
+          input: {
+            type: "text",
+            allowUnknownValues: false,
+            hidden: false
+          }
+        }
+      ],
+      definition
+    );
+    $$invalidate(6, activeFieldIndex = definition.fields.length - 1);
   };
   $$self.$$set = ($$props2) => {
     if ("definition" in $$props2)
@@ -26045,7 +26073,6 @@ function instance33($$self, $$props, $$invalidate) {
     input1_input_handler,
     input2_input_handler,
     click_handler,
-    click_handler_1,
     input0_input_handler_1,
     input1_input_handler_1,
     toggle_checked_binding,
@@ -26070,6 +26097,7 @@ function instance33($$self, $$props, $$invalidate) {
     inputbuilderfile_folder_binding,
     inputbuilderfile_allowedExtensions_binding,
     toggle_checked_binding_1,
+    click_handler_1,
     click_handler_2,
     click_handler_3,
     click_handler_4,

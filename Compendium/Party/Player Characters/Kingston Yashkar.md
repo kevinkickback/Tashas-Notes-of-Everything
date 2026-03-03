@@ -1,13 +1,15 @@
 ---
 type: pc
+level: "4"
+race: "Tabaxi"
+class: 
+ - "Paladin"
+subClass: 
+ - "Conquest"
+cover: "/Assets/Images/Party/kingston.png"
 tags:
 - race/tabaxi
 - class/paladin
-level: "3"
-race: "Tabaxi"
-class: "Paladin"
-subClass: "Conquest"
-cover: "/Assets/Images/Party/kingston.png"
 ---
 ###### Kingston Yashkar
 :FasPerson: Player Character &nbsp; | &nbsp; :FasQuoteLeft: Luck favors the bold :FasQuoteRight:
@@ -19,7 +21,7 @@ ___
 > | ---- | ---- |
 > | :FasCrown: Level   | `=this.level` |
 > | :RiSwordFill: Class |  `=this.class`|
-> | :FasFireFlameCurved: Oath |  `=this.subClass`|
+> | :FasFireFlameCurved: Archetype |  `=join(this.subClass, "<br>")`|
 > |  :FasUserGroup: Race |  `=this.race`|
 
 > [!quote|no-t]

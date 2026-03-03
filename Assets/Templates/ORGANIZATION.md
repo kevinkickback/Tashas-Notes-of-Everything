@@ -1,35 +1,32 @@
 <%*
-// ###########################################################
-//                        Main Code Section
-// ###########################################################
+const { moveAndOpenFile } = tp.user.utils;
 
-// Call modal form & declare variables
+// Open modal form for organization creation
 const result = await MF.openForm('ORGANIZATION');
-const alignment = result.Alignment.value;
-const name = result.Name.value;
-const location = result.Location.value;
 
-if (result.status === 'ok') {
-
-    // Rename file & open in new tab
-    await tp.file.rename(name);
-    await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
-
-    // Save & display file-explorer icons
-    const iconize = app.plugins.plugins["obsidian-icon-folder"];
-    const notePath = `Compendium/Lore/Organizations/${name}.md`;
-    iconize.addFolderIcon(notePath, "LiVenetianMask");
-    iconize.api.util.dom.createIconNode(iconize, notePath, "LiVenetianMask");
-
-    // Fire success toast notification
-    new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New organization <span style="text-decoration: underline;">${name}</span> added`;
-
-} else {
-
-   // Fire cancel toast notification
+// Cancel if form was closed without submission
+if (result.status !== 'ok') {
     new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Organization has not been added`;
     return;
 }
+
+// Declare & normalize variables
+const alignment = result.Alignment.value;
+const name = result.Name.value;
+const location = result.Location.value;
+const image = result.Image.value || "embed.jpg";
+
+// Rename & open note in new tab
+await moveAndOpenFile(tp, name);
+
+// Apply icon to note
+const iconize = app.plugins.plugins["obsidian-icon-folder"];
+const notePath = `Compendium/Lore/Organizations/${name}.md`;
+iconize.addFolderIcon(notePath, "LiVenetianMask");
+iconize.api.util.dom.createIconNode(iconize, notePath, "LiVenetianMask");
+
+// Show success notification
+new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New organization <span style="text-decoration: underline;">${name}</span> added`;
 _%>
 
 ---
@@ -45,7 +42,7 @@ tags:
 ___
 
 > [!quote|no-t]
->![[embed.jpg|right wm-sm]]Profile of <% name %>, the <% alignment ? alignment.toLowerCase() : 'unknown' %> aligned organization.
+>![[<% image %>|right wm-sm]]Profile of <% name %>, the <% alignment ? alignment.toLowerCase() : 'unknown' %> aligned organization.
 
 > [!column|flex 3]
 > > [!hint]- NPC's

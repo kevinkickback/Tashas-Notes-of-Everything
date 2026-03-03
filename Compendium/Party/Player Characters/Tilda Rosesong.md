@@ -1,13 +1,15 @@
 ---
 type: pc
+level: "4"
+race: "Tiefling"
+class: 
+ - "Sorcerer"
+subClass: 
+ - "Divine Soul"
+cover: "/Assets/Images/Party/tilda.webp"
 tags:
 - race/tiefling
 - class/sorcerer
-level: "3"
-race: "Tiefling"
-class: "Sorcerer"
-subClass: "Divine Soul"
-cover: "/Assets/Images/Party/tilda.webp"
 ---
 ###### Tilda Rosesong
 :FasPerson: Player Character &nbsp; | &nbsp; :FasQuoteLeft: I shape destiny to my will :FasQuoteRight:
@@ -18,8 +20,8 @@ ___
 > | Type | Stat |
 > | ---- | ---- |
 > | :FasCrown: Level   | `=this.level` |
-> | :RiSwordFill: Class |  `=this.class`|
-> | :FasHandSparkles: Origin |  `=this.subClass`|
+> | :RiSwordFill: Class | `=join(this.class, "<br>")`|
+> | :FasFireFlameCurved: Archetype |  `=join(this.subClass, "<br>")`|
 > |  :FasUserGroup: Race |  `=this.race`|
 
 > [!quote|no-t]

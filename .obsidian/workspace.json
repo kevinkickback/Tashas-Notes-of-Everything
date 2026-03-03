@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "236345cd2756a5a1",
+            "id": "e273018339819fa1",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -34,7 +34,7 @@
       {
         "id": "e28bde642b0ea5c6",
         "type": "tabs",
-        "dimension": 24.63126843657817,
+        "dimension": 22.935103244837755,
         "children": [
           {
             "id": "a58c95d8f0002a0b",
@@ -51,9 +51,9 @@
         ]
       },
       {
-        "id": "7fe0fa75dad401a5",
+        "id": "2c1ef92ca245f1a7",
         "type": "tabs",
-        "dimension": 75.36873156342183,
+        "dimension": 77.06489675516224,
         "children": [
           {
             "id": "3384d39262929b92",
@@ -72,7 +72,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 336.5
+    "width": 306.5
   },
   "right": {
     "id": "cbcc3a597fb0833b",
@@ -81,7 +81,7 @@
       {
         "id": "36fb3699cc5e9295",
         "type": "tabs",
-        "dimension": 23.77873563218391,
+        "dimension": 21.982758620689655,
         "children": [
           {
             "id": "34783b92fcf002b0",
@@ -98,7 +98,7 @@
       {
         "id": "1f6fc3dcaa6b4b26",
         "type": "tabs",
-        "dimension": 76.22126436781609,
+        "dimension": 78.01724137931035,
         "children": [
           {
             "id": "37992ec5383e3e3d",
@@ -108,7 +108,7 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true,
-                "showSearch": true,
+                "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-tags",
@@ -155,7 +155,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 342.5
+    "width": 363.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -166,50 +166,53 @@
       "modalforms:Edit forms": false
     }
   },
-  "active": "236345cd2756a5a1",
+  "active": "e273018339819fa1",
   "lastOpenFiles": [
-    "Assets/Templates/NOTE.md",
-    "Session Notes/Session 02.md",
-    "Session Notes/Session 01.md",
-    "Assets/Templates/STARTUP.md",
-    "Assets/Templates/MIGRATE.md",
-    "Compendium/Party/Player Characters/Alaric Waycrest.md",
-    "INDEX.md",
-    "Assets/Templates/CONTINENT.md",
-    "temp.md",
-    "Assets/Templates/LOCALE.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/Faerûn.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/Western Heartlands/Western Heartlands.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/Western Heartlands/Sword Coast/Baldurs Gate/Baldurs Gate.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/Western Heartlands/Sword Coast/Waterdeep/Waterdeep.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/Western Heartlands/Sword Coast/Baldurs Gate/Elfsong Tavern.md",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/Western Heartlands/Sword Coast/Sword Coast.md",
-    "Compendium/Atlas/Material Plane/Toril/Toril.md",
-    "Compendium/Atlas/Material Plane/Material Plane.md",
-    "Compendium/Atlas/Feywild/Feywild.md",
     "Assets/Images/header.png",
-    "Convert Notes to v3.md",
-    "Compendium/NPC's/temp.md",
-    "Compendium/Lore/Events/Fey Day.md",
-    "changelog.md",
-    "Compendium/Party/Quests/Take Five.md",
+    "Assets/Images/session.png",
+    "Assets/Images/quest.png",
+    "Assets/Images/portrait.jpg",
+    "Assets/Images/embed.jpg",
+    "Assets/Images/compendium.jpg",
+    "Assets/Images/banner.jpg",
+    "Assets/Templates/CONTINENT.md",
+    "Assets/Templates/LANDMARK.md",
+    "INDEX.md",
+    "Assets/Templates/PLAYER.md",
     "Compendium/Party/Player Characters/Tilda Rosesong.md",
     "Compendium/Party/Player Characters/Moira Belkas.md",
-    "Assets/Images/Lore/Deck_of_many_things.jpg",
-    "Assets/Images/Lore/FeyDay.jpg",
-    "Compendium/Atlas/Material Plane/Toril/Faerûn/Western Heartlands/Sword Coast/Waterdeep/bar",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 5/TEST PROV 6/TEST LOCALE 7/TEST LAND 8",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 5/TEST PROV 6/TEST LOCALE 7",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 5/TEST PROV 6",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 5",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3/TEST TERR 4",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/TEST CONT 3",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2",
-    "Compendium/Atlas/TEST PLANE 1",
-    "Compendium/Atlas/TEST PLANE 1/TEST REALM 2/we did lmao",
-    "Assets/Images/Location/baldursGate.webp",
-    "Assets/Images/Location/sorcSundries.jpg",
-    "Assets/Images/Location/westernHeartlands.jpg",
-    "Assets/Images/Location/lordsAlliance.jpg"
+    "Compendium/Party/Player Characters/Kingston Yashkar.md",
+    "Compendium/Party/Player Characters/Alaric Waycrest.md",
+    "Assets/Templates/REALM.md",
+    "Compendium/Party/Player Characters/length.md",
+    "Compendium/Party/Player Characters/fsdfsdfsdfsdf.md",
+    "Assets/Templates/PROVINCE.md",
+    "Assets/Templates/LOCALE.md",
+    "Assets/Templates/GOD.md",
+    "Assets/Templates/EVENT.md",
+    "Assets/Templates/TERRITORY.md",
+    "Assets/Templates/STARTUP.md",
+    "Assets/Templates/QUEST.md",
+    "Assets/Templates/PLANE.md",
+    "Assets/Templates/ORGANIZATION.md",
+    "Assets/Templates/OBJECT.md",
+    "Assets/Templates/NPC.md",
+    "Assets/Templates/NOTE.md",
+    "Assets/Templates/MIGRATE.md",
+    "Compendium/NPC's/Eleidin Verlice.md",
+    "Assets/Images/Lore/organization-14-45-14.jpg",
+    "Assets/Images/Lore/organization-14-46-02.avif",
+    "Assets/Images/Lore/organization-14-45-38.png",
+    "Assets/Images/Lore/object-14-38-33.jpg",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/Western Heartlands/Sword Coast/Waterdeep/fsdfsdfs",
+    "Compendium/Atlas/qqqqqqqqqqqqqq",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/Western Heartlands/Sword Coast/Waterdeep/sdfsdfsdf",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/Western Heartlands/Sword Coast/Baldurs Gate/final loc",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/Western Heartlands/vbvbvbvb",
+    "Compendium/Atlas/qweqweqwe",
+    "Compendium/Atlas/asdfadsf",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/Western Heartlands/zzzzzzzzzzz",
+    "Compendium/Atlas/Material Plane/Toril/Faerûn/321231321",
+    "Compendium/Atlas/Material Plane/Toril/Ocean Local/asdfasdfasdf"
   ]
 }

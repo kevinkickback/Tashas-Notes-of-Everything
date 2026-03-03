@@ -1,45 +1,44 @@
 <%*
-// ###########################################################
-//                        Main Code Section
-// ###########################################################
+const { moveAndOpenFile } = tp.user.utils;
 
+// Open modal form for plane creation
 const result = await MF.openForm('PLANE');
-const name = result.Name.value;
 
-if (result.status === 'ok') {
-  // Rename file & open in new tab
-  const newPath = `Compendium/Atlas/${name}/${name}`;
-  await tp.file.move(newPath);
-  await app.workspace.getLeaf(true).openFile(tp.file.find_tfile(name));
-
-  // Save & display file-explorer icons
-  const iconize = app.plugins.plugins["obsidian-icon-folder"];
-  const folderPath = newPath.replace(/\/[^/]+$/, "");
-  const notePath = `${newPath}.md`;
-  iconize.addFolderIcon(folderPath, "FasCircleHalfStroke");
-  iconize.addFolderIcon(notePath, "FasCircleHalfStroke");
-  iconize.api.util.dom.createIconNode(iconize, folderPath, "FasCircleHalfStroke");
-  iconize.api.util.dom.createIconNode(iconize, notePath, "FasCircleHalfStroke");
-
-  //Fire success toast notification
-  new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New plane <span style="text-decoration: underline;">${name}</span> added`;
-
-} else {
-
-  // Fire cancel toast notification
+// Cancel if form was closed without submission
+if (result.status !== 'ok') {
   new Notice().noticeEl.innerHTML = `<span style="color: red; font-weight: bold;">Cancelled:</span><br>Plane has not been added`;
   return;
 }
-_%>
 
+// Declare & normalize variables
+const name = result.Name.value;
+const banner = result.Banner.value || "banner.jpg";
+
+// Apply icon to folder & note
+const iconize = app.plugins.plugins["obsidian-icon-folder"];
+const icon = "FasCircleHalfStroke"
+const newPath = `Compendium/Atlas/${name}/${name}`;
+const folderPath = newPath.replace(/\/[^/]+$/, "");
+const notePath = `${newPath}.md`;
+iconize.addFolderIcon(folderPath, icon);
+iconize.addFolderIcon(notePath, icon);
+iconize.api.util.dom.createIconNode(iconize, folderPath, icon);
+iconize.api.util.dom.createIconNode(iconize, notePath, icon);
+
+// Rename, move, & open note in new tab
+await moveAndOpenFile(tp, name, newPath);
+
+// Show success notification
+new Notice().noticeEl.innerHTML = `<span style="color: green; font-weight: bold;">Finished!</span><br>New plane <span style="text-decoration: underline;">${name}</span> added`;
+-%>
 ---
 type: plane
 tags:
  - 
 ---
-![[banner.jpg|banner]]
+![[<% banner %>|banner]]
 ###### <% name %>
-<span class="sub2">:FasCircleHalfStroke:  Plane of Existence</span>
+<span class="sub2">:FasCircleHalfStroke: Plane of Existence</span>
 ___
 
 > [!quote|no-t] SUMMARY

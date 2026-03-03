@@ -2893,11 +2893,12 @@ body {
 }
 
 .index .callout[data-callout] .bases-cards-item {
-	padding-bottom: unset;
+	padding-top: 2px;
+	padding-bottom: 0px;
 }
 
 .bases-cards-property[data-property="formula.Details"] {
-    border-top: 2px solid; /* border width and fallback color */
+    border-top: 2px solid;
     border-image: linear-gradient(to right, transparent, white, transparent) 1;
 	padding-top: 0.2em; 
 }
@@ -2945,4 +2946,14 @@ body {
 
 .index .callout[data-callout] hr {
     padding-bottom: 0.5em;
+}
+
+.callout.callout[data-callout~="infobox"] table td {
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* Hide new note button */
+.bases-toolbar-new-item-menu {
+	display: none !important;
 }

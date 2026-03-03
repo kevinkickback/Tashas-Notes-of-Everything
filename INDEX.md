@@ -6,11 +6,8 @@ cssClasses: index
 
 ```base
 formulas:
-  Level: '[icon("crown"), level]'
-  Race: '[icon("user"), race]'
-  Class: '[icon("swords"), class]'
   Details: |
-    [icon("crown"), Level, "\u00A0 | \u00A0", icon("user"), Race, "\u00A0 | \u00A0", icon("swords"), Class]
+        [icon("crown"), level, "\u00A0 | \u00A0", icon("user"), race, "\u00A0 | \u00A0", icon("swords"), if(class.isType("list"), list(class).join(" / "), class)]
 views:
   - type: cards
     name: Cards
@@ -24,7 +21,6 @@ views:
     imageAspectRatio: 1.15
     imageFit: ""
     cardSize: 310
-
 ```
 
 > [!npc]-   NPC's<br><span class="sub">Non-Player Characters</span>

@@ -67,6 +67,17 @@
             "type": "dataview",
             "query": "dv.pages('\"Compendium/Atlas\"').file.name"
           }
+        },
+        {
+          "name": "Portrait",
+          "label": "",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "NPC-{{time}}",
+            "saveLocation": "Assets/Images/NPC"
+          }
         }
       ],
       "version": "1",
@@ -120,6 +131,19 @@
             "type": "dataview",
             "query": "dv.pages('\"Compendium/Atlas\"').where(p => p.type === \"realm\").file.name;"
           }
+        },
+        {
+          "name": "Banner",
+          "label": "",
+          "description": "",
+          "input": {
+            "type": "image",
+            "allowUnknownValues": false,
+            "hidden": false,
+            "filenameTemplate": "continent-{{time}}",
+            "saveLocation": "Assets/Images/Location"
+          },
+          "isRequired": false
         }
       ],
       "version": "1"
@@ -146,6 +170,17 @@
           "input": {
             "type": "dataview",
             "query": "['Personal','Political','Seasonal','Religious']"
+          }
+        },
+        {
+          "name": "Image",
+          "label": "Featured Image",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "event-{{time}}",
+            "saveLocation": "Assets/Images/Lore"
           }
         }
       ],
@@ -277,6 +312,17 @@
             ],
             "allowUnknownValues": true
           }
+        },
+        {
+          "name": "Portrait",
+          "label": "",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "DEITY-{{time}}",
+            "saveLocation": "Assets/Images/Lore"
+          }
         }
       ],
       "version": "1"
@@ -314,6 +360,17 @@
             "type": "dataview",
             "query": "dv.pages('\"Compendium/Atlas\"').where(p => p.type === \"locale\").file.name"
           }
+        },
+        {
+          "name": "Banner",
+          "label": "",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "landmark-{{time}}",
+            "saveLocation": "Assets/Images/Location"
+          }
         }
       ],
       "version": "1"
@@ -350,6 +407,17 @@
           "input": {
             "type": "dataview",
             "query": "dv.pages('\"Compendium/Atlas\"').where(p => p.type === \"territory\" || p.type === \"province\").file.name;"
+          }
+        },
+        {
+          "name": "Banner",
+          "label": "",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "locale-{{time}}",
+            "saveLocation": "Assets/Images/Location"
           }
         }
       ],
@@ -402,6 +470,17 @@
             "query": "dv.pages('\"Compendium\"').file.etags;",
             "allowUnknownValues": true
           }
+        },
+        {
+          "name": "Banner",
+          "label": "",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "session-{{time}}",
+            "saveLocation": "Assets/Images/"
+          }
         }
       ],
       "version": "1"
@@ -428,6 +507,17 @@
           "input": {
             "type": "dataview",
             "query": "['Armor','Jewelry','Magic Item','Weapon','Religious Artifact','Treasure']"
+          }
+        },
+        {
+          "name": "Image",
+          "label": "Featured Image",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "object-{{time}}",
+            "saveLocation": "Assets/Images/Lore"
           }
         }
       ],
@@ -466,6 +556,17 @@
             "type": "dataview",
             "query": "dv.pages('\"Compendium/Atlas\"').file.name"
           }
+        },
+        {
+          "name": "Image",
+          "label": "Featured Image",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "organization-{{time}}",
+            "saveLocation": "Assets/Images/Lore"
+          }
         }
       ],
       "version": "1"
@@ -482,6 +583,17 @@
           "input": {
             "type": "text",
             "hidden": false
+          }
+        },
+        {
+          "name": "Banner",
+          "label": "Banner Image",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "plane-{{time}}",
+            "saveLocation": "Assets/Images/Location"
           }
         }
       ],
@@ -540,6 +652,17 @@
             "type": "dataview",
             "query": "dv.pages('\"Compendium/Atlas\"').file.name;"
           }
+        },
+        {
+          "name": "Image",
+          "label": "Featured Image",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "quest-{{time}}",
+            "saveLocation": "Assets/Images/Quest"
+          }
         }
       ],
       "version": "1"
@@ -566,6 +689,17 @@
           "input": {
             "type": "dataview",
             "query": "dv.pages('\"Compendium/Atlas\"').where(p => p.type === \"plane\").file.name;"
+          }
+        },
+        {
+          "name": "Banner",
+          "label": "Banner Image",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "realm-{{time}}",
+            "saveLocation": "Assets/Images/Location"
           }
         }
       ],
@@ -604,6 +738,17 @@
             "type": "dataview",
             "query": "dv.pages('\"Compendium/Atlas\"').where(p => p.type === \"territory\").file.name"
           }
+        },
+        {
+          "name": "Banner",
+          "label": "",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "province-{{time}}",
+            "saveLocation": "Assets/Images/Location"
+          }
         }
       ],
       "version": "1"
@@ -640,6 +785,17 @@
           "input": {
             "type": "dataview",
             "query": "dv.pages('\"Compendium/Atlas\"').where(p => p.type === \"continent\" || p.type === \"ocean\").file.name"
+          }
+        },
+        {
+          "name": "Banner",
+          "label": "",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "territory-{{time}}",
+            "saveLocation": "Assets/Images/Location"
           }
         }
       ],
@@ -686,8 +842,24 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "dataview",
-            "query": "['Artificer','Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard']"
+            "type": "multiselect",
+            "source": "fixed",
+            "multi_select_options": [
+              "Artificer",
+              "Barbarian",
+              "Bard",
+              "Cleric",
+              "Druid",
+              "Fighter",
+              "Monk",
+              "Paladin",
+              "Ranger",
+              "Rogue",
+              "Sorcerer",
+              "Warlock",
+              "Wizard"
+            ],
+            "allowUnknownValues": true
           }
         },
         {
@@ -696,8 +868,122 @@
           "description": "",
           "isRequired": false,
           "input": {
-            "type": "dataview",
-            "query": "['Ancestral Guardian', 'Battlerager', 'Berserker', 'Storm Herald', 'Totem Warrior', 'Zealot', 'College of Creation', 'College of Eloquence', 'College of Glamour', 'College of Lore', 'College of Swords', 'College of Valor', 'College of Whispers', 'Arcana Domain', 'Death Domain', 'Forge Domain', 'Grave Domain', 'Knowledge Domain', 'Life Domain', 'Light Domain', 'Nature Domain', 'Order Domain', 'Peace Domain', 'Tempest Domain', 'Trickery Domain', 'Twilight Domain', 'War Domain', 'Circle of Dreams', 'Circle of Spores', 'Circle of Stars', 'Circle of the Land', 'Circle of the Moon', 'Circle of the Shepherd', 'Circle of Wildfire', 'Arcane Archer', 'Battle Master', 'Cavalier', 'Champion', 'Echo Knight', 'Eldritch Knight', 'Psi Warrior', 'Purple Dragon Knight', 'Rune Knight', 'Samurai', 'Drunken Master', 'Four Elements', 'Kensei', 'Long Death', 'Mercy', 'Open Hand', 'Shadow', 'Sun Soul', 'Ancients', 'Conquest', 'Crown', 'Devotion', 'Glory', 'Oathbreaker', 'Redemption', 'Vengeance', 'Watchers', 'Beast Master', 'Fey Wanderer', 'Gloom Stalker', 'Horizon Walker', 'Hunter', 'Monster Slayer', 'Swarmkeeper', 'Arcane Trickster', 'Assassin', 'Inquisitive', 'Mastermind', 'Phantom', 'Scout', 'Soulknife', 'Swashbuckler', 'Thief', 'Aberrant Mind', 'Clockwork Soul', 'Divine Soul', 'Draconic Bloodline', 'Shadow Magic', 'Storm Sorcery', 'Wild Magic', 'Archfey', 'Celestial', 'Fathomless', 'Fiend', 'Genie', 'Great Old One', 'Hexblade', 'Undead', 'Undying', 'Bladesinging', 'Chronurgy', 'Graviturgy', 'Lore Mastery', 'Order of Scribes', 'School of Abjuration', 'School of Conjuration', 'School of Divination', 'School of Enchantment', 'School of Evocation', 'School of Illusion', 'School of Necromancy', 'School of Transmutation', 'War Magic', 'Alchemist', 'Armorer', 'Artillerist', 'Battle Smith']"
+            "type": "multiselect",
+            "source": "fixed",
+            "multi_select_options": [
+              "Ancestral Guardian",
+              "Battlerager",
+              "Berserker",
+              "Storm Herald",
+              "Totem Warrior",
+              "Zealot",
+              "College of Creation",
+              "College of Eloquence",
+              "College of Glamour",
+              "College of Lore",
+              "College of Swords",
+              "College of Valor",
+              "College of Whispers",
+              "Arcana Domain",
+              "Death Domain",
+              "Forge Domain",
+              "Grave Domain",
+              "Knowledge Domain",
+              "Life Domain",
+              "Light Domain",
+              "Nature Domain",
+              "Order Domain",
+              "Peace Domain",
+              "Tempest Domain",
+              "Trickery Domain",
+              "Twilight Domain",
+              "War Domain",
+              "Circle of Dreams",
+              "Circle of Spores",
+              "Circle of Stars",
+              "Circle of the Land",
+              "Circle of the Moon",
+              "Circle of the Shepherd",
+              "Circle of Wildfire",
+              "Arcane Archer",
+              "Battle Master",
+              "Cavalier",
+              "Champion",
+              "Echo Knight",
+              "Eldritch Knight",
+              "Psi Warrior",
+              "Purple Dragon Knight",
+              "Rune Knight",
+              "Samurai",
+              "Drunken Master",
+              "Four Elements",
+              "Kensei",
+              "Long Death",
+              "Mercy",
+              "Open Hand",
+              "Shadow",
+              "Sun Soul",
+              "Ancients",
+              "Conquest",
+              "Crown",
+              "Devotion",
+              "Glory",
+              "Oathbreaker",
+              "Redemption",
+              "Vengeance",
+              "Watchers",
+              "Beast Master",
+              "Fey Wanderer",
+              "Gloom Stalker",
+              "Horizon Walker",
+              "Hunter",
+              "Monster Slayer",
+              "Swarmkeeper",
+              "Arcane Trickster",
+              "Assassin",
+              "Inquisitive",
+              "Mastermind",
+              "Phantom",
+              "Scout",
+              "Soulknife",
+              "Swashbuckler",
+              "Thief",
+              "Aberrant Mind",
+              "Clockwork Soul",
+              "Divine Soul",
+              "Draconic Bloodline",
+              "Shadow Magic",
+              "Storm Sorcery",
+              "Wild Magic",
+              "Archfey",
+              "Celestial",
+              "Fathomless",
+              "Fiend",
+              "Genie",
+              "Great Old One",
+              "Hexblade",
+              "Undead",
+              "Undying",
+              "Bladesinging",
+              "Chronurgy",
+              "Graviturgy",
+              "Lore Mastery",
+              "Order of Scribes",
+              "School of Abjuration",
+              "School of Conjuration",
+              "School of Divination",
+              "School of Enchantment",
+              "School of Evocation",
+              "School of Illusion",
+              "School of Necromancy",
+              "School of Transmutation",
+              "War Magic",
+              "Alchemist",
+              "Armorer",
+              "Artillerist",
+              "Battle Smith"
+            ],
+            "allowUnknownValues": true
           }
         },
         {
@@ -709,14 +995,20 @@
             "type": "text",
             "hidden": false
           }
+        },
+        {
+          "name": "Portrait",
+          "label": "",
+          "description": "",
+          "isRequired": false,
+          "input": {
+            "type": "image",
+            "filenameTemplate": "PARTY-{{time}}",
+            "saveLocation": "Assets/Images/Party"
+          }
         }
       ],
-      "version": "1",
-      "template": {
-        "createInsertCommand": false,
-        "createNoteCommand": false,
-        "parsedTemplate": []
-      }
+      "version": "1"
     },
     {
       "title": "Note Migration Tool 🔧",

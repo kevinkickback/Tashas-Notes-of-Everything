@@ -1,13 +1,18 @@
 ---
 type: pc
+level: "4"
+race: "Human"
+class:
+- "Ranger"
+- "Druid"
+subClass:
+- "Swarmkeeper"
+- "Stars"
+cover: "/Assets/Images/Party/moira.jpg"
 tags:
 - race/human
 - class/ranger
-level: "3"
-race: "Human"
-class: "Ranger"
-subClass: "Gloom Stalker"
-cover: "/Assets/Images/Party/moira.jpg"
+- class/druid
 ---
 ###### Moira Belkas
 :FasPerson: Player Character &nbsp; | &nbsp; :FasQuoteLeft: I honor the balance of nature :FasQuoteRight:
@@ -18,8 +23,8 @@ ___
 > | Type | Stat |
 > | ---- | ---- |
 > | :FasCrown: Level   | `=this.level` |
-> | :RiSwordFill: Class |  `=this.class`|
-> | :FasBullseye: Conclave |  `=this.subClass`|
+> | :RiSwordFill: Class | `=join(this.class, "<br>")`|
+> | :FasFireFlameCurved: Archetype |  `=join(this.subClass, "<br>")`|
 > |  :FasUserGroup: Race |  `=this.race`|
 
 > [!quote|no-t]

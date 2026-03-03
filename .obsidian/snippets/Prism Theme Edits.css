@@ -168,3 +168,29 @@ div.notice-container div.notice {
 .modal-form .setting-item:nth-child(odd) {
 	background-color: rgba(0, 0, 0, 0.15) !important;
 }
+
+/* Remove bases toolbar backgorund */
+.bases-header {
+	background-color: transparent !important;
+}
+
+/* Style edit modal forms */
+.workspace-leaf-content[data-type="modal-form-manage-forms-view"] #form-rows > div[class*="svelte-"] {
+  margin-top: 10px;
+  padding: 10px;
+  background: var(--background-secondary);
+}
+
+.workspace-leaf-content[data-type="modal-form-manage-forms-view"] .form-row-buttons button {
+  background: var(--background-primary);
+}
+
+.workspace-leaf-content[data-type="modal-form-manage-forms-view"] .form-row-buttons button:hover {
+  background: grey;
+  cursor: pointer;
+}
+
+ .workspace-leaf-content[data-type="modal-form-edit-form-view"] div.flex.row.gap2.sticky-buttons button[class*="svelte-"] {
+  background-color: var(--background-secondary);
+  cursor: pointer;
+}

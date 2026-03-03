@@ -41,3 +41,25 @@ h6 .headerTitle input {
 .stats input {
 	width: 94%;
 }
+
+.modal-content:not(.is-mobile) .setting-item-info {
+	min-width: 60px !important;
+}
+
+.multi-select-root:not(.is-mobile) {
+	display: flex !important;
+	gap: 0.5rem !important;
+	flex: 1 !important;
+	flex-direction: column !important;
+	align-items: flex-end !important;
+}
+
+.multi-select-root:not(.is-mobile) .badges {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	min-height: 2rem;
+	padding: 0.5rem 0 0 0;
+	flex-direction: row-reverse;
+	justify-content: flex-start;
+}

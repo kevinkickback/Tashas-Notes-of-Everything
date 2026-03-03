@@ -4,7 +4,7 @@
   "templater-obsidian",
   "modalforms",
   "obsidian-style-settings",
-  "obsidian-icon-folder",
   "folder-notes",
-  "dataview"
+  "dataview",
+  "obsidian-icon-folder"
 ]

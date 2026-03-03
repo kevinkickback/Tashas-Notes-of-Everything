@@ -12,7 +12,7 @@ date: 2024-02-17
 
 ![[session.png|banner]]
 ###### The Road Less Traveled
-<span class="sub2">:FasSun: DAY 01 &nbsp; | &nbsp; :FasTags: `= this.file.etags`</span>
+<span class="sub2">:FasSun: DAY 01 &nbsp; | &nbsp; :FasTags: `VIEW[{tags}][text]`</span>
 ___
 
 > [!quote|no-t] SUMMARY

@@ -71,13 +71,7 @@ body {
 		rgba(0, 0, 0, 0.025);
 	transition: box-shadow 0.15s linear;
 }
-.cards table.dataview tbody > tr > td {
-	/* Paragraphs */
-	/* Links */
-	/* Buttons */
-	/* Lists */
-	/* Images */
-}
+
 .cards table.dataview tbody > tr > td:first-child {
 	font-weight: var(--bold-weight);
 	border: none;
@@ -475,7 +469,14 @@ body:not(.zoom-off)
 	text-align: center;
 }
 
-/* Adjust cover iamge */
+/* Adjust cover image */
 .cards table.dataview tbody > tr > td img {
 	object-position: top left;
+}
+
+/* Adjust details */
+.bases-cards-line .value-list-container {
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
 }

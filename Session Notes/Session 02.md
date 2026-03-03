@@ -12,7 +12,7 @@ date: 2025-02-17
 
 ![[session.png|banner]]
 ###### Peaks and Perils
-<span class="sub2">:FasSun: DAY 02 &nbsp; | &nbsp; :FasTags: `= this.file.etags`</span>
+<span class="sub2">:FasSun: DAY 02 &nbsp; | &nbsp; :FasTags: `VIEW[{tags}][text]`</span>
 ___
 
 > [!quote|no-t] SUMMARY
