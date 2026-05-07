@@ -1,3 +1,9 @@
+<p align="center">
+  <em>
+    If you enjoy this project then check out <a href="https://github.com/kevinkickback/Tavern-Born">Tavern Born</a>, a D&D character creator app!
+  </em>
+</p>
+
 # Tasha's Notes of Everything - A D&D Obsidian Vault
 
 Welcome to Tasha's Notes of Everything! This project is an Obsidian vault specifically designed for Dungeons and Dragons (D&D) note-taking. Geared towards players this vault is here to help you organize, plan, and enrich your D&D experience.
